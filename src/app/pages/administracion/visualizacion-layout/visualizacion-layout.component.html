@@ -1,0 +1,37 @@
+<app-operativa-header tituloPantalla="{{'menu.moduloAdministracion.vizualizacionLayouts' | translate}}"></app-operativa-header>
+<div id="visualizacionLayout" class="panel panel-default col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    <br>
+    <div class="card my-1">
+        <div class="card-body">
+                <div class="row justify-content-center">
+                    <div class="col-xs-1 col-sm-1 col-md-1 text-right align-items-center">
+                        <label class="col-form-label" for="inputNombreArchivo">
+                            {{'pantalla.moduloAdministracion.vizualizacionLayout' | translate}}:
+                        </label>
+                        
+                    </div>
+
+                    <div class="col-xs-3 col-sm-3 col-md-3">
+                        <input #btnCargarArchivo type="file" name="file" id="file" (change)="readArchivo($event)" aria-label="file" [hidden]="true" accept="*">
+                        <input type="text" id="inputNombreArchivo" class="form-control" [readonly]="true" [(ngModel)]="nombreArchivo">
+                    </div>
+
+                    <div class="col-xs-1 col-sm-1 col-md-1">
+                        <button type="button" class="btn btn-danger" (click)="btnCargarArchivo.click()">{{'btn.examinar' |
+                            translate}}</button>
+                    </div>
+                </div>
+            
+            <div class="row mt-2">
+                <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-1 offset-sm-1 offset-md-1 offset-lg-1">
+                    <button type="button" class="btn btn-danger" (click)="eventClean()">{{'btn.limpiar' |
+                        translate}}</button>
+                </div>
+                <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-8 offset-sm-8 offset-md-8 offset-lg-8">
+                    <button type="button" class="btn btn-danger" (click)="procesoLayout()">{{'btn.procesar' |
+                        translate}}</button>
+                </div> 
+            </div>
+        </div>
+    </div>
+</div>

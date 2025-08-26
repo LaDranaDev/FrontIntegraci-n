@@ -1,0 +1,455 @@
+<app-operativa-header
+  tituloPantalla="{{ 'menu.adminContrato.pantallaIntradia' | translate }}"
+></app-operativa-header>
+<div
+  id="altaContratos"
+  class="panel panel-default col-xs-12 col-sm-12 col-md-12 col-lg-12"
+>
+  <br />
+  <div>
+    <h5 class="card-header justify-content-center"></h5>
+    <app-busqueda-cliente
+      [data]="dataContract"
+      (valueChange)="dataClientChange($event)"
+    ></app-busqueda-cliente>
+  </div>
+
+  <br />
+  <h5 class="card-header">
+    Frecuencia de Envío <span class="marginleft">Contenido del Reporte</span>
+  </h5>
+  <div class="card">
+      <div class="card-body col-xs-2">
+
+        <div class="row justify-content-center">
+          <div class="col-3">
+            <div class="form-group row">
+              <label class="col-form-label col-sm-8 text-style" for="selectHorasToAddAndRemove1" >{{ "pantallas.regeneraReporteCobranza.selhorario" | translate }}</label>
+            </div>
+            <div class="form-group row align-items-center">
+                <div class="col-5">
+                    <select class="form-control" size="10" name="selectHorasToAddAndRemove1" [disabled]="disableFormByCancel"
+                        id="selectHorasToAddAndRemove1" multiple [(ngModel)]="listHorasSelectedIzquierda">
+                        <option *ngIf="listHorasFirstSelect.length > 1" value="-1"> {{'todos'| translate}} </option>
+                        <option *ngFor="let hora of listHorasFirstSelect" [value]="hora['idCatalogo']">
+                            {{hora['descripcionCatalogo']}}</option>
+                    </select>
+                </div>
+                <div class="col-2">
+                    <span class="badge badge-secondary text-desing-badge mb-1"
+                    (click)="addNewHour()" >{{'pantalla.parametriadicional.consulta.datosparametria.sendToAnother'
+                        | translate}}</span>
+                    <span class="badge badge-secondary text-desing-badge"
+                    (click)="removeHour()"   >{{'pantalla.parametriadicional.consulta.datosparametria.returnToAnother'
+                        | translate}}</span>
+                </div>
+                <div class="col-5">
+                    <select class="form-control" size="10" name="selectHorasDestinyToAddContrwe" multiple
+                        id="selectHorasDestinyToAddContr" [(ngModel)]="listHorasSelectedDerecha" [disabled]="disableFormByCancel"
+                        aria-label="selectHorasDestinyToAddContr">
+                        <option *ngIf="listHorasSecondSelect.length > 1" value="-1"> {{'todos'| translate}} </option>
+                        <option *ngFor="let hora of listHorasSecondSelect" [value]="hora['idCatalogo']">
+                            {{hora['descripcionCatalogo']}}</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-sm-12">
+              <div class="form-check mt-3">
+                <input
+                  class="form-check-input"
+                  id="optOperCierre"
+                  [(ngModel)]="bandCierre" 
+                  type="checkbox"
+                  [disabled]="disableFormByCancel"
+                />
+                <label
+                  class="form-check-label label-marging"
+                  id="optOperCierreLabel"
+                  for="optOperCierre"
+                 >
+                  {{
+                    "pantallas.reportesCobranzaIntradia.enviarIntradia"
+                      | translate
+                  }}
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <!-- Select account text fielf -->
+          <div class="col-2">
+            <div class="form-group row">
+              <label class="col-form-label col-sm-8 text-style" for="cuenta">{{ "pantallas.regeneraReporteCobranza.cuenta" | translate }}</label>
+            </div>
+            <div class="form-group row align-items-center">
+              <div class="col-sm-8">
+                <select
+                  class="form-control"
+                  size="10"
+                  name="selectHorasDestinyToAddContr"
+                  multiple
+                  [disabled]="disableFormByCancel"
+                  id="selectHorasDestinyToAddContr"
+                  aria-label="selectHorasDestinyToAddContr"
+                >
+                  <option [value]="cuenta.idContratoCuenta" *ngFor="let cuenta of listCuentas">
+                    {{ cuenta.numCuenta }}
+                  </option>
+                </select>
+                <!-- paginador --> 
+                <label class="col-form-label text-style d-flex justify-content-center">
+                  <button
+                  class="btn" 
+                  [disabled]="!canMoveToPreviousPage" 
+                  (click)="moveToFirstPage()" 
+                  >
+                  </button>
+                  <button
+                  class="btn" 
+                  [disabled]="!canMoveToPreviousPage" 
+                  (click)="moveToPreviousPage()" 
+                  >
+                  <em class="fa fa-angle-left"></em>
+                  </button>
+                  <button class="btn" disabled >
+                    <div class="with-pagination">
+                      {{ pageIndex }} / {{ pageCount }}
+                    </div>
+                  </button>
+                  <button
+                  class="btn" 
+                  [disabled]="!canMoveToNextPage" 
+                  (click)="moveToNextPage()" 
+                  >
+                  <em class="fa fa-angle-right"></em>
+                  </button>
+                  <button
+                  class="btn" 
+                  [disabled]="!canMoveToNextPage" 
+                  (click)="moveToLastPage()" 
+                  >
+                  <em class="fa fa-angle-double-right"></em>
+                  </button>
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-4">
+            <div class="row justify-content-center margin-iz ">
+                <div class="col-12">
+                    <div class="form-group row tam mr">
+                        <label 
+                            class="col-form-label col-sm-8 text-style" for="selectHorasToAddAndRemoveC">{{'pantallas.reportesCobranzaIntradia.seleccionarClacones'
+                            | translate}}</label>
+                    </div>
+                    <div class="form-group row align-items-center">
+                        <div class="col-sm-4">
+                            <select class="form-control" size="10" name="selectHorasToAddAndRemoveC"  [disabled]="disableFormByCancel"
+                                id="selectHorasToAddAndRemoveC" multiple [(ngModel)]="listCuentasSelectedIzquierda">
+                                <option *ngIf="listCuentasFirstSelect.length > 1"  value="-1"> {{'todos'| translate}} </option>
+                                <option *ngFor="let hora2 of listCuentasFirstSelect" [value]="hora2">{{hora2['descripcionCatalogo']}}</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-1">
+                            <span class="badge badge-secondary text-desing-badge mb-1"
+                                (click)="addNewCuenta()">{{'pantalla.parametriadicional.consulta.datosparametria.sendToAnother'
+                                | translate}}</span>
+                            <span class="badge badge-secondary text-desing-badge"
+                                (click)="removeCuenta()">{{'pantalla.parametriadicional.consulta.datosparametria.returnToAnother'
+                                | translate}}</span>
+                        </div>
+                        <div class="col-sm-4">
+                            <select class="form-control" size="10" name="selectHorasDestinyToAddContr2"  [disabled]="disableFormByCancel"
+                                id="selectHorasDestinyToAddContr2" [(ngModel)]="listCuentasSelectedDerecha" multiple
+                                aria-label="selectHorasDestinyToAddContr">
+                                <option *ngIf="listCuentasSecondSelect.length > 1"  value="-1"> {{'todos'| translate}} </option>
+                                <option *ngFor="let hora2 of listCuentasSecondSelect" [value]="hora2">
+                                    {{hora2['descripcionCatalogo']}}</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-12">
+                  <div class="form-group mt-3">
+                    <label
+                      class="form-check-label label-marging"
+                    >
+                      {{
+                        "pantallas.regeneraReporteCobranza.clacones" | translate
+                      }}
+                    </label>
+                  </div>
+                  <div class="form-check mt-3">
+                    <input
+                      class="form-check-input"
+                      id="claconesCargo"
+                      type="checkbox"
+                      [(ngModel)]="optClaCarg" 
+                      [disabled]="disableFormByCancel"
+                    />
+                    <label
+                      class="form-check-label label-marging"
+                      for="claconesCargo"
+                      id="claconesCargoLabel"
+                      name="claconesCargo"
+                     >
+                      {{
+                        "pantallas.reportesCobranzaIntradia.todosClaconesCargo"
+                          | translate
+                      }}
+                    </label>
+                  </div>
+                  <div class="form-check">
+                    <input
+                      class="form-check-input"
+                      id="claconesAbono"
+                      [(ngModel)]="optClaAbono"
+                      type="checkbox"
+                      [disabled]="disableFormByCancel"
+                    />
+                    <label
+                      class="form-check-label label-marging"
+                      id="claconesAbonoLabel"
+                      for="claconesAbono"
+                     >
+                      {{
+                        "pantallas.reportesCobranzaIntradia.todosClaconesAbono"
+                          | translate
+                      }}
+                    </label>
+                  </div>
+                  <div class="form-group mt-3">
+                    <label class="form-check-label mt-1" for="archivosTitle">
+                      {{
+                        "pantallas.regeneraReporteCobranza.ctaArchivos"
+                          | translate
+                      }}
+                    </label>
+                  </div>
+                  <div class="form-check">
+                    <input
+                      class="form-check-input"
+                      type="radio"
+                      name="exampleRadios"
+                      id="exampleRadios1"
+                      value="A"
+                      (click)="cantFilesRadioConsolid = 'A'"
+                      [checked]="cantFilesRadioConsolid === 'A'"
+                      [disabled]="disableFormByCancel"
+                    />
+                    <label class="form-check-label" for="exampleRadios1">
+                      {{
+                        "pantallas.reportesCobranzaIntradia.recibirArchivoConsolidado"
+                          | translate
+                      }}
+                    </label>
+                  </div>
+                  <div class="form-check">
+                    <input
+                      class="form-check-input"
+                      type="radio"
+                      name="exampleRadios"
+                      id="exampleRadios2"
+                      value="C"
+                      (click)="cantFilesRadioConsolid = 'C'"
+                      [checked]="cantFilesRadioConsolid === 'C'"
+                      [disabled]="disableFormByCancel"
+                    />
+                    <label class="form-check-label" for="exampleRadios2">
+                      {{
+                        "pantallas.reportesCobranzaIntradia.recibirArchivoPorCuenta"
+                          | translate
+                      }}
+                    </label>
+                  </div>
+                  <div class="form-check">
+                    <input
+                      class="form-check-input"
+                      id="signosNegativos"
+                      type="checkbox"
+                      [(ngModel)]="chkSigN"
+                      [disabled]="disableFormByCancel"
+                    />
+                    <label
+                      class="form-check-label label-marging"
+                      for="signosNegativos"
+                      id="signosNegativosLabe"
+                    >
+                      {{
+                        "pantallas.reportesCobranzaIntradia.mostrarSignosNegativos"
+                          | translate
+                      }}
+                    </label>
+                  </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-3">
+          <form [formGroup]="formReportsIntradia">
+            <!-- Canal entrega -->
+              <div class="form-group row">
+                <label class="col-form-label col-sm-8 text-style" for="canalEntrega">{{ "pantallas.regeneraReporteCobranza.canalEntrega" | translate}}</label>
+              </div>
+    
+              <div class="form-group row align-items-center">
+                <!-- Select type format and canal-->
+                <div class="col-sm-12">
+                  <div class="form-group">
+                    <select class="form-control" formControlName="optCanal" id="canalEntrega">
+                      <option value="">Seleccione una opción</option>
+                      <option
+                        [value]="canalE.idCanal"
+                        *ngFor="let canalE of listCanales"
+                      >
+                        {{ canalE.nombre }}
+                      </option>
+                    </select>
+    
+                    <div class="form-group mt-3">
+                      <label for="exampleFormControlSelect1"
+                        >{{
+                          "pantallas.regeneraReporteCobranza.tipoFormato"
+                            | translate
+                        }}
+                        Intradía</label
+                      >
+                      <select
+                        class="form-control"
+                        id="exampleFormControlSelect1"
+                        formControlName="optFormato"
+                      >
+                        <option value="">Seleccione una opción</option>
+                        <option [value]="formats.idCatalogo" *ngFor="let formats of listFormats"> 
+                          {{ formats.descripcionCatalogo }}
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+    
+                <div class="col-sm-12" class="margin-contenido">
+                  <!-- Tipo contenido -->
+                  <div class="form-check mt-3">
+                    <label class="form-check-label label-marging">
+                      {{ "pantallas.regeneraReporteCobranza.tipCont" | translate }}
+                    </label>
+                  </div>
+                  <div class="form-check mt-4">
+                    <input
+                      class="form-check-input"
+                      type="radio"
+                      name="radioContentType"
+                      id="radioContentType1"
+                      value="P"
+                      (click)="optTipoContenido = 'P'"
+                      [checked]="optTipoContenido === 'P'"
+                      [disabled]="disableFormByCancel"
+                    />
+                    <label class="form-check-label" for="radioContentType1">
+                      {{ "pantallas.regeneraReporteCobranza.parcial" | translate }}
+                    </label>
+                  </div>
+                  <div class="form-check">
+                    <input
+                      class="form-check-input"
+                      type="radio"
+                      name="radioContentType"
+                      id="radioContentType2"
+                      value="A"
+                      (click)="optTipoContenido = 'A'"
+                      [checked]="optTipoContenido === 'A'"
+                      [disabled]="disableFormByCancel"
+                    />
+                    <label class="form-check-label" for="radioContentType2">
+                      {{ "pantallas.regeneraReporteCobranza.acumulativo" | translate }}
+                    </label>
+                  </div>
+    
+                  <!-- Cuenta Clabe -->
+                  <div class="form-check">
+                    <input
+                      class="form-check-input"
+                      id="mostrarCuentaClabe"
+                      formControlName="chkCta"
+                      type="checkbox"
+                      [disabled]="disableFormByCancel"
+                    />
+                    <label
+                      class="form-check-label labelClabe"
+                      for="mostrarCuentaClabe"
+                      id="mostrarCuentaClabeLabel"
+                    >
+                      {{
+                        "pantallas.regeneraReporteCobranza.virtualMov" | translate
+                      }}
+                    </label>
+                  </div>
+                  <!-- Acumulaciones -->
+                  <div class="form-check">
+                    <input
+                      class="form-check-input"
+                      id="anulacionesCheck"
+                      type="checkbox"
+                      formControlName="anulaciones"
+                      [disabled]="disableFormByCancel"
+                    />
+                    <label
+                      for="anulacionesCheck"
+                      id="anulacionesCheck"
+                      class="form-check-label label-marging"
+                    >
+                      {{ "pantallas.regeneraReporteCobranza.incAnulaciones" | translate }}
+                    </label>
+                  </div>
+                </div>
+              </div>
+          </form>
+        </div>
+
+        </div>
+      </div>
+
+
+  </div>
+  <div class="row">
+    <div class="col-12 mb-3 mt-3">
+      <input #btnCargarArchivo 
+        type="file" 
+        class="form-control-plaintext" 
+        name="file" 
+        id="file" 
+        (change)="readArchivo($event)"
+        aria-label="file"
+        *ngIf="showFileButton"
+        accept=".xlsx, .xls"
+      />
+    </div>
+    <div class="col-6 mb-5">
+      <button
+        type="button"
+        class="btn btn-danger mt-3 mr-5"
+        (click)="chargeAccounts()"
+      >
+        {{ "pantallas.reportesCobranzaIntradia.cargarCuentas" | translate }}
+      </button>
+      <button type="button" class="btn btn-danger mt-3 ml-5" *ngIf="showFileButton" (click)="showFileButton = false">
+        {{ "btn.cancelar" | translate }}
+      </button>
+      <br />
+      <button type="button" class="btn btn-danger mt-3" (click)="downloadAccounts()">
+        {{ "pantallas.reportesCobranzaIntradia.descargaFormato" | translate }}
+      </button>
+    </div>
+    <div class="col-6 text-right">
+      <button (click)="saveConfigIntradia()" type="button" class="btn btn-danger mt-3">
+        {{ "btn.guardarBanco" | translate }}
+      </button>
+      <br />
+      <button type="button" class="btn btn-danger mt-3" (click)="exportReport()">
+        {{ "btn.exportar" | translate }}
+      </button>
+    </div>
+  </div>
+</div>

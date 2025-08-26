@@ -1,0 +1,9 @@
+.row{
+  display: flex;
+  flex-wrap: nowrap;
+  margin-right: -15px;
+}
+.justi{
+  display: flex;
+  justify-content: center;
+}

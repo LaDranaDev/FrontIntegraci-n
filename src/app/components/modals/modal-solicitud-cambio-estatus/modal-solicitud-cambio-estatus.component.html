@@ -1,0 +1,62 @@
+<div class="modal-button"></div>
+
+<div id="popup_container">
+  <div class="titles">
+    <div class="txt-center">
+    </div>
+    <div class="titles-sub">
+      <div class="txt-start">
+        <label class="title-bold" *ngIf="bandera === 'P' " [ngStyle]="{ 'color': color }" for="">{{'btn.seleccionar' | translate}}</label>
+        <label class="title-bold" *ngIf="bandera === '' " [ngStyle]="{ 'color': color }" for="">{{'modals.catalogoDin.confirmacion' | translate}}</label>
+      </div>
+      <div class="txt-end" >
+        <label class="title-bold" *ngIf="bandera === 'P' " [ngStyle]="{ 'color': color }" for="">{{'planCalidad.msjMONOP0900Codigo' | translate}}</label>
+        <label class="title-bold" *ngIf="bandera === '' " [ngStyle]="{ 'color': color }" for="">{{'planCalidad.msjCNF000Codigo' | translate}}</label>
+      </div>
+    </div>
+  </div>
+
+  <form ngNativeValidate #addForm="ngForm" (ngSubmit)="onEnviar()">
+    <div class="content-padding" id="popup_content">
+        <div id="img" class="txt-center"> <img src="{{img}}" alt=""></div>
+        <div>
+          <div  class="txt-wordbreak">
+            <label class="title-bold" *ngIf="bandera === ''" for="">{{'planCalidad.msjCNF000Titulo' | translate}}</label>
+            <label class="title-bold" *ngIf="bandera === 'P'" >{{'planCalidad.msjMONOP0900Observacion' | translate}}</label>
+          </div>
+
+          <div id="popup_message">
+            <div id="tipoMsg"></div>
+              <mat-dialog-content>
+              <br> 
+              <div class="txt-wordbreak" *ngIf="bandera === ''">
+                <label for="">{{'planCalidad.msjCNF000Observacion' | translate}}</label>
+              </div>
+              <br>
+              <mat-radio-group *ngIf="bandera === 'P'" [(ngModel)]="bandera">
+                <mat-radio-button checked="bandera==='P'" value="P" >{{'planCalidad.msjMONOP0900Opcion' | translate}}</mat-radio-button>
+                <br>
+                <mat-radio-button  value="T" >{{'planCalidad.comunes.allOption' | translate}}</mat-radio-button>
+              </mat-radio-group>
+              <div class="txt-wordbreak" *ngIf="bandera === ''">
+                <label for="">{{'planCalidad.msjCNF000Sugerencia' | translate}}</label>
+              </div>
+            </mat-dialog-content>
+          </div>
+        </div>
+    </div>
+
+    <mat-dialog-actions class="center">
+      <div class="col text-center display-buttons">
+        <div class="txt-end">
+          <button type="submit" id="add-client-form"  class="btn btn-outline-danger justify-content-center buttons-okcancel">OK</button>
+        </div>
+        <div class="txt-start">
+          <button type="button" mat-dialog-close class="btn btn-outline-danger buttons-okcancel"  (click)="modalRef.close()">{{'btn.cancelar' | translate}}</button>
+        </div>
+      </div>
+    </mat-dialog-actions>
+  </form>
+
+</div>
+<div class="modal-button"></div>

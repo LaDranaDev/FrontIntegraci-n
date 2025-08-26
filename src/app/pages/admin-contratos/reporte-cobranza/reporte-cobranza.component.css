@@ -1,0 +1,10 @@
+.cente {
+    display: flex;
+    flex-direction: column;
+}
+
+.center-text{
+    justify-content: center;
+    align-items: center;
+    display: flex;
+}

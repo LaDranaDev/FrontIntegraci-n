@@ -1,0 +1,134 @@
+<app-operativa-header tituloPantalla="{{'pantalla.sucursales.title' | translate}}"></app-operativa-header>
+<div id="gestionSucursales" class="panel panel-default col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    <br>
+    <!-- --- Seccion de Busqueda de criterios --- -->
+    <div class="card mt-3">
+        <h5 class="card-header justify-content-center">{{'pantalla.sucursales.criterios.title' | translate}}</h5>
+        <div class="card-body">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <form [formGroup]="gestionSucursalesForm" class="row">
+                    <div class="col-6">
+                        <div class="col-label estilo">
+                            <label for="cp" class="col-form-label">{{'pantalla.sucursales.criterio.cp' |
+                                translate}}</label>
+                        </div>
+                        <div class="col-input estilo">
+                            <input type="text" class="form-control estilo" id="cp" formControlName="cp"
+                                [(ngModel)]="cpBusqueda" maxlength="5" size="30" (keypress)="onlyNumbers($event)"
+                                (paste)="pasteOnlyNumbers($event)">
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="col-label estilo">
+                            <label for="sucursal" class="col-form-label">{{'pantalla.sucursales.criterio.sucursal' |
+                                translate}}</label>
+                        </div>
+                        <div class="col-input estilo">
+                            <input type="text" class="form-control removeTextTransform estilo" id="sucursal"
+                                formControlName="sucursal" [(ngModel)]="sucurBusqueda" maxlength="75" size="30"
+                                (keypress)="onlyAlphaNumberPointAndSpace($event)"
+                                (paste)="pasteOnlyAlphaNumberPointAndSpace($event)">
+                        </div>
+                    </div>
+                </form>
+                <div class="row">
+                    <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-1 offset-sm-1 offset-md-1 offset-lg-1">
+                        <button type="button" class="btn btn-danger" (click)="cleanFiltros()">{{'btn.limpiar' |
+                            translate}}</button>
+                    </div>
+                    <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-8 offset-sm-8 offset-md-8 offset-lg-8">
+                        <button type="button" class="btn btn-danger" (click)="searchSucursal()">{{'btn.buscar'
+                            | translate}}</button>
+                    </div>
+                </div>
+                <div class="row mt-2">
+                    <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-1 offset-sm-1 offset-md-1 offset-lg-1">
+                        <button type="button" class="btn btn-danger" (click)="goAddSucursal()">{{'btn.agregar' |
+                            translate}}</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- --- Seccion de Resultado --- -->
+    <div class="card mt-3">
+        <h5 class="card-header justify-content-center">
+            {{'pantalla.sucursales.table.title' | translate}}
+        </h5>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 table-responsive">
+                    <table class="table table-striped table-hover" aria-describedby="sucursales">
+                        <thead>
+                            <tr>
+                                <th scope="col" class="text-center">{{'pantalla.sucursales.table.col.idSucursal' |
+                                    translate}}</th>
+                                <th scope="col" class="text-center">{{'pantalla.sucursales.table.col.sucursal' |
+                                    translate}}</th>
+                                <th scope="col" class="text-center">{{'pantalla.sucursales.table.col.latitud' |
+                                    translate}}</th>
+                                <th scope="col" class="text-center">{{'pantalla.sucursales.table.col.longitud' |
+                                    translate}}</th>
+                                <th scope="col" class="text-center">{{'pantalla.sucursales.table.col.direccion' |
+                                    translate}}</th>
+                                <th scope="col" class="text-center">{{'pantalla.sucursales.table.col.cp' |
+                                    translate}}</th>
+                                <th scope="col" class="text-center">{{'pantalla.sucursales.table.col.seleccionar' |
+                                    translate}}</th>
+                                <th scope="col" class="text-center">{{'pantalla.sucursales.table.col.modificar' |
+                                    translate}}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <ng-container *ngIf="banderaHasRows; then templateFillTable; else templateEmptyTableBack">
+                            </ng-container>
+                            <ng-template #templateFillTable>
+                                <tr *ngFor="let dato of tabla">
+                                    <td class="text-center">{{dato.id}}</td>
+                                    <td class="text-center">{{dato.sucursal}}</td>
+                                    <td class="text-center">{{dato.latitud}}</td>
+                                    <td class="text-center">{{dato.longitud}}</td>
+                                    <td class="text-center">{{dato.direccion}}</td>
+                                    <td class="text-center">{{dato.cp}}</td>
+                                    <td class="text-center">
+                                        <label for="check"></label>
+                                        <input type="checkbox" name="check" id="check" [checked]="false" (change)="onChangeChkSeleccionar($event, dato.id)"/>
+                                    </td>
+                                    <td class="text-center"><button (click)="goUpdateSucursal(dato)"
+                                            class="btn btn-outline-danger">{{'btn.modificar' | translate}}</button></td>
+                                </tr>
+                            </ng-template>
+                            <ng-template #templateEmptyTableBack>
+                                <tr>
+                                    <td class="text-center" colspan="12"> {{'noResult' | translate}}</td>
+                                </tr>
+                            </ng-template>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mt-1">
+                    <div class="d-flex justify-content-center" *ngIf="banderaHasRows">
+                        <pagination [maxSize]="rowsPorPagina" [boundaryLinks]="showBoundaryLinks" [directionLinks]="showDirectionLinks"
+                            [totalItems]="totalElements" [itemsPerPage]="rowsPorPagina" [(ngModel)]="page"
+                            previousText="&lsaquo;" nextText="&rsaquo;" firstText="{{'paginador.inicio' | translate}}" lastText="{{'paginador.fin' | translate}}"
+                            (pageChanged)="onPageChanged($event)">
+                        </pagination>
+
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-2" *ngIf="banderaHasRows">
+                <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-1 offset-sm-1 offset-md-1 offset-lg-1">
+                    <button type="button" class="btn btn-danger" (click)="exportSucursales()">{{'btn.exportar' |
+                        translate}}</button>
+                </div>
+                <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-8 offset-sm-8 offset-md-8 offset-lg-8">
+                    <button type="button" class="btn btn-danger" (click)="deleteSucursal()">{{'btn.eliminar'
+                        | translate}}</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

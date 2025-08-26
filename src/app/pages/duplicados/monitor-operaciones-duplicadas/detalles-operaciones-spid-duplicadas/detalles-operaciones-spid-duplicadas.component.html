@@ -1,0 +1,158 @@
+<app-operativa-header tituloPantalla="{{'MO' | translate}}: "></app-operativa-header>
+<form [formGroup]="datosForm" id="SPID">
+    <div class="card">
+        <h5 class="card-header justify-content-center">
+            {{'MO.DG' | translate}}:
+        </h5>
+        <div class="inpu">
+            <label for="productoSPID2" class="col-form-label col-xs-2 col-sm-2 col-md-1">{{'MO.P' | translate}}: </label>
+            <input type="text" class="form-control" id="productoSPID2" name="producto" formControlName="producto">
+        </div>
+        <div class="inpu">
+            <div class="dos">
+                <label for="codCliSPID2" class="col-form-label col-xs-2 col-sm-2 col-md-2">{{'MO.CC' | translate}}: </label>
+                <input type="text" class="form-control" id="codCliSPID2" name="codCli" formControlName="codCli" >
+            </div>
+            <div class="dos">
+                <label for="estatusSPID2" class="col-form-label col-xs-2 col-sm-2 col-md-2">{{'MO.E' | translate}}: </label>
+                <input type="text" class="form-control" id="estatusSPID2" name="estatus" formControlName="estatus" >
+            </div>
+        </div>
+        <div class="inpu">
+            <div class="dos" *ngIf="id === '91'">
+                <label for="fechaVencSPID2" class="col-form-label col-xs-2 col-sm-2 col-md-2">{{'MO.FV' | translate}}: </label>
+                <input type="text" class="form-control" id="fechaVencSPID2" name="fechaVenc" formControlName="fechaVenc">
+            </div>
+            <div class="dos" *ngIf="id !== '91'">
+                <label for="fechaAplicSPID2" class="col-form-label col-xs-2 col-sm-2 col-md-2">{{'MO.FA' | translate}}: </label>
+                <input type="text" class="form-control" id="fechaAplicSPID2" name="fechaAplic" formControlName="fechaAplic" >
+            </div>
+            <div class="dos">
+                <label for="fechaCapturaSPID2" class="col-form-label col-xs-2 col-sm-2 col-md-2">{{'MO.PR' | translate}}: </label>
+                <input type="text" class="form-control" id="fechaCapturaSPID2" name="fechaCaptura" formControlName="fechaCaptura" >
+            </div>
+
+        </div>
+        <div class="inpu">
+            <label for="nomArchSPID2" class="col-form-label col-xs-2 col-sm-2 col-md-1">{{'MO.NA' | translate}}: </label>
+            <input type="text" class="form-control" id="nomArchSPID2" name="nomArch" formControlName="nomArch">
+        </div>
+        <div class="inpu">
+            <div class="dos">
+                <label for="referenciaSPID2" class="col-form-label col-xs-2 col-sm-2 col-md-2">{{'MO.R' | translate}}: </label>
+                <input type="text" class="form-control" id="referenciaSPID2" name="referencia" formControlName="referencia" >
+            </div>
+            <div class="dos">
+                <label for="numConvenioSPID2" class="col-form-label col-xs-2 col-sm-2 col-md-2">{{'consultaDocumentosCFDI.lblClaveRastreo' | translate}}: </label>
+                <input type="text" class="form-control" id="numConvenioSPID2" name="numConvenio" formControlName="numConvenio">
+            </div>
+        </div>
+    </div>
+    <div class="card">
+        <h5 class="card-header justify-content-center">
+            {{'MO.DO' | translate}}:
+        </h5>
+        <div class="inpu">
+            <label for="bancoOrdenante2" class="col-form-label col-xs-2 col-sm-2 col-md-1">{{'MO.B' | translate}}: </label>
+            <input type="text" class="form-control" id="bancoOrdenante2" name="bancoOrdenante" formControlName="bancoOrdenante">
+        </div>
+        <div class="inpu">
+            <label for="nombreOrd2" class="col-form-label col-xs-2 col-sm-2 col-md-1">{{'MO.N' | translate}}: </label>
+            <input type="text" class="form-control" id="nombreOrd2" name="nombreOrd" formControlName="nombreOrd">
+        </div>
+        <div class="inpu">
+            <div class="dos">
+                <label for="ctaAbono2" class="col-form-label col-xs-2 col-sm-2 col-md-2">{{'MO.C' | translate}}: </label>
+                <input type="text" class="form-control" id="ctaAbono2" name="ctaAbono" formControlName="ctaAbono" >
+            </div>
+            <div class="dos">
+                <label for="divisaOrd2" class="col-form-label col-xs-2 col-sm-2 col-md-2">{{'MO.D' | translate}}: </label>
+                <input type="text" class="form-control" id="divisaOrd2" name="divisaOrd" formControlName="divisaOrd" >
+            </div>
+        </div>
+        <div class="inpu">
+            <div class="dos">
+                <label for="importe2" class="col-form-label col-xs-2 col-sm-2 col-md-2">{{'MO.I' | translate}}: </label>
+                <input type="text" class="form-control" id="importe2" name="importe" formControlName="importe" >
+            </div>
+            <div class="dos"></div>
+        </div>
+    </div>
+    <div class="card">
+        <h5 class="card-header justify-content-center">{{'MO.DR' | translate}}:</h5>
+        <div class="inpu">
+            <label for="bancoReceptor22" class="col-form-label col-xs-2 col-sm-2 col-md-1">{{'MO.B' | translate}}: </label>
+            <input type="text" class="form-control" id="bancoReceptor22" name="bancoReceptor" formControlName="bancoReceptor" >
+        </div>
+        <div class="inpu">
+            <label for="nombreBenef22" class="col-form-label col-xs-2 col-sm-2 col-md-1">{{'MO.N' | translate}}: </label>
+            <input type="text" class="form-control" id="nombreBenef22" name="nombreBenef" formControlName="nombreBenef" >
+        </div>
+        <div class="inpu" *ngIf="datosForm.value.tipoPago !== null">
+            <label for="tipoPago22" class="col-form-label col-xs-2 col-sm-2 col-md-1">{{'MO.CCH' | translate}}: </label>
+            <input type="text" class="form-control" id="tipoPago22" name="tipoPago" formControlName="tipoPago">
+        </div>
+        <div class="inpu">
+            <div class="dos">
+                <label for="ctaCargo2" class="col-form-label col-xs-2 col-sm-2 col-md-2">{{'MO.C' | translate}}: </label>
+                <input type="text" class="form-control" id="ctaCargo2" name="ctaCargo" formControlName="ctaCargo">
+            </div>
+            <div class="dos">
+                <label for="divisa2" class="col-form-label col-xs-2 col-sm-2 col-md-2">{{'MO.D' | translate}}: </label>
+                <input type="text" class="form-control" id="divisa2" name="divisa" formControlName="divisa">
+            </div>
+        </div>
+        <div class="inpu">
+            <div class="dos">
+                <label for="importeCargo2" class="col-form-label col-xs-2 col-sm-2 col-md-2">{{'MO.I' | translate}}: </label>
+                <input type="text" class="form-control" id="importeCargo2" name="importeCargo" formControlName="importeCargo">
+            </div>
+            <div class="dos">
+            </div>
+        </div>
+    </div>
+    <div class="card">
+        <h5 class="card-header justify-content-center">
+            {{'MO.CO' | translate}}:
+        </h5>
+        <div class="inpu">
+                <label for="mensajeSPID2"></label>
+                <input type="text" class="form-control" id="mensajeSPID2" name="mensaje" formControlName="mensaje">
+        </div>
+    </div>
+    <div class="card" *ngIf="rechazo === true">
+        <h5 class="card-header justify-content-center">
+            {{'R' | translate}}:
+        </h5>
+        <div class="inpu">
+            <label for="razonRechazo8" class="col-form-label col-xs-4 col-sm-4 col-md-2">{{'R.R' | translate}}: </label>
+            <input type="text" class="form-control" id="razonRechazo8" name="razonRechazo" formControlName="razonRechazo" maxlength="200">
+        </div>
+
+        <div class="row mt-2">
+            <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-1 offset-sm-1 offset-md-1 offset-lg-1">
+                <button type="button" class="btn btn-danger" (click)="procesarSPID()">{{'btn.aceptar' | translate}}</button>
+            </div>
+            <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-8 offset-sm-8 offset-md-8 offset-lg-8">
+                <button type="button" class="btn btn-danger" (click)="cancel8()">{{'btn.cancelar' | translate}}</button>
+            </div>
+            <br><br>
+        </div>
+    </div>
+    <div class="row mt-2">
+        <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-1 offset-sm-1 offset-md-1 offset-lg-1">
+            <button type="button" class="btn btn-danger" (click)="regresarSPID()">{{'MO.Regr' | translate}}</button>
+        </div>
+        <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-8 offset-sm-8 offset-md-8 offset-lg-8">
+            <button type="button" class="btn btn-danger" (click)="procesarSPID()">{{'MO.Proc' | translate}}</button>
+        </div>
+    </div>
+    <div class="row mt-2">
+        <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-1 offset-sm-1 offset-md-1 offset-lg-1">
+            <button type="button" class="btn btn-danger" (click)="refrescarSPID()">{{'MO.Refr' | translate}}</button>
+        </div>
+        <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-8 offset-sm-8 offset-md-8 offset-lg-8">
+            <button type="button" class="btn btn-danger" (click)="rechazarSPID()">{{'MO.Rech' | translate}}</button>
+        </div>
+    </div>
+</form>

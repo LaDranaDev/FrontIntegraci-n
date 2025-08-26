@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 19.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="3 -5 14 18" style="enable-background:new 3 -5 14 18;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill-rule:evenodd;clip-rule:evenodd;fill:#FFFFFF;}
+</style>
+<symbol  id="exportar" viewBox="0 -16 12 16">
+	<g>
+		<path class="st0" d="M6-12l5.3,5.6h-3V0H3.7v-6.4h-3L6-12z M0-16h12v4H9.7v-2.4H2.2v2.4H0V-16z"/>
+	</g>
+</symbol>
+<use xlink:href="#exportar"  width="12" height="16" id="XMLID_2_" y="-16" transform="matrix(1 0 0 -1 4 -4)" style="overflow:visible;"/>
+</svg>

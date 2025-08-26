@@ -1,0 +1,361 @@
+<div
+  id="cfdi"
+  class="panel panel-default col-xs-12 col-sm-12 col-md-12 col-lg-12"
+>
+<ng-container *ngIf="!showDetail">
+  <app-operativa-header
+    tituloPantalla="{{ 'pantallas.consultacfdi' | translate }}"
+  ></app-operativa-header>
+  <form [formGroup]="documentosCFDIForm">
+    <div class="card-body">
+      <h5 class="card-header justify-content-center">
+        {{ "pantalla.datosContrato.title" | translate }}
+      </h5>
+      <div class="card">
+        <div class="card-body">
+          <!-- Client code -->
+          <div class="row justify-content-md-center">
+            <div class="col-xs-6 col-sm-6 col-md-6">
+              <div class="form-group row">
+                <label for="nombre" class="col-form-label col-sm-3"
+                  >{{
+                    "pantalla.altaContratos.datosContrato.codCliente"
+                      | translate
+                  }}:</label
+                >
+                <div class="col-sm-4" *ngIf="bloqueado === false">
+                  <input
+                    type="text"
+                    id="nombre"
+                    name="nombre"
+                    class="form-control"
+                    formControlName="codigoClienteCfdi"
+                    (keydown.Tab)="consultaDatosCliente()"
+                    tabindex="1"
+                    (keypress)="eventOnlyNumbers($event)"
+                    (paste)="onPaste($event)"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Social razon -->
+          <div class="row justify-content-md-center">
+            <div class="col-xs-6 col-sm-6 col-md-6">
+              <div class="form-group row">
+                <label for="nombre" class="col-form-label col-sm-3"
+                  >{{
+                    "pantalla.altaContratos.datosContrato.razonSocial"
+                      | translate
+                  }}:</label
+                >
+                <div class="col-sm-9">
+                  <input
+                    type="text"
+                    id="nombre"
+                    name="nombre"
+                    class="form-control"
+                    formControlName="razonSocialCfdi"
+                    tabindex="1"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Num contrat -->
+          <div class="row justify-content-md-center">
+            <div class="col-xs-6 col-sm-6 col-md-6">
+              <div class="form-group row">
+                <label for="numeroContratoCfdi" class="col-form-label col-sm-3"
+                  >{{
+                    "numContrato"
+                      | translate
+                  }}:</label
+                >
+                <div class="col-sm-4">
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="numeroContratoCfdi"
+                    id="numeroContratoCfdi"
+                    formControlName="numeroContratoCfdi"
+                    tabindex="1"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- numeroConfirming -->
+          <div class="row justify-content-md-center">
+            <div class="col-xs-6 col-sm-6 col-md-6">
+              <div class="form-group row">
+                <label
+                  for="contratoConfirmingCfdi"
+                  class="col-form-label col-sm-3"
+                  >{{
+                    "pantalla.altaContratos.datosContrato.datosContrato.confirming"
+                      | translate
+                  }}:</label
+                >
+                <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                  <select
+                    class="form-select form-select-sm form-control"
+                    id="contratoConfirmingCfdi"
+                    formControlName="numeroConfirming"
+                    aria-label="contratoConfirmingCfdi">
+                    <option value="">{{'select' | translate}}</option>
+                    <option
+                      [value]="item.numContratoConfirmingCfdi"
+                      *ngFor="let item of listaconfirming"
+                    >
+                      {{ item.numContratoConfirmingCfdi }}
+                    </option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card-body">
+      <h5 class="card-header justify-content-center">
+        {{ "pantallas.consultacfdi.complemento" | translate }}
+      </h5>
+      <div class="card">
+        <div class="card-body">
+          <div class="row justify-content-md-center">
+            <div class="col col-md-3">
+              <div class="row">
+                <label
+                  for="fechaInicioCfdi"
+                  class="col-md-3 col-xs-3 col-xs-3 col-sm-3"
+                  >{{'pantallas.consultaContratos.fechaInicio' | translate}}</label
+                >
+                <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                  <div class="input-group">
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="fechaInicioCfdi"
+                      name="fechaInicioCfdi"
+                      readonly
+                      required
+                      bsDatepicker
+                      #dpFechaIni="bsDatepicker"
+                      [bsConfig]="datePickerConfig"
+                      formControlName="fechaInicioCfdi"
+                      [maxDate]="getMaxDate()"
+                    />
+                    <div class="input-group-append">
+                      <button
+                        class="btn btn-outline-danger"
+                        type="button"
+                        id="btnFechaInicio"
+                        name="btnFechaInicio"
+                        (click)="dpFechaIni.toggle()"
+                        [attr.aria-expanded]="dpFechaIni.isOpen"
+                      >
+                        <em class="fa fa-calendar"></em>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col col-md-3">
+              <div class="row">
+                <label
+                  for="fechaFinCfdi"
+                  class="col-md-3 col-xs-3 col-xs-3 col-sm-3"
+                  >{{'pantallas.consultaContratos.fechaFin' | translate}}</label
+                >
+                <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                  <div class="input-group">
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="fechaFinCfdi"
+                      name="fechaFinCfdi"
+                      readonly
+                      required
+                      bsDatepicker
+                      #dpFechaFin="bsDatepicker"
+                      [bsConfig]="datePickerConfig"
+                      formControlName="fechaFinCfdi"
+                      [maxDate]="getMaxDate()"
+                    />
+                    <div class="input-group-append">
+                      <button
+                        class="btn btn-outline-danger"
+                        type="button"
+                        id="btnFechaFin"
+                        name="btnFechaFin"
+                        (click)="dpFechaFin.toggle()"
+                        [attr.aria-expanded]="dpFechaFin.isOpen"
+                      >
+                        <em class="fa fa-calendar"></em>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5 offset-md-1">
+        <button
+          type="button"
+          class="btn btn-danger"
+          (click)="limpiarDatosForm()"
+        >
+          {{ "btn.limpiar" | translate }}
+        </button>
+      </div>
+      <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5 text-right">
+        <button
+          type="button"
+          class="btn btn-danger"
+          (click)="validaCadaCampoObligatorio()"
+        >
+          {{ "btn.buscar" | translate }}
+        </button>
+      </div>
+    </div>
+  </form>
+
+  <div *ngIf="banderaHasRows">
+    <div class="card my-1">
+      <h5 class="card-header justify-content-center">
+        {{
+          "pantalla.moduloAdministracion.resultadoBusqueda.title" | translate
+        }}
+      </h5>
+      <div class="card-body">
+        <div class="row">
+          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <table
+              class="table table-striped table-hover"
+              aria-describedby="listaConsultaDocumentos"
+            >
+              <thead>
+                <tr>
+                  <th class="text-center" scope="col">
+                    {{ "consultaDocumentosCFDI.lblNoDocumento" | translate }}
+                  </th>
+                  <th class="text-center" scope="col">
+                    {{ "consultaDocumentosCFDI.lblNoDocumentoCliente" | translate }}
+                  </th>
+                  <th class="text-center" scope="col">
+                    {{ "consultaDocumentosCFDI.lblNombreProveedor" | translate }}
+                  </th>
+                  <th class="text-center" scope="col">
+                    {{ "consultaDocumentosCFDI.lblImporteDocumento" | translate }}
+                  </th>
+                  <th class="text-center" scope="col">
+                    {{
+                      "consultaDocumentosCFDI.lblFechaVencimiento" | translate
+                    }}
+                  </th>
+                  <th class="text-center" scope="col">
+                    {{ "consultaDocumentosCFDI.lblFechaEmision" | translate }}
+                  </th>
+                  <th class="text-center" scope="col">
+                    {{
+                      "consultaDocumentosCFDI.lblEstatus"
+                        | translate
+                    }}
+                  </th>
+                  <th class="text-center" scope="col">
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <ng-container
+                  *ngIf="
+                    banderaHasRows;
+                    then templateFillTable;
+                    else templateEmptyTable2
+                  "
+                >
+                </ng-container>
+                <ng-template #templateFillTable>
+                  <tr *ngFor="let documento of returnedArray">
+                    <td class="text-center">
+                      {{ documento.numDocumentoCfdi }}
+                    </td>
+                    <td class="text-center">{{ documento.numDocumentoClienteCfdi }}</td>
+                    <td class="text-center">{{ documento.nomProveedorCfdi }}</td>
+                    <td class="text-center">{{ documento.importeDocumentoCfdi }}</td>
+                    <td class="text-center">
+                      {{ documento.fechaVencimientoCfdi }}
+                    </td>
+                    <td class="text-center">{{ documento.fechaEmisionCfdi }}</td>
+                    <td class="text-center">{{ documento.estatusCfdi }}</td>
+                    <td class="text-center linkLabel" (click)="detailDocument(false, documento)">{{ 'consultaDocumentosCFDI.lblDetalle' | translate }}</td>
+                  </tr>
+                </ng-template>
+                <ng-template #templateEmptyTable2>
+                  <tr>
+                    <td class="text-center" colspan="6">
+                      {{
+                        "pantalla.moduloAdministracion.gestionBancos.resultadoBusqueda"
+                          | translate
+                      }}
+                    </td>
+                  </tr>
+                </ng-template>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="tablaRequest.length > 0">
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mt-1">
+            <div class="d-flex justify-content-center">
+                <pagination 
+                    [boundaryLinks]="true" 
+                    [directionLinks]="true" 
+                    [totalItems]="totalElements"
+                    [itemsPerPage]="rowsPorPagina" 
+                    [maxSize]="rowsPorPagina" 
+                    previousText="&lsaquo;"
+                    nextText="&rsaquo;" 
+                    firstText="{{'paginador.inicio' | translate}}"
+                    lastText="{{'paginador.fin' | translate}}" 
+                    (pageChanged)="pageChanged($event)">
+                </pagination>
+            </div>
+        </div>
+    </div>
+</div>
+
+  <div class="row mt-2">
+    <div
+      class="col-xs-11 col-sm-11 col-md-11 col-lg-11 text-right"
+    >
+      <button
+        type="button"
+        [hidden]="!banderaHasRows"
+        class="btn btn-danger"
+        [disabled]="tablaRequest.length <= 0"
+        (click)="onClickExportar()"
+      >
+        {{ "btn.exportar" | translate }}
+      </button>
+    </div>
+  </div>
+
+</ng-container>
+<ng-container *ngIf="showDetail">
+<app-consulta-contratos-cfdi-detalle [requestDetail]="documento" [documentodetalle]="docDetail" (isBack)="detailDocument($event)"></app-consulta-contratos-cfdi-detalle>
+</ng-container>
+</div>

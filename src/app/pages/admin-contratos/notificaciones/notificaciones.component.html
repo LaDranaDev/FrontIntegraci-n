@@ -1,0 +1,103 @@
+<app-operativa-header
+  tituloPantalla="{{ 'menu.adminContrato.adminNotificaciones' | translate }}"
+></app-operativa-header>
+<div
+  id="altaContratos"
+  class="panel panel-default col-xs-12 col-sm-12 col-md-12 col-lg-12"
+>
+  <br />
+  <h5 class="card-header justify-content-center">
+    {{ "pantalla.datosContrato.title" | translate }}
+  </h5>
+  <app-busqueda-cliente
+    [data]="datos"
+    #limpiar
+  ></app-busqueda-cliente>
+  <div class="card">
+    <h5 class="card-header justify-left">{{ "pantalla.configNotificaciones.title" | translate }}</h5>
+    <div class="card-body padding-card-less">
+      <br />
+
+      <div>
+        <div class="col-xs-3">
+          <div>
+            <h3>{{'pantalla.configNotificaciones.tipo' | translate }}</h3>
+          </div>
+          <div>
+            <h3>{{'pantalla.configNotificaciones.correoCliente' | translate }}</h3>
+          </div>
+          <div>
+            <h3>{{'pantalla.configNotificaciones.correoArea' | translate }}</h3>
+          </div>
+        </div>
+        <div class="col-xs-3" *ngFor="let reg of notificacionList">
+          <div>
+            {{ reg.nombreNoti }}
+          </div>
+          <div>
+            <label for="ckCliente{{ reg.idNoti }}"></label>
+            <input
+              *ngIf="ActivacionCorreo === true"
+              type="checkbox"
+              id="ckCliente{{ reg.idNoti }}"
+              name="ckCliente{{ reg.idNoti }}"
+              (click)="habilitarCamposCliente(reg, $event, 'C')"
+              [appInputDisabled]="datos.descEstatus"
+              [checked]="reg.bandCliente === 'A' ? true : false"
+              [disabled]="(reg.tipoDest === 'O' ? true : false) || datos.descEstatus === 'CANCELADO'"
+            />&nbsp;
+
+            <button
+              type="button"
+              class="btn btn-danger"
+              id="correoCliente{{ reg.idNoti }}"
+              name="correoCliente{{ reg.idNoti }}"
+              value="Editar cuentas"
+              (click)="irCuentas('C', reg)"
+              [appInputDisabled]="datos.descEstatus"
+            >
+              {{'pantalla.configNotificaciones.editar' | translate}}
+            </button>
+          </div>
+          <div>
+            <label for="ckAreas{{ reg.idNoti }}"></label>
+            <input
+              *ngIf="ActivacionCorreo === true"
+              type="checkbox"
+              id="ckAreas{{ reg.idNoti }}"
+              name="ckAreas{{ reg.idNoti }}"
+              (click)="habilitarCamposCatalogo(reg, $event, 'O')"
+              [checked]="reg.bandOpCaptacion === 'A' ? true : false"
+              [disabled]="(reg.tipoDest === 'C' ? true : false) || datos.descEstatus === 'CANCELADO'"
+            />&nbsp;
+
+            <button
+              type="button"
+              class="btn btn-danger"
+              id="correoAreas{{ reg.idNoti }}"
+              name="correoAreas{{ reg.idNoti }}"
+              value="Editar cuentas"
+              (click)="irCuentas('O', reg)"
+              [disabled]="reg.tipoDest === 'C' ? true : false"
+              [appInputDisabled]="datos.descEstatus"
+            >
+              {{'pantalla.configNotificaciones.editar' | translate}}
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div></div>
+    </div>
+    <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12 txt-end">
+      <button
+        type="button"
+        class="btn btn-danger float-left mr-4"
+        [disabled]="exportDisable"
+        (click)="export()"
+      >
+        {{ "btn.exportar" | translate }}
+      </button>
+    </div>
+  </div>
+</div>

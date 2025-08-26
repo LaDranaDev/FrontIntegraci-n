@@ -1,0 +1,277 @@
+<app-operativa-header tituloPantalla="{{'pantalla.parametrosDelContrato' | translate}}"></app-operativa-header>
+<div id="parametriaAdicional" class="panel panel-default col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    <br>
+    <div class="card">
+        <h5 class="card-header justify-content-center">
+            {{'pantalla.datosContrato.title' | translate}}
+        </h5>
+        <app-busqueda-cliente [data]="datos"></app-busqueda-cliente>
+        <!-- #limpiar-->
+    </div>
+    <div class="card mt-3">
+        <h5 class="card-header justify-content-center">
+            {{'pantalla.parametrosDelContrato.parametros' | translate}}
+        </h5>
+        <div class="card-body">
+            <div class="row justify-content-center">
+                <div class="col-xs-6 col-sm-6 col-md-6">
+                    <form [formGroup]="parametrosContratoForm">
+                        <div class="form-group row tam ml">
+                            <div class="col-xs-1 col-sm-1 col-md-1 justify-content-center">
+                                <input type="checkbox" name="activarPantallaContingencia" formControlName="activarPantallaContingencia" aria-label="activo">
+                            </div>
+                            <label class="col-xs-11 col-sm-11 col-md-11">{{'pantalla.parametrosDelContrato.activarPantalla' | translate}}</label>
+                        </div>
+                        <div class="form-group row tam ml">
+                            <div class="col-xs-1 col-sm-1 col-md-1 justify-content-center">
+                                <input type="checkbox" name="activarEstadoCuenta15" formControlName="activarEstadoCuenta15" aria-label="activo">
+                            </div>
+                            <label class="col-xs-11 col-sm-11 col-md-11">{{'pantalla.parametrosDelContrato.activarEstadoCuenta15' | translate}}</label>
+                        </div>
+                        <div class="form-group row tam ml">
+                            <div class="col-xs-1 col-sm-1 col-md-1 justify-content-center">
+                                <input type="checkbox" name="activarNominaPayext" formControlName="activarNominaPayext" aria-label="activo" (change)="payext($event)">
+                            </div>
+                            <label class="col-xs-11 col-sm-11 col-md-11">{{'pantalla.parametrosDelContrato.activarNominaPayext' | translate}}</label>
+                        </div>
+                        <div class="form-group row tam ml">
+                            <div class="col-xs-1 col-sm-1 col-md-1 justify-content-center">
+                                <input type="checkbox" name="altaCuentasBeneficiariasAME" formControlName="altaCuentasBeneficiariasAME" aria-label="activo">
+                            </div>
+                            <label class="col-xs-11 col-sm-11 col-md-11">{{'pantalla.parametrosDelContrato.altaCuentasBeneficiariasAME' | translate}}</label>
+                        </div>
+                        <div class="form-group row tam ml">
+                            <div class="col-xs-1 col-sm-1 col-md-1 justify-content-center">
+                                <input type="checkbox" name="cambioCodigoCECOBAN" formControlName="cambioCodigoCECOBAN" aria-label="activo">
+                            </div>
+                            <label class="col-xs-11 col-sm-11 col-md-11">{{'pantalla.parametrosDelContrato.cambioCodigoCECOBAN' | translate}}</label>
+                        </div>
+                        <div class="form-group row tam ml">
+                            <div class="col-xs-1 col-sm-1 col-md-1 justify-content-center">
+                                <input type="checkbox" name="homologarNombreComprobanteSPE" formControlName="homologarNombreComprobanteSPE" aria-label="activo">
+                            </div>
+                            <label class="col-xs-11 col-sm-11 col-md-11">{{'pantalla.parametrosDelContrato.homologarNombreComprobanteSPEI' | translate}}</label>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="col-xs-6 col-sm-6 col-md-6">
+                    <form [formGroup]="parametrosContratoForm">
+                        <div class="form-group row ">
+                            <div class="col-xs-1 col-sm-1 col-md-1  justify-content-center">
+                                <label for="activarReporteHistorico"></label>
+                                <input type="checkbox" name="activarReporteHistorico" id="activarReporteHistorico" formControlName="activarReporteHistorico">
+                            </div>
+                            <label class="col-xs-11 col-sm-11 col-md-11">{{'pantalla.parametrosDelContrato.activarReporteHistorico' | translate}}</label>
+                        </div>
+                        <div class="form-group row ">
+                            <div class="col-xs-1 col-sm-1 col-md-1  justify-content-center">
+                                <input type="checkbox" name="activarReporteBeneficiarioEOP" formControlName="activarReporteBeneficiarioEOP" aria-label="activo">
+                            </div>
+                            <label class="col-xs-11 col-sm-11 col-md-11">{{'pantalla.parametrosDelContrato.activarReporteBeneficiarioEOP' | translate}}</label>
+                        </div>
+                        <div class="form-group row ">
+                            <div class="col-xs-1 col-sm-1 col-md-1  justify-content-center">
+                                <input type="checkbox" name="activarReporteConsolidadoOP" formControlName="activarReporteConsolidadoOP" aria-label="activo">
+                            </div>
+                            <label class="col-xs-11 col-sm-11 col-md-11">{{'pantalla.parametrosDelContrato.activarReporteConsolidadoOP' | translate}}</label>
+                        </div>
+                        <div class="form-group row ">
+                            <div class="col-xs-1 col-sm-1 col-md-1  justify-content-center">
+                                <input type="checkbox" name="activarReporteIntradiaOP" formControlName="activarReporteIntradiaOP" aria-label="activo" (change)="intradiaSelect($event)">
+                            </div>
+                            <label class="col-xs-11 col-sm-11 col-md-11">{{'pantalla.parametrosDelContrato.activarReporteIntradiaOP' | translate}}</label>
+                        </div>
+                    </form>
+                    <div class="row justify-content-center margin-iz " *ngIf="intradia === true">
+                        <div class="col-12">
+                            <div class="form-group row tam mr">
+                                <label class="col-form-label col-sm-8 text-style" for="selectHorasToAddAndRemove2">{{'pantalla.parametrosDelContrato.seleccionarHoras'
+                            | translate}}</label>
+                            </div>
+                            <div class="form-group row align-items-center">
+
+                                <div class="col-sm-4">
+                                    <select class="form-control" size="10" name="selectHorasToAddAndRemove2" id="selectHorasToAddAndRemove2" multiple [(ngModel)]="listHorasSelectedIzquierda">
+                                <option *ngIf="listHorasFirstSelect.length > 1"  value="-1"> {{'todos' | translate}} </option>
+                                <option *ngFor="let hora of listHorasFirstSelect" [value]="hora['idCatalogo']">{{hora['descripcionCatalogo']}}</option>
+                            </select>
+                                </div>
+                                <div class="col-sm-1">
+                                    <span class="badge badge-secondary text-desing-badge mb-1 " (click)="addNewHour()">{{'pantalla.parametriadicional.consulta.datosparametria.sendToAnother' | translate}}</span>
+                                    <span class="badge badge-secondary text-desing-badge" (click)="removeHour()">{{'pantalla.parametriadicional.consulta.datosparametria.returnToAnother' | translate}}</span>
+                                </div>
+                                <div class="col-sm-4 ">
+                                    <select class="form-control" size="10" name="selectHorasDestinyToAddContr" multiple id="selectHorasDestinyToAddContr" [(ngModel)]="listHorasSelectedDerecha" aria-label="selectHorasDestinyToAddContr">
+                                <option *ngIf="listHorasSecondSelect.length > 1" value="-1"> {{'todos' | translate}} </option>
+                                <option *ngFor="let hora of listHorasSecondSelect" [value]="hora['idCatalogo']">
+                                    {{hora['descripcionCatalogo']}}</option>
+                            </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row justify-content-center margin-iz " *ngIf="intradia === false">
+                        <div class="col-12">
+                            <div class="form-group row tam mr">
+                                <label class="col-form-label col-sm-8 text-style" for="selectHorasToAddAndRemoveP">{{'pantalla.parametrosDelContrato.seleccionarHoras'
+                            | translate}}</label>
+                            </div>
+                            <div class="form-group row align-items-center">
+
+                                <div class="col-sm-4">
+                                    <select class="form-control" size="10" name="selectHorasToAddAndRemoveP" disabled id="selectHorasToAddAndRemoveP" multiple [(ngModel)]="listHorasSelectedIzquierda">
+                                <option value="-1"> {{'todos' | translate}} </option>
+                                <option *ngFor="let horaPC of listHorasFirstSelect" [value]="horaPC['idCatalogo']">
+                                    {{horaPC['descripcionCatalogo']}}</option>
+                            </select>
+                                </div>
+                                <div class="col-sm-1">
+                                    <span class="badge badge-secondary text-desing-badge mb-1" (click)="addNewHour()">{{'pantalla.parametriadicional.consulta.datosparametria.sendToAnother'
+                                | translate}}</span>
+                                    <span class="badge badge-secondary text-desing-badge" (click)="removeHour()">{{'pantalla.parametriadicional.consulta.datosparametria.returnToAnother'
+                                | translate}}</span>
+                                </div>
+                                <div class="col-sm-4">
+                                    <select class="form-control" size="10" name="selectHorasDestinyToAddContrP" multiple id="selectHorasDestinyToAddContr" [(ngModel)]="listHorasSelectedDerecha" disabled aria-label="selectHorasDestinyToAddContr">
+                                <option value="-1"> {{'todos' | translate}} </option>
+                                <option *ngFor="let horaPC of listHorasSecondSelect" [value]="horaPC['idCatalogo']">
+                                    {{horaPC['descripcionCatalogo']}}</option>
+                            </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <form [formGroup]="parametrosContratoForm">
+                <div class="card-body">
+                    <div class="form-group row3">
+                        <label class="col-md-6  col-xs-6 col-xs-4 col-sm-4">{{'pantalla.parametrosDelContrato.backendConfirming' | translate}}</label>
+                        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                            <select class="form-select form-select-sm form-control" formControlName="backendConfirming" id="backendConfirming" aria-label=".form-select-sm example">
+                                    <option value="">{{'select' | translate}}</option>
+                                    <option value="ENL" >{{'pantalla.parametrosDelContrato.opcion.enlace' | translate}}</option>
+                                    <option value="COR" >{{'pantalla.parametrosDelContrato.opcion.coorporativo' | translate}}</option>
+                                </select>
+                        </div>
+                    </div>
+                    <div class="form-group row3">
+                        <label class="col-md-6  col-xs-6 col-xs-4 col-sm-4">{{'pantalla.parametrosDelContrato.tipoProcesamiento' | translate}}</label>
+                        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                            <select class="form-select form-select-sm form-control" formControlName="tipoProcesamiento" id="tipoProcesamiento" aria-label=".form-select-sm example" (change)="cambio($event)">
+                                <option value="">{{'select' | translate}}</option>
+                                <option *ngFor="let item of procesamiento" [value]="item.idCatalogo">{{item.descripcionCatalogo}}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row3">
+                        <label class="col-md-6  col-xs-6 col-xs-4 col-sm-4">{{'pantalla.parametrosDelContrato.periodoEsperaArchivoFondeoHrs' | translate}}</label>
+                        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                            <select class="form-select form-select-sm form-control" formControlName="periodoEsperaArchivoFondeoHrs" id="periodoEsperaArchivoFondeoHrs" aria-label=".form-select-sm example">
+                                <option value=0>{{'select' | translate}}</option>
+                                <option *ngFor="let item of periodo" [value]="item.idCatalogo">{{item.descripcionCatalogo}}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row3">
+                        <label class="col-md-6  col-xs-6 col-xs-4 col-sm-4">{{'pantalla.parametrosDelContrato.configurarCifradoArchivos' | translate}}</label>
+                        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                            <select class="form-select form-select-sm form-control" formControlName="configurarCifradoArchivos" id="configurarCifradoArchivos" aria-label=".form-select-sm example">
+                                <option value="">{{'select' | translate}}</option>
+                                <option [value]="'I'" >{{'pantalla.parametrosDelContrato.opcion.sinCifrar' | translate}}</option>
+                                <option [value]="'A'" >{{'pantalla.parametrosDelContrato.opcion.cifradoCore' | translate}}</option>
+                                <option [value]="'H'" >{{'pantalla.parametrosDelContrato.opcion.cifradoHSM' | translate}}</option>
+                                <option [value]="'p'" >{{'pantalla.parametrosDelContrato.opcion.PKCS7' | translate}}</option>
+
+                                <option [value]="'B'" >{{'pantalla.parametrosDelContrato.opcion.tipoCifradoPGP' | translate}}</option>
+                                <option [value]="'M'" >{{'pantalla.parametrosDelContrato.opcion.tipoCifradoM' | translate}}</option>
+                                <option [value]="'K'" >{{'pantalla.parametrosDelContrato.opcion.tipoCifradoK' | translate}}</option>
+
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group row3" *ngIf="parametrosContratoForm.value.configurarCifradoArchivos === 'H'">
+                        <label class="col-md-6  col-xs-6 col-xs-4 col-sm-4">{{'pantalla.parametrosDelContrato.HSM' | translate}}</label>
+                        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                            <select class="form-select form-select-sm form-control" formControlName="hsm" id="hsm" aria-label=".form-select-sm example">
+                                <option value="">{{'select' | translate}}</option>
+                                <option *ngFor="let item of hsm" [value]="item.estatusActivo">{{item.descripcionCatalogo}}</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row2 justify-content-center">
+                    <div class="centro col-xs-6 col-sm-6 col-md-6">
+                        <div class="form-group tam ml">
+                            <label class="col-xs-11 col-sm-11 col-md-11">{{'pantalla.parametrosDelContrato.tipoArchivoRespuesteARecibir' | translate}}</label>
+                            <mat-radio-group [(ngModel)]="selectedStatus" formControlName="tipoArchivoRespuesteARecibir">
+                                <mat-radio-button class="dis example-radio-button" *ngFor="let season of options" [value]="season.idCatalogo">
+                                    {{season.descripcionCatalogo}}
+                                </mat-radio-button>
+                            </mat-radio-group>
+
+                        </div>
+
+                    </div>
+
+                    <div class=" centro col-xs-6 col-sm-6 col-md-6">
+                        <div class="form-group tam mr">
+                            <label class="col-xs-11 col-sm-11 col-md-11" for="tiposFormato">{{'pantalla.parametrosDelContrato.tipoFormato' | translate}}</label>
+                            <div formArrayName="tipoFormato">
+                                <div class="cent" [formGroupName]="i" *ngFor="let item of this.parametrosContratoForm.controls['tipoFormato'].value; let i = index">
+                                    <input type="checkbox" formControlName="checked" id="tiposFormato" (change)="chek($event, item)" /><label class="estilo">{{ tiposFormatos[i].descripcionCatalogo }}</label>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="form-group row tam ml3">
+                    <div class="col-xs-1 col-sm-1 col-md-1 justify-content-center">
+                        <input type="checkbox" name="contingenciaBuzonera" formControlName="contingenciaBuzonera" aria-label="activo">
+                    </div>
+                    <label class="col-xs-11 col-sm-11 col-md-11">{{'pantalla.parametrosDelContrato.contingenciaBuzonera' | translate}}</label>
+                </div>
+                <div class="form-group row tam ml3">
+                    <div class="col-xs-6 col-sm-6 col-md-6">
+                        <div class="form-group row">
+                            <label for="profileIdContingente" class="col-form-label col-xs-6 col-sm-6 col-md-6">{{'pantalla.parametrosDelContrato.contingenciaBuzonera' | translate}}</label>
+
+                            <input type="text" class="form-control" id="profileIdContingente" name="profileIdContingente" formControlName="profileIdContingente" placeholder="{{'pantalla.parametrosDelContrato.contingenciaBuzonera' | translate}}" (keypress)="carac($event)" (ondragenter)="disableEvent($event)"
+                                (dragover)="disableEvent($event)" (ondrop)="disableEvent($event)" (paste)="eventoOnPasteBlock($event)">
+
+                        </div>
+                    </div>
+                </div>
+
+
+
+            </form>
+            <div class="row mt-2">
+                <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-1 offset-sm-1 offset-md-1 offset-lg-1">
+                    <button type="button" class="btn btn-danger" (click)="limpiar()" [appInputDisabled]="datos.descEstatus">{{'btn.limpiar' |
+                        translate}}</button>
+                </div>
+                <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-8 offset-sm-8 offset-md-8 offset-lg-8">
+                    <button type="button" class="btn btn-danger" (click)="pregunta()" [appInputDisabled]="datos.descEstatus">{{'btn.guardar' |
+                        translate}}</button>
+                </div>
+            </div>
+            <div class="row mt-2">
+                <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-1 offset-sm-1 offset-md-1 offset-lg-1">
+                </div>
+                <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-8 offset-sm-8 offset-md-8 offset-lg-8">
+                    <button type="button" class="btn btn-danger" (click)="openModal()">{{'btn.exportar' |
+                        translate}}</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

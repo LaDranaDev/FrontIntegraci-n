@@ -1,0 +1,104 @@
+<app-operativa-header tituloPantalla="{{'menu.gestionBuzon.gestionProtocolos.consulta' | translate}}"></app-operativa-header>
+<div id="consultaBanco" class="panel panel-default col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    <br>
+    <div class="card">
+        <h5 class="card-header justify-content-center">
+            {{'pantallas.monitorOperacionesOnline.busquedad' | translate}}
+        </h5>
+        <div class="card-body">
+            <form [formGroup]="gestionProtocolosForm">
+                <div class="row justify-content-center">
+                    <div class="col-xs-6 col-sm-6 col-md-6">
+                        <div class="form-group row">
+                            <label for="nombre" class="col-xs-2 col-sm-2 col-md-2 col-lg-2 offset-xs-1 offset-sm-1 offset-md-1 offset-lg-1 col-form-label text-right mt-1">{{'pantallas.usuarioOperantes.Nombre' | translate}}</label>
+                            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                <input class="form-control"  type="text" id="nombre" name="nombre" formControlName="nombre"
+                                (keypress)="onlyAlphabeticAndNumbersAndSomeCaracEsp($event)"
+                                (ondragenter)="disableEvent($event)"
+                                (dragover)="disableEvent($event)"
+                                (ondrop)="disableEvent($event)"
+                                maxlength="20">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <div class="row mt-2">
+                <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-1 offset-sm-1 offset-md-1 offset-lg-1">
+                    <button type="button" class="btn btn-danger" (click)="eventClean()">{{'btn.limpiar' | translate}}</button>
+                </div>
+                <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-8 offset-sm-8 offset-md-8 offset-lg-8">
+                    <button type="button" class="btn btn-danger" (click)="eventoConsultar()">{{'btn.buscar' | translate}}</button>
+                </div>
+            </div>
+            <br>
+        </div>
+    </div>
+    <br>
+    <div class="card my-1">
+        <h5 class="card-header justify-content-center">
+            {{'menu.gestionBuzon.gestionProtocolos.lista' | translate}}
+        </h5>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                   <table class="table table-striped table-hover" aria-describedby="listaConsultaProtocolo">
+                        <thead>
+                            <tr>
+                                <th class="text-center" scope="col">{{'pantalla.moduloAdministracion.consultarPais.nombre' | translate}}</th>
+                                <th class="text-center" scope="col">{{'pantalla.moduloAdministracion.gestionBancos.activo' | translate}}</th>
+                                <th class="text-center" scope="col">{{'menu.gestionBuzon.gestionProtocolos.parametros' | translate}}</th>
+                                <th class="text-center" scope="col">{{'btn.modificar' | translate}}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <ng-container *ngIf="banderaHasRows; then templateFillTable; else templateEmptyTable">
+                            </ng-container>
+                            <ng-template #templateFillTable>
+                                <tr *ngFor="let protocolo of tabla ">
+                                    <td class="text-center">{{protocolo.nombre}}</td>
+                                    <td class="text-center">
+                                        <input type="checkbox" name="activo" [checked]="protocolo.activo" disabled aria-label="activo">
+                                    </td>
+                                    <td class="text-center">
+                                        <button type="button" class="btn btn-outline-danger" (click)="viewParametrodelProtocolo(protocolo)" > {{'menu.gestionBuzon.gestionProtocolos.parametros' | translate}}</button>
+                                    </td>
+                                    <td class="text-center">
+                                    <button type="button" class="btn btn-outline-danger" (click)="editProtocolo(protocolo)" > {{'btn.modificar' | translate}}</button>
+                                    </td>
+                                </tr>
+                            </ng-template>
+                            <ng-template #templateEmptyTable>
+                                <tr>
+                                    <td class="text-center" colspan="6"> {{'pantalla.moduloAdministracion.gestionBancos.resultadoBusqueda' | translate}} </td>
+                                </tr>
+                            </ng-template>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mt-1">
+                    <div class="d-flex justify-content-center" *ngIf="banderaHasRows">
+                        <pagination [maxSize]="rowsPorPagina" [boundaryLinks]="showBoundaryLinks"
+                                [directionLinks]="showDirectionLinks" [totalItems]="totalElements"
+                                [itemsPerPage]="rowsPorPagina" [(ngModel)]="page" previousText="&lsaquo;"
+                                nextText="&rsaquo;" firstText="{{'paginador.inicio' | translate}}" lastText="{{'paginador.fin' | translate}}"
+                                (pageChanged)="onPageChange($event)">
+                            </pagination>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-2">
+        <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10 offset-xs-10 offset-sm-10 offset-md-10 offset-lg-10">
+            <br>
+            <button type="button" class="btn btn-danger" (click)="addProtocolo()">{{'btn.agregar.protocolo' | translate}}</button>
+        </div>
+        <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10 offset-xs-10 offset-sm-10 offset-md-10 offset-lg-10">
+            <br>
+            <button type="button" class="btn btn-danger" (click)="onClickExportar()">{{'btn.exportar' | translate}}</button>
+        </div>
+    </div>
+</div>

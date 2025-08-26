@@ -1,0 +1,52 @@
+.cente {
+    display: flex;
+    flex-direction: column;
+}
+input[type="checkbox"] {
+    appearance: none;
+    width: 2em;
+    height: 2em;
+    margin-top: 0.5em;
+    vertical-align: top;
+    background-color: #E6E4E4;
+    position: relative;
+    border: 1px solid rgba(0, 0, 0, 0.25);
+    border-radius: 0.25em;
+    cursor: pointer;
+}
+
+input[type="checkbox"]:after {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    font-family: FontAwesome, sans-serif;
+    font-weight: 600;
+    content: "\f00c";
+    color: #fff;
+    font-size: 15px;
+    display: none
+}
+
+input[type="checkbox"]:checked,
+input[type="checkbox"]:checked:hover {
+    background-color: #FE2E2E;
+}
+
+input[type="checkbox"]:checked::after {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+input[type="checkbox"]:hover {
+    background-color: #ddd;
+}
+
+.label-marging {
+    margin-top: 7px !important;
+    margin-left: 2px !important;
+}
+
+input[type="file"] {
+    width: 100%;
+}

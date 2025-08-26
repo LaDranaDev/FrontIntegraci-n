@@ -1,0 +1,95 @@
+<app-operativa-header tituloPantalla="{{'pantalla.moduloAdministracion.consultaClaveABA.busqueda' | translate}}"></app-operativa-header>
+<div id="consultaClaveABA" class="panel panel-default col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    <br>
+    <div class="card">
+        <h5 class="card-header justify-content-center">
+            {{'pantalla.moduloAdministracion.consultaClaveABA.busqueda' | translate}}
+        </h5>
+        <div class="card-body">
+            <form [formGroup]="gestionClavesForm">
+                <div class="row justify-content-center">
+                    <div class="col-xs-6 col-sm-6 col-md-6">
+                        <div class="form-group row">
+                            <label for="codigoTransfer"
+                                class="word-break col-xs-2 col-sm-2 col-md-2 col-lg-2 offset-xs-1 offset-sm-1 offset-md-1 offset-lg-1 col-form-label text-right mt-1">{{'menu.moduloAdministracion.ClaveABA'|
+                                translate}}:</label>
+                            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                <input class="form-control removeTextTransform" type="text" id="codigoTransfer" name="codigoTransfer" formControlName="codigoTransfer"
+                                    (keypress)="onlyAlphaNumber($event)" maxlength="12" size="25">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-6 col-sm-6 col-md-6">
+                        <div class="form-group row">
+                            <label for="nombre"
+                                class="word-break col-xs-2 col-sm-2 col-md-2 col-lg-2 offset-xs-1 offset-sm-1 offset-md-1 offset-lg-1 col-form-label text-right mt-1">{{'pantallas.usuarioOperantes.Descripcion'|
+                                translate}}</label>
+                            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                <input class="form-control removeTextTransform" type="text" id="nombre" name="nombre" formControlName="nombre" (keypress)="onlyAlphaNumberAndComa($event)"
+                                    maxlength="200" size="55">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <div class="row mt-2">
+                <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-1 offset-sm-1 offset-md-1 offset-lg-1">
+                    <button type="button" class="btn btn-danger" (click)="eventCleanAba()">{{'btn.limpiar' | translate}}</button>
+                </div>
+                <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-8 offset-sm-8 offset-md-8 offset-lg-8">
+                    <button type="button" class="btn btn-danger" (click)="eventoConsultarAba()">{{'btn.buscar' | translate}}</button>
+                </div>
+            </div>
+            <br>
+        </div>
+    </div>
+    <ng-container *ngIf="banderaHasRows; then templateFillTable; ">
+    </ng-container>
+    <ng-template #templateFillTable>
+
+        <div class="card my-1">
+            <h5 class="card-header justify-content-center">
+                {{'pantalla.consultarBuzon.resultadoBusqueda.title' | translate}}
+            </h5>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                        <table class="table table-striped table-hover" aria-describedby="listaConsultaBanco">
+                            <thead>
+                                <tr>
+                                    <th class="text-center" scope="col">{{'menu.moduloAdministracion.ClaveABA' | translate}}</th>
+                                    <th class="text-center" scope="col">{{'pantalla.moduloAdministracion.consultaClaveABA.descripcioon' | translate}}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                <tr *ngFor="let clave of tabla">
+                                    <td class="text-center">{{clave.codigoISO}}</td>
+                                    <td class="text-center">{{clave.codigoTransfer}}</td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mt-1">
+                        <div class="d-flex justify-content-center" *ngIf="banderaHasRows">
+
+                            <pagination [maxSize]="10" [boundaryLinks]="showBoundaryLinks" [directionLinks]="showDirectionLinks" [totalItems]="totalElements" [itemsPerPage]="rowsPorPagina"
+                                [(ngModel)]="page" previousText="&lsaquo;" nextText="&rsaquo;" firstText="{{'paginador.inicio' | translate}}" lastText="{{'paginador.fin' | translate}}" (pageChanged)="onPageChanged($event)">
+                            </pagination>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-2">
+            <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-10 offset-sm-10 offset-md-10 offset-lg-10">
+                <button type="button" class="btn btn-danger" [disabled]="!banderaBtnExportar" (click)="generarReporteExcelCsv()">{{'btn.exportar' | translate}}</button>
+            </div>
+        </div>
+    </ng-template>
+
+</div>

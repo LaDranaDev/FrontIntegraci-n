@@ -1,0 +1,260 @@
+<app-operativa-header [center]="true"
+    tituloPantalla="{{ 'traking.bitacora.envio.estado.cuenta.tituloPag' | translate }}">
+</app-operativa-header>
+<div id="bitaEdoCuenta" class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    <br />
+    <form [formGroup]="formBitaEdoCuenta">
+        <div class="card">
+            <h5 class="card-header justify-content-center">
+                {{ "traking.bitacora.envio.estado.cuenta.busqueda" | translate }}
+            </h5>
+            <br />
+            <div class="card-body col-xs-2">
+                <div class="row">
+                    <!-- Cod cliente -->
+                    <div class="col-xs-6 col-sm-6 col-md-6">
+                        <div class="form-group row">
+                            <label for="codCliente" class="col-form-label col-sm-4 col-md-4">
+                                {{ "traking.bitacora.envio.estado.cuenta.codCliente" | translate }}:
+                            </label>
+                            <div class="col-sm-6 col-md-6">
+                                <input type="text" formControlName="codCliente" id="codCliente" name="codCliente"
+                                    class="form-control" maxlength="8" (keypress)="validateOnlyNumeros($event)"
+                                    (blur)="validateTamanoBuc($event)" (paste)="pasteOnlyNumeros($event)" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Número de cuenta -->
+                    <div class="col-xs-6 col-sm-6 col-md-6">
+                        <div class="form-group row">
+                            <label for="numCuenta" class="col-form-label col-sm-4 col-md-4">
+                                {{ "traking.bitacora.envio.estado.cuenta.cuentaEje" | translate }}:
+                            </label>
+                            <div class="col-sm-6 col-md-6">
+                                <input type="text" id="numCuenta" name="numCuenta" formControlName="numCuenta"
+                                    class="form-control" maxlength="11" (keypress)="validateOnlyNumeros($event)"
+                                    (paste)="pasteOnlyNumeros($event)" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <!-- Número de contrato -->
+                    <div class="col-xs-6 col-sm-6 col-md-6">
+                        <div class="form-group row">
+                            <label for="numContrato" class="col-form-label col-sm-4 col-md-4">
+                                {{ "traking.bitacora.envio.estado.cuenta.numContrato" | translate }}:
+                            </label>
+                            <div class="col-sm-6 col-md-6">
+                                <input type="text" id="numContrato" name="numContrato" formControlName="numContrato"
+                                    class="form-control" size="20" (keypress)="validateOnlyNumeros($event)"
+                                    (blur)="validateTamanoBuc($event)" (paste)="pasteOnlyNumeros($event)" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Estatus del Contrato -->
+                    <div class="col-xs-6 col-sm-6 col-md-6">
+                        <div class="form-group row">
+                            <label for="estatusContrato" class="col-form-label col-sm-4 col-md-4">
+                                {{ "traking.bitacora.envio.estado.cuenta.estatusContrato" | translate }}:
+                            </label>
+                            <div class="col-sm-6 col-md-6">
+                                <input type="text" formControlName="estatusContrato" id="estatusContrato"
+                                    name="estatusContrato" class="form-control" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <!-- Razón social -->
+                    <div class="col-xs-12 col-sm-12 col-md-12">
+                        <div class="form-group row">
+                            <label for="razonSocial" class="col-form-label col-sm-2 col-md-2">
+                                {{ "traking.bitacora.envio.estado.cuenta.razonSocial" | translate }}:
+                            </label>
+                            <div class="col-sm-9 col-md-9">
+                                <input type="text" formControlName="razonSocial" id="razonSocial" name="razonSocial"
+                                    class="form-control" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <!-- Tipo Edo. Cuenta -->
+                    <div class="col-xs-12 col-sm-12 col-md-12">
+                        <div class="form-group row">
+                            <label for="tipoEdoCuenta" class="col-form-label col-sm-2 col-md-2">
+                                {{ "traking.bitacora.envio.estado.cuenta.tipoEdoCuenta" | translate }}:
+                            </label>
+                            <div class="col-sm-9 col-md-9">
+                                <select class="form-select form-select-sm form-control" formControlName="tipoEdoCuenta"
+                                    id="tipoEdoCuenta" name="tipoEdoCuenta">
+                                    <option *ngFor="let tipo of tiposEdoCuenta" [value]="tipo.idTipoEstadoCuenta">
+                                        {{tipo.descTipoEstadoCuenta}}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <!--Fechas-->
+                    <div class="col-xs-6 col-sm-6 col-md-6">
+                        <div class="form-group row">
+                            <label for="from" class="col-form-label col-sm-4 col-md-4">
+                                {{ "traking.bitacora.envio.estado.cuenta.fechaInicio" | translate }}:
+                            </label>
+                            <div class="col-sm-4 col-md-4">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" id="from" name="from" bsDatepicker
+                                        #dpFechaFrom="bsDatepicker" [bsConfig]="datePickerConfig" formControlName="from"
+                                        readonly />
+                                    <div class="input-group-append">
+                                        <button class="btn btn-outline-danger" type="button" id="btnFromCalendar"
+                                            name="btnFromCalendar" (click)="dpFechaFrom.toggle()" [disabled]="false"
+                                            [attr.aria-expanded]="dpFechaFrom.isOpen">
+                                            <em class="fa fa-calendar"></em>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-xs-6 col-sm-6 col-md-6">
+                        <div class="form-group row">
+                            <label for="to" class="col-form-label col-sm-4 col-md-4">
+                                {{ "traking.bitacora.envio.estado.cuenta.fechaFin" | translate }}:
+                            </label>
+                            <div class="col-sm-4 col-md-4">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" id="to" name="to" bsDatepicker
+                                        #dpFechaHasta="bsDatepicker" [bsConfig]="datePickerConfig" formControlName="to"
+                                        readonly />
+                                    <div class="input-group-append">
+                                        <button class="btn btn-outline-danger" type="button" id="btnToCalendar"
+                                            name="btnToCalendar" (click)="dpFechaHasta.toggle()" [disabled]="false"
+                                            [attr.aria-expanded]="dpFechaHasta.isOpen">
+                                            <em class="fa fa-calendar"></em>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Botones -->
+                <div class="row mt-3 mb-3">
+                    <div class="col-md-5 offset-1">
+                        <button type="button" class="btn btn-danger" (click)="clearForm()">
+                            {{ "traking.bitacora.envio.estado.cuenta.btnLimpiar" | translate }}
+                        </button>
+                    </div>
+                    <div class="col-md-1 offset-4">
+                        <button type="button" class="btn btn-danger" (click)="getTableEdosCuenta($event)">
+                            {{ "traking.bitacora.envio.estado.cuenta.btnConsultar" | translate }}
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <!-- Tabla -->
+    <div class="card my-1" *ngIf="bitacora.length > 0">
+        <h5 class="card-header justify-content-center">
+            {{ "traking.bitacora.envio.estado.cuenta.busquedaResult" | translate }}
+        </h5>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <div class="table-responsive">
+                        <table class="table table-striped table-hover" aria-describedby="listaConsultaBanco">
+                            <thead>
+                                <tr>
+                                    <th class="text-center" scope="col">
+                                        {{ 'traking.bitacora.envio.estado.cuenta.tab.fechaEnvio' | translate }}
+                                    </th>
+                                    <th class="text-center" scope="col">
+                                        {{ 'traking.bitacora.envio.estado.cuenta.tab.horaEnvio' | translate }}
+                                    </th>
+                                    <th class="text-center" scope="col">
+                                        {{'traking.bitacora.envio.estado.cuenta.tab.numeroCargos' | translate }}
+                                    </th>
+                                    <th class="text-center" scope="col">
+                                        {{'traking.bitacora.envio.estado.cuenta.tab.saldoCargos' | translate }}
+                                    </th>
+                                    <th class="text-center" scope="col">
+                                        {{'traking.bitacora.envio.estado.cuenta.tab.numeroAbonos' | translate }}
+                                    </th>
+                                    <th class="text-center" scope="col">
+                                        {{'traking.bitacora.envio.estado.cuenta.tab.saldosAbonos' | translate }}
+                                    </th>
+                                    <th class="text-center" scope="col">
+                                        {{'traking.bitacora.envio.estado.cuenta.tab.archivo' | translate }}
+                                    </th>
+                                    <th class="text-center" scope="col">
+                                        {{'traking.bitacora.envio.estado.cuenta.tab.tipoEdoCuenta' | translate }}
+                                    </th>
+                                    <th class="text-center" scope="col">
+                                        {{'traking.bitacora.envio.estado.cuenta.tab.tipoFormato' | translate }}
+                                    </th>
+                                    <th class="text-center" scope="col">
+                                        {{'traking.bitacora.envio.estado.cuenta.tab.codCliente' | translate }}
+                                    </th>
+                                    <th class="text-center" scope="col">
+                                        {{'traking.bitacora.envio.estado.cuenta.tab.cuentaEje' | translate }}
+                                    </th>
+                                    <th class="text-center" scope="col">
+                                        {{'traking.bitacora.envio.estado.cuenta.tab.contenidoEdoCuenta' | translate }}
+                                    </th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                <tr *ngFor="let report of bitacora; index as i">
+                                    <td>{{ report.fechaEnvio }}</td>
+                                    <td>{{ report.horaEnvio }}</td>
+                                    <td>{{ report.numCargos }}</td>
+                                    <td>{{ report.saldoCargos }}</td>
+                                    <td>{{ report.numAbonos }}</td>
+                                    <td>{{ report.saldoAbonos }}</td>
+                                    <td>{{ report.archivo }}</td>
+                                    <td>{{ report.tipoEdoCta }}</td>
+                                    <td>{{ report.tipoFormato }}</td>
+                                    <td>{{ report.codCliente }}</td>
+                                    <td>{{ report.ctaEje }}</td>
+                                    <td>{{ report.contEdoCuenta }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mt-3 mb-3">
+                <div class="col-md-1 offset-10">
+                    <button type="button" class="btn btn-danger" (click)="export()">
+                        {{ "btn.exportar" | translate }}
+                    </button>
+                </div>
+            </div>
+
+            <!-- Paginador -->
+            <div class="row" *ngIf="bitacora.length > 0">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mt-1">
+                    <div class="d-flex justify-content-center" *ngIf="bitacora.length > 0">
+                        <pagination [boundaryLinks]="true" [directionLinks]="true" [totalItems]="totalElements"
+                            [itemsPerPage]="PAGE_SIZE" [maxSize]="PAGE_SIZE" [(ngModel)]="page" previousText="&lsaquo;"
+                            nextText="&rsaquo;" firstText="{{'paginador.inicio' | translate}}"
+                            lastText="{{'paginador.fin' | translate}}" (pageChanged)="onPageChanged($event)">
+                        </pagination>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

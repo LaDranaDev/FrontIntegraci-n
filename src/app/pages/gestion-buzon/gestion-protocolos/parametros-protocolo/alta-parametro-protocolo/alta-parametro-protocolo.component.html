@@ -1,0 +1,130 @@
+<app-operativa-header *ngIf="this.parametro" tituloPantalla="{{'menu.gestionBuzon.parametroProtocolo.modificar' | translate}}"></app-operativa-header>
+<app-operativa-header *ngIf="!this.parametro" tituloPantalla="{{'menu.gestionBuzon.parametroProtocolo.alta' | translate}}"></app-operativa-header>
+<div id="altaParametro" class="panel panel-default col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    <br>
+    <div class="card">
+        <h5 class="card-header justify-content-center">
+            {{'menu.gestionBuzon.gestionProtocolos.datosparametro' | translate}}
+        </h5>
+        <div class="card-body">
+            <form [formGroup]="altaParametroForm">
+                <div class="row">
+                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                        <div class="form-group row align-items-center">
+                            <label for="inputnombreParametro" class="col-xs-3 col-sm-3 col-md-3 col-lg-3 col-form-label text-right">{{'menu.gestionBuzon.parametroProtocolo.nombre' | translate}}</label>
+                            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                <input type="text" class="form-control removeTextTransform" id="inputnombreParametro" name="inputnombreParametro" formControlName="nombreParametro"
+                                (keypress)="onlyAlphabeticAndNumbersAndSomeCaracEsp($event)" 
+                                (ondragenter)="disableEvent($event)"
+                                (dragover)="disableEvent($event)"
+                                (ondrop)="disableEvent($event)"
+                                (paste)="eventoOnPasteBlock($event)"
+                                maxlength="80">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                        <div class="form-group row align-items-center">
+                            <label for="inputcodigo" class="col-xs-3 col-sm-3 col-md-3 col-lg-3 col-form-label text-right">{{'menu.gestionBuzon.parametroProtocolo.codigo' | translate}}</label>
+                            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                <input type="text" class="form-control removeTextTransform" id="inputcodigo" name="inputcodigo" formControlName="codigo"
+                                (keypress)="onlyAlphabeticAndNumbers($event)" 
+                                (ondragenter)="disableEvent($event)"
+                                (dragover)="disableEvent($event)"
+                                (ondrop)="disableEvent($event)"
+                                (paste)="eventoOnPasteBlock($event)"
+                                maxlength="30">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                        <div class="form-group row align-items-center">
+                            <label for="inputlongitud" class="col-xs-3 col-sm-3 col-md-3 col-lg-3 col-form-label text-right">{{'menu.gestionBuzon.parametroProtocolo.longitud' | translate}}</label>
+                            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                <input type="text" class="form-control removeTextTransform" id="inputlongitud" name="inputlongitud" formControlName="longitud"
+                                (keypress)="eventOnlyNumbers($event)" 
+                                (ondragenter)="disableEvent($event)"
+                                (dragover)="disableEvent($event)"
+                                (ondrop)="disableEvent($event)"
+                                (paste)="eventoOnPasteBlock($event)"
+                                maxlength="3">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                        <div class="form-group row align-items-center">
+                            <label for="formato" class="col-xs-3 col-sm-3 col-md-3 col-lg-3 col-form-label text-right">{{'menu.gestionBuzon.parametroProtocolo.formato' | translate}}</label>
+                            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                <select class="form-control" id="formato" name="formato" formControlName="formato">
+                                    <option value="0"> {{'menu.gestionBuzon.parametroProtocolo.numerico' | translate}} </option>
+                                    <option value="1"> {{'menu.gestionBuzon.parametroProtocolo.alfa' | translate}} </option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                        <div class="form-group row align-items-center">
+                            <label for="inputparaActivo" class="col-xs-3 col-sm-3 col-md-3 col-lg-3 col-form-label text-right">{{'pantalla.moduloAdministracion.gestionBancos.activo' | translate}}:</label>
+                            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                <input type="checkbox" class="form-control-box" id="inputparaActivo" name="n_paraActivo"  formControlName="paraActivo">
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                        <div class="form-group row align-items-center">
+                            <label for="inputcifrado" class="col-xs-3 col-sm-3 col-md-3 col-lg-3 col-form-label text-right">{{'menu.gestionBuzon.parametroProtocolo.cirado' | translate}}:</label>
+                            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                <input type="checkbox" class="form-control-box" id="inputcifrado" name="n_cifrado"  formControlName="cifrado">
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                        <div class="form-group row align-items-center">
+                            <label for="inputrequerido" class="col-xs-3 col-sm-3 col-md-3 col-lg-3 col-form-label text-right">{{'menu.gestionBuzon.parametroProtocolo.requerido' | translate}}:</label>
+                            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                <input type="checkbox" class="form-control-box" id="inputrequerido" name="n_requerido"  formControlName="requerido">
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+
+            </form>
+        </div>
+    </div>
+    <br>
+    <div class="row mb-2">
+        <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-1 offset-sm-1 offset-md-1 offset-lg-1">
+            <button type="button" class="btn btn-danger" (click)="regresarToConsult()">{{'btn.cancelarAltaP' | translate}}</button>
+        </div>
+        <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-8 offset-sm-8 offset-md-8 offset-lg-8">
+            <button type="button" class="btn btn-danger" (click)="validaCadaCampoObligatorio()">{{'btn.guardarAltaP' | translate}}</button>
+        </div>
+    </div>
+    <br>
+</div>
+
+
+
+

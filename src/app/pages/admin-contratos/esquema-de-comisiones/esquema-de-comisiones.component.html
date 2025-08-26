@@ -1,0 +1,325 @@
+<div id="esquemaComisiones" class="panel panel-default col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    <app-operativa-header tituloPantalla="{{'pantallas.esquemaDeComisiones' | translate}}"></app-operativa-header>
+    <h5 class="card-header justify-content-center">
+        <label>{{'pantalla.datosContrato.title' | translate}}</label>
+    </h5>
+    <app-busqueda-cliente [data]="datos" #limpiar></app-busqueda-cliente>
+    <div class="card">
+        <h5 class="card-header justify-content-center">
+            <label for="">{{'pantallas.esquemaDeComisiones.tabla' | translate}}
+            </label>
+        </h5>
+        <div class="card-body" *ngIf="!configAnualidad">
+            <form [formGroup]="esquemaForm" autocomplete="off">
+                <div class="ui-wrapper">
+                    <div class="ui-scroller">
+                        <table class="table ui-table" aria-describedby="comunes">
+                            <thead>
+                                <tr>
+                                    <th class="ui-col font-normal" scope="col">
+                                        {{'pantalla.esquemaCobroComisionDef.producto' |
+                                        translate}}</th>
+                                    <th class="ui-col2" scope="col">{{'pantalla.esquemaCobroComisionDef.criterio' |
+                                        translate}}</th>
+                                    <th class="ui-col3" scope="col">{{'pantalla.esquemaCobroComisionDef.sinLimite' |
+                                        translate}}</th>
+                                    <th scope="col" *ngFor="let item of itemsRangos">{{item.titulo}}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <ng-container formArrayName="esquema">
+                                    <ng-container
+                                        *ngFor="let x of this.esquemaForm.get('esquema').controls;let i=index;trackBy:track"
+                                        [formGroupName]="i">
+                                        <tr>
+                                            <td class="ui-col ui-size text-wrap">
+                                                <label for="nombreProducto"
+                                                    class="text-wrap">{{this.esquemaForm.get('esquema').controls[i].value.nombreProducto}}</label>
+                                            </td>
+                                            <td class="ui-col2 ui-size">
+                                                <select formControlName="idCriterio" id="idCriterioComun"
+                                                    class="form-control wSelect form-control-sm"
+                                                    aria-label="idCriterio">
+                                                    <option [value]="criterio.idCatalogo"
+                                                        *ngFor="let criterio of criteriosComunes">
+                                                        {{criterio.descripcionCatalogo}}</option>
+                                                </select>
+                                            </td>
+                                            <td class="ui-col3 ui-size">
+                                                <select formControlName="idRango" [id]="'idRangoComun' + this.esquemaForm.get('esquema').controls[i].value.idProducto"
+                                                    class="form-control wSelect form-control-sm"
+                                                    aria-label="idRangoComun" (change)="bloqueoRangos(x);"
+                                                    >
+                                                    <option [value]="r.id" *ngFor="let r of rangos">{{r.descripcion}}
+                                                    </option>
+                                                </select>
+                                            </td>
+                                            <ng-container formArrayName="rangos">
+                                                <ng-container
+                                                    *ngFor="let y of x.get('rangos').controls;let j=index;trackBy:track"
+                                                    [formGroupName]="j">
+                                                    <td class="ui-size">
+                                                        <div class="input-group input-group-sm wPrecio"
+                                                            *ngIf="x.value.rangos[j].valor == -1">
+                                                            <input type="text"
+                                                                class="form-control text-center sinLimite"
+                                                                placeholder="Sin Limite" aria-labelledby="valor"
+                                                                id="valor" disabled>
+                                                        </div>
+                                                        <div class="input-group input-group-sm wPrecio"
+                                                            *ngIf="x.value.rangos[j].valor != -1">
+                                                            <span
+                                                                *ngIf="x.value.idCriterio == 2 || x.value.idCriterio == 4"
+                                                                class="input-group-text " id="peso">$</span>
+                                                            <input onpaste="return false;" type="text"
+                                                                class="form-control text-center "
+                                                                formControlName="valor" aria-labelledby="valor"
+                                                                id="valor" size="15" [maxlength]="12"
+                                                                (blur)='validaRango(x.value.rangos,x.value.rangos[j].posicion,$event, x.value)'
+                                                                appInputMask="numerico_punto"
+                                                                (keypress)="maxLengthNumber($event);"
+                                                                (change)="habilitaRangos(x.value.rangos[j].valor,x);">
+                                                        </div>
+                                                    </td>
+                                                    <td class="ui-size">
+                                                        <div class="input-group input-group-sm wPrecio">
+                                                            <span
+                                                                *ngIf="x.value.idCriterio == 1 || x.value.idCriterio == 2"
+                                                                class="input-group-text" id="peso">$</span>
+                                                            <input onpaste="return false;" type="text"
+                                                                class="form-control text-center"
+                                                                formControlName="precio" aria-labelledby="precio"
+                                                                size="15" [maxlength]="10" id="precio"
+                                                                (change)="habilitaRangos(x.value.rangos[j].precio, x, true);"
+                                                                appInputMask="numerico_punto"
+                                                                (keypress)="maxLengthNumber($event);">
+                                                            <span
+                                                                *ngIf="x.value.idCriterio == 3 || x.value.idCriterio == 4 "
+                                                                class="input-group-text " id="porcentaje">%</span>
+                                                        </div>
+                                                    </td>
+                                                </ng-container>
+                                            </ng-container>
+                                        </tr>
+                                    </ng-container>
+                                </ng-container>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </form>
+            <ng-container *ngIf="this.formEsquemaDivisas.get('divisa')?.controls?.length">
+                <hr>
+                <br>
+                <!-- DIVISAS -->
+                <div class="row pl-3 pr-3">
+                    <form [formGroup]="formEsquemaDivisas" autocomplete="off">
+                        <table class="table" aria-describedby="divisas">
+                            <thead>
+                                <tr>
+                                    <th scope="col">{{'pantalla.esquemaCobroComisionDef.producto' | translate}}</th>
+                                    <th scope="col">{{'pantalla.esquemaCobroComisionDef.criterio' | translate}}</th>
+                                    <th scope="col">{{'divisa' | translate}}</th>
+                                    <th scope="col">{{'divisa' | translate}} 1</th>
+                                    <th scope="col">{{'pantalla.esquemaCobroComisionDef.precio' | translate}}</th>
+                                    <th scope="col">{{'divisa' | translate}} 2</th>
+                                    <th scope="col">{{'pantalla.esquemaCobroComisionDef.precio' | translate}}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <ng-container formArrayName="divisa">
+                                    <ng-container
+                                        *ngFor="let x of this.formEsquemaDivisas.get('divisa').controls;let i=index;trackBy:track"
+                                        [formGroupName]="i">
+                                        <tr scope="col">
+                                            <td>
+                                                <label
+                                                    for="nombreProducto">{{this.formEsquemaDivisas.get('divisa').controls[i].value.nombreProducto}}</label>
+                                            </td>
+                                            <td>
+                                                <select formControlName="idCriterio" aria-label="idCriterio"
+                                                    id="idCriterio" class="form-control form-control-sm">
+                                                    <option [value]="criterio.idCatalogo"
+                                                        *ngFor="let criterio of criteriosEspeciales">
+                                                        {{criterio.descripcionCatalogo}}</option>
+                                                </select>
+                                            </td>
+                                            <td>
+                                                <select formControlName="numDivisas" aria-label="Divisa" id="numDivisas"
+                                                    class="form-control form-control-sm"
+                                                    *ngIf="this.formEsquemaDivisas.get('divisa').controls[i].value.idCriterio == 5">
+                                                    <option [value]="0"> Todos </option>
+                                                    <option [value]="1"> MXP </option>
+                                                    <option [value]="2"> USD </option>
+                                                </select>
+                                            </td>
+                                            <td>
+                                                <ng-container
+                                                    *ngIf="this.formEsquemaDivisas.get('divisa').controls[i].value.idCriterio == 5 && this.formEsquemaDivisas.get('divisa').controls[i].value.numDivisas != 2">
+                                                    MXP
+                                                </ng-container>
+                                            </td>
+                                            <td>
+                                                <ng-container
+                                                    *ngIf="this.formEsquemaDivisas.get('divisa').controls[i].value.idCriterio == 6 || this.formEsquemaDivisas.get('divisa').controls[i].value.numDivisas != 2">
+                                                    <label for="montoMxp"></label>
+                                                    <input type="text" formControlName="montoMxp"
+                                                        class='form-control text-center wPrecio' id="montoMxp"
+                                                        customCurrency
+                                                        name="montoMxp" size='25' [maxlength]="10"
+                                                        appInputMask="numerico_punto"
+                                                        (keypress)="maxLengthNumber($event)">
+                                                </ng-container>
+                                            </td>
+                                            <td>
+                                                <ng-container
+                                                    *ngIf="this.formEsquemaDivisas.get('divisa').controls[i].value.idCriterio == 5 && this.formEsquemaDivisas.get('divisa').controls[i].value.numDivisas != 1">
+                                                    USD
+                                                </ng-container>
+                                            </td>
+                                            <td>
+                                                <ng-container
+                                                    *ngIf="this.formEsquemaDivisas.get('divisa').controls[i].value.idCriterio == 5 && this.formEsquemaDivisas.get('divisa').controls[i].value.numDivisas != 1">
+                                                    <label for="montoUsd"></label>
+                                                    <input type="text" formControlName="montoUsd"
+                                                        class='form-control text-center wPrecio' id="montoUsd"
+                                                        appInputMask="numerico_punto"
+                                                        customCurrency
+                                                        name="montoUsd" size='25' [maxlength]="10"
+                                                        (keypress)="maxLengthNumber($event)">
+                                                </ng-container>
+                                            </td>
+                                        </tr>
+                                    </ng-container>
+                                </ng-container>
+                            </tbody>
+                        </table>
+                    </form>
+                </div>
+            </ng-container>
+            <mat-card>
+                <mat-card-actions>
+                    <div class="row col-xs-12 col-sm-12 col-md-12 col-lg-12 d-flex">
+                        <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-1 display">
+                            <button type="button" class="btn btn-danger" (click)="cleanForm()">
+                                {{'btn.limpiar' | translate}}
+                            </button>
+                        </div>
+                        <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-8 display">
+                            <button type="button" class="btn btn-danger" (click)="guardaForms()">
+                                {{'btn.guardar' | translate}}
+                            </button>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row col-xs-12 col-sm-12 col-md-12 col-lg-12 d-flex">
+                        <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 offset-1 display">
+                            <button type="button" class="btn btn-danger" (click)="activarConfiguracion()">
+                                {{'btn.ConfigAnualidad' | translate}}
+                            </button>
+                        </div>
+                        <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-7 display">
+                            <button type="button" class="btn btn-danger" (click)="exportar()">
+                                {{'btn.exportar' | translate}}
+                            </button>
+                        </div>
+                    </div>
+                </mat-card-actions>
+            </mat-card>
+        </div>
+
+        <div class="card-body" *ngIf="configAnualidad">
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <form [formGroup]="formConfigAnualidad">
+                        <table class="table table-striped table-hover" aria-describedby="listaConsultaPais">
+                            <thead>
+                                <tr>
+                                    <th scope="col" class="text-center">
+                                        {{'pantalla.esquemaCobroComisionDef.producto' | translate}}</th>
+                                    <th scope="col" class="text-center">
+                                        {{'pantalla.esquemaCobroComisionDef.monto' | translate}}</th>
+                                    <th scope="col" class="text-center">
+                                        {{'pantalla.esquemaCobroComisionDef.activo' | translate}}</th>
+                                    <th scope="col" class="text-center">
+                                        {{'MO.NC' | translate}}
+                                    </th>
+                                    <th scope="col" class="text-center">
+                                        {{'pantalla.esquemaCobroComisionDef.fechaAnualidad' | translate}}
+                                    </th>
+                                    <th scope="col" class="text-center">
+                                        {{'pantalla.esquemaCobroComisionDef.fechaProxCobro' | translate}}
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody formArrayName="formArrayConfigAnualidad">
+                                <tr *ngFor="let configracion of formArrayConfigAnualidad.controls; index as i"
+                                    [formGroupName]="i">
+                                    <td class="">{{ configracion.get('producto')?.value }}</td>
+                                    <td class="text-center">
+                                        <input class="form-control" id="monto" name="monto" maxlength="10"
+                                            appCurrencyInput formControlName="monto" />
+                                    </td>
+                                    <td class="text-center">
+                                        <label for="estatus"></label>
+                                        <input type="checkbox" name="estatus" id="estatus" class="m-2"
+                                            formControlName="estatus">
+                                    </td>
+                                    <td class="text-center">
+                                        <input class="form-control" id="numCuenta" appInputMask="numerico" name="numCuenta" maxlength="11"
+                                            formControlName="numCuenta" />
+                                    </td>
+                                    <td class="text-center">
+                                        <div class="d-flex align-items-center">
+                                            <input matInput class="form-control width-conv"
+                                                [matDatepicker]="pickerFecha" formControlName="fecha"
+                                                onkeyup="return 0;" onkeypress="return 0;" onkeydown="return 0;"
+                                                ngDefaultControl>
+                                            <mat-datepicker-toggle matSuffix
+                                                [for]="pickerFecha"></mat-datepicker-toggle>
+                                            <mat-datepicker color="warn" #pickerFecha></mat-datepicker>
+                                        </div>
+                                    </td>
+                                    <td class="text-center">
+                                        <div class="d-flex align-items-center">
+                                            <input matInput class="form-control width-conv"
+                                                [matDatepicker]="pickerFechaFPA" formControlName="fechaFPA" readonly>
+                                            <mat-datepicker-toggle matSuffix
+                                                [for]="pickerFechaFPA"></mat-datepicker-toggle>
+                                            <mat-datepicker color="warn" #pickerFechaFPA
+                                                disabled="true"></mat-datepicker>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </form>
+                </div>
+            </div>
+            <div [hidden]="banderaHasRows" class=" text-center" colspan="12"> {{'noResult' | translate}}
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 d-flex">
+                <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-1 display">
+                    <button type="button" class="btn btn-danger" (click)="cleanForm()">
+                        {{'btn.limpiar' | translate}}
+                    </button>
+                </div>
+                <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-8 display">
+                    <button type="button" class="btn btn-danger" (click)="guardarConfigAnual()">
+                        {{'btn.guardar' | translate}}
+                    </button>
+                </div>
+            </div>
+            <br>
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-10 display">
+                    <button type="button" class="btn btn-danger" (click)="exportar()">
+                        {{'btn.exportar' | translate}}
+                    </button>
+                </div>
+            </div>
+        </div>
+        <br>
+    </div>
+    <br>
+</div>

@@ -1,0 +1,19 @@
+.inpu{
+    display: flex;
+    margin: 5px;
+    margin-left: 50px;
+    margin-right: 50px;
+}
+.dos{
+    display: flex;
+    width: 100%;
+}
+.derecha{
+    width: 50%;
+}
+.izquierda{
+    width: 50%;
+}
+input[type="text"] {
+    text-transform: none;
+}

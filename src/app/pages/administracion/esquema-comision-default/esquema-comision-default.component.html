@@ -1,0 +1,272 @@
+<app-operativa-header tituloPantalla="{{'menu.esquemaCobroComisionDef' | translate}}"></app-operativa-header>
+<div id="gestionsbackends" class="panel panel-default col-xs-12 col-sm-12 col-md-12 col-lg-12">
+      <div class="card mt-3">
+            <h5 class="card-header justify-content-center"> {{'menu.esquemaCobroComisionDef' |
+                  translate}} </h5>
+            <div class="card-body" *ngIf="!configAnualidad">
+                  <div class="row containerTables">
+                        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 productosTableDiv">
+                              <table class="table">
+                                    <caption></caption>
+                                    <thead>
+                                          <tr>
+                                                <th scope="col" class="text-center col-producto">
+                                                      {{'pantalla.esquemaCobroComisionDef.producto' | translate}}
+                                                </th>
+                                                <th scope="col" class="text-center col-criterio">
+                                                      {{'pantalla.esquemaCobroComisionDef.criterio' | translate}}
+                                                </th>
+                                                <th scope="col" class="text-center col-sin-limite">
+                                                      {{'pantalla.esquemaCobroComisionDef.sinLimite' | translate}}
+                                                </th>
+                                          </tr>
+                                    </thead>
+                                    <tbody>
+                                          <tr *ngFor="let producto of esquemaComisionesArray" class="productosBody">
+                                                <td class="">{{ producto.descProducto }}</td>
+                                                <td class="text-center">
+                                                      <label for="criterio{{producto.idProdCntrPc}}"></label>
+                                                      <select class="form-control"
+                                                            id="criterio{{producto.idProdCntrPc}}"
+                                                            name="criterio{{producto.idProdCntrPc}}"
+                                                            (change)="cambiaCriterios(producto)"
+                                                            [(ngModel)]="producto.criterioCom">
+                                                            <option *ngFor="let criterio of criterios"
+                                                                  [value]="criterio.idCatalogo">
+                                                                  {{criterio.descripcionCatalogo}}
+                                                            </option>
+                                                      </select>
+                                                </td>
+                                                <td class="text-center">
+                                                      <label for="limite{{producto.idProdCntrPc}}"></label>
+                                                      <select class="form-control" id="limite{{producto.idProdCntrPc}}"
+                                                            name="limite{{producto.idProdCntrPc}}"
+                                                            (change)="actualizarInput(producto, $event.target); habilitaRangos(producto.idProdCntrPc, producto.bandSinLimite, producto.producto,0,producto)"
+                                                            [(ngModel)]="producto.bandSinLimite">
+
+                                                            <option *ngFor="let rango of rangos; index as i"
+                                                                  [value]="i">
+                                                                  {{rango.descripcionCatalogo}}
+                                                            </option>
+                                                      </select>
+                                                </td>
+                                          </tr>
+                                    </tbody>
+                              </table>
+                        </div>
+                        <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 rangeTableDiv">
+                              <table class="table table-striped rangeTable">
+                                    <caption></caption>
+                                    <thead>
+                                          <tr>
+                                                <ng-container *ngFor="let a of RANGOS_ARRAY; let index = index">
+                                                      <th scope="col" class="rangeTableTh">
+                                                            {{'pantalla.esquemaCobroComisionDef.rango' |
+                                                            translate}}
+                                                            {{index+1}}
+                                                      </th>
+                                                      <th scope="col" class="rangeTableTh">
+                                                            {{'pantalla.esquemaCobroComisionDef.precio' |
+                                                            translate}}
+                                                      </th>
+                                                </ng-container>
+                                          </tr>
+                                    </thead>
+                                    <tbody>
+                                          <tr *ngFor="let producto of esquemaComisionesArray"
+                                                class="productosBody paddingColumn">
+                                                <ng-container *ngFor="let rango of obtenerRangos(producto); index as i">
+                                                      <td class="rangeTableTh">
+                                                            <input class="form-control"
+                                                                  id="rango{{producto.idProdCntrPc}}{{i}}"
+                                                                  name="rango{{producto.idProdCntrPc}}{{i}}"
+                                                                  maxlength="12" appInputMask="numerico_punto"
+                                                                  appCurrencyInput
+                                                                  [disabled]="verificarInputActivo(i, producto.bandSinLimite, rango.valor, producto.producto) || rango.valor === SIN_LIMITE"
+                                                                  (focus)="changeValueInput( i,producto.idProdCntrPc)"
+                                                                  (blur)="validarOperacion($event, rango, producto.idProdCntrPc)"
+                                                                  (change)="verificarPivote($event, i,producto.idProdCntrPc, producto.producto,1, producto.bandSinLimite)"
+                                                                  (click)="PosEnd
+                                                                  ($event)" [(ngModel)]="rango.valor" />
+                                                      </td>
+                                                      <td class="rangeTableTh">
+                                                            <input class="form-control"
+                                                                  id="precio{{producto.idProdCntrPc}}{{i}}"
+                                                                  name="precio{{producto.idProdCntrPc}}{{i}}"
+                                                                  maxlength="10"
+                                                                  appCurrencyInput [(ngModel)]="rango.precio"
+                                                                  (blur)="!rango.precio ? rango.precio='0.0' : ''"
+                                                                  [disabled]="verificarInputActivo(i, producto.bandSinLimite, rango.valor, producto.producto)" />
+                                                      </td>
+                                                </ng-container>
+                                          </tr>
+                                    </tbody>
+                              </table>
+                        </div>
+                  </div>
+                  <div [hidden]="banderaHasRows" class=" text-center" colspan="12"> {{'noResult' | translate}}
+                  </div>
+                  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                        <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-1 display">
+                              <button type="button" class="btn btn-danger" (click)="limpiarEsquema()">
+                                    {{'btn.limpiar' | translate}}
+                              </button>
+                        </div>
+                        <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-8 display">
+                              <button type="button" class="btn btn-danger" (click)="openConfirmYN()">
+                                    {{'btn.guardar' | translate}}
+                              </button>
+                        </div>
+                  </div>
+                  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                        <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 offset-1 display">
+                              <button type="button" class="btn btn-danger" (click)="activarConfiguracion()">
+                                    {{'btn.ConfigAnualidad' | translate}}
+                              </button>
+                        </div>
+                        <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-7 display">
+                              <button type="button" class="btn btn-danger" (click)="abrirModalExportar()">
+                                    {{'btn.exportar' | translate}}
+                              </button>
+                        </div>
+                  </div>
+            </div>
+            <div class="card-body" *ngIf="configAnualidad">
+                  <div class="row">
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                              <table class="table table-striped table-hover" aria-describedby="listaConsultaPais">
+                                    <thead>
+                                          <tr>
+                                                <th scope="col" class="text-center">
+                                                      {{'pantalla.esquemaCobroComisionDef.producto' | translate}}</th>
+                                                <th scope="col" class="text-center">
+                                                      {{'pantalla.esquemaCobroComisionDef.monto' | translate}}</th>
+                                                <th scope="col" class="text-center">
+                                                      {{'pantalla.esquemaCobroComisionDef.activo' | translate}}</th>
+                                                <th scope="col" class="text-center">
+                                                      {{'pantalla.esquemaCobroComisionDef.fechaAnualidad' | translate}}
+                                                </th>
+                                                <th scope="col" class="text-center">
+                                                      {{'pantalla.esquemaCobroComisionDef.fechaProxCobro' | translate}}
+                                                </th>
+                                          </tr>
+                                    </thead>
+                                    <tbody>
+                                          <tr *ngFor="let configAnualidad of configAnualidadData  index as i" class="">
+                                                <td class="">{{ configAnualidad.producto }}</td>
+                                                <td class="text-center">
+                                                      <input class="form-control" appInputMask="numerico_punto"
+                                                            id="monto" name="monto" maxlength="10"
+                                                            [(ngModel)]="configAnualidad.monto" />
+                                                </td>
+                                                <td class="text-center">
+                                                      <label for="estatus"></label>
+                                                      <input type="checkbox" name="estatus" id="estatus" class="m-2"
+                                                            (change)="activarEstatusConfAnual($event,configAnualidad)"
+                                                            [checked]="configAnualidad.estatus === 'A'">
+                                                </td>
+                                                <td class="text-center">
+                                                      <div class="d-flex align-items-center">
+                                                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                                                  <div
+                                                                        class="form-group row justify-content-center align-items-center">
+                                                                        <label for="fechaFin" hidden
+                                                                              class="col-xs-1 col-sm-1 col-md-1 col-lg-1 col-form-label">{{'administracion.buzon.operacion.fecha.final'
+                                                                              | translate}}</label>
+                                                                        <div
+                                                                              class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
+                                                                              <div class="input-group">
+                                                                                    <input type="text"
+                                                                                          class="form-control"
+                                                                                          id="fechaFin" name="fechaFin"
+                                                                                          readonly required bsDatepicker
+                                                                                          #dpFechaFin="bsDatepicker"
+                                                                                          [bsConfig]="datePickerConfig"
+                                                                                          [(ngModel)]="configAnualidad.fecha"
+                                                                                          [minDate]="getMinDate()">
+                                                                                    <div class="input-group-append">
+                                                                                          <button
+                                                                                                class="btn btn-outline-danger"
+                                                                                                type="button"
+                                                                                                id="btnFechaFin"
+                                                                                                name="btnFechaFin"
+                                                                                                (click)="dpFechaFin.toggle()"
+                                                                                                [attr.aria-expanded]="dpFechaFin.isOpen">
+                                                                                                <em
+                                                                                                      class="fa fa-calendar"></em>
+                                                                                          </button>
+                                                                                    </div>
+                                                                              </div>
+                                                                        </div>
+                                                                  </div>
+                                                            </div>
+                                                      </div>
+                                                </td>
+                                                <td class="text-center">
+                                                      <div class="d-flex align-items-center">
+                                                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                                                  <div
+                                                                        class="form-group row justify-content-center align-items-center">
+                                                                        <label for="fechaProxCobro" hidden
+                                                                              class="col-xs-1 col-sm-1 col-md-1 col-lg-1 col-form-label">{{'administracion.buzon.operacion.fecha.final'
+                                                                              | translate}}</label>
+                                                                        <div
+                                                                              class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
+                                                                              <div class="input-group">
+                                                                                    <input type="text"
+                                                                                          class="form-control"
+                                                                                          id="fechaProxCobro"
+                                                                                          name="fechaProxCobro" readonly
+                                                                                          disabled bsDatepicker
+                                                                                          #dpFechaProxCobro="bsDatepicker"
+                                                                                          [bsConfig]="datePickerConfig"
+                                                                                          [(ngModel)]="configAnualidad.fechaFPA"
+                                                                                          [minDate]="getMinDate()">
+                                                                                    <div class="input-group-append">
+                                                                                          <button
+                                                                                                class="btn btn-outline-danger"
+                                                                                                type="button"
+                                                                                                id="btnFechaProxCobro"
+                                                                                                name="btnFechaProxCobro"
+                                                                                                readonly disabled>
+                                                                                                <em
+                                                                                                      class="fa fa-calendar"></em>
+                                                                                          </button>
+                                                                                    </div>
+                                                                              </div>
+                                                                        </div>
+                                                                  </div>
+                                                            </div>
+                                                      </div>
+                                                </td>
+                                          </tr>
+                                    </tbody>
+                              </table>
+                        </div>
+                  </div>
+                  <div [hidden]="banderaHasRows" class=" text-center" colspan="12"> {{'noResult' | translate}}
+                  </div>
+                  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                        <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-1 display">
+                              <button type="button" class="btn btn-danger" (click)="limpiarConfAnual()">
+                                    {{'btn.limpiar' | translate}}
+                              </button>
+                        </div>
+                        <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-8 display">
+                              <button type="button" class="btn btn-danger" (click)="guardarConfAnual()">
+                                    {{'btn.guardar' | translate}}
+                              </button>
+                        </div>
+                  </div>
+                  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+
+                        <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-10 display">
+                              <button type="button" class="btn btn-danger" (click)="abrirModalExportar(true)">
+                                    {{'btn.exportar' | translate}}
+                              </button>
+                        </div>
+                  </div>
+            </div>
+      </div>
+
+</div>

@@ -1,0 +1,191 @@
+<app-operativa-header tituloPantalla="{{'pantalla.sterling.historialBuzon.title' | translate}}"></app-operativa-header>
+
+<div id="tamanobuzon" class="panel panel-default col-xs-12 col-sm-12 col-md-12 col-lg-12">
+
+    <div class="card mt-3" [hidden]="showBtnQuery">
+        <h5 class="card-header justify-content-center"> {{'pantalla.monitoreo.monitorArchivoCurso.busqueda' |
+            translate}} </h5>
+        <br>
+        <form [formGroup]="gestionbuzonForm">
+
+            <div class="row g-3 align-items-center">
+                <div class="col-auto offset-md-1">
+                    <label for="idBuzon" class=" offset-1 centrar">{{'menu.buzon'| translate}}:</label>
+                </div>
+                <div class="col-auto">
+                    <input class="form-control removeTextTransform" type="text" id="idBuzon" name="idBuzon"
+                        formControlName="idBuzon">
+                </div>
+                <div class="col-md-2">
+                    <div class="form-check">
+                        <label class="form-check-label" for="filtroFecha">
+                            {{'menu.sterling.historialBuzon.fecha' | translate}}
+                        </label>
+                        <input class="form-check-input ml-3" type="checkbox" name="filtroFecha" formControlName="filtroFecha"
+                            id="filtroFecha" (change)="activarInputFecha($event)">
+                    </div>
+                </div>
+                <div class="col-md-auto">
+                    <label for="periodo" class="centrar margin-right delete-padding">
+                        {{'pantalla.controlVolumenOperativo.graficaArchivoCliente.periodo' | translate}}:
+                    </label>
+                </div>
+
+                <div class="col-xs-auto col-sm-auto col-md-auto col-lg-auto">
+                    <label for="iniFecha" class="col-form-label">
+                        {{'pantalla.controlVolumenOperativo.graficaArchivoCliente.fechaInicio' | translate}}
+                    </label>
+                </div>
+                <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+                    <div class="input-group">
+                        <input formControlName="iniFecha" [disabled]="calendario" type="text"
+                            class="form-control inputDate" id="iniFecha" name="iniFecha" bsDatepicker
+                            #dpFechaAten="bsDatepicker" [bsConfig]="datePickerConfig" />
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-danger" type="button" id="btnFechaAtendida"
+                                name="btnFechaAtendida" (click)="dpFechaAten.toggle()" [disabled]="calendario"
+                                [attr.aria-expanded]="dpFechaAten.isOpen">
+                                <em class="fa fa-calendar"></em>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="col-xs-auto col-sm-auto col-md-auto col-lg-auto">
+                    <label for="finFecha"
+                        class="col-form-label">{{'pantalla.controlVolumenOperativo.graficaArchivoCliente.fechaFin' |
+                        translate}}</label>
+                </div>
+                <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+                    <div class="input-group">
+                        <input type="text" class="form-control inputDate" id="finFecha" name="finFecha" bsDatepicker
+                            #dpFechaFin="bsDatepicker" [bsConfig]="datePickerConfig" formControlName="finFecha"
+                            for="finFecha" />
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-danger" type="button" id="btnDateEnd" name="btnDateEnd"
+                                [disabled]="calendario" (click)="dpFechaFin.toggle()"
+                                [attr.aria-expanded]="dpFechaFin.isOpen">
+                                <em class="fa fa-calendar"></em>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+            <br>
+
+
+            <div class="row">
+                <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-1  delete-padding">
+                    <label for="agrupar">{{'menu.sterling.tamanobuzon.agrupar' | translate}}</label>
+                </div>
+
+                <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 centrar">
+                    <input type="radio" name="radio1" formControlName="radio1" id="tamamioMB" value="NUM_TAMA_MB">
+                    <label class="separar-check " for="tamamioMB"> {{'menu.sterling.tamanobuzon.tamanio' | translate}}
+                    </label>
+                </div>
+
+                <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 centrar">
+                    <input type="radio" name="radio1" formControlName="radio1" id="total" value="NUM_TOTAL">
+                    <label class="separar-check " for="total"> {{'menu.sterling.tamanobuzon.total' | translate}}
+                    </label>
+                </div>
+
+                <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 centrar">
+                    <label for="agrupar">{{'menu.sterling.tamanobuzon.mostrar' | translate}}</label>
+                </div>
+
+                <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 centrar">
+                    <input type="radio" name="radio2" formControlName="radio2" id="alto" value="DESC">
+                    <label class="separar-check " for="alto">
+                        {{'menu.sterling.historialBuzon.alto' | translate}}
+                    </label>
+                </div>
+
+                <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 centrar">
+                    <input type="radio" name="radio2" formControlName="radio2" id="bajo" value="ASC">
+                    <label class="separar-check " for="bajo">
+                        {{'menu.sterling.historialBuzon.bajo' | translate}}
+                    </label>
+                </div>
+            </div>
+
+        </form>
+
+        <div class="row mt-2">
+            <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-1 offset-sm-1 offset-md-1 offset-lg-1">
+                <button type="button" class="btn btn-danger" (click)="eventCleanGH()">{{'btn.limpiar' |
+                    translate}}</button>
+            </div>
+            <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-8 offset-sm-8 offset-md-8 offset-lg-8">
+                <button type="button" class="btn btn-danger" (click)="consultarDatosBuzon()">{{'btn.buscar' |
+                    translate}}</button>
+            </div>
+        </div>
+        <br>
+        <br>
+    </div>
+
+    <div class="card my-1" [hidden]="!showBtnQuery">
+        <h5 class="card-header justify-content-center">
+            {{'pantalla.consultarBuzon.resultadoBusqueda.title' | translate}}
+        </h5>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <table class="table table-striped table-hover" aria-describedby="graficaHistBuzon">
+                        <thead>
+                            <tr>
+                                <th class="text-center" scope="col">{{'menu.sterling.historialBuzon.periodo' |
+                                    translate}}</th>
+                                <th class="text-center" scope="col">{{'menu.sterling.historialBuzon.tamanoMB' |
+                                    translate}}</th>
+                                <th class="text-center" scope="col">{{'menu.sterling.historialBuzon.total' | translate}}
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <ng-container *ngIf="banderaHasRows">
+                                <tr *ngFor="let buzon of returnedArray">
+                                    <td class="text-center">{{buzon.fecha}}</td>
+                                    <td class="text-center">{{buzon.tamanioMB}}</td>
+                                    <td class="text-center">{{buzon.numTotal}}</td>
+                                </tr>
+                            </ng-container>
+                            <ng-container *ngIf="!banderaHasRows">
+                                <tr>
+                                    <td class="text-center" colspan="12">
+                                        {{'pantalla.moduloAdministracion.gestionBancos.resultadoBusqueda' | translate}}
+                                    </td>
+                                </tr>
+                            </ng-container>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div>
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-center">
+                    <h2>{{'pantalla.controlVolumenOperativo.historial.titleGrafica' | translate}}</h2>
+                </div>
+                <div class="chart-container" width="300px" height="300px">
+                    <canvas id="chartHistory"></canvas>
+                </div>
+            </div>
+            <div class="row mt-2" [hidden]="!showBtnQuery">
+                <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-1 offset-sm-1 offset-md-1 offset-lg-1">
+                    <button type="button" class="btn btn-danger" (click)="eventCleanGH()">{{'btn.limpiar' |
+                        translate}}</button>
+                </div>
+                <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-8 offset-sm-8 offset-md-8 offset-lg-8">
+                    <button type="button" class="btn btn-danger" (click)="exportarDatos()">{{'btn.exportar' |
+                        translate}}</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>

@@ -1,0 +1,35 @@
+<div class="modal-button"></div>
+<div id="popup_container">
+        <div class="titles">
+                <div class="txt-center">
+                </div>
+                <div class="titles-sub">
+                        <div class="txt-start">
+                                <label class="title-bold" [ngStyle]="{ 'color': color }" for="">{{data.titulo}}</label>
+                        </div>
+                          
+                </div>
+        </div>
+        <div class="content-padding" id="popup_content">
+                <div id="img" class="txt-center"> <img src="{{img}}" alt=""></div>
+                <div>
+                    <div  class="txt-wordbreak">
+                        <label class="title-bold" for="">{{data.contenido}}</label>
+                    </div>
+                    <form [formGroup]="cuentaCobroForm">
+                        <div>
+                            <label for="cuentaCobro"></label>
+                            <input class="form-control"  type="text" id="cuentaCobro" name="cuentaCobro"  placeholder="Cuenta Cobro" formControlName="cuentaCobro"
+                            > 
+                        </div>
+                    </form>
+                </div>
+        </div>
+        <mat-dialog-actions class="center">
+                <div class="col text-center">
+                    <button type="button" class="btn btn-outline-danger justify-content-center" (click)="accept()">OK</button>
+                    <button type="button" class="btn btn-outline-danger" mat-dialog-close>Cancelar</button>
+                </div>
+        </mat-dialog-actions>
+</div>
+<div class="modal-button"></div>

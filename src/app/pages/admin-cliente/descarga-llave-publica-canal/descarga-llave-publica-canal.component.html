@@ -1,0 +1,107 @@
+<app-operativa-header
+    tituloPantalla="{{'menu.adminitracionCliente.descargaLlavePublicaCanal' | translate}}"></app-operativa-header>
+<div id="descargaLlavePublicaCanal" class="panel panel-default col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    <br>
+    <div class="card">
+        <h5 class="card-header justify-content-center">
+            <!-- {{'pantalla.descargallavepublicacanal.consultallaves' | translate}} -->
+            Key's Search
+        </h5>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-xs-6 col-sm-6 col-md-6">
+                    <div class="form-group row">
+                        <label for="codCliente"
+                            class="col-form-label col-sm-3">{{'pantalla.descargallavepublicacanal.datosContrato.codCliente'
+                            |
+                            translate}}:</label>
+                        <div class="col-sm-4">
+                            <input type="text" id="codCliente" name="codigoCliente" class="form-control"
+                                placeholder="{{'pantalla.descargallavepublicacanal.datosContrato.codCliente' | translate}}"
+                                (keydown.Tab)="validateBucCert()" (keypress)="validateOnlyNumeros($event)" maxlength="8"
+                                size="12" (paste)="pasteOnlyNumeros($event)" tabindex="1"
+                                [(ngModel)]="datosContrato.bucCliente">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-6 col-sm-6 col-md-6">
+                    <div class="form-group row">
+                        <label for="numContrato" class="col-form-label col-sm-3">{{'numContrato' |
+                            translate}}:</label>
+                        <div class="col-sm-4">
+                            <input type="text" class="form-control" name="numContrato"
+                                placeholder="{{'numContrato' | translate}}" id="numContrato"
+                                [(ngModel)]="datosContrato.numContrato" disabled>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br />
+        <div class="row mt-3">
+            <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-1 offset-sm-1 offset-md-1 offset-lg-1">
+                <button type="button" (click)="clearScreen()" class="btn btn-danger">{{'btn.limpiar' |
+                    translate}}</button>
+            </div>
+            <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-8 offset-sm-8 offset-md-8 offset-lg-8">
+                <button type="button" (click)="findLlavePub()" class="btn btn-danger">{{'btn.consultar' |
+                    translate}}</button>
+            </div>
+        </div>
+        <br />
+    </div>
+    <br />
+    <div class="card mt-2" *ngIf="banderaHasRows">
+        <h5 class="card-header justify-content-center">
+        </h5>
+        <div class="card-body">
+            <div class="row table-responsive">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <table class="table table-striped table-hover"
+                        aria-describedby="listConsultCatalogoDinamicoInformacion">
+                        <thead>
+                            <tr>
+                                <th class="text-center" scope="col">
+                                    {{'pantalla.descargallavepublicacanal.table.col.seleccionar' | translate}}</th>
+                                <th class="text-center" scope="col">
+                                    {{'pantalla.descargallavepublicacanal.table.col.numContrato' | translate}}</th>
+                                <th class="text-center" scope="col">
+                                    {{'pantalla.descargallavepublicacanal.table.col.fecha' | translate}}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <ng-container *ngIf="banderaHasRows; then templateFillTable; else templateEmptyTable">
+                            </ng-container>
+                            <ng-template #templateFillTable>
+                                <tr *ngFor="let llave of listLlavesPub">
+                                    <td class="text-center">
+                                        <input type="radio" class="option-input radio" name="selKeyDownload" id="selKeyDownload"
+                                            (click)="onEventClickRadioButton(llave.contrato + '::' + llave.fecha)"
+                                            aria-label="selKeyDownload">
+                                    </td>
+                                    <td class="text-center">{{llave.contrato}}</td>
+                                    <td class="text-center">{{llave.fecha}}</td>
+                                </tr>
+                            </ng-template>
+                            <ng-template #templateEmptyTable>
+                            </ng-template>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <ng-container *ngIf="banderaHasRows; then templateShowButtons; else templateHideButtons">
+            </ng-container>
+            <ng-template #templateShowButtons>
+                <div class="row mt-2">
+                    <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 offset-xs-1 offset-sm-1 offset-md-1 offset-lg-1">
+                        <button type="button" class="btn btn-danger"
+                            (click)="downloadLlavePub()">{{'btn.descargarArchivo' |
+                            translate}}</button>
+                    </div>
+                </div>
+            </ng-template>
+            <ng-template #templateHideButtons>
+            </ng-template>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,140 @@
+<app-operativa-header tituloPantalla="{{'pantalla.pagoDirecto' | translate}}"></app-operativa-header>
+<div id="parametriaAdicional" class="panel panel-default col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    <br>
+    <div class="card">
+        <h5 class="card-header justify-content-center">
+            {{'pantalla.datosContrato.title' | translate}}
+        </h5>
+        <app-busqueda-cliente [data]="datos"></app-busqueda-cliente> <!-- #limpiar-->
+    </div>
+
+    <br>
+
+    <div class="card">
+        <h5 class="card-header justify-content-center"><label for="">{{'adminContrato.pagoDirecto.title' |
+                translate}}</label></h5>
+        <div class="card-body">
+            <div class="row mt-2">
+                <div class="col-md-4 offset-4">
+                    <label for="contratoEnlace" class="col-auto ml-2">{{'pantalla.pagoDirecto.lblContratoEnlace' |
+                        translate}}</label>
+                    <!--input type="input" class="col-md-1" name="contratoEnlace" id="contratoEnlace"
+                        [(ngModel)]="reportesConfirming.activaCheck1" aria-label="activo"-->
+                    <input type="input" class="col-md-2" name="contratoEnlace" id="contratoEnlace" aria-label="activo">
+                </div>
+            </div>
+            <div class="row mt-2">
+                <div class="col-md-4 offset-4">
+                    <!--input type="checkbox" class="col-md-1" name="check1" id="check1"
+                        [(ngModel)]="reportesConfirming.activaCheck1" aria-label="activo"-->
+                    <input type="checkbox" class="col-md-1" name="check1" id="check1"
+                         aria-label="activo">
+                    <label for="check1" class="col-auto ml-2">{{'pantalla.pagoDirecto.check1' |
+                        translate}}</label>
+                </div>
+            </div>
+            <div class="row mt-2">
+                <div class="col-md-4 offset-4">
+                    <!--input type="checkbox" class="col-md-1" name="check1" id="check1"
+                        [(ngModel)]="reportesConfirming.activaCheck1" aria-label="activo"-->
+                    <input type="checkbox" class="col-md-1" name="check1" id="check1"
+                         aria-label="activo">
+                    <label for="check1" class="col-auto ml-2">{{'pantalla.pagoDirecto.check2' |
+                        translate}}</label>
+                </div>
+            </div>
+            <div class="row mt-2">
+                <div class="col-md-4 offset-4">
+                    <label for="check1" class="col-auto ml-2">{{'pantalla.pagoDirecto.seleccionarHoras' |
+                        translate}}</label>
+                </div>
+            </div>
+            <div class="form-group row align-items-center">
+                <div class="col-sm-4">
+                </div>
+                <div class="col-sm-1">
+                    <!--select class="form-control" size="10" name="selectHorasToAddAndRemove"
+                        id="selectHorasToAddAndRemove" multiple [(ngModel)]="listHorasSelectedIzquierda"
+                        [disabled]="banderaDisableSelectHorasIzq">
+                        <option *ngIf="listHorasFirstSelect.length > 1" value="-1"> {{'todos' | translate}}
+                        </option>
+                        <option *ngFor="let hora of listHorasFirstSelect" [value]="hora['idCat']">
+                            {{hora['descripcionCatalogo']}}</option>
+                    </select-->
+                    <label for="selectHorasToAddAndRemove"></label>
+                    <select class="form-control" size="10" name="selectHorasToAddAndRemove"
+                        id="selectHorasToAddAndRemove" multiple>
+                        <option value="-1"> {{'todos' | translate}}
+                        </option>
+                        <!--option>{{hora['descripcionCatalogo']}}</option-->
+                    </select>
+                </div>
+                <div class="col-sm-1">
+                    <!--span class="badge badge-secondary text-desing-badge mb-1" (click)="addNewHour()"
+                        [class.disabled]="banderaDisableAddHour">{{'pantalla.parametriadicional.consulta.datosparametria.sendToAnother'
+                        | translate}}</span>
+                    <span class="badge badge-secondary text-desing-badge" (click)="removeHour()"
+                        [class.disabled]="banderaDisableRemoveHour">{{'pantalla.parametriadicional.consulta.datosparametria.returnToAnother'
+                        | translate}}</span-->
+                    <span class="badge badge-secondary text-desing-badge mb-1">{{'pantalla.parametriadicional.consulta.datosparametria.sendToAnother'
+                        | translate}}</span>
+                    <br>
+                    <span class="badge badge-secondary text-desing-badge">{{'pantalla.parametriadicional.consulta.datosparametria.returnToAnother'
+                        | translate}}</span>
+                </div>
+                <div class="col-sm-1 ">
+                    <!--select class="form-control" size="10" name="selectHorasDestinyToAdd" multiple
+                        id="selectHorasDestinyToAdd" [(ngModel)]="listHorasSelectedDerecha"
+                        aria-label="selectHorasDestinyToAdd" [disabled]="banderaDisableSelectHorasDer">
+                        <option *ngIf="listHorasSecondSelect.length > 1" value="-1"> {{'todos' | translate}}
+                        </option>
+                        <option *ngFor="let hora of listHorasSecondSelect" [value]="hora['idCat']">
+                            {{hora['descripcionCatalogo']}}</option>
+                    </select-->
+                    <select class="form-control" size="10" name="selectHorasDestinyToAdd" multiple
+                        id="selectHorasDestinyToAdd"
+                        aria-label="selectHorasDestinyToAdd" >
+                        <option> {{'todos' | translate}}
+                        </option>
+                        <!--option>{{hora['descripcionCatalogo']}}</option-->
+                    </select>
+                </div>
+                <div class="col-sm-4">
+                </div>
+            </div>
+            <div class="row mt-2">
+                <div class="col-md-4 offset-4">
+                    <label for="selectCanal" class="col-auto ml-2">{{'pantalla.pagoDirecto.seleccionCanal' |
+                        translate}}</label>
+                    <div class="col-sm-4">
+                        <select class="form-select form-control" formControlName="selectCanal" id="selectCanal" aria-label=".form-select-sm example">
+                            <!--option [value]="item.idProducto" *ngFor="let item of productos" ></option-->
+                            <option></option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-3">
+        <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-1 offset-sm-1 offset-md-1 offset-lg-1">
+            <button type="button" class="btn btn-danger">{{'btn.limpiar' | translate}}</button>
+            <!--button type="button" class="btn btn-danger" (click)="cleanDatos()" [disabled]="banderaBtnLimpiar || datos.descEstatus === 'CANCELADO'">{{'btn.limpiar' | translate}}</button-->
+        </div>
+        <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-8 offset-sm-8 offset-md-8 offset-lg-8">
+            <button type="button" class="btn btn-danger">{{'btn.guardar' | translate}}</button>
+            <!--button type="button" class="btn btn-danger" (click)="openModalConfGuardado()"
+                [disabled]="banderaBtnGuardar || datos.descEstatus === 'CANCELADO'">{{'btn.guardar' | translate}}</button-->
+        </div>
+    </div>
+    <div class="row mt-2">
+        <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-10 offset-sm-10 offset-md-10 offset-lg-10">
+            <button type="button" class="btn btn-danger">{{'btn.exportar' | translate}}</button>
+            <!--button type="button" class="btn btn-danger" (click)="openModalExportacion()"
+                [disabled]="banderaBtnExportar">{{'btn.exportar' | translate}}</button-->
+        </div>
+    </div>
+
+    <br>
+</div>

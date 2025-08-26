@@ -1,0 +1,487 @@
+<app-operativa-header *ngIf="filtros === true" tituloPantalla="{{'M.D' | translate}}"></app-operativa-header>
+<app-operativa-header *ngIf="abreTabla === true"tituloPantalla="{{'M.DA' | translate}}"></app-operativa-header>
+<div id="monitorOperaciones" class="panel panel-default col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    <br>
+    <div class="card my-1" *ngIf="filtros === true">
+        <h5 class="card-header justify-content-center">{{'pantalla.moduloAdministracion.criterios' | translate}}</h5>
+        <form [formGroup]="monitorOperacionesForm">
+            <div class="dos" *ngIf="todos === true">
+                <div class="dividir">
+                        <div class="card-body">
+                            <div class="form-group row2">
+                                <label for="codCli3" class="col-md-3  col-xs-3 col-xs-3 col-sm-3">{{'codigoCliente' | translate}}:</label>
+                                <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+                                    <input class="form-control"  type="text" id="codCli3" name="codCli" formControlName="codCli" placeholder="{{'codigoCliente' | translate}}"
+                                    (keypress)="numerico($event)" (ondragenter)="disableEvent($event)" (dragover)="disableEvent($event)" (ondrop)="disableEvent($event)" maxlength="8">
+                                </div>
+                            </div>
+                            <div class="form-group row2">
+                                <label for="cuentaAbono3" class="col-md-3  col-xs-3 col-xs-3 col-sm-3">{{'cuentaAbono' | translate}}:</label>
+                                <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+                                    <input class="form-control"  type="text" name="cuentaAbono" id="cuentaAbono3" formControlName="cuentaAbono" placeholder="{{'cuentaAbono' | translate}}"
+                                    (keypress)="numerico($event)" (ondragenter)="disableEvent($event)" (dragover)="disableEvent($event)" (ondrop)="disableEvent($event)" maxlength="18"> </div>
+                            </div>
+                            <div class="form-group row2">
+                                <label for="importe3" class="col-md-3  col-xs-3 col-xs-3 col-sm-3">{{'importe' | translate}}:</label>
+                                <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+                                        <input class="form-control"  type="text" id="importe3" name="importe" appCurrencyInput formControlName="importe" placeholder="{{'importe' | translate}}"
+                                        (keypress)="numerico($event)" (ondragenter)="disableEvent($event)" (dragover)="disableEvent($event)" (ondrop)="disableEvent($event)" (blur)="transformAmount($event)" maxlength="15">
+                                </div>
+                            </div>
+                            <div class="form-group row2">
+                                <label for="referencia13" class="col-md-3  col-xs-3 col-xs-3 col-sm-3">{{'referencia' | translate}}:</label>
+                                <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+                                    <input class="form-control" appInputMask="alfanumerico_punto_guionBajo_espace"  type="text" id="referencia13" name="referencia" formControlName="referencia" placeholder="{{'referencia' | translate}}"
+                                    (ondragenter)="disableEvent($event)" (dragover)="disableEvent($event)" (ondrop)="disableEvent($event)">
+                                </div>
+                            </div>
+                            <div class="form-group row2">
+                                <label for="divisa13" class="col-md-3  col-xs-3 col-xs-3 col-sm-3">{{'divisa' | translate}}:</label>
+                                <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+                                    <select class="form-select form-select-sm form-control" formControlName="divisa" id="divisa13"  aria-label=".form-select-sm example">
+                                        <option value="">{{'todos' | translate}}</option>
+                                        <option [value]="item.key" *ngFor="let item of divi" >{{item.value}}</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group row2">
+                                <label for="numContrato13" class="col-md-3  col-xs-3 col-xs-3 col-sm-3">{{'numContrato' | translate}}:</label>
+                                <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+                                    <input class="form-control"  type="text"  id="numContrato13" name="numContrato" formControlName="numContrato" placeholder="{{'numContrato' | translate}}"
+                                    (keypress)="numerico($event)" (ondragenter)="disableEvent($event)" (dragover)="disableEvent($event)" (ondrop)="disableEvent($event)" maxlength="12">
+                                </div>
+                            </div>
+                            <div class="form-group row2">
+                                <label for="inputFechaInicial3" class="col-md-3  col-xs-3 col-xs-3 col-sm-3">{{'fechaInicial' | translate}}:</label>
+                                <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" id="inputFechaInicial3" name="v_fechaInicial" readonly required
+                                        bsDatepicker #dpFechaIni="bsDatepicker" [bsConfig]="datePickerConfig" formControlName="fechaInicio" [maxDate]="getMaxDate()">
+                                        <div class="input-group-append">
+                                            <button class="btn btn-outline-danger" type="button" id="btnFechaInicio" name="btnFechaInicio" (click)="dpFechaIni.toggle()" [attr.aria-expanded]="dpFechaIni.isOpen"><em class="fa fa-calendar"></em>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                </div>
+                <div class="dividir">
+                    <div class="card-body">
+                        <div class="form-group row2" >
+                            <label for="cuentaCargo3" class="col-md-3  col-xs-3 col-xs-3 col-sm-3">{{'cuentaCargo' | translate}}:</label>
+                            <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+                                    <input class="form-control"  type="text" name="cuentaCargo" id="cuentaCargo3" formControlName="cuentaCargo" placeholder="{{'cuentaCargo' | translate}}"
+                                    (keypress)="numerico($event)" maxlength="12" (ondragenter)="disableEvent($event)" (dragover)="disableEvent($event)" (ondrop)="disableEvent($event)">
+                            </div>
+                        </div>
+                        <div class="form-group row2">
+                            <label for="producto13" class="col-md-3  col-xs-3 col-xs-3 col-sm-3">{{'producto' | translate}}:</label>
+                            <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+                                <select class="form-select form-select-sm form-control" formControlName="producto" id="producto13"  aria-label=".form-select-sm example" (change)="valueChange($event)">
+                                <option value="">{{'todos' | translate}}</option>
+                                <option [value]="item.key" *ngFor="let item of catalogo" >{{item.value}}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row2">
+                            <label for="nombreArchivo13" class="col-md-3  col-xs-3 col-xs-3 col-sm-3">{{'nombreArchivo' | translate}}:</label>
+                            <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+                                    <input class="form-control"  type="text" id="nombreArchivo13" name="nombreArchivo" appInputMask="alfanumerico_punto_guionBajo_espace" formControlName="nombreArchivo" placeholder="{{'nombreArchivo' | translate}}"
+                                    (ondragenter)="disableEvent($event)" (ondragenter)="disableEvent($event)" (dragover)="disableEvent($event)" (ondrop)="disableEvent($event)">
+                            </div>
+                        </div>
+                        <div class="form-group row2">
+                            <label for="estatus13" class="col-md-3  col-xs-3 col-xs-3 col-sm-3">{{'estatus' | translate}}:</label>
+                            <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+                                <select class="form-select form-select-sm form-control" formControlName="estatus" id="estatus13"  aria-label=".form-select-sm example">
+                                <option value="">{{'todos' | translate}}</option>
+                                <option [value]="item.key" *ngFor="let item of estat" >{{item.value}}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row2">
+                            <p class="espacio2"></p>
+                        </div>
+                        <div class="form-group row2">
+                            <label for="idOperacion3" class="col-md-3  col-xs-3 col-xs-3 col-sm-3">{{'idMovimiento' | translate}}:</label>
+                            <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+                                    <input class="form-control"  type="text" id="idOperacion3" name="idOperacion" formControlName="idOperacion" placeholder="{{'idMovimiento' | translate}}"
+                                    (keypress)="numerico($event)" (ondragenter)="disableEvent($event)" (dragover)="disableEvent($event)" (ondrop)="disableEvent($event)" maxlength="12">
+                            </div>
+                        </div>
+                        <div class="form-group row2">
+                            <label for="fechaFin3" class="col-md-3  col-xs-3 col-xs-3 col-sm-3">{{'fechaFinal' | translate}}:</label>
+                            <div class="ccol-xs-8 col-sm-8 col-md-8 col-lg-8">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" id="fechaFin3" name="fechaFin" readonly required
+                                    bsDatepicker #dpFechaFin="bsDatepicker" [bsConfig]="datePickerConfig" formControlName="fechaFin" [maxDate]="getMaxDate()">
+                                    <div class="input-group-append">
+                                        <button class="btn btn-outline-danger" type="button" id="btnFechaFin" name="btnFechaFin" (click)="dpFechaFin.toggle()"
+                                        [attr.aria-expanded]="dpFechaFin.isOpen">
+                                            <em class="fa fa-calendar"></em>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="dos" *ngIf="todos === false">
+            <div class="dividir">
+                        <div class="card-body">
+                            <div class="form-group row2">
+                                <label for="codCli4" class="col-md-3  col-xs-3 col-xs-3 col-sm-3">{{'codigoCliente' | translate}}:</label>
+                                <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+                                    <input class="form-control"  type="text" id="codCli4" name="codCli" formControlName="codCli" placeholder="{{'codigoCliente' | translate}}"
+                                    (keypress)="numerico($event)" (ondragenter)="disableEvent($event)" (dragover)="disableEvent($event)" (ondrop)="disableEvent($event)"  maxlength="8">
+                                </div>
+                            </div>
+                            <div class="form-group row2"
+                            *ngIf="productoSeleccionado === '23' || productoSeleccionado === '29' || productoSeleccionado === '99' || productoSeleccionado === '09' || productoSeleccionado === '25' || productoSeleccionado === '02' || productoSeleccionado === '21'|| productoSeleccionado === '80' || productoSeleccionado === '22' || productoSeleccionado === '40'">
+                                <label for="cuentaAbono4" class="col-md-3  col-xs-3 col-xs-3 col-sm-3">{{'cuentaAbono' | translate}}:</label>
+                                <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+                                    <input class="form-control"  type="text" name="cuentaAbono" id="cuentaAbono4" formControlName="cuentaAbono" placeholder="{{'cuentaAbono' | translate}}"
+                                    (keypress)="numerico($event)" (ondragenter)="disableEvent($event)" (dragover)="disableEvent($event)" (ondrop)="disableEvent($event)" maxlength="18"> </div>
+                            </div>
+                            <div class="form-group row2"
+                                *ngIf="productoSeleccionado === '11'">
+                                <label for="claveProveedor4" class="col-md-3  col-xs-3 col-xs-3 col-sm-3">{{'claveProveedor' | translate}}:</label>
+                                <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+                                    <input class="form-control"  type="text" name="claveProveedor"  id="claveProveedor4" formControlName="claveProveedor" placeholder="{{'claveProveedor' | translate}}"
+                                    (ondragenter)="disableEvent($event)"
+                                    (dragover)="disableEvent($event)"
+                                    (ondrop)="disableEvent($event)">
+                                </div>
+                            </div>
+                            <div *ngIf="productoSeleccionado === '85'  || productoSeleccionado === '36'"><p class="espacio"></p></div>
+                            <div class="form-group row2"
+                                *ngIf="productoSeleccionado === '93'">
+                                <label for="numEmpleado4" class="col-md-3  col-xs-3 col-xs-3 col-sm-3">{{'numEmpleado' | translate}}:</label>
+                                <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+                                    <input class="form-control"  type="text" id="numEmpleado4" name="numEmpleado" formControlName="numEmpleado" placeholder="{{'numEmpleado' | translate}}"
+                                    (ondragenter)="disableEvent($event)" (dragover)="disableEvent($event)" (ondrop)="disableEvent($event)">
+                                </div>
+                            </div>
+                            <div class="form-group row2"
+                            *ngIf="productoSeleccionado === '23' || productoSeleccionado === '29' || productoSeleccionado === '99' || productoSeleccionado === '02' || productoSeleccionado === '21'
+                            || productoSeleccionado === '80' || productoSeleccionado === '22' || productoSeleccionado === '40' || productoSeleccionado === '09' || productoSeleccionado === '85' || productoSeleccionado === '25' || productoSeleccionado === '36'">
+                                <label for="importe4" class="col-md-3  col-xs-3 col-xs-3 col-sm-3">{{'importe' | translate}}:</label>
+                                <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+                                        <input class="form-control"  type="text" id="importe4" name="importe" appCurrencyInput formControlName="importe" placeholder="{{'importe' | translate}}"
+                                        (keypress)="numerico($event)" maxlength="15" (ondragenter)="disableEvent($event)" (dragover)="disableEvent($event)" (ondrop)="disableEvent($event)">
+                                </div>
+                            </div>
+                            <div class="form-group row2"
+                                *ngIf="productoSeleccionado === '11'">
+                                <label for="tipoOperacion4" class="col-md-3  col-xs-3 col-xs-3 col-sm-3">{{'tipoOperacion' | translate}}:</label>
+                                <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+                                    <select class="form-select form-select-sm form-control" formControlName="tipoOperacion" id="tipoOperacion4"  aria-label=".form-select-sm example">
+                                        <option value="">{{'todos' | translate}}</option>
+                                        <option value="1">Alta de Proveedor, Persona Física Nacional</option>
+                                        <option value="2">Alta de Proveedor, Persona Física Internacional</option>
+                                        <option value="3">Alta de Proveedor, Persona Moral Nacional</option>
+                                        <option value="4">Alta de Proveedor, Persona Moral Internacional</option>
+                                        <option value="5">Modicicación de Proveedor, Persona Física Nacional</option>
+                                        <option value="6">Modicicación de Proveedor, Persona Física Internacional</option>
+                                        <option value="7">Modicicación de Proveedor, Persona Moral Nacional</option>
+                                        <option value="8">Modicicación de Proveedor, Persona Moral Internacional</option>
+                                        <option value="9">Baja de Proveedor </option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group row2"
+                                *ngIf="productoSeleccionado === '93'">
+                                <label for="numTarjeta4" class="col-md-3  col-xs-3 col-xs-3 col-sm-3">{{'numTarjeta' | translate}}:</label>
+                                <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+                                    <input class="form-control"  type="text" id="numTarjeta4" name="numTarjeta" formControlName="numTarjeta" placeholder="{{'numTarjeta' | translate}}"
+                                    (ondragenter)="disableEvent($event)" (dragover)="disableEvent($event)" (ondrop)="disableEvent($event)" >
+                                </div>
+                            </div>
+                            <div class="form-group row2"
+                                *ngIf="productoSeleccionado === '23' || productoSeleccionado === '29' || productoSeleccionado === '99' || productoSeleccionado === '02' || productoSeleccionado === '21'
+                                || productoSeleccionado === '80' || productoSeleccionado === '22' || productoSeleccionado === '40' || productoSeleccionado === '85'  || productoSeleccionado === '36'  || productoSeleccionado === '25' || productoSeleccionado === '09'">
+                                <label for="referencia4" class="col-md-3  col-xs-3 col-xs-3 col-sm-3"
+                                *ngIf="productoSeleccionado === '23' || productoSeleccionado === '29' || productoSeleccionado === '99' || productoSeleccionado === '02' || productoSeleccionado === '21' || productoSeleccionado === '80' || productoSeleccionado === '22' || productoSeleccionado === '40'
+                            || productoSeleccionado === '36' || productoSeleccionado === '25' || productoSeleccionado === '09'">{{'referencia' | translate}}:</label>
+                                <label for="referencia4" class="col-md-3  col-xs-3 col-xs-3 col-sm-3" *ngIf="productoSeleccionado === '85'">{{'referenciaCliente' | translate}}:</label>
+                                <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+                                    <input class="form-control"  type="text" id="referencia4" name="referencia" formControlName="referencia" placeholder="{{'referencia' | translate}}"
+                                    (ondragenter)="disableEvent($event)" (dragover)="disableEvent($event)" (ondrop)="disableEvent($event)">
+                                </div>
+                        </div>
+                            <div *ngIf="productoSeleccionado === '11'"><p class="espacio"></p></div>
+                            <div class="form-group row2" *ngIf="productoSeleccionado === '93'">
+                                <label for="sucursalTutora4" class="col-md-3  col-xs-3 col-xs-3 col-sm-3">{{'sucursalTutora' | translate}}:</label>
+                                <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+                                    <input class="form-control"  type="text" id="sucursalTutora4" name="sucursalTutora" formControlName="sucursalTutora" placeholder="{{'sucursalTutora' | translate}}"
+                                    (ondragenter)="disableEvent($event)" (dragover)="disableEvent($event)" (ondrop)="disableEvent($event)">
+                                </div>
+                            </div>
+                            <div class="form-group row2">
+                                <label for="divisa4" class="col-md-3  col-xs-3 col-xs-3 col-sm-3">{{'divisa' | translate}}:</label>
+                                <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+                                    <select class="form-select form-select-sm form-control" formControlName="divisa" id="divisa4"  aria-label=".form-select-sm example">
+                                    <option value="">{{'todos' | translate}}</option><option [value]="item.key" *ngFor="let item of divi" >{{item.value}}</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group row2">
+                                <label for="numContrato4" class="col-md-3  col-xs-3 col-xs-3 col-sm-3">{{'numContrato' | translate}}:</label>
+                                <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+                                    <input class="form-control"  type="text"  id="numContrato4" name="numContrato" formControlName="numContrato" placeholder="{{'numContrato' | translate}}"
+                                    (keypress)="numerico($event)" maxlength="12" (ondragenter)="disableEvent($event)" (dragover)="disableEvent($event)" (ondrop)="disableEvent($event)">
+                                </div>
+                            </div>
+                            <div class="form-group row2" *ngIf="productoSeleccionado === '23' || productoSeleccionado === '21' || productoSeleccionado === '22'">
+                                <label for="lineaCaptura4" class="col-md-3  col-xs-3 col-xs-3 col-sm-3">{{'lineaCaptura' | translate}}:</label>
+                                <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+                                    <input class="form-control"  type="text" id="lineaCaptura4" name="lineaCaptura" formControlName="lineaCaptura" placeholder="{{'lineaCaptura' | translate}}"
+                                    (ondragenter)="disableEvent($event)" (dragover)="disableEvent($event)" (ondrop)="disableEvent($event)">
+                                </div>
+                            </div>
+                            <div class="form-group row2" *ngIf="productoSeleccionado === '23'">
+                                <label for="registroPatronal14" class="col-md-3  col-xs-3 col-xs-3 col-sm-3">{{'registroPatronal' | translate}}:</label>
+                                <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+                                    <input class="form-control"  type="text" id="registroPatronal14" name="registroPatronal" formControlName="registroPatronal" placeholder="{{'registroPatronal' | translate}}"
+                                    (ondragenter)="disableEvent($event)" (dragover)="disableEvent($event)" (ondrop)="disableEvent($event)">
+                                </div>
+                            </div>
+                            <div class="form-group row2">
+                                <label for="inputFechaInicial14" class="col-md-3  col-xs-3 col-xs-3 col-sm-3">{{'fechaInicial' | translate}}:</label>
+                                <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" id="inputFechaInicial14" name="v_fechaInicial" readonly required
+                                        bsDatepicker #dpFechaIni="bsDatepicker" [bsConfig]="datePickerConfig" formControlName="fechaInicio" [maxDate]="getMaxDate()">
+                                        <div class="input-group-append">
+                                            <button class="btn btn-outline-danger" type="button" id="btnFechaInicio" name="btnFechaInicio" (click)="dpFechaIni.toggle()"
+                                            [attr.aria-expanded]="dpFechaIni.isOpen">
+                                                <em class="fa fa-calendar"></em>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group row2" *ngIf="productoSeleccionado === '93'">
+                                <label for="tipo4" class="col-md-3  col-xs-3 col-xs-3 col-sm-3">{{'tipo' | translate}}:</label>
+                                <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+                                    <select class="form-select form-select-sm form-control" formControlName="tipo" id="tipo4"  aria-label=".form-select-sm example"
+                                    (ondragenter)="disableEvent($event)" (dragover)="disableEvent($event)" (ondrop)="disableEvent($event)">
+                                        <option value="">{{'todos' | translate}}</option>
+                                        <option [value]="item.idTipo" *ngFor="let item in tipo" >{{item.descripcion}}</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group row2" *ngIf="productoSeleccionado === '40' || productoSeleccionado === '80' || productoSeleccionado === '85'">
+                                <label for="numOrden4" class="col-md-3  col-xs-3 col-xs-3 col-sm-3"*ngIf="productoSeleccionado === '40' || productoSeleccionado === '80'">{{'numOrden' | translate}}:</label>
+                                <label for="numOrden4" class="col-md-3  col-xs-3 col-xs-3 col-sm-3" *ngIf="productoSeleccionado === '85' ">{{'numOrdenATM' | translate}}:</label>
+                                <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+                                    <input class="form-control"  type="text" name="numOrden" id="numOrden4" formControlName="numOrden" placeholder="{{'numOrden' | translate}}"
+                                    (ondragenter)="disableEvent($event)" (dragover)="disableEvent($event)" (ondrop)="disableEvent($event)">
+                                </div>
+                            </div>
+                        </div>
+                </div>
+                <div class="dividir">
+                    <div class="card-body">
+                        <div class="form-group row2"
+                        *ngIf="productoSeleccionado === '23' || productoSeleccionado === '29' || productoSeleccionado === '99' || productoSeleccionado === '02' || productoSeleccionado === '21'
+                        || productoSeleccionado === '80' || productoSeleccionado === '25' || productoSeleccionado === '22' || productoSeleccionado === '40' || productoSeleccionado === '85' || productoSeleccionado === '36' || productoSeleccionado === '09'"  >
+                            <label for="cuentaCargo4" class="col-md-3  col-xs-3 col-xs-3 col-sm-3">{{'cuentaCargo' | translate}}:</label>
+                            <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+                                    <input class="form-control"  type="text" name="cuentaCargo" id="cuentaCargo4" formControlName="cuentaCargo" placeholder="{{'cuentaCargo' | translate}}"
+                                    (keypress)="numerico($event)" (ondragenter)="disableEvent($event)" (dragover)="disableEvent($event)" (ondrop)="disableEvent($event)" maxlength="12"  >
+                            </div>
+                        </div>
+                        <div class="form-group row2" *ngIf="productoSeleccionado === '93' || productoSeleccionado === '11'"> <p class="espacio3"></p></div>
+                        <div class="form-group row2">
+                            <label for="producto4" class="col-md-3  col-xs-3 col-xs-3 col-sm-3">{{'producto' | translate}}:</label>
+                            <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+                                <select class="form-select form-select-sm form-control" formControlName="producto" id="producto4"  aria-label=".form-select-sm example" (change)="valueChange($event)">
+                                <option value="">{{'todos' | translate}}</option>
+                                <option [value]="item.key" *ngFor="let item of catalogo" >{{item.value}}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row2">
+                            <label for="nombreArchivo4" class="col-md-3  col-xs-3 col-xs-3 col-sm-3">{{'nombreArchivo' | translate}}:</label>
+                            <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+                                    <input class="form-control"  type="text" id="nombreArchivo4" name="nombreArchivo" formControlName="nombreArchivo" placeholder="{{'nombreArchivo' | translate}}"
+                                    (ondragenter)="disableEvent($event)" (dragover)="disableEvent($event)" (ondrop)="disableEvent($event)">
+                            </div>
+                        </div>
+                        <div class="form-group row2">
+                            <label for="estatus4" class="col-md-3  col-xs-3 col-xs-3 col-sm-3">{{'estatus' | translate}}:</label>
+                            <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+                                <select class="form-select form-select-sm form-control" formControlName="estatus" id="estatus4"  aria-label=".form-select-sm example">
+                                <option value="">{{'todos' | translate}}</option>
+                                <option [value]="item2.key" *ngFor="let item2 of estat" >{{item2.value}}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row2" *ngIf="productoSeleccionado === '23' || productoSeleccionado === '21'|| productoSeleccionado === '80' || productoSeleccionado === '22' || productoSeleccionado === '40' || productoSeleccionado === '85' || productoSeleccionado === '11' || productoSeleccionado === '09' || productoSeleccionado === '93' || productoSeleccionado === '36' || productoSeleccionado === '25'">
+                            <p class="espacio2"></p> </div>
+                        <div class="form-group row2" *ngIf="productoSeleccionado === '29' || productoSeleccionado === '99' || productoSeleccionado === '02'">
+                            <label for="horaOperación4" class="ol-md-3  col-xs-3 col-xs-3 col-sm-3">{{'horaOperación' | translate}}:</label>
+                            <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+                                    <select class="form-select form-select-sm form-control" formControlName="horaOperación" id="horaOperación4"  aria-label=".form-select-sm example">
+                                        <option value="">{{'todos' | translate}}</option>
+                                        <option [value]="item.key" *ngFor="let item of hora" >{{item.descr}}</option>
+                                        </select>
+                            </div>
+                        </div>
+                        <div class="form-group row2">
+                            <label for="idOperacion4" class="col-md-3  col-xs-3 col-xs-3 col-sm-3">{{'idMovimiento' | translate}}:</label>
+                            <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+                                    <input class="form-control"  type="text" id="idOperacion4" name="idOperacion" formControlName="idOperacion" placeholder="{{'idMovimiento' | translate}}"
+                                    (keypress)="numerico($event)" (ondragenter)="disableEvent($event)" (dragover)="disableEvent($event)" (ondrop)="disableEvent($event)" maxlength="12">
+                            </div>
+                        </div>
+                        <div class="form-group row2" *ngIf="productoSeleccionado === '22'">
+                            <label for="convenio4" class="col-md-3  col-xs-3 col-xs-3 col-sm-3">{{'convenio' | translate}}:</label>
+                            <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+                                    <input class="form-control"  type="text" id="convenio4" name="convenio" formControlName="convenio" placeholder="{{'convenio' | translate}}"
+                                    (ondragenter)="disableEvent($event)" (dragover)="disableEvent($event)" (ondrop)="disableEvent($event)" >
+                            </div>
+                        </div>
+                        <div class="form-group row2" *ngIf="productoSeleccionado === '23'">
+                            <label for="folio4" class="col-md-3  col-xs-3 col-xs-3 col-sm-3">{{'folio' | translate}}:</label>
+                            <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+                                <input class="form-control"  type="text"  id="folio4" name="folio" formControlName="folio" placeholder="{{'folio' | translate}}"
+                                (ondragenter)="disableEvent($event)" (dragover)="disableEvent($event)" (ondrop)="disableEvent($event)">
+                            </div>
+                        </div>
+                        <div class="form-group row2" *ngIf="productoSeleccionado === '23' || productoSeleccionado === '21'"><p class="espacio2"></p></div>
+                        <div class="form-group row2">
+                            <label for="fechaFin4" class="col-md-3  col-xs-3 col-xs-3 col-sm-3">{{'fechaFinal' | translate}}:</label>
+                            <div class="ccol-xs-8 col-sm-8 col-md-8 col-lg-8">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" id="fechaFin4" name="fechaFin" readonly required [max]="maxFromDate"
+                                    bsDatepicker #dpFechaFin="bsDatepicker" [bsConfig]="datePickerConfig" formControlName="fechaFin" [maxDate]="getMaxDate()">
+                                    <div class="input-group-append">
+                                        <button class="btn btn-outline-danger" type="button" id="btnFechaFin" name="btnFechaFin" (click)="dpFechaFin.toggle()"[attr.aria-expanded]="dpFechaFin.isOpen"><em class="fa fa-calendar"></em>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row2" *ngIf="productoSeleccionado === '80' || productoSeleccionado === '85' || productoSeleccionado === '40'">
+                            <label for="nomBeneficiario4" class="col-md-3  col-xs-3 col-xs-3 col-sm-3">{{'nomBeneficiario' | translate}}:</label>
+                            <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+                                    <input class="form-control"  type="text" id="nomBeneficiario4" name="nomBeneficiario" formControlName="nomBeneficiario" placeholder="{{'nomBeneficiario' | translate}}"
+                                    (ondragenter)="disableEvent($event)" (dragover)="disableEvent($event)" (ondrop)="disableEvent($event)">
+                            </div>
+                        </div>
+                        <div class="form-group row2" *ngIf="productoSeleccionado === '80'">
+                            <label for="nomPersonaAutorizada4" class="col-md-3  col-xs-3 col-xs-3 col-sm-3">{{'nomPersonaAutorizada' | translate}}:</label>
+                            <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+                                    <input class="form-control"  type="text" id="nomPersonaAutorizada4" name="nomPersonaAutorizada" 
+                                    formControlName="nomPersonaAutorizada" placeholder="{{'nomPersonaAutorizada' | translate}}"
+                                    (ondragenter)="disableEvent($event)" (dragover)="disableEvent($event)" (ondrop)="disableEvent($event)">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-2">
+                <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-1 offset-sm-1 offset-md-1 offset-lg-1">
+                    <button type="button" class="btn btn-danger" (click)="limpiarMonitor2()">{{'btn.limpiar' | translate}}</button>
+                </div>
+                <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-8 offset-sm-8 offset-md-8 offset-lg-8">
+                    <button type="button" class="btn btn-danger" (click)="guardarMonitor2()">{{'btn.consultar' | translate}}</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+
+    <div *ngIf="abreTabla === true">
+        <div class="card my-1">
+            <h5 class="card-header justify-content-center">{{'pantalla.moduloAdministracion.resultadoBusqueda.title' | translate}}</h5>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 table-responsive">
+                       <table class="table table-striped table-hover" aria-describedby="listaConsultaMonitor">
+                        <caption></caption>
+                            <thead>
+                                <tr>
+                                    <th class="text-center" scope="col"> {{'codigoCliente' |translate}} </th><th class="text-center" scope="col"> {{'idMovimiento' |translate}} </th>
+                                    <th class="text-center" scope="col"> {{'cuentaCargo' |translate}} </th><th class="text-center" scope="col"> {{'cuentaAbono' |translate}}  </th>
+                                    <th class="text-center" scope="col"> {{'producto' |translate}} </th><th class="text-center" scope="col"> {{'nombreArchivo' |translate}} </th>
+                                    <th class="text-center" scope="col"> {{'canal' |translate}} </th><th class="text-center" scope="col"> {{'referencia' |translate}} </th>
+                                    <th class="text-center" scope="col"> {{'estatus' |translate}} </th><th class="text-center" scope="col"> {{'importe' |translate}} </th>                             
+                                    <th class="text-center" scope="col"> {{'archivoDupl' |translate}} </th><th class="text-center" scope="col"> {{'estatusDupl' |translate}} </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <ng-container *ngIf="banderaHasRows; then templateFillTable; else templateEmptyTableMONI">
+                                </ng-container>
+                                <ng-template #templateFillTable>
+                                    <tr *ngFor="let tab1 of tablaMonitor">
+                                        <td class="text-center"(click)="detalles(tab1)" > {{tab1.codCli }}</td>
+                                        <td class="text-center"> {{tab1.idOperacion}}</td>
+                                        <td class="text-center"> {{tab1.ctaCargo === '-1' ? 'ErrorCampo' : tab1.ctaCargo }}</td>
+                                        <td class="text-center"> {{tab1.ctaAbono }}</td>
+                                        <td class="text-center"> {{tab1.producto }}</td>
+                                        <td class="text-center"> {{tab1.nomArch}}</td>
+                                        <td class="text-center"> {{tab1.canal }}</td>
+                                        <td class="text-center"> {{tab1.referencia}}</td>
+                                        <td class="text-center"> {{tab1.estatus}}</td>
+                                        <td class="text-center"> {{tab1.importe}}</td>
+                                        <td class="text-center"> {{tab1.nombreArchDuplicado}}</td>
+                                        <td class="text-center"> {{tab1.estatusDuplicado}}</td>
+                                    </tr>
+                                </ng-template>
+                                <ng-template #templateEmptyTableMONI>
+                                    <tr>
+                                        <td class="text-center" colspan="12"> {{'noResult' | translate}} </td>
+                                    </tr>
+                                </ng-template>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mt-1">
+                       <div class="d-flex justify-content-center" *ngIf="banderaHasRows">
+                        <pagination 
+                        [boundaryLinks]="showBoundaryLinksMO2" 
+                        [directionLinks]="showDirectionLinksMO2" 
+                        [totalItems]="totalElements2"
+                        [itemsPerPage]="rowsPorPagina2" 
+                        [maxSize]="10" 
+                        [(ngModel)]="page"  
+                        previousText="&lsaquo;" nextText="&rsaquo;"
+                        firstText="{{'paginador.inicio' | translate}}" 
+                        lastText="{{'paginador.fin' | translate}}" 
+                        (pageChanged)="onPageChanged2($event)">
+                </pagination>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="clas">
+            <div> {{'MO.TOS' | translate}}: {{totalElements2}}</div>
+            <div> {{'MO.CE' | translate}}: {{correoT}}</div>
+        </div>
+        <div class="clas">
+            <div> {{'menu.monitoreo.comprobantesFormatoCDMX.operaciones.total.archivo' | translate}}: {{archi}}</div>
+            <div> {{'menu.monitoreo.comprobantesFormatoCDMX.operaciones.importe' | translate}}: {{importGlobal | currency}}</div>
+        </div>
+        <div class="row mt-2">
+            <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-1 offset-sm-1 offset-md-1 offset-lg-1">
+                <button type="button" class="btn btn-danger" (click)="regresar()">{{'MO.Regr' | translate}}</button>
+            </div>
+            <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-8 offset-sm-8 offset-md-8 offset-lg-8">
+                <button type="button" class="btn btn-danger" (click)="exportar()"> {{'btn.exportar' | translate}}</button>
+            </div>
+        </div>
+        <div class="row mt-2">
+            <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-1 offset-sm-1 offset-md-1 offset-lg-1">
+                <button type="button" class="btn btn-danger" (click)="refrescar()">{{'MO.Refr' | translate}}</button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,103 @@
+<app-operativa-header tituloPantalla="{{'pantalla.codPos.titulo.alta' | translate}}" *ngIf="pageNameTitle"></app-operativa-header>
+<app-operativa-header tituloPantalla="{{'pantalla.codPos.titulo.modificar' | translate}}" *ngIf="!pageNameTitle"></app-operativa-header>
+
+<div id="altaBanco" class="panel panel-default col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    <br>
+    <div class="card">
+        <h5 class="card-header justify-content-center">
+            {{'pantalla.codPos.msj' | translate}}
+        </h5>
+        <div class="card-body">
+            <form [formGroup]="altaCPForm">
+                <div class="row">
+                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                        <div class="form-group row align-items-center">
+                            <label for="codigoPostal" class="col-xs-3 col-sm-3 col-md-3 col-lg-3 col-form-label text-right">{{'pantalla.moduloAdministracion.CP' | translate}}:</label>
+                            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                <input type="text" class="form-control removeTextTransform" id="codigoPostal" name="codigoPostal" formControlName="codigoPostal" placeholder="{{'pantalla.moduloAdministracion.CP' | translate}}" appInputMask="numerico"
+                                size="5" maxlength="5">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row" *ngIf="edit === false;">
+                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                        <div class="form-group row align-items-center">
+                            <label for="latitud" class="col-xs-3 col-sm-3 col-md-3 col-lg-3 col-form-label text-right">{{'pantalla.moduloAdministracion.latitud' | translate}}:</label>
+                            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                <input type="text" class="form-control removeTextTransform" id="latitud" name="latitud" formControlName="latitud" placeholder="{{'pantalla.moduloAdministracion.latitud' | translate}}" appInputMask="alfanumerico_carac"
+                                size="11" maxlength="11">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row" *ngIf="edit === false;">
+                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                        <div class="form-group row align-items-center">
+                            <label for="longitud" class="col-xs-3 col-sm-3 col-md-3 col-lg-3 col-form-label text-right">{{'pantalla.moduloAdministracion.longitud' | translate}}:</label>
+                            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                <input type="text" class="form-control removeTextTransform" id="longitud" name="longitud" formControlName="longitud" placeholder="{{'pantalla.moduloAdministracion.longitud' | translate}}" appInputMask="alfanumerico_carac"
+                                size="11" maxlength="11">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row" *ngIf="edit === false;">
+                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                        <div class="form-group row align-items-center">
+                            <label for="sucursal" class="col-xs-3 col-sm-3 col-md-3 col-lg-3 col-form-label text-right">{{'pantalla.moduloAdministracion.sucursal' | translate}}:</label>
+                            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 fle">
+                                <input type="text" class="form-control removeTextTransform" id="sucursal" name="sucursal"  formControlName="sucursal" placeholder="{{'pantalla.moduloAdministracion.sucursal' | translate}}" appInputMask="numerico"
+                                size="4" maxlength="4">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row" *ngIf="edit === true;">
+                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                        <div class="form-group row align-items-center">
+                            <label for="sucursal" class="col-xs-3 col-sm-3 col-md-3 col-lg-3 col-form-label text-right">{{'pantalla.moduloAdministracion.sucursal' | translate}}:</label>
+                            <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 fle ">
+                                <input type="text" class="form-control removeTextTransform" id="sucursal" name="sucursal"  formControlName="sucursal" appInputMask="numerico" size="4" maxlength="4">
+                               <label for="direccion2"></label>
+                                <input type="text" class="form-control removeTextTransform" id="direccion2" name="direccion"  formControlName="direccion" >
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="row">
+                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                        <div class="form-group row align-items-center">
+                            <label for="calculoAutomatico" class="col-xs-3 col-sm-3 col-md-3 col-lg-3 col-form-label text-right">{{'pantalla.moduloAdministracion.calculoAutomatico' | translate}}:</label>
+                            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                <label for="status"></label>
+                                <input type="checkbox" class="form-control removeTextTransform" id="calculoAutomatico" name="calculoAutomatico"  formControlName="calculoAutomatico" (change)="cambioCalculo($event, edit)">
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </form>
+        </div>
+    </div>
+    <br>
+    <div class="row mb-2">
+        <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-1 offset-sm-1 offset-md-1 offset-lg-1">
+            <button type="button" class="btn btn-danger" (click)="regresarToConsult()">{{'btn.cancelarCP' | translate}}</button>
+        </div>
+        <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-8 offset-sm-8 offset-md-8 offset-lg-8" *ngIf="edit === false;">
+            <button type="button" class="btn btn-danger" (click)="guardar()">{{'btn.guardarCP' | translate}}</button>
+        </div>
+        <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-8 offset-sm-8 offset-md-8 offset-lg-8" *ngIf="edit === true;">
+            <button type="button" class="btn btn-danger" (click)="actualizar()">{{'btn.guardarCP' | translate}}</button>
+        </div>
+    </div>
+</div>

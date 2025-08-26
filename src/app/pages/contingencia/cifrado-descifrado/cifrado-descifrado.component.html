@@ -1,0 +1,173 @@
+<app-operativa-header tituloPantalla="{{'menu.contigencia.cifradoDescifrado' | translate}}"></app-operativa-header>
+<div id="cifradoDescrifrado" class="panel panel-default col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    <br>
+    <div class="card">
+        <h5 class="card-header justify-content-center">
+            {{'pantalla.datosContrato.title' | translate}}
+        </h5>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-xs-6 col-sm-6 col-md-6">
+                    <div class="form-group row">
+                        <label for="codCliente"
+                            class="col-form-label col-sm-3">{{'pantalla.cifradodes.datosContrato.codCliente' |
+                            translate}}:</label>
+                        <div class="col-sm-4">
+                            <input type="text" id="codCliente" name="codigoCliente" class="form-control"
+                                placeholder="{{'pantalla.cifradodes.datosContrato.codCliente' | translate}}"
+                                (keydown.Tab)="findContratoByBuc()" (keypress)="validateOnlyNumeros($event)"
+                                maxlength="8" size="12" (paste)="pasteOnlyNumeros($event)" tabindex="1"
+                                [(ngModel)]="datosContrato.bucCliente">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-6 col-sm-6 col-md-6">
+                    <div class="form-group row">
+                        <label for="estatusContrato"
+                            class="col-form-label col-sm-3">{{'pantalla.cifradodes.datosContrato.estatusContrato' |
+                            translate}}:</label>
+                        <div class="col-sm-4">
+                            <input type="text" id="estatusContrato" name="estatusContrato" class="form-control"
+                                placeholder="{{'pantalla.cifradodes.datosContrato.estatusContrato' | translate}}" tabindex="1"
+                                [(ngModel)]="datosContrato.descEstatus" disabled>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group row">
+                        <label for="razonSocial"
+                            class="col-form-label col-sm-3">{{'pantalla.cifradodes.datosContrato.razonSocial'
+                            |
+                            translate}}:</label>
+                        <div class="col-sm-9">
+                            <input type="text" id="razonSocial" name="razonSocial"
+                                placeholder="{{'pantalla.cifradodes.datosContrato.razonSocial' | translate}}" class="form-control"
+                                [(ngModel)]="datosContrato.razonSocial" disabled>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-6" hidden>
+                    <div class="form-group row">
+                        <label for="idContrato"
+                            class="col-form-label col-sm-3">{{'pantalla.cifradodes.datosContrato.idContrato' |
+                            translate}}:</label>
+                        <div class="col-sm-4">
+                            <input type="text" id="idContrato" name="idContrato" class="form-control"
+                                [(ngModel)]="datosContrato.idContrato">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-6 col-sm-6 col-md-6">
+                    <div class="form-group row">
+                        <label for="cuentaEje"
+                            class="col-form-label col-sm-3">{{'pantalla.cifradodes.datosContrato.cuentaEje' |
+                            translate}}:</label>
+                        <div class="col-sm-4">
+                            <input type="text" id="cuentaEje" name="cuentaEje" class="form-control"
+                                placeholder="{{'pantalla.cifradodes.datosContrato.cuentaEje' | translate}}"
+                                [(ngModel)]="datosContrato.cuentaEje" disabled>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-6 col-sm-6 col-md-6">
+                    <div class="form-group row">
+                        <label for="numContrato" class="col-form-label col-sm-3">{{'numContrato' |
+                            translate}}:</label>
+                        <div class="col-sm-4">
+                            <input type="text" class="form-control" name="numContrato"
+                                placeholder="{{'numContrato' | translate}}" id="numContrato"
+                                [(ngModel)]="datosContrato.numContrato" disabled>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card mt-1">
+        <h5 class="card-header justify-content-center">
+            {{'pantalla.cifradodes.seccion.archivo' | translate}}
+        </h5>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-xs-6 col-sm-6 col-md-6">
+                    <div class="form-group row ">
+                        <label for="canal"
+                            class="col-form-label font-weight-bold col-sm-2">{{'pantalla.cifradodes.seccion.archivo.canal'
+                            |
+                            translate}}</label>
+                        <div class="col-sm-4">
+                            <select #canales id="canal" name="canal" class="form-control"
+                                (change)="onSelected(canales.value)" [(ngModel)]="idCanal"
+                                [attr.disabled]="bandShowBotones? '' : null">
+                                <option value="0" disabled>-Seleccione -</option>
+                                <option *ngFor="let canal of lstCanales" [value]="canal.idCanal" >
+                                    {{ canal.nombre }}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-6 col-sm-6 col-md-6">
+                    <div class="form-group row ">
+                        <label for="operacion"
+                            class="col-form-label font-weight-bold col-sm-2">{{'pantalla.cifradodes.seccion.archivo.operacion'
+                            |
+                            translate}}</label>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12">
+                    <div class="form-group row ">
+                        <div class="form-check form-check-inline col-sm-1">
+                            <input type="radio" id="cifrado" name="operacion" class="form-check-input space-right"
+                                value="01" checked (change)="onChange($event)" [(ngModel)]="operacion"
+                                [attr.disabled]="bandShowBotones? '' : null">
+                            <label for="cifrado"
+                                class="col-form-label">{{'pantalla.cifradodes.seccion.archivo.op.cifrado' |
+                                translate}}</label>
+                        </div>
+                        <div class="form-check form-check-inline col-sm-3">
+                            <input type="radio" id="descifrado" name="operacion" class="form-check-input space-right"
+                                value="02" (change)="onChange($event)" [(ngModel)]="operacion"
+                                [attr.disabled]="bandShowBotones? '' : null">
+                            <label for="descifrado"
+                                class="col-form-label ">{{'pantalla.cifradodes.seccion.archivo.op.descifrado' |
+                                translate}}</label>
+                        </div>
+                        <div class="col-xs-4 col-sm-4 col-md-4">
+                            <div class="align-items-center">
+                                <div class="justify-content-center">
+                                    <input #btnCargarArchivo type="file" value="{{'btn.archivo' | translate}}"
+                                        class="form-control text-center" name="file" id="file"
+                                        (change)="readArchivo($event)" aria-label="file"
+                                        [attr.disabled]="bandShowBotones? '' : null">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br />
+        <div class="row mt-3">
+            <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-1 offset-sm-1 offset-md-1 offset-lg-1">
+                <button type="button" (click)="clearScreen()" class="btn btn-danger">{{'btn.limpiar' |
+                    translate}}</button>
+
+            </div>
+            <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-8 offset-sm-8 offset-md-8 offset-lg-8">
+                <button type="button" id="upload" (click)="uploadArchivo()" class="btn btn-danger" 
+                [disabled]="bandShowBotones? '' : null">{{'btn.enviar' |
+                    translate}}</button>
+            </div>
+        </div>
+        <br />
+    </div>
+</div>

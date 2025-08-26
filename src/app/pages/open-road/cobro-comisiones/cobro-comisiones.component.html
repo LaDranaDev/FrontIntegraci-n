@@ -1,0 +1,118 @@
+<!--O consulta de comisiones-->
+<div class="panel panel-default col">
+    <app-operativa-header
+        tituloPantalla="{{'pantallas.comunes.consultasComisiones' | translate}}"></app-operativa-header>
+    <div class="card">
+        <app-filtros-consultas (filtroConsulta)="filtroConsulta($event)"
+            (limpia)="SeLimpia($event)"></app-filtros-consultas>
+        <div class="row btnAnulaComision">
+            <div class="col">
+                <button *ngIf="formConsulta.get('anulaComision')?.length" type="button"
+                    class="btn btn-outline-danger float-r mt-1" (click)="estatusComision()">Anular Comisión</button>
+                <button *ngIf="formConsulta.get('anulaComision')?.length" type="button"
+                    class="btn btn-outline-danger float-left mt-1" (click)="cuentaCobro()">Modficar Cuenta de
+                    Cobro</button>
+            </div>
+        </div>
+    </div>
+    <br>
+    <div class="card" *ngIf="totalRegistros > 0">
+        <h5 class="card-header justify-content-center"><label for="">{{'pantalla.consultarBuzon.resultadoBusqueda.title'
+                | translate}}</label></h5>
+        <div class="card-body">
+            <div class="table-responsive">
+                <form [formGroup]="formConsulta" autocomplete="off">
+                    <table class="table table-striped table-hover" aria-describedby="consultas">
+                        <thead>
+                            <tr>
+                                <ng-container *ngFor="let item of titulosCabecera">
+                                    <th scope="col">{{item}}</th>
+                                </ng-container>
+                                <th scope="col" class="justify-content-center text-center">
+                                    {{'pantalla.descargallavepublicacanal.table.col.seleccionar' |
+                                    translate}} <input type="checkbox" id="selectA" class="form-check-input ml-5"
+                                        aria-label="selectA" (change)="selectAll($event)"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <ng-container formArrayName="anulaComision">
+                                <ng-container
+                                    *ngFor="let item of formConsulta.get('anulaComision').controls;let i=index;"
+                                    [formGroupName]="i">
+                                    <tr>
+                                        <td>{{item.value.bucCliente}}</td>
+                                        <td>{{item.value.ctaOrdenante}}</td>
+                                        <td>{{item.value.concepto}}</td>
+                                        <td>{{item.value.descProducto}}</td>
+                                        <td>{{item.value.numRegistrosProducto}}</td>
+                                        <td>{{item.value.clacon}}</td>
+                                        <td>{{item.value.fechaCalculo}}</td>
+                                        <td>{{item.value.fechaEnvio}}</td>
+                                        <td>{{item.value.fechaCambioEstatus}}</td>
+                                        <td>{{item.value.descError}}</td>
+                                        <td>{{item.value.descEstatus}}</td>
+                                        <td>{{item.value.strImporte}}</td>
+                                        <td>{{item.value.strPrecio}}</td>
+                                        <td>{{item.value.strPorcentaje}}</td>
+                                        <td>{{item.value.strComision}}</td>
+                                        <td>{{item.value.strTcPesos}}</td>
+                                        <td>{{item.value.divisa}}</td>
+                                        <td>{{item.value.strComisionDivisa}}</td>
+                                        <td>{{item.value.strIva}}</td>
+                                        <td>{{item.value.strTotal}}</td>
+                                        <td>{{item.value.aliasSubsidiaria}}</td>
+                                        <td>{{item.value.bucSubsidiaria}}</td>
+                                        <td class="text-center">
+                                            <input type="checkbox" formControlName="estatus" id="estatus" name="estatus"
+                                                class="form-check-input ml-5"
+                                                aria-label="estatus" (change)="seleccionado(item.value, i,$event)">
+                                        </td>
+                                    </tr>
+                                </ng-container>
+                            </ng-container>
+                            <tr>
+                                <td colspan="16"></td>
+                                <td class="text-center">TOTAL</td>
+                                <td>{{totalComisionDivisa}}</td>
+                                <td>{{totalIva}}</td>
+                                <td>{{total}}</td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </form>
+            </div>
+            <div class="row mt-2">
+                <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-1 offset-sm-1 offset-md-1 offset-lg-1">
+                </div>
+                <div class="col-md-2  offset-xs-7 offset-sm-7 offset-md-7 offset-lg-7 ">
+                    <div>*IVA Informativo del 16%</div>
+                </div>
+            </div>
+            <div class="row mt-2">
+                <div class="col-xs-1 col-sm-1 col-md- col-lg-1 offset-xs-1 offset-sm-1 offset-md-1 offset-lg-1">
+                </div>
+                <div class="col-xs-1 col-sm-1 col-md- col-lg-1 offset-xs-8 offset-sm-8 offset-md-8 offset-lg-8">
+                    <button type="button" class="btn btn-danger" (click)="exportar()"> {{'btn.exportar' |
+                        translate}}</button>
+                </div>
+            </div>
+            <br>
+            <div class="row mt-2">
+                <div class="col-xs-1 col-sm-1 col-md- col-lg-1 offset-xs-1 offset-sm-1 offset-md-1 offset-lg-1">
+                </div>
+                <div class="col-md-8 text-end">
+                    <section class="text-right">
+                        <ngb-pagination (pageChange)="onPageChange($event)" [pageSize]="pageSize"
+                            [collectionSize]="totalRegistros" [(page)]="page" [maxSize]="10" [rotate]="true"
+                            [boundaryLinks]="true" class="d-flex justify-content-end"></ngb-pagination>
+                    </section>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+    <br>
+</div>

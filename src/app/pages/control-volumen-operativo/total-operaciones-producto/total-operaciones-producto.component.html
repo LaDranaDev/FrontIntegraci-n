@@ -1,0 +1,182 @@
+<app-operativa-header tituloPantalla="{{ 'operativo.graficaTotOperTitulo' | translate }}"></app-operativa-header>
+<div id="consultaValidacionesCanal" class="panel panel-default col-xs-12 col-sm-12 col-md-12 col-lg-12">
+  <br />
+  <div class="card" [hidden]="showGraph">
+    <h5 class="card-header justify-content-center">
+      {{ "pantalla.gestionValidacion.seccionBusqueda.title" | translate }}
+    </h5>
+    <div class="card-body">
+      <form [formGroup]="formSearch">
+        <div class="row">
+          <div class="col-xs-5 col-sm-5 col-md-4 col-lg-5">
+            <div class="form-group row justify-content-center align-items-center">
+              <label for="product" class="col-md-3 col-form-label">{{
+                "pantalla.moduloAdministracion.gestionBackend.producto"
+                | translate
+                }}:</label>
+              <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                <select class="form-control" name="product" id="product" formControlName="product">
+                  <option value="">{{"todos" | translate}}</option>
+                  <option [value]="item.value" *ngFor="let item of producto">{{item.value}}</option>
+                  <option>{{"ninguno" | translate}}</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-check form-check-inline">
+              <input type="radio" class="ml-5 form-check-input" id="Operaciones" name="Operaciones"
+                (click)="formSearch.get('opeMonto')?.setValue('operaciones')" [checked]="
+                  formSearch.get('opeMonto')?.value === 'operaciones' ? true : false
+                " />
+              <label class="form-check-label" for="Operaciones">{{
+                "menu.controlVolumenOperativo.graficaCliente.opcion" | translate
+                }}</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input type="radio" class="ml-5 form-check-input" name="Monto" id="Monto"
+                (click)="formSearch.get('opeMonto')?.setValue('monto')" [checked]="
+                  formSearch.get('opeMonto')?.value === 'monto' ? true : false
+                " />
+              <label class="form-check-label" for="Monto">{{
+                "pantalla.monitoreo.monitorArchivoCurso.monto" | translate
+                }}</label>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="row mt-3">
+          <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-1">
+            <label for="fechainicio" class="col-form-label labelDate">{{
+              "pantalla.controlVolumenOperativo.graficaArchivoCliente.periodo"
+              | translate
+              }}:</label>
+          </div>
+          <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">
+            <label for="fechaInicio" class="col-form-label labelDate">{{
+              "pantalla.controlVolumenOperativo.graficaArchivoCliente.fechaInicio"
+              | translate
+              }}</label>
+          </div>
+          <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+            <div class="input-group">
+              <input type="text" class="form-control" id="fechaInicio" name="fechaInicio" readonly required bsDatepicker
+                [bsConfig]="datePickerConfig" #dpFechaIni="bsDatepicker" formControlName="dateInit" />
+              <div class="input-group-append">
+                <button class="btn btn-outline-danger" type="button" id="btnFechaInicio" name="btnFechaInicio"
+                  (click)="dpFechaIni.toggle()" [attr.aria-expanded]="dpFechaIni.isOpen">
+                  <em class="fa fa-calendar"></em>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">
+            <label for="fechaFin" class="col-form-label labelDate">{{
+              "pantalla.controlVolumenOperativo.graficaArchivoCliente.fechaFin" | translate
+              }}</label>
+          </div>
+          <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+            <div class="input-group">
+              <input type="text" class="form-control" id="fechaFin" name="fechaFin" readonly required bsDatepicker
+                [bsConfig]="datePickerConfig" #dpFechaFin="bsDatepicker" formControlName="dateEnd" />
+              <div class="input-group-append">
+                <button class="btn btn-outline-danger" type="button" id="btnFechaFin" name="btnFechaFin"
+                  (click)="dpFechaFin.toggle()" [attr.aria-expanded]="dpFechaFin.isOpen">
+                  <em class="fa fa-calendar"></em>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+
+      <!-- Buttons search, clear -->
+      <div class="row mt-5">
+        <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-1 offset-sm-1 offset-md-1 offset-lg-1">
+          <button type="button" class="btn btn-danger" (click)="cleanForm()">
+            {{ "btn.limpiar" | translate }}
+          </button>
+        </div>
+        <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 offset-xs-8 offset-sm-8 offset-md-8 offset-lg-8">
+          <button type="button" class="btn btn-danger" (click)="search()">
+            {{ "btn.buscar" | translate }}
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card mt-3" [hidden]="!showGraph">
+    <div class="card-body">
+      <div class="row">
+        <!-- Table -->
+        <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
+          <table class="table table-striped table-hover">
+            <caption></caption>
+            <thead>
+              <tr>
+                <th scope="col" class="text-center">
+                  {{ "operativo.nombreProducto" | translate }}
+                </th>
+                <th scope="col" class="text-center" *ngIf="requestGet.idProducto === 'monto'">
+                  {{
+                  "pantalla.controlVolumenOperativo.graficaArchivoCliente.monto"
+                  | translate
+                  }}
+                </th>
+                <th scope="col" class="text-center" *ngIf="requestGet.idProducto === 'operaciones'">
+                  {{
+                  "menu.controlVolumenOperativo.graficaCliente.opcion"
+                  | translate
+                  }}
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <ng-container *ngIf="totalOpe.length > 0">
+                <tr *ngFor="let ope of totalOpe">
+                  <td class="text-left">{{ ope.grlNombProd }}</td>
+                  <td class="text-center">{{ ope.numMont }}</td>
+                </tr>
+              </ng-container>
+              <ng-container *ngIf="totalOpe.length <= 0">
+                <tr>
+                  <td class="text-center" colspan="6">
+                    {{ "administracion.productos.periodo.Nodata" | translate }}
+                  </td>
+                </tr>
+              </ng-container>
+            </tbody>
+          </table>
+        </div>
+        <!-- Graph -->
+        <div class="col-xs-7 col-sm-7 col-md-7 col-lg-7">
+          <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-center text-uppercase">
+              <h2>{{ titlteGraph }}</h2>
+              <h2>{{ 'menu.sterling.historialBuzon.periodo' | translate}}: {{requestGet.fechaInicial}} {{'toLabel' |
+                translate}} {{requestGet.fechaFinal}}</h2>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+              <canvas class="canvas-size" id="chartTotalOpProduc"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row mt-2">
+        <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-1 offset-sm-1 offset-md-1 offset-lg-1">
+          <button type="button" class="btn btn-danger" (click)="backToFormSearch()">
+            {{ "btn.regresar" | translate }}
+          </button>
+        </div>
+        <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-8 offset-sm-8 offset-md-8 offset-lg-8">
+          <button type="button" class="btn btn-danger" (click)="exportReport()">
+            {{ "btn.exportar" | translate }}
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 19.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="-611 320 21 11" style="enable-background:new -611 320 21 11;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill:#928E8B;}
+	.st1{fill:#FFFFFF;}
+	.st2{fill:none;}
+</style>
+<symbol  id="token-mini-boton" viewBox="0 -9 19 9">
+	<path class="st0" d="M9.5,0C14.7,0,19-2,19-4.5S14.7-9,9.5-9S0-7,0-4.5S4.3,0,9.5,0z"/>
+	<g>
+		<g>
+			<path class="st1" d="M3-4.5C3-5.4,5-7,7-7v5C5-2,3-3.5,3-4.5z M8-3v-3h8v3H8z"/>
+		</g>
+	</g>
+</symbol>
+<use xlink:href="#token-mini-boton"  width="19" height="9" id="XMLID_761_" y="-9" transform="matrix(1 0 0 -1 -610 321)" style="overflow:visible;"/>
+<rect id="_x3C_Sector_x3E__110_" x="-611" y="320" class="st2" width="21" height="11"/>
+</svg>

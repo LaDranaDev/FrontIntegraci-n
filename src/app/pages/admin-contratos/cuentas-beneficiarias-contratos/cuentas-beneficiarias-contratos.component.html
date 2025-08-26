@@ -1,0 +1,115 @@
+<app-operativa-header tituloPantalla="{{'menu.adminContrato.cuentasBeneficiarias' | translate}}"></app-operativa-header>
+<div id="cuentasBeneficiarias" class="panel panel-default col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    <br>
+    <div class="card">
+        <h5 class="card-header justify-content-center">
+            {{'pantalla.datosContrato.title' | translate}}
+        </h5>
+        <app-busqueda-cliente [data]="datos" #limpiar></app-busqueda-cliente>
+        <br>
+    </div>
+    <br>
+    <div class="card my-1">
+        <div class="card-body">
+            <form [formGroup]="cuentasBeneficiariasForm">
+                <div class="row justify-content-center">
+                    <div class="col-xs-6 col-sm-6 col-md-6">
+                        <div class="form-group row">
+                            <label class="col-xs-2 col-sm-2 col-md-2 col-lg-2 offset-xs-1 offset-sm-1 offset-md-1 offset-lg-1 col-form-label text-right mt-1" for="cuentaBeneficiaria">{{'pantallas.regeneraReporteCobranza.cuenta'| translate}}</label>
+                            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                <input class="form-control"  type="text" id="cuentaBeneficiaria" name="cuentaBeneficiaria"
+                                formControlName="cuentaBeneficiaria"
+                                (keypress)="validaNumberos($event)"
+                                (ondragenter)="disableEvent($event)"
+                                (dragover)="disableEvent($event)"
+                                (ondrop)="disableEvent($event)"
+                                maxlength="18" size="28"
+                                [appInputDisabled]="datos.descEstatus"
+                                >
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <div class="row mt-2">
+                <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-1 offset-sm-1 offset-md-1 offset-lg-1">
+                    <button type="button" class="btn btn-danger" (click)="limpiarDatosForm()" [appInputDisabled]="datos.descEstatus"
+                    >{{'btn.limpiar' |
+                        translate}}</button>
+                </div>
+                <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-8 offset-sm-8 offset-md-8 offset-lg-8">
+                    <button type="button" class="btn btn-danger" (click)="eventoConsultar()"  [appInputDisabled]="datos.descEstatus">{{'btn.buscar' |
+                        translate}}</button>
+                </div>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="row mt-2">
+                <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-10 offset-sm-10 offset-md-10 offset-lg-10">
+                    <button type="button" class="btn btn-danger" [disabled]="!banderaBtnExportar"  (click)="openCuentaBeneficiaria()">{{'btn.exportar' | translate}}</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="banderaHasRows">
+        <div class="card my-1">
+            <h5 class="card-header justify-content-center">
+                {{'pantalla.moduloAdministracion.resultadoBusqueda.title' | translate}}
+            </h5>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                       <table class="table table-striped table-hover" aria-describedby="listaConsultaCuenta">
+                            <thead>
+                                <tr>
+                                    <th class="text-center" scope="col">{{'pantalla.cuentasBeneficiarias.tipoCta' | translate}}</th>
+                                    <th class="text-center" scope="col">{{'pantalla.cuentasBeneficiarias.buc' | translate}}</th>
+                                    <th class="text-center" scope="col">{{'razonSocial' | translate}}</th>
+                                    <th class="text-center" scope="col">{{'pantalla.cuentasBeneficiarias.nomCta' | translate}}</th>
+                                    <th class="text-center" scope="col">{{'pantalla.cuentasBeneficiarias.nomCtaBen' | translate}}</th>
+                                    <th class="text-center" scope="col">{{'pantalla.cuentasBeneficiarias.fechaAlta' | translate}}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <ng-container *ngIf="banderaHasRows; then templateFillTable; else templateEmptyTable2">
+                                </ng-container>
+                                <ng-template #templateFillTable>
+                                    <tr *ngFor="let cuenta of tablaCuentas">
+                                        <td class="text-center">{{cuenta.tipoCuenta}}</td>
+                                        <td class="text-center">{{cuenta.buc  === null ? '--' : cuenta.buc}}</td>
+                                        <td class="text-center">{{cuenta.razonSoc  === null ? '--' : cuenta.razonSoc}}</td>
+                                        <td class="text-center">{{cuenta.nombCta}}</td>
+                                        <td class="text-center">{{cuenta.numCtaBen}}</td>
+                                        <td class="text-center">{{cuenta.fechaAlta === null ? '--' : cuenta.fechaAlta}}</td>
+                                    </tr>
+                                </ng-template>
+                                <ng-template #templateEmptyTable2>
+                                    <tr>
+                                        <td class="text-center" colspan="6">  {{'pantalla.moduloAdministracion.gestionBancos.resultadoBusqueda' | translate}} </td>
+                                    </tr>
+                                </ng-template>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mt-1">
+                        <div class="d-flex justify-content-center" *ngIf="banderaHasRows">
+                            <pagination
+                                [maxSize]="10"
+                                [boundaryLinks]="showBoundaryLinksCuentas"
+                                [directionLinks]="showDirectionLinksCuentas"
+                                [totalItems]="totalElements"
+                                [itemsPerPage]="rowsPorPagina"
+                                [(ngModel)]="page"
+                                previousText="&lsaquo;" nextText="&rsaquo;"
+                                firstText="{{'paginador.inicio' | translate}}" lastText="{{'paginador.fin' | translate}}">
+                            </pagination>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

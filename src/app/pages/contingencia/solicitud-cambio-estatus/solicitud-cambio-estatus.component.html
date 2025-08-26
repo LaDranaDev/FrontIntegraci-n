@@ -1,0 +1,304 @@
+<div id="adminBuzon" class="panel panel-default col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    <app-operativa-header tituloPantalla="{{'menu.contigencia.solicitudCambioEstatus' | translate}}"></app-operativa-header>
+    
+    <br>
+    <h5 class="card-header justify-content-center">
+        {{'solicitudEstadosCuenta.general.tituloDatosContrato' | translate}}
+    </h5>
+    <div class="card">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                    <div class="form-group row justify-content-center align-items-center">
+                        <label for="codCliente" class="col-xs-6 col-sm-10 col-md-6 col-lg-4 col-form-label">{{'comun.codCliente' | translate}}:</label>
+                        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                            <input class="form-control" type="text" name="codCliente" id="codCliente"  placeholder="{{'comun.codCliente' | translate}}" appInputMask="numerico" (paste)="pasteOnlyNumeros($event)"
+                                [(ngModel)]="datosContrato.codigoCliente"  (keydown.Tab)="buscarBuc()" (keypress)="eventOnKeyOnlyNumbers($event)" tabindex="1" maxlength="8"  > 
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                    <div class="form-group row justify-content-center align-items-center">
+                        <label for="tipoArchivo" class="col-xs-6 col-sm-10 col-md-6 col-lg-4 col-form-label">{{'comun.estatusContrato' | translate}}:</label>
+                        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                            <input class="form-control" type="text" name="tipoArchivo" id="tipoArchivo"  placeholder="{{'comun.estatusContrato' | translate}}" 
+                            [(ngModel)]="datosContrato.descEstatus"  disabled >
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <div class="form-group row justify-content-center align-items-center">
+                        <label for="razonSoc" class="col-xs-2 col-sm-2 col-md-2 col-lg-2 col-form-label">{{'comun.razonSocial' | translate}}:</label>
+                        <div class="col-xs-8 col-sm-8 col-md-8 col-lg-9">
+                            <input class="form-control" type="text" name="razonSoc" id="razonSoc"  placeholder="{{'comun.razonSocial' | translate}}" 
+                                [(ngModel)]="datosContrato.razonSocial"  disabled tabindex="1" maxlength="255"  > 
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                    <div class="form-group row justify-content-center align-items-center">
+                        <label for="cunetaEje" class="col-xs-6 col-sm-10 col-md-6 col-lg-4 col-form-label">{{'comun.cuentaEje' | translate}}:</label>
+                        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                            <input class="form-control" type="text" name="cunetaEje" id="cunetaEje"  placeholder="{{'comun.cuentaEje' | translate}}" 
+                            [(ngModel)]="datosContrato.cuentaEje" disabled="false" tabindex="1"  maxlength="200" > 
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                    <div class="form-group row justify-content-center align-items-center">
+                        <label for="numContrato" class="col-xs-6 col-sm-10 col-md-6 col-lg-4 col-form-label">{{'comun.numCntr' | translate}}:</label>
+                        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                            <input class="form-control" type="text" name="numContrato" id="numContrato"  placeholder="{{'comun.numCntr' | translate}}" 
+                            [(ngModel)]="datosContrato.numContrato" disabled tabindex="1"  maxlength="200" > 
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+        </div>
+    </div>
+
+    <br>
+    <br>
+    <div class="card" *ngIf="banderaBotones === true">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                    <div class="form-group row justify-content-center align-items-center">
+                        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                            <button type="button" class="btn btn-danger" (click)="onCambioEstatusOperacion()">{{'cambio.estatus.mnuCambioEsta.operacion' | translate}}</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                    <div class="form-group row justify-content-center align-items-center">
+                        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                            <button type="button" class="btn btn-danger" (click)="onCierreBanderaProducto()">{{'cambio.estatus.mnuCambioEsta.cierreP' | translate}}</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                    <div class="form-group row justify-content-center align-items-center">
+                        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                            <button type="button" class="btn btn-danger" (click)="onCambioEstatusArchivo()">{{'cambio.estatus.mnuCambioEsta.archivo' | translate}}</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                    <div class="form-group row justify-content-center align-items-center">
+                        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                            <button type="button" class="btn btn-danger" (click)="onCierreBanderaArchivo()">{{'cambio.estatus.mnuCambioEsta.cierreA' | translate}}</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+    <!-- Cambio Estatus Operación  -->
+    <h5 class="card-header justify-content-center" *ngIf="banderaCambioEstatusOperacion === true">
+        {{'planCalidad.cambioEst.tituloParametros' | translate}} - {{'cambio.estatus.mnuCambioEsta.operacion' | translate}}
+    </h5>
+    <!-- Cambio Estatus Archivo  -->
+    <h5 class="card-header justify-content-center" *ngIf="banderaCambioEstatusArchivo === true">
+        {{'planCalidad.cambioEst.tituloParametros' | translate}} - {{'cambio.estatus.mnuCambioEsta.archivo' | translate}}
+    </h5>
+    <div class="card" *ngIf="banderaCambioEstatusOperacion === true || banderaCambioEstatusArchivo === true">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                    <div class="form-group row justify-content-center align-items-center">
+                        <label for="nomArchivo" class="col-xs-6 col-sm-10 col-md-6 col-lg-4 col-form-label">{{'planCalidad.cambioEst.nombreArchivo' | translate}}</label>
+                        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                            <input class="form-control" type="text" name="cunetaEje" id="nomArchivo"  placeholder="{{'planCalidad.cambioEst.nombreArchivo' | translate}}" 
+                            [(ngModel)]="nombreArchivo" tabindex="1"  maxlength="200" > 
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                    <div class="form-group row justify-content-center align-items-center">
+                        <label for="statusArchivo" class="col-xs-6 col-sm-10 col-md-6 col-lg-4 col-form-label">{{'planCalidad.cambioEst.estatus' | translate}}</label>
+                        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                            <select class="form-control" id="tipoArchivo" title="Seleccionar..."  
+                                name="statusArchivo" [(ngModel)]="estatusArchivo" >
+                                <option value="0" >{{'seleccione' | translate}}</option>
+                                <option *ngFor="let status of listEstatusResponse" [title]="status.value" [value]="status.key">{{status.value}}</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Cierre Bandera Producto  -->
+    <h5 class="card-header justify-content-center" *ngIf="banderaCierreProducto === true">
+        {{'planCalidad.cambioEst.tituloParametros' | translate}} - {{'cambio.estatus.mnuCambioEsta.cierreP' | translate}}
+    </h5>
+    <!-- Cierre Bandera Producto  -->
+    <h5 class="card-header justify-content-center" *ngIf="banderaCierreArchivo === true">
+        {{'planCalidad.cambioEst.tituloParametros' | translate}} - {{'cambio.estatus.mnuCambioEsta.cierreA' | translate}}
+    </h5>
+    <div class="card" *ngIf="banderaCierreProducto === true || banderaCierreArchivo === true">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <div class="form-group row justify-content-center align-items-center">
+                        <label for="nomArchivo" class="col-xs-6 col-sm-10 col-md-6 col-lg-4 col-form-label">{{'planCalidad.cambioEst.nombreArchivo' | translate}}</label>
+                        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                            <input class="form-control" type="text" name="cunetaEje" id="nomArchivo"  placeholder="{{'planCalidad.cambioEst.nombreArchivo' | translate}}" 
+                            [(ngModel)]="nombreArchivo" tabindex="1"  maxlength="200" > 
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <br>
+    <div class="row" *ngIf="banderaBtnConsultar===true">
+        <div class="col-xs-12 col-sm-1 col-md-1 col-lg-1 offset-sm-1 offset-md-1 offset-lg-1 mt-1">
+            <button type="button" class="btn btn-danger" (click)="limpiar()">{{'btn.limpiar' | translate}}</button>
+        </div>
+        <div class="col-xs-12 col-sm-1 col-md-1 col-lg-1 offset-sm-6 offset-md-8 offset-lg-8 mt-1"> 
+            <button type="button" class="btn btn-danger" (click)="consultar()">{{'btn.consultarConexion' | translate}}</button>
+        </div>
+    </div>
+
+    <br>
+    <div class="card" *ngIf="banderaTabla===true">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <table class="table table-striped table-hover" aria-describedby="listaConsultaPais">
+                        <thead>
+                            <tr>
+                                <th class="text-center" scope="col">{{'planCalidad.cambioEst.seleccionar' | translate}}
+                                    
+                                    <label for="checkAll"></label>
+                                    <input type="checkbox" [(ngModel)]="checkAll" id="checkAll" name="checkAll" (change)="onChangeAll($event)" class="hidden">
+                                </th>
+                                <th class="text-center" scope="col">{{'planCalidad.cambioEst.codigoCliente' | translate}}</th>
+
+                                <th class="text-center" scope="col" *ngIf="banderaCambioEstatusOperacion === true" >{{'planCalidad.cambioEst.idMovimiento' | translate}}</th>
+                                <th class="text-center" scope="col" *ngIf="banderaCambioEstatusOperacion === true">{{'planCalidad.cambioEst.cuentaCargo' | translate}}</th>
+                                <th class="text-center" scope="col" *ngIf="banderaCambioEstatusOperacion === true">{{'planCalidad.cambioEst.cuentaAbono' | translate}}</th>
+
+                                <th class="text-center" scope="col" *ngIf="banderaCierreProducto === true
+                                    || banderaCambioEstatusOperacion === true">{{'planCalidad.cambioEst.producto' | translate}}</th>
+
+                                <th class="text-center" scope="col">{{'planCalidad.cambioEst.nombreArchivo' | translate}}</th>
+                                <th class="text-center" scope="col">{{'planCalidad.cambioEst.canal' | translate}}</th>
+                                <th class="text-center" scope="col">{{'planCalidad.cambioEst.estatus' | translate}}</th>
+
+                                <th class="text-center" scope="col" *ngIf="banderaCambioEstatusOperacion === true ||
+                                    banderaCambioEstatusOperacion === true">{{'planCalidad.cambioEst.importe' | translate}}</th>
+
+                                <th class="text-center" scope="col" *ngIf="banderaCierreArchivo === true">{{'planCalidad.cambioEst.banderaCie' | translate}}</th>
+                                <th class="text-center" scope="col" *ngIf="banderaCierreProducto === true">{{'planCalidad.cambioEst.banderaProd' | translate}}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <ng-container *ngIf="banderaHasRows; then templateFillTable; else templateEmptyTable2"> </ng-container>
+                            <ng-template #templateFillTable>
+                                <tr *ngFor="let dato of tablaDatos" >
+                                    <td class="text-center">
+                                        <label for="check"></label>
+                                        <input type="checkbox" value="{{dato.banderaCambio}}" name="check" id="check" [checked]="dato.banderaCambio === 'true' ? true : false"
+                                         (change)="onChangeChkSeleccionar($event, dato)"/>
+                                    </td>
+                                    <td class="text-center">{{dato.buc}}</td>
+                                    <td class="text-center" *ngIf="banderaCambioEstatusOperacion === true">{{dato.movimiento}}</td>
+                                    <td class="text-center" *ngIf="banderaCambioEstatusOperacion === true" >{{dato.ctaCargo}}</td>
+                                    <td class="text-center" *ngIf="banderaCambioEstatusOperacion === true">{{dato.ctaAbono}}</td>
+
+                                    <td class="text-center" *ngIf="banderaCierreProducto === true
+                                                                || banderaCambioEstatusOperacion === true">{{dato.producto}}</td>
+
+                                    <td class="text-center">{{dato.nombreArchivo}}</td>
+                                    <td class="text-center">{{dato.canal}}</td>
+                                    <td class="text-center">{{dato.estatus}}</td>
+
+                                    <td class="text-center" *ngIf="banderaCambioEstatusOperacion === true ||
+                                                banderaCambioEstatusOperacion === true">{{dato.importe}}</td>
+
+                                    <td class="text-center" *ngIf="banderaCierreProducto || banderaCierreArchivo">{{dato.bandera}}</td>
+                                </tr>
+                            </ng-template>
+                            <ng-template #templateEmptyTable2>
+                                <tr>
+                                    <td class="text-center" colspan="12">  {{'pantalla.moduloAdministracion.gestionBancos.resultadoBusqueda' | translate}} </td>
+                                </tr>
+                            </ng-template>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mt-1">
+                    <div class="d-flex justify-content-center" *ngIf="banderaHasRows">
+                        <pagination
+                            [maxSize]="10"
+                            [boundaryLinks]="showBoundaryLinksCuentas"
+                            [directionLinks]="showDirectionLinksCuentas"
+                            [totalItems]="totalElements"
+                            [itemsPerPage]="rowsPorPagina"
+                            [(ngModel)]="page"
+                            previousText="&lsaquo;" nextText="&rsaquo;"
+                            firstText="{{'paginador.inicio' | translate}}" lastText="{{'paginador.fin' | translate}}"
+                            (pageChanged)="onPageChanged($event)">
+                        </pagination>
+
+                    </div>
+                </div>
+            </div>
+
+            <br>
+            <div class="row">
+                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                    <div class="form-group row justify-content-center align-items-center">
+                        <label for="estatusO" class="col-xs-6 col-sm-10 col-md-6 col-lg-4 col-form-label">{{'planCalidad.cambioEst.estatus' | translate}}</label>
+                        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                            <select class="form-control" id="estatusO" title="Seleccionar..."  
+                                name="estatusO" [(ngModel)]="estatusOperacion" >
+                                <option value="0" >{{'seleccione' | translate}}</option>
+                                <option *ngFor="let status of listEstatusCResponse" [title]="status.value" [value]="status.key">{{status.value}}</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <br>
+    <div class="row" *ngIf="banderaTabla===true">
+        <div class="col-xs-12 col-sm-1 col-md-1 col-lg-1 offset-sm-1 offset-md-1 offset-lg-1 mt-1">
+        </div>
+        <div class="col-xs-12 col-sm-1 col-md-1 col-lg-1 offset-sm-6 offset-md-8 offset-lg-8 mt-1">
+            <button type="button" class="btn btn-danger"  (click)="enviar()">{{'planCalidad.general.enviar' | translate}}</button>
+        </div>
+    </div>
+
+    <br>
+    <br>
+    <br>
+    <br>
+
+    
+
+</div>

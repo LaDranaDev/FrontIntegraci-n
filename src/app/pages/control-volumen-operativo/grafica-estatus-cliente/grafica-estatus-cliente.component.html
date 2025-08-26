@@ -1,0 +1,247 @@
+<app-operativa-header tituloPantalla="{{
+    'pantalla.controlVolumenOperativo.graficaEstatusCliente.title' | translate
+  }}"></app-operativa-header>
+
+<div id="gestionAlarma" class="panel panel-default col-xs-12 col-sm-12 col-md-12 col-lg-12">
+  <br />
+  <!-- --- Seccion de Busqueda --- -->
+  <div class="card mt-3" [hidden]="banderaHasRows">
+    <h5 class="card-header justify-content-center">
+      {{ "pantalla.monitoreo.monitorArchivoCurso.busqueda" | translate }}
+    </h5>
+    <div class="card-body">
+      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <form [formGroup]="graficoEstatusClienteForm" class="row">
+          <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 offset-1">
+            <div class="input-group mb-3">
+              <label class="input-group-text" for="codigoCliente">{{
+                "pantalla.controlVolumenOperativo.graficaEstatusCliente.codigoCliente"
+                | translate
+                }}</label>
+              <input type="text" appInputMask="numerico" (paste)="pasteOnlyNumeros($event)" class="form-control display"
+                name="codigoCliente" id="codigoCliente" formControlName="codigoCliente" [ngClass]="{
+                  'is-invalid':
+                    submittedBuzonSearch &&
+                    formControlGraficoEstatusCliente['codigoCliente'].errors
+                }" />
+            </div>
+          </div>
+          <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 offset-1"></div>
+          <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 offset-1">
+            <div class="form-check">
+              <label class="form-check-label mr-5" for="buscarFecha">
+                {{
+                "pantalla.controlVolumenOperativo.graficaEstatusCliente.buscarFecha"
+                | translate
+                }}
+              </label>
+              <input class="form-check-input" type="checkbox" value="buscarFecha" id="buscarFecha"
+                formControlName="buscarFecha" [(ngModel)]="buscarFechaNg" (change)="activarInputFecha($event)" />
+            </div>
+          </div>
+          <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">
+            <label for="fechaInicio" class="col-form-label labelDate periodo-name">{{
+              "pantalla.controlVolumenOperativo.graficaEstatusCliente.periodo"
+              | translate
+              }}</label>
+          </div>
+
+          <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+            <label for="fechaInicio" class="col-form-label labelDate">
+              {{
+              "pantalla.controlVolumenOperativo.graficaEstatusCliente.fechaInicio"
+              | translate
+              }}
+            </label>
+            <div class="col-md-8 inputDate">
+              <div class="input-group">
+                <input type="text" class="form-control" id="fechaInicio" name="fechaInicio" bsDatepicker
+                  #dpFechaAten="bsDatepicker" [bsConfig]="datePickerConfig" formControlName="fechaInicio" />
+                <div class="input-group-append">
+                  <button class="btn btn-outline-danger" type="button" id="btnFechaAtendida" name="btnFechaAtendida"
+                    (click)="dpFechaAten.toggle()" [disabled]="calendario" [attr.aria-expanded]="dpFechaAten.isOpen">
+                    <em class="fa fa-calendar"></em>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+            <label for="fechaFin" class="col-form-label labelDate">{{
+              "pantalla.controlVolumenOperativo.graficaEstatusCliente.fechaFin"
+              | translate
+              }}</label>
+
+            <div class="col-md-8 inputDate">
+              <div class="input-group">
+                <input type="text" class="form-control" id="fechaFin" name="fechaFin" bsDatepicker
+                  #dpFechaFin="bsDatepicker" [bsConfig]="datePickerConfig" formControlName="fechaFin" />
+                <div class="input-group-append">
+                  <button class="btn btn-outline-danger" type="button" id="btnDateEnd" name="btnDateEnd"
+                    [disabled]="calendario" (click)="dpFechaFin.toggle()" [attr.aria-expanded]="dpFechaFin.isOpen">
+                    <em class="fa fa-calendar"></em>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mt-5 mb-5">
+          <div class="col-md-5 offset-1">
+            <button type="button" class="btn btn-danger" (click)="onClickClean()">
+              {{ "btn.limpiar" | translate }}
+            </button>
+          </div>
+          <div class="col-md-5 d-flex justify-content-end">
+            <button type="button" class="btn btn-danger" (click)="eventoConsultar()">
+              {{ "btn.buscar" | translate }}
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- --- Seccion de Resultado --- -->
+  <div class="card mt-3" [hidden]="!banderaHasRows || showChartClient">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+      <div class="divide2">
+        <div class="rowTable centrar-content">
+          <table class="table table-striped table-hover">
+            <caption></caption>
+            <thead>
+              <tr>
+                <th scope="col" class="text-center">
+                  {{
+                  "pantalla.controlVolumenOperativo.graficaEstatusCliente.Estatus"
+                  | translate
+                  }}
+                </th>
+                <th scope="col" class="text-center">
+                  {{
+                  "pantalla.controlVolumenOperativo.graficaEstatusCliente.total"
+                  | translate
+                  }}
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <ng-container *ngIf="
+                  content.length > 0;
+                  then templateFillTable;
+                  else templateEmptyTable4
+                ">
+              </ng-container>
+
+              <ng-template #templateFillTable>
+                <tr *ngFor="let dato of content">
+                  <td class="text-center">
+                    <button class="link" (click)="createCharWithFilter(dato.estatus)">
+                      {{ dato.estatus }}
+                    </button>
+                  </td>
+                  <td class="text-center">{{ dato.total }}</td>
+                </tr>
+              </ng-template>
+              <ng-template #templateEmptyTable4>
+                <tr>
+                  <td class="text-center" colspan="12">{{
+                    "pantalla.mensaje.generico.nohaydatos"
+                    | translate
+                    }}</td>
+                </tr>
+              </ng-template>
+            </tbody>
+          </table>
+        </div>
+        <div class="row2">
+          <div class="chart-container" width="300px" height="300px">
+            <canvas id="chartHistory"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row mt-2 mb-3" [hidden]="!banderaHasRows">
+      <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-1 offset-sm-1 offset-md-1 offset-lg-1">
+        <button type="button" class="btn btn-danger" (click)="onClickClean()">
+          {{ "btn.regresar" | translate }}
+        </button>
+      </div>
+      <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-8 offset-sm-8 offset-md-8 offset-lg-8">
+        <button type="button" class="btn btn-danger" (click)="exportarDatos()">
+          {{ "btn.exportar" | translate }}
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ResultByClient -->
+  <div class="card mt-3" [hidden]="!showChartClient">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+      <div class="divide2">
+        <div class="rowTable centrar-content">
+          <table class="table table-striped table-hover">
+            <caption></caption>
+            <thead>
+              <tr>
+                <th scope="col" class="text-center">
+                  {{ "operativo.nombreCliente" | translate }}
+                </th>
+                <th scope="col" class="text-center">
+                  {{
+                  "pantalla.controlVolumenOperativo.graficaEstatusCliente.total"
+                  | translate
+                  }}
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <ng-container *ngIf="
+                  dataFilter.length > 0;
+                  then templateFillTableFilter;
+                  else templateEmptyTableFilterNoempty
+                ">
+              </ng-container>
+
+              <ng-template #templateFillTableFilter>
+                <tr *ngFor="let datoFilter of dataFilter">
+                  <td class="text-center">
+                    <label>
+                      {{ datoFilter.nombreBenef }}
+                    </label>
+                  </td>
+                  <td class="text-center">{{ datoFilter.numeMovil }}</td>
+                </tr>
+              </ng-template>
+              <ng-template #templateEmptyTableFilterNoempty>
+                <tr>
+                  <td class="text-center" colspan="12">{{
+                    "pantalla.mensaje.generico.nohaydatos"
+                    | translate
+                    }}</td>
+                </tr>
+              </ng-template>
+            </tbody>
+          </table>
+        </div>
+        <div class="row2">
+          <div class="chart-container" width="300px" height="300px">
+            <canvas id="chartByFilter"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row mt-2 mb-3">
+      <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-1 offset-sm-1 offset-md-1 offset-lg-1">
+        <button type="button" class="btn btn-danger" (click)="onClickClean(true)">
+          {{ "btn.regresar" | translate }}
+        </button>
+      </div>
+      <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-8 offset-sm-8 offset-md-8 offset-lg-8">
+        <button type="button" class="btn btn-danger" (click)="exportarDatos(true)">
+          {{ "btn.exportar" | translate }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

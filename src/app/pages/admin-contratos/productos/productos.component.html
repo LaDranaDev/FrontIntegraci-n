@@ -1,0 +1,444 @@
+<app-operativa-header tituloPantalla="{{'menu.productos' | translate}}"></app-operativa-header>
+<div id="productosContrato" class="panel panel-default col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    <br>
+    <div class="card">
+        <h5 class="card-header justify-content-center">
+            {{'pantalla.datosContrato.title' | translate}}
+        </h5>
+
+        <div class="row10 ml-2 pl-2 pr-2">
+            <div class="col-xs-6 col-sm-6 col-md-6">
+                <div class="form-group rowt">
+                    <label for="nombre" class="col-form-label col-sm-3">{{'pantalla.datosContrato.codCliente' |
+                        translate}}</label>
+                    <div class="col-sm-4">
+                        <input type="text" id="nombre" name="nombre" class="form-control"
+                            placeholder="{{'pantalla.datosContrato.codCliente' | translate}}"
+                            [(ngModel)]="datospersonales.bucCliente" disabled>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-6 col-sm-6 col-md-6">
+                <div class="form-group rowt">
+                    <label for="estatus" class="col-form-label col-sm-3">{{'pantalla.datosContrato.estatusContrato' |
+                        translate}}</label>
+                    <div class="col-sm-4">
+                        <select class="form-control" id="estatus" name="estatus" (change)="seleccion($event)"
+                            [attr.disabled]="firstLoadIsCancel ? '' : null">
+                            <option *ngFor="let estatus of lstEstatusContrato" [value]="estatus.idCat"
+                                [selected]="idEstatusDef === estatus.idCat">
+                                {{ estatus.descripcionCatalogo }}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row10 ml-2 pl-2 pr-2">
+            <div class="col-sm-6 col-md-6">
+                <div class="form-group rowt">
+                    <label for="nombre" class="col-form-label col-sm-3">{{'pantalla.datosContrato.razonSocial' |
+                        translate}}</label>
+                    <div class="col-sm-9">
+                        <input type="text" id="nombre" name="nombre" class="form-control"
+                            placeholder="{{'pantalla.datosContrato.razonSocial' | translate}}" tabindex="1"
+                            [(ngModel)]="datospersonales.razonSocial" disabled>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-6 col-md-6" hidden>
+                <div class="form-group rowt">
+                    <label for="idContrato" class="col-form-label col-sm-3">{{'pantalla.datosContrato.idContrato' |
+                        translate}}</label>
+                    <div class="col-sm-4">
+                        <input type="text" id="idContrato" name="idContrato" class="form-control"
+                            [(ngModel)]="datospersonales.idContrato">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row10 ml-2 pl-2 pr-2">
+            <div class="col-xs-6 col-sm-6 col-md-6">
+                <div class="form-group rowt">
+                    <label for="nombre" class="col-form-label col-sm-3">{{'pantalla.datosContrato.cuentaEje' |
+                        translate}}</label>
+                    <div class="col-sm-4">
+                        <input type="text" id="nombre" name="nombre" class="form-control"
+                            placeholder="{{'pantalla.datosContrato.cuentaEje' | translate}}" tabindex="1"
+                            [(ngModel)]="datospersonales.cuentaEje" disabled>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xs-6 col-sm-6 col-md-6">
+                <div class="form-group rowt">
+                    <label for="nombre" class="col-form-label col-sm-3">{{'pantalla.datosContrato.numContrato' |
+                        translate}}</label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control" name="nombre" id="nombre"
+                            placeholder="{{'pantalla.datosContrato.numContrato' | translate}}" tabindex="1"
+                            [(ngModel)]="datospersonales.numContrato" disabled>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+    </div>
+    <br>
+
+    <form [formGroup]="productosForm">
+        <div class="card">
+            <h5 class="card-header justify-content-center">
+                {{'pantalla.productos.admin.datosContrato.title' | translate}}
+            </h5>
+            <div class="card-body">
+                <!-- periodoHabilitacion -->
+                <div class="row justify-content-center">
+                    <label for="periodoHabilitacion"
+                        class="col-sm-2 col-form-label">{{'pantalla.productos.admin.datosContrato.periodo' |
+                        translate}}</label>
+                    <div class="col-sm-1">
+                        <select [attr.disabled]="firstLoadIsCancel ? '' : null" class="form-select form-select-sm form-control"
+                            formControlName="periodoHabilitacion" id="periodoHabilitacion" aria-label=".form-select-sm">
+                            <option [value]="0"
+                                [selected]="this.productosForm.controls['periodoHabilitacion'].value === 0">
+                                0</option>
+                            <option [value]="0.5"
+                                [selected]="this.productosForm.controls['periodoHabilitacion'].value === 0.5">30
+                                min
+                            </option>
+                            <option [value]="sec" *ngFor="let sec of sec | slice: 0 : 24 "
+                                [selected]="this.productosForm.controls['periodoHabilitacion'].value === sec">
+                                {{sec}}&nbsp;hr(s)</option>
+                        </select>
+                    </div>
+                </div>
+                <!-- diasProgramarArchivos -->
+                <div class="row justify-content-center">
+                    <label for="diasProgramarArchivos"
+                        class="col-form-label col-sm-2">{{'pantalla.productos.admin.datosContrato.dias' |
+                        translate}}</label>
+                    <div class="col-sm-1">
+                        <select [attr.disabled]="firstLoadIsCancel ? '' : null" class="form-select form-select-sm form-control"
+                            formControlName="diasProgramarArchivos" id="diasProgramarArchivos"
+                            aria-label=".form-select-sm">
+                            <option [value]="sec" *ngFor="let sec of sec | slice: 0 : 99 "
+                                [selected]="this.productosForm.controls['diasProgramarArchivos'].value === sec">
+                                {{sec}}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+
+
+                <!--Nemónico, Alias -->
+                <div class="row justify-content-center mb-2">
+                    <label for="nemonico"
+                        class="col-form-label col-md-1">{{'pantalla.productos.admin.datosContrato.nemonico' |
+                        translate}}</label>
+                    <div class="col-md-1">
+                        <input type="text" id="nemonico" name="nemonico" [attr.disabled]="firstLoadIsCancel ? '' : null"
+                            formControlName="nemonico" class="col-sm-1 form-control removeTextTransform" size="4"
+                            maxlength="4" (keypress)="onlyAlphaNumber($event)" (ondragenter)="disableEvent($event)"
+                            (dragover)="disableEvent($event)" (ondrop)="disableEvent($event)">
+                    </div>
+
+
+                    <label *ngIf="this.productosForm.controls['activaAlias'].value === 'ACTIVO'" for="alias"
+                        class="col-form-label col-md-1">{{'pantalla.productos.admin.datosContrato.alias'
+                        | translate}}</label>
+                    <div class="col-md-1">
+                        <input *ngIf="this.productosForm.controls['activaAlias'].value === 'ACTIVO'"
+                            [attr.disabled]="firstLoadIsCancel ? '' : null" type="text" id="alias" name="alias" formControlName="alias"
+                            class="col-sm-1 form-control removeTextTransform" size="10" maxlength="8"
+                            (keypress)="onlyAlphaNumber($event)" (paste)="(false)" (blur)="upperCase('alias')"
+                            (ondragenter)="disableEvent($event)" (dragover)="disableEvent($event)"
+                            (ondrop)="disableEvent($event)">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-9 col-sm-9 col-md-9">
+                        <div class="form-group row2">
+                            <div>
+                                <input [attr.disabled]="firstLoadIsCancel ? '' : null" type="checkbox" name="bandCambioProd"
+                                    formControlName="bandCambioProd" id="bandCambioProd" />
+                            </div>
+                            <label for="bandCambioProd"
+                                class="col-form-label  estilo text-style">{{'pantalla.productos.admin.datosContrato.cambio.producto'
+                                | translate}}</label>
+                            <div class="estilo">
+                                <input type="checkbox" [attr.disabled]="firstLoadIsCancel ? '' : null" name="verificarCuentaBeneficiaria"
+                                    formControlName="verificarCuentaBeneficiaria" id="verificarCuentaBeneficiaria" />
+                                <label for="verificarCuentaBeneficiaria"
+                                    class="col-form-label  estilo text-style">{{'pantalla.productos.admin.datosContrato.verifica.cuenta'
+                                    | translate}}</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-9 col-sm-9 col-md-9">
+                        <div class="form-group row2">
+                            <div>
+                                <label for="usarClabeParaEdoCta"></label>
+                                <input [attr.disabled]="firstLoadIsCancel ? '' : null" type="checkbox" name="usarClabeParaEdoCta"
+                                    id="usarClabeParaEdoCta" formControlName="usarClabeParaEdoCta" />
+                            </div>
+                            <label for="usarClabeParaEdoCta"
+                                class="col-form-label estilo text-style">{{'pantalla.productos.admin.datosContrato.usa.cuenta'
+                                | translate}}</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-9 col-sm-9 col-md-9">
+                        <div class="form-group row2">
+                            <div>
+                                <label for="usarCifrasControl"></label>
+                                <input [attr.disabled]="firstLoadIsCancel ? '' : null" type="checkbox" name="usarCifrasControl"
+                                    id="usarCifrasControl" formControlName="usarCifrasControl" />
+                            </div>
+                            <label for="usarCifrasControl"
+                                class="col-form-label estilo text-style">{{'pantalla.productos.admin.datosContrato.cifras.control'
+                                | translate}}</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class="card">
+            <h5 class="card-header justify-content-center">
+                {{'pantalla.productos.admin.datosCanales.title' | translate}}
+            </h5>
+            <br>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-xs-5 col-sm-5 col-md-5">
+                        <div class="form-group row">
+                            <div class="col-xs-5 col-sm-5 col-md-5 dis" formArrayName="canales">
+                                <table class="">
+                                    <caption></caption>
+                                    <tbody>
+                                        <ng-container
+                                            *ngFor="let item of this.productosForm.controls['canales'].value; let i = index; ">
+                                            <tr *ngIf="i % 2 === 0 ">
+                                                <td [formGroupName]="i" class="textAlignRigth">
+                                                    <label for="canales{{canales[i].idCanal}}"></label>
+                                                    <input [attr.disabled]="firstLoadIsCancel ? '' : null" type="checkbox"
+                                                        formControlName="estadoSeleccion"
+                                                        id="canales{{canales[i].idCanal}}"
+                                                        name="canales{{canales[i].idCanal}}"
+                                                        (change)="eventDisableElementos(canales[i].idCanal)"
+                                                        [checked]="this.productosForm.controls['idCanalCore'].value === canales[i].idCanal ? true : false" />
+                                                    {{canales[i].descripcion}}
+                                                </td>
+                                                <td [formGroupName]="i+1"
+                                                    *ngIf="this.productosForm.controls['canales'].value.length !== i+1"
+                                                    class="textAlignLeft">
+                                                    <label for="canales{{canales[i+1].idCanal}}"></label>
+
+                                                    <input [attr.disabled]="firstLoadIsCancel ? '' : null" type="checkbox"
+                                                        formControlName="estadoSeleccion"
+                                                        id="canales{{canales[i+1].idCanal}}"
+                                                        name="canales{{canales[i+1].idCanal}}"
+                                                        (change)="eventDisableElementos(canales[i+1].idCanal)"
+                                                        [checked]="this.productosForm.controls['idCanalCore'].value === canales[i+1].idCanal ? true : false" />
+                                                    {{canales[i+1].descripcion}}
+                                                </td>
+
+
+                                            </tr>
+
+
+                                        </ng-container>
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="rowIzq">
+                    <div class="col-xs-5 col-sm-5 col-md-5">
+                        <div class="form-group row">
+                            <label for="messagePartner"
+                                class="col-form-label col-sm-3">{{'pantalla.productos.admin.datosCanales.message' |
+                                translate}}</label>
+                            <div class="col-sm-3">
+                                <input type="text" [attr.disabled]="firstLoadIsCancel ? '' : null" id="messagePartner"
+                                    name="messagePartner" class="form-control" formControlName="messagePartner" size="6"
+                                    maxlength="4" (keypress)="onlyNumbers($event)"
+                                    (blur)="validateMessagePartner($event)" (ondragenter)="disableEvent($event)"
+                                    (dragover)="disableEvent($event)" (ondrop)="disableEvent($event)"
+                                    (paste)="onlyNumbers($event)">
+                            </div>
+                            <label for="tipoTransferencia"
+                                class="col-form-label col-sm-3">{{'pantalla.productos.admin.datosCanales.tipotransf'
+                                |
+                                translate}}</label>
+                            <div class="col-sm-3">
+                                <select [attr.disabled]="firstLoadIsCancel ? '' : null" class="form-control" name="tipoTransferencia"
+                                    id="tipoTransferencia" formControlName="tipoTransferencia">
+                                    <option [value]="'X'"
+                                        [selected]="this.productosForm.controls['tipoTransferencia'].value === 'X'">
+                                        Seleccione...</option>
+                                    <option [value]="'R'"
+                                        [selected]="this.productosForm.controls['tipoTransferencia'].value === 'R'">Real
+                                        Time
+                                    </option>
+                                    <option [value]="'S'"
+                                        [selected]="this.productosForm.controls['tipoTransferencia'].value === 'S'">
+                                        Store and
+                                        Forward</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-5 col-sm-5 col-md-5">
+                        <div class="form-group row">
+                            <label for="bic"
+                                class="col-form-label col-sm-3">{{'pantalla.productos.admin.datosCanales.bic' |
+                                translate}}</label>
+                            <div class="col-sm-3">
+                                <input [attr.disabled]="firstLoadIsCancel ? '' : null" type="text" id="bic" name="bic"
+                                    class="form-control removeTextTransform" formControlName="bic" size="15"
+                                    maxlength="13" (keypress)="onlyAlphaNumber($event)"
+                                    (ondragenter)="disableEvent($event)" (dragover)="disableEvent($event)"
+                                    (ondrop)="disableEvent($event)" (paste)="onlyAlphaNumber($event)">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br>
+    </form>
+    <div class="card">
+        <h5 class="card-header justify-content-center">
+            {{'pantalla.productos.admin.productos.title' | translate}}
+        </h5>
+        <table class="table table-striped table-hover" aria-describedby="Productos del contrato" mat-table
+            [dataSource]="dataSource">
+            <ng-container matColumnDef="asignado">
+                <th scope="col" class="text-center" mat-header-cell *matHeaderCellDef>
+                    {{'pantalla.productos.admin.productos.sel' |
+                    translate}}</th>
+                <td class="text-center" mat-cell *matCellDef="let element">
+                    <label for="asignado{{element.id}}"></label>
+                    <input type="checkbox" id="asignado{{element.id}}" name="asignado"
+                        [disabled]="(habilitarAltaBajaProductos === true ? false : true) && firstLoadIsCancel" [(ngModel)]="element.asignado" (click)="enableParamProdSelect($event, element.id)" />
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="descripcion">
+                <th scope="col" class="text-center" mat-header-cell *matHeaderCellDef>
+                    {{'menu.productos' | translate}}
+                </th>
+                <td class="text-center" mat-cell *matCellDef="let element">
+                    <ng-container *ngIf="element.aplicaContratoConfirming === 'S' && habilitarEdicionProductos">
+                        <button class="link" id="descripcion{{element.id}}" name="descripcion{{element.id}}"
+                            (click)="openModalSelect(element.id)">
+                            {{element.descripcion}}
+                        </button>
+                    </ng-container>
+                    <ng-container *ngIf="element.aplicaContratoConfirming === 'N'">
+                        {{element.descripcion}}
+                    </ng-container>
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="tipoCargo">
+                <th scope="col" class="text-center" mat-header-cell *matHeaderCellDef>
+                    {{'pantalla.productos.admin.productos.tipocargo' | translate}}
+                </th>
+                <td class="text-center" mat-cell *matCellDef="let element">
+                    <label for="tipoCargo{{element.id}}"></label>
+                    <select *ngIf="element.aplicaTipoCargo === 'A'" class="form-control with80"
+                        [(ngModel)]="element.tipoCargo"
+                        [disabled]="(this.productosForm.controls['bandEdicionProductos'].value === 'A' && element.asignado === true ? false : true && habilitarEdicionProductos === true ? true : false) || isCancelStatusClient || firstLoadIsCancel"
+                        id="tipoCargo{{element.id}}" name="tipoCargo{{element.id}}">
+                        <option value="D" [selected]="element.tipoCargo === 'D'">Detalle
+                        </option>
+                        <option value="G" [selected]="element.tipoCargo === 'G'">Global
+                        </option>
+                        <option *ngIf="element.id == 5" value="C" [selected]="element.tipoCargo === 'C'">Global
+                            por Concepto
+                        </option>
+                    </select>
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="envioEmail">
+                <th scope="col" class="text-center" mat-header-cell *matHeaderCellDef>
+                    {{'pantalla.productos.admin.productos.email' |
+                    translate}}</th>
+                <td class="text-center" mat-cell *matCellDef="let element">
+                    <label for="envioEmail{{element.id}}"></label>
+                    <input *ngIf="element.aplicaEmail === 'A'" type="checkbox" [(ngModel)]="element.envioEmail"
+                        id="envioEmail{{element.id}}" name="envioEmail{{element.id}}"
+                        [disabled]="(this.productosForm.controls['bandEdicionProductos'].value === 'A' && element.asignado === true ? false : true &&  habilitarEdicionProductos === true ? true : false) || isCancelStatusClient || firstLoadIsCancel">
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="vigencia">
+                <th scope="col" class="text-center" mat-header-cell *matHeaderCellDef>
+                    {{'pantalla.productos.admin.productos.vigencia' | translate}}</th>
+                <td class="text-center" mat-cell *matCellDef="let element">
+                    <label for="vigencia{{element.id}}"></label>
+                    <select *ngIf="element.aplicaVigencia === 'A'" class="form-control with80"
+                        [(ngModel)]="element.vigencia"
+                        [disabled]="(this.productosForm.controls['bandEdicionProductos'].value === 'A' && element.asignado === true ? false : true &&  habilitarEdicionProductos === true ? true : false) || isCancelStatusClient || firstLoadIsCancel"
+                        id="vigencia{{element.id}}" name="vigencia{{element.id}}">
+                        <option [value]="sec" *ngFor="let sec of sec | slice: 0 : 365 ">{{sec}}</option>
+                    </select>
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="numeroReintentos">
+                <th scope="col" class="text-center" mat-header-cell *matHeaderCellDef>
+                    {{'pantalla.productos.admin.productos.reintentos' | translate}}</th>
+                <td class="text-center" mat-cell *matCellDef="let element">
+                    <label for="numeroReintentos{{element.id}}"></label>
+                    <input *ngIf="element.aplicaReintentos === 'A'" type="text" id="numeroReintentos{{element.id}}"
+                        name="numeroReintentos{{element.id}}" maxlength="2" size="2" class="form-control with80"
+                        [(ngModel)]="element.numeroReintentos" (keypress)="onlyNumbers($event)"
+                        [disabled]="(this.productosForm.controls['bandEdicionProductos'].value === 'A' && this.productosForm.controls['bandMostrarReintentos'].value === 'A' && element.asignado === true ? false : true && mostrarReintentos === true ? false : true) || isCancelStatusClient || firstLoadIsCancel" />
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="intervaloReintentos">
+                <th scope="col" class="text-center" mat-header-cell *matHeaderCellDef>
+                    {{'pantalla.productos.admin.productos.cadamin' | translate}}</th>
+                <td class="text-center" mat-cell *matCellDef="let element">
+                    <label for="intervaloReintentos{{element.id}}"></label>
+                    <input *ngIf="element.aplicaReintentos === 'A'" type="text" id="intervaloReintentos{{element.id}}"
+                        name="intervaloReintentos{{element.id}}" maxlength="2" size="2"
+                        [(ngModel)]="element.intervaloReintentos" class="form-control with80"
+                        (keypress)="onlyNumbers($event)"
+                        [disabled]="(this.productosForm.controls['bandEdicionProductos'].value === 'A' && this.productosForm.controls['bandMostrarReintentos'].value === 'A' && element.asignado === true ? false : true && mostrarReintentos === true ? false : true) || isCancelStatusClient || firstLoadIsCancel" />
+                </td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;">
+            </tr>
+        </table>
+    </div>
+    <div class="row mt-3">
+        <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-1 offset-sm-1 offset-md-1 offset-lg-1">
+            <button type="button" class="btn btn-danger" [attr.disabled]="firstLoadIsCancel ? '' : null"
+                (click)="cleanDatos()">{{'btn.limpiar' |
+                translate}}</button>
+
+        </div>
+        <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-8 offset-sm-8 offset-md-8 offset-lg-8">
+            <button type="button" class="btn btn-danger" (click)="saveContrato()"
+                [attr.disabled]="firstLoadIsCancel ? '' : null">{{'btn.guardar' | translate}}</button>
+        </div>
+    </div>
+    <div class="row mt-2">
+        <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-10 offset-sm-10 offset-md-10 offset-lg-10">
+            <button type="button" class="btn btn-danger" (click)="exportProductos()"
+                [attr.disabled]="firstLoadIsCancel ? '' : null">{{'btn.exportar' | translate}}</button>
+        </div>
+    </div>
+</div>

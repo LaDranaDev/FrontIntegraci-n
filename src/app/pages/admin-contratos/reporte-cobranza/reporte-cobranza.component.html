@@ -1,0 +1,134 @@
+<app-operativa-header tituloPantalla="{{'menu.adminContrato.regeneraReporteCobranza' | translate}}"></app-operativa-header>
+
+<div id="monitorOperaciones" class=" panel panel-default col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    <br>
+    <div class="card">
+        <h5 class="card-header justify-content-center"></h5>
+        <app-busqueda-cliente [data]="datos" #limpiar></app-busqueda-cliente>
+    </div>
+    <form [formGroup]="formDatosPersonales">
+        <div class="card">
+            <h5 class="card-header justify-content-center">{{'pantallas.regeneraReporteCobranza.contenido' | translate}}</h5>
+            <div class="card-body">
+                <div class="row justify-content-center">
+                        <label for="inputUser" class="col-auto">{{'pantallas.regeneraReporteCobranza.tipreporte' | translate}}</label>
+                        <div class="form-group col-md-3">
+                            <select id="inputUser" name="inputUser" class="form-select form-select-sm form-control" formControlName="tipoReporte" [ngModel]="optionTipRep" (change)="onChange($event)"  [attr.disabled]="true" >
+                                <option *ngFor="let tr of tipRep" [ngValue]="tr.id">{{tr.valor}}</option>
+                            </select>
+                        </div>
+                </div>
+                <div class="row justify-content-center">
+                        <label for="inputUser" class="col-auto center-text">{{'pantallas.regeneraReporteCobranza.fecha' | translate}}</label>
+                        <div class="form-group col-md-2">
+                            <input matInput [matDatepicker]="picker" [disabled]=bolFecha [ngModel]="serializedDate" formControlName="fecha">
+                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                            <mat-datepicker  color="warn" #picker></mat-datepicker>
+                        </div>
+                </div>
+                <div class="row justify-content-center">
+                        <ng-container *ngIf="optionTipRep ==='1'">
+                            <label for="inputUser" class="col-auto">{{'pantallas.regeneraReporteCobranza.selhorario' | translate}}</label>
+                            <div class="form-group col-md-3">
+                                <select class="form-select form-select-sm form-control" [ngModel]="horario" formControlName="selHorario" aria-label=".form-select-sm example">
+                                    <option *ngFor="let horas of horasBean" [ngValue]="horas.descripcionCatalogo">{{ horas.descripcionCatalogo }}</option>
+                                </select>
+                            </div>
+                        </ng-container>
+                        <div class="form-group col-auto">
+                            <input type="checkbox" formControlName="opCierre" [checked]="configRepCob.bandCierre" id="check1" name="check1">
+                        </div>
+                        <label for="check1" class="col-auto">{{'pantallas.regeneraReporteCobranza.ioc' | translate}}</label>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm">
+                        <label for="divCuenta">{{'pantallas.regeneraReporteCobranza.cuenta' | translate}}</label>
+                        <select class="form-control" name="divCuenta" id="divCuenta" size="10" disabled>
+                            <option *ngFor="let item of cuentasRepCob" [ngValue]="item">{{ item.numCuenta }}</option>
+                        </select>
+                    </div>
+                    <div class="col-sm">
+                        <label for="groupsC">{{'pantallas.regeneraReporteCobranza.clacones' | translate}}</label>
+                        <select class="form-control" multiple="multiple" id="groupsC" name="groupsC" size="10" disabled>
+                                <option *ngFor="let clacones of claconesRepCob" [ngValue]="clacones">{{clacones.descripcionCatalogo}}</option>
+                            </select>
+                    </div>
+                    <div class="col-sm">
+                        <label for="groupsS">{{'pantallas.regeneraReporteCobranza.seleccionados' | translate}}</label>
+                        <select class="form-control" multiple="multiple" id="groupsS" name="groupsS" size="10" disabled>
+                        <option *ngFor="let config of claconesConfigRepCob" [ngValue]="config">{{config.descripcionCatalogo}}</option>
+                    </select>
+                    </div>
+                    <div class="col-sm">
+                        <div class="form-group">
+                            <label for="nombre">{{'pantallas.regeneraReporteCobranza.canalEntrega' | translate}}</label>
+                            <select class="form-select form-select-sm form-control" [ngModel]="canal" formControlName="canalEntrega" aria-label=".form-select-sm example">
+                                <option *ngFor="let canales of canalesBean" [ngValue]="canales.idCanal">{{canales.descripcion}}</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="apellido">{{'pantallas.regeneraReporteCobranza.tipoFormato' | translate}}</label>
+                            <select class="form-select form-select-sm form-control" [ngModel]="tipForm" formControlName="tipoFormato" aria-label=".form-select-sm example">
+                            <option *ngFor="let formatos of formatosBean" [ngValue]="formatos.idCatalogo">{{formatos.descripcionCatalogo}}</option>
+                        </select>
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <div class="row justify-content-center">
+                    <div class="col-sm-3">
+                        <label>{{'pantallas.regeneraReporteCobranza.titClacones' | translate}}</label>
+                        <div class="form-group">
+                            <div class="form-check">
+                                <input type="checkbox" name="ckbCla" id="ckbCla" [ngModel]="configRepCob.todosClaconesCargo" formControlName="claconesCargo" [checked]="configRepCob.todosClaconesCargo">
+                                <label for="ckbCla">{{'pantallas.regeneraReporteCobranza.claconesCargo' | translate}}</label>
+                            </div>
+                            <div class="form-check">
+                                <input type="checkbox" name="ckbClaT" id="ckbClaT" [ngModel]="configRepCob.todosClaconesAbono" formControlName="claconesAbono" [checked]="configRepCob.todosClaconesAbono">
+                                <label for="ckbClaT">{{'pantallas.regeneraReporteCobranza.claconesAbono' | translate}}</label>
+                            </div>
+                        </div>
+                        <label>{{'pantallas.regeneraReporteCobranza.ctaArchivos' | translate}}</label>
+                        <div class="form-check">
+                            <input type="radio" [checked]="radioConso" name="consoCtas" id="consoCtas" formControlName="consoCtas" [ngModel]="configRepCob.recibirArchivo" value="A">
+                            <label for="consoCtas">{{'pantallas.regeneraReporteCobranza.consoCtas' | translate}}</label>
+                        </div>
+                        <div class="form-check">
+                            <input type="radio" [checked]="radioCta" name="consoCtas" id="consoCtas" formControlName="consoCtas" [ngModel]="configRepCob.recibirArchivo" value="C">
+                            <label for="consoCtas">{{'pantallas.regeneraReporteCobranza.archCtas' | translate}}</label>
+                        </div>
+                        <div class="form-check">
+                            <input type="checkbox" id="sigNegativos" [checked]="configRepCob.bandCobranzaSig === 'A'" [ngModel]="configRepCob.bandCobranzaSig" formControlName="sigNegativos" name="sigNegativos">
+                            <label for="sigNegativos">{{'pantallas.regeneraReporteCobranza.sigNeg' | translate}}</label>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <label>{{'pantallas.regeneraReporteCobranza.tipCont' | translate}}</label>
+                        <div class="form-check">
+                            <input type="radio" id="contenido" [checked]="radioPar" formControlName="contenido" [ngModel]="configRepCob.tipoContenido" name="contenido" value="P">
+                            <label for="contenido">{{'pantallas.regeneraReporteCobranza.parcial' | translate}}</label>
+                        </div>
+                        <div class="form-check">
+                            <input type="radio" id="contenido" [checked]="radioAcu" formControlName="contenido" [ngModel]="configRepCob.tipoContenido" name="contenido" value="A">
+                            <label for="contenido">{{'pantallas.regeneraReporteCobranza.acumulativo' | translate}}</label>
+                        </div>
+                        <div class="form-check">
+                            <input type="checkbox" id="ckbMC" [checked]="configRepCob.bandCobranzaCvrt === 'A'" [ngModel]="configRepCob.bandCobranzaCvrt" formControlName="virtMov" name="ckbMC">
+                            <label for="ckbMC">{{'pantallas.regeneraReporteCobranza.virtualMov' | translate}}</label>
+                        </div>
+                        <div class="form-check">
+                            <input type="checkbox" name="ckbI" [checked]="configRepCob.bandAnulaciones === 'A'" id="ckbI" disabled>
+                            <label for="ckbI">{{'pantallas.regeneraReporteCobranza.incAnulaciones' | translate}}</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 mr-2 mt-3">
+                <button type="button" class="btn btn-outline-danger float-right" [disabled]="btnRegenera" (click)="generaXML()">{{'pantallas.regeneraReporteCobranza.btnRegenerar' | translate}}</button>
+            </div>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,13 @@
+<div *ngIf="sinPermisos == false"> 
+    <app-operativa-header tituloPantalla="{{'menu.inicio.bienvenida' | translate}}"></app-operativa-header>
+</div>
+<div *ngIf="sinPermisos == true">
+    <app-operativa-header tituloPantalla="Error acceso invalido"></app-operativa-header>
+    <div>
+        <h3 class="text">Usted no cuenta con el perfil necesario para relizar la operación solicitada.</h3>
+    </div>
+    <div>
+        <h3 class="text">
+            Por favor contacte a su administrador para que le brinde el permiso requerido</h3>
+    </div>
+</div>

@@ -1,0 +1,19 @@
+
+<div class="modal-export">
+    <h2 mat-dialog-title>{{'modals.exportacion.titulo' | translate}}</h2>
+    <mat-dialog-content>{{'modals.exportacion.contenido' | translate}}</mat-dialog-content>
+    <mat-dialog-actions>
+        <button type="button" class="btn btn-outline-danger float-right" [mat-dialog-close]="true" (click)="exportar('xlsx')">
+            <img draggable="true" class="pull-left page-header-logo img " id="imgCSV"
+            src="../../assets/img/export/excel.png" alt="logotipo-xls">
+        </button>
+        <button type="button" class="btn btn-outline-danger float-right" [mat-dialog-close]="true" (click)="exportar('pdf')">
+            <img draggable="true" class="pull-left page-header-logo img" id="imgPDF"
+            src="../../assets/img/export/pdf.svg" alt="logotipo-pdf">
+        </button>
+        <button type="button" class="btn btn-outline-danger float-right" [mat-dialog-close]="true" (click)="exportar('csv')">
+            <img draggable="true" class="pull-left page-header-logo img" id="imgCSV"
+            src="../../assets/img/export/c.svg" alt="logotipo-csv">
+        </button>
+    </mat-dialog-actions>
+</div>

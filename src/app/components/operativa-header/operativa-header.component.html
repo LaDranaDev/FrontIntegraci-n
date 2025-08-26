@@ -1,0 +1,29 @@
+<div class="padding-0 col-md-12 col-lg-12 col-xl-12">
+    <div id="root-tplVentanaOperativa-ICabeceraPrincipal-cabSuperiorBotonera" class="col-xs-12 col-sm-12 col-lg-12 tools-app">
+        <div class="pull-right span-title-header-size">
+            <h2 [ngClass]="{'text-center': center}">{{tituloPantalla}} <span *ngIf="subtitle"> - {{subtitle}}</span></h2>
+        </div>
+        <div>
+            <p *ngIf="showBandSPEI" class="red-text-alarm">{{'lblBandSPEIMsg' | translate}}</p>
+            <p *ngIf="showAlertas" class="red-text-alarm">{{'lblAlertasMsg' | translate}}</p>
+        </div>
+        <div id="root-tplVentanaOperativa-ICabeceraPrincipal-fechaYHora" class="col-md-offset-3 col-lg-offset-3 col-xl-offset-4 col-sm-4 col-md-4 col-lg-3 col-xl-2 pull-right spanheader-text-size">
+            <div id="root-tplVentanaOperativa-ICabeceraPrincipal-headerHoraActual">
+                <span id="root-tplVentanaOperativa-ICabeceraPrincipal-horaActualLbl">{{'lblHoraActual' | translate}}</span>
+                <strong>
+            <span id="root-tplVentanaOperativa-ICabeceraPrincipal-horaActualLblText"
+              class="horaActualLblText">{{horaHeader}}
+            </span>
+            <span id="root-tplVentanaOperativa-ICabeceraPrincipal-horaActualLblTextHrs">{{'lblHrs' | translate}}</span>
+          </strong>
+            </div>
+            <div id="root-tplVentanaOperativa-ICabeceraPrincipal-headerFechaActual">
+                <span id="root-tplVentanaOperativa-ICabeceraPrincipal-fechaActualLbl">{{'lblFechaActual' | translate}}</span>
+                <strong>
+            <span id="root-tplVentanaOperativa-ICabeceraPrincipal-fechaActualLblText" class="fechaActualLblText"
+              >{{diaHeader}} </span>
+          </strong>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,37 @@
+<div class="modal-header">
+    <h5 class="modal-title" id="exampleModalLabel">{{'modals.clientes.addClienteTitle' | translate}}</h5>
+    <button
+      type="button"
+      class="btn-close"
+      aria-label="Close"
+      (click)="modalRef.close()"
+    ></button>
+  </div>
+  
+  <div class="modal-body">
+  
+    <form ngNativeValidate #addForm="ngForm" (ngSubmit)="onAddClient(addForm)">
+      
+    <label for="txtNmbrClte" class="col-form-label">{{'pantallas.clientes.Nombre' | translate}}</label> 
+    <input ngModel id="txtNmbrClte" name="txtNmbrClte" class="form-control" placeholder="Nombre" required>
+  
+  
+    <label for="dscClte" class="col-form-label">{{'pantallas.clientes.Descripcion' | translate}}</label> 
+    <textarea ngModel id="dscClte" name="dscClte" class="form-control" placeholder="Descripción"></textarea>
+  
+  
+    <label for="numBuc" class="col-form-label">Número de BUC</label> 
+    <input ngModel id="numBuc" name="numBuc" class="form-control" placeholder="num_BUC" appInputMask="numerico" maxlength="8">
+  
+    <hr>
+    
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" (click)="modalRef.close()">
+        Cancelar
+      </button>
+      <button type="submit" id="add-client-form" class="btn btn-danger">Guardar</button>
+    </div>
+    
+  </form>
+  </div>
+  

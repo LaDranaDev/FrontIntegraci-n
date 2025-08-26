@@ -1,0 +1,169 @@
+<app-operativa-header tituloPantalla="{{'MO' | translate}}"></app-operativa-header>
+<form [formGroup]="datosForm">
+    <div class="card">
+        <h5 class="card-header justify-content-center">
+            {{'MO.DG' | translate}}
+        </h5>
+        <div class="inpu">
+            <label for="producto" class="col-form-label col-xs-2 col-sm-2 col-md-1">{{'MO.P' | translate}}: </label>
+            <input type="text" class="form-control" id="producto" name="producto" formControlName="producto">
+        </div>
+        <div class="inpu">
+            <div class="dos">
+                <label for="bucEmpleado" class="col-form-label col-xs-2 col-sm-2 col-md-2">{{'MO.CC' | translate}}: </label>
+                <input type="text" class="form-control" id="bucEmpleado" name="bucEmpleado" formControlName="bucEmpleado">
+            </div>
+            <div class="dos">
+                <label for="estatus" class="col-form-label col-xs-2 col-sm-2 col-md-2">{{'MO.E' | translate}}: </label>
+                <input type="text" class="form-control" id="estatus" name="estatus" formControlName="estatus">
+            </div>
+        </div>
+        <div class="inpu">
+            <div class="dos" *ngIf="id === '22'">
+                <label for="fechaVenc" class="col-form-label col-xs-2 col-sm-2 col-md-2">{{'MO.FA' | translate}}: </label>
+                <input type="text" class="form-control" id="fechaVenc" name="fechaVenc" formControlName="fechaVenc">
+            </div>
+            
+            <div class="dos">
+            </div>
+        </div>
+        <div class="inpu">
+            <div class="dos" *ngIf="id !== '22'">
+                <label for="fechaVenc" class="col-form-label col-xs-2 col-sm-2 col-md-2">{{'MO.FHP' | translate}}: </label>
+                <input type="text" class="form-control" id="fechaVenc" name="fechaVenc" formControlName="fechaVenc">
+            </div>
+            
+            <div class="dos">
+            </div>
+        </div>
+        <div class="inpu">
+            <label for="nomArch" class="col-form-label col-xs-2 col-sm-2 col-md-1">{{'MO.NA' | translate}}: </label>
+            <input type="text" class="form-control" id="nomArch" name="nomArch" formControlName="nomArch">
+        </div>
+        <div class="inpu" *ngIf="id === '21'">
+            <label for="referencia" class="col-form-label col-xs-2 col-sm-2 col-md-1">{{'MO.NOP' | translate}}: </label>
+            <input type="text" class="form-control" id="referencia" name="referencia" formControlName="referencia" >
+        </div>
+        <div class="inpu" *ngIf="id === '22'">
+            <label for="referencia" class="col-form-label col-xs-2 col-sm-2 col-md-1">{{'MO.COP' | translate}}: </label>
+            <input type="text" class="form-control" id="referencia" name="referencia" formControlName="referencia">
+        </div>
+        <div class="inpu">
+            <div class="dos">
+                <label for="lineaCaptura" class="col-form-label col-xs-2 col-sm-2 col-md-2">{{'lineaCaptura' | translate}}: </label>
+                <input type="text" class="form-control" id="lineaCaptura" name="lineaCaptura" formControlName="lineaCaptura">
+            </div>
+            <div class="dos">
+            </div>
+        </div>
+        <div class="inpu" *ngIf="id === '22'">
+            <label for="folioSua" class="col-form-label col-xs-2 col-sm-2 col-md-1">{{'menu.monitoreo.comprobantesFormatoCDMX.folio' | translate}}: </label>
+            <input type="text" class="form-control" id="folioSua" name="folioSua" formControlName="folioSua">
+        </div>
+       
+        
+    </div>
+    <div class="card">
+        <h5 class="card-header justify-content-center">
+            {{'MO.DO1' | translate}}:
+        </h5>
+        <div class="inpu">
+            <label for="nombreOrd" class="col-form-label col-xs-2 col-sm-2 col-md-1">{{'MO.N1' | translate}}: </label>
+            <input type="text" class="form-control" id="nombreOrd" name="nombreOrd" formControlName="nombreOrd">
+        </div>
+        <div class="inpu">
+            <div class="dos">
+                <label for="ctaCargo" class="col-form-label col-xs-2 col-sm-2 col-md-2">{{'MO.C1' | translate}}: </label>
+                <input type="text" class="form-control" id="ctaCargo" name="ctaCargo" formControlName="ctaCargo">
+            </div>
+            <div class="dos">
+            </div>
+        </div>
+        
+    </div>
+    <div class="card">
+        <h5 class="card-header justify-content-center">
+           {{'MO.DR' | translate}}:
+        </h5>
+        
+        <div class="inpu" *ngIf="id === '21'">
+            <label for="llavePago" class="col-form-label col-xs-2 col-sm-2 col-md-1">{{'MO.LLP' | translate}}: </label>
+            <input type="text" class="form-control" id="llavePago" name="llavePago" formControlName="llavePago">
+        </div>
+        <div class="inpu" *ngIf="id === '21'">
+            <label for="plaza" class="col-form-label col-xs-2 col-sm-2 col-md-1">{{'MO.PL' | translate}}: </label>
+            <input type="text" class="form-control" id="plaza" name="plaza" formControlName="plaza">
+        </div>
+        <div class="inpu" *ngIf="id === '21'">
+            <label for="sucursal" class="col-form-label col-xs-2 col-sm-2 col-md-1">{{'pantalla.moduloAdministracion.sucursal' | translate}}: </label>
+            <input type="text" class="form-control" id="sucursal" name="sucursal" formControlName="sucursal">
+        </div>
+        <div class="inpu" *ngIf="id === '22'">
+            <label for="numConvenio" class="col-form-label col-xs-2 col-sm-2 col-md-1">{{'menu.monitoreo.comprobantesFormatoCDMX.detalle.convenio' | translate}} </label>
+            <input type="text" class="form-control" id="numConvenio" name="numConvenio" formControlName="numConvenio">
+        </div>
+        <div class="inpu" *ngIf="id === '22'">
+            <label for="nombreConvenio" class="col-form-label col-xs-2 col-sm-2 col-md-1">{{'menu.monitoreo.comprobantesFormatoCDMX.detalle.convenioNombre' | translate}} </label>
+            <input type="text" class="form-control" id="nombreConvenio" name="nombreConvenio" formControlName="nombreConvenio">
+        </div>
+        <div class="inpu" *ngIf="id === '22'">
+            <label for="numTarjeta" class="col-form-label col-xs-2 col-sm-2 col-md-1">{{'MO.C' | translate}}: </label>
+            <input type="text" class="form-control" id="numTarjeta" name="numTarjeta" formControlName="numTarjeta">
+        </div>
+        <div class="inpu" *ngIf="id === '23'">
+            <label for="folioSua" class="col-form-label col-xs-2 col-sm-2 col-md-1">{{'folio' | translate}}: </label>
+            <input type="text" class="form-control" id="folioSua" name="folioSua" formControlName="folioSua">
+        </div>
+        <div class="inpu" *ngIf="id === '23'">
+            <label for="registroPat" class="col-form-label col-xs-2 col-sm-2 col-md-1">{{'registroPatronal' | translate}}: </label>
+            <input type="text" class="form-control" id="registroPat" name="registroPat" formControlName="registroPat">
+        </div>
+        <div class="inpu" *ngIf="id === '23'">
+            <label for="periodoPago" class="col-form-label col-xs-2 col-sm-2 col-md-1">{{'MO.PDP' | translate}}: </label>
+            <input type="text" class="form-control" id="periodoPago" name="periodoPago" formControlName="periodoPago">
+        </div>
+        <div class="inpu">
+            <label for="divisa" class="col-form-label col-xs-2 col-sm-2 col-md-1">{{'MO.D' | translate}}: </label>
+            <input type="text" class="form-control" id="divisa" name="divisa" formControlName="divisa" >
+        </div>
+        <div class="inpu">
+            <label for="importe" class="col-form-label col-xs-2 col-sm-2 col-md-1">{{'MO.I' | translate}}: </label>
+            <input type="text" class="form-control" id="importe" name="importe" formControlName="importe">
+        </div>
+    </div>
+    <div class="card">
+        <h5 class="card-header justify-content-center">
+            {{'MO.CO' | translate}}:
+        </h5>
+        <div class="inpu">
+                <label for="mensajePIF"></label>
+                <input type="text" class="form-control" id="mensajePIF" name="mensaje" formControlName="mensaje">
+        </div>
+    </div>
+    <div class="row mt-2">
+        <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-1 offset-sm-1 offset-md-1 offset-lg-1">
+            <button type="button" class="btn btn-danger" (click)="regresarPIF()">{{'MO.Regr' | translate}}</button>
+        </div>
+        <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-8 offset-sm-8 offset-md-8 offset-lg-8">
+            <button type="button" class="btn btn-danger" (click)="historialPIF()"> {{'MO.H' | translate}}</button>
+        </div>
+    </div>
+    <div class="row mt-2" *ngIf="idEstatus === '7'">
+        <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-1 offset-sm-1 offset-md-1 offset-lg-1">
+            <button type="button" class="btn btn-danger" (click)="reintentarPIF()">{{'MO.Rei' | translate}}</button>
+        </div>
+        <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-8 offset-sm-8 offset-md-8 offset-lg-8">
+            <button type="button" class="btn btn-danger" (click)="rechazarPIF()">{{'MO.Rech' | translate}}</button>
+        </div>
+    </div>
+    <div class="row mt-2">
+        <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-1 offset-sm-1 offset-md-1 offset-lg-1">
+            <button type="button" class="btn btn-danger" (click)="refrescarPIF()">{{'MO.Refr' | translate}}</button>
+        </div>
+    </div>
+    <div class="row mt-2" *ngIf="idEstatus === '13'">
+        <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-1 offset-sm-1 offset-md-1 offset-lg-1">
+            <button type="button" class="btn btn-danger" (click)="procesarPIF()">{{'MO.Proc'' | translate}}</button>
+        </div>
+    </div>
+</form> 

@@ -1,0 +1,21 @@
+<form [formGroup]="registerForm">
+    <h2 mat-dialog-title>{{data.titulo}}</h2>
+    <mat-dialog-content>{{data.contenido}}
+        <br><br>
+        <div>
+            <label for="correo"></label>
+            <input class="form-control"  type="text" id="correo" name="correo"  placeholder="Correo" formControlName="email"
+            (ondragenter)="disableEvent($event)" 
+            (dragover)="disableEvent($event)" 
+            (ondrop)="disableEvent($event)" 
+            (paste)="eventoOnPasteBlock($event)" 
+            > 
+        </div>
+    </mat-dialog-content>
+    <mat-dialog-actions>
+        <div class="col text-center">
+            <button type="button" class="btn btn-outline-danger justify-content-center" (click)="accept()">OK</button>
+            <button type="button" class="btn btn-outline-danger" mat-dialog-close>Cancelar</button>
+        </div>
+    </mat-dialog-actions>
+</form>

@@ -1,0 +1,12 @@
+.wi80{
+    width: 60%;
+}
+.rojo{
+    color: red
+}
+.display{
+    display: inline-block !important;
+}
+.removeTextTransform{
+    text-transform: none;
+}

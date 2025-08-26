@@ -1,0 +1,78 @@
+.ui-table {
+    border: none;
+    border-collapse: separate;
+    border-spacing: 0;
+}
+.ui-table thead th {
+    border: none;
+    padding: 10px;
+    white-space: nowrap;
+}
+.ui-table tbody td {
+    padding: 5px;
+    white-space: nowrap;
+}
+
+.ui-scroller {
+    margin-left: 367px;
+    overflow-x: scroll;
+    overflow-y: visible;
+    padding-bottom: 5px;
+}
+.ui-table .ui-col {
+    border-left: solid 1px #DDEFEF;
+    left: 0;
+    position: absolute;
+    top: auto;
+    width: 120px;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    font-size: smaller;
+}
+.ui-table .ui-col2 {
+    border-right: solid 1px #DDEFEF;
+    left: 120px;
+    position: absolute;
+    top: auto;
+    width: 130px;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+}
+.ui-table .ui-col3 {
+    border-right: solid 1px #DDEFEF;
+    left: 250px;
+    position: absolute;
+    top: auto;
+    width: 130px;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+}
+
+.wSelect{
+    width: 110px;
+}
+
+.wPrecio{
+    width: 80px;
+}
+.input-group-text{
+    background-color: #f8f4f4 !important;
+}
+.sinLimite{
+    background-color: #ffffff !important;
+}
+
+.ui-size{
+    height: 6.5em;
+}
+
+.font-normal{
+    font-size: 11px !important;
+}
+
+.font-size-custom{
+    font-size: smaller;
+}

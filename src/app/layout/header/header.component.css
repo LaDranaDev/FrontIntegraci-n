@@ -1,0 +1,256 @@
+.example-container {
+  position: absolute;
+  top: 50px;
+  bottom: 0px;
+  left: 0;
+  right: 0;
+  max-height: 90%;
+  z-index: 1;
+  }
+
+  .example-header{
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 0;
+  }
+  
+  .example-sidenav {
+    user-select: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 210px;
+ }
+ 
+  .example-sidenav-content {
+    display: flex;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+    color: #ffff;
+    font-size: 18px;
+  }
+  .menu-button {
+    transition: 300ms ease-in-out;
+    transform: rotate(0deg);
+    color:#0a0a0a;
+  }
+  .menu-button.rotated {
+    transform: rotate(180deg);
+  }
+  .submenu {
+    height: auto;
+    overflow-y: hidden;
+    transition: transform 300ms ease;
+    transform: scaleY(0);
+    transform-origin: top;
+    /*padding-left: 5px;*/
+    
+  }
+  .submenu.expanded {
+    transform: scaleY(1);
+  }
+.color{
+    background: #fffdfd;
+}
+
+
+.colorArriba{
+    background: #484848;
+    height: 50px; 
+}
+.botonArriba
+{
+    margin: 5px;
+    background: #484848;
+    color: #ffffff;
+    border-radius: 5px;
+    border-color: #ffffff;
+}
+
+.full-width{
+    width: 200px;
+    font-size: 12px;
+}
+.mat-list-text{
+    color: #ffffff;
+}
+
+
+
+.mat-list-item.active{
+  color: #dc3545;
+  background-color: #ffff;
+  /*background-color: rgba(246, 246, 246, 0.97);}*/
+  padding-left: 10px;
+}
+
+.mat-list-item-content{
+  padding-left: 20px !important;
+}
+
+
+
+
+.bor{
+  border-color:rgba(0,0,0,.125);
+  border-width: 1px;
+  border-style:solid;
+}
+
+
+.bor1{
+  border-color: rgba(0,0,0,.125);
+  border-width: 1px;
+  border-style:solid;
+  display: grid;
+  justify-content: center;
+
+}
+
+.centrar{
+  display: flex;
+}
+
+.inicio{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  color: rgb(5, 5, 5);
+}
+
+.mat-list-base {
+  padding-top: 0px;
+}
+
+.act.active{
+  background-color: rgba(0,0,0,.03);
+}
+
+.text.active{
+  color: #f7051d;
+  font-weight:bold;
+}
+
+
+@media only screen and (min-width: 1801px) {
+  .color{
+    background: #ffffff;
+  }
+}
+
+@media only screen and (max-width: 1800px) {
+  .page-header {
+    padding-bottom: 0;
+    background: #484848;
+    color: #e4e4e4;
+    display: flex;
+    margin: 0px !important;
+    border-bottom: 0px !important;
+    width: 1600px;
+  }
+  .info-user .user {
+    width: 15 0px;
+}
+}
+@media only screen and (max-width: 2300px) {
+  .page-header {
+    padding-bottom: 0;
+    background: #484848;
+    color: #e4e4e4;
+    display: flex;
+    margin: 0px !important;
+    border-bottom: 0px !important;
+    width: 1500px;
+  }
+  .info-user .user {
+    width: 140px;
+}
+}
+@media only screen and (max-width: 1500px) {
+  .page-header {
+    padding-bottom: 0;
+    background: #484848;
+    color: #e4e4e4;
+    display: flex;
+    margin: 0px !important;
+    border-bottom: 0px !important;
+    width: 1100px;
+  }
+  .info-user .user {
+    width: 100px;
+}
+}
+@media only screen and (max-width: 1200px) {
+  .page-header {
+    padding-bottom: 0;
+    background: #484848;
+    color: #e4e4e4;
+    display: flex;
+    margin: 0px !important;
+    border-bottom: 0px !important;
+    width: 1000px;
+  }
+  .info-user .user {
+    width: 50px;
+}
+}
+
+@media only screen and (max-width: 1000px) {
+  .page-header {
+    padding-bottom: 0;
+    background: #484848;
+    color: #e4e4e4;
+    display: flex;
+    margin: 0px !important;
+    border-bottom: 0px !important;
+    width: 900px;
+  }
+  .info-user .user {
+    width: 10px;
+}
+}
+@media only screen and (max-width: 1800px) {
+  .color{
+    background: #ffffff;
+  }
+}
+
+
+.header{
+  padding-left: 15px;
+  height: 35px !important;
+}
+
+.nav-hidden{
+  width: 68px;
+}
+
+.mr-left-content{
+  margin-left: 68px !important;
+}
+
+::ng-deep .mat-table{
+  font-family: unset;
+}
+
+::ng-deep .mat-row{
+  height: 30px !important;
+}
+
+::ng-deep .mat-header-row{
+  height: 21px !important;
+}
+.tooltipTime {
+  color: #fafafa;
+  text-decoration-color: #fafafa;
+}
+.timemessage{
+  text-decoration-color: #fafafa;
+  color: #fafafa;
+}
+
+.red-text-time {
+  color: red;
+}

@@ -1,0 +1,89 @@
+<app-operativa-header tituloPantalla="{{'pantalla.sucursales.catalogo.title' | translate}}"></app-operativa-header>
+<div id="sucursales" class="panel panel-default col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    <br>
+    <!-- --- Seccion Alta de Sucursales --- -->
+    <div class="card mt-3">
+        <h5 class="card-header justify-content-center">
+            <ng-container *ngIf="bandEsAlta; then templateTitleCreate; else templateTitleUpdate">
+            </ng-container>
+            <ng-template #templateTitleCreate>
+                {{'pantalla.sucursales.alta.title' | translate}}
+            </ng-template>
+            <ng-template #templateTitleUpdate>
+                {{'pantalla.sucursales.modificacion.title' | translate}}
+            </ng-template>
+        </h5>
+        <div class="card-body">
+            <form [formGroup]="formSucursal" class="row">
+                <div class="col-12">
+                    <div class="col-label estilo">
+                        <label for="sucursal" class="col-form-label">{{'pantalla.sucursales.campo.sucursal' |
+                            translate}}</label>
+                    </div>
+                    <div class="col-input estilo">
+                        <input type="text" class="form-control estilo removeTextTransform" id="sucursal"
+                            formControlName="sucursal" [(ngModel)]="sucursal" maxlength="75" size="75"
+                            (keypress)="onlyAlphaNumberPointAndSpace($event)"
+                            (paste)="pasteOnlyAlphaNumberPointAndSpace($event)">
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="col-label estilo">
+                        <label for="cp" class="col-form-label">{{'pantalla.sucursales.campo.cp' | translate}}</label>
+                    </div>
+                    <div class="col-input estilo">
+                        <input type="text" class="form-control estilo removeTextTransform" id="cp" formControlName="cp"
+                            [(ngModel)]="cp" maxlength="5" (keypress)="onlyNumbers($event)"
+                            (paste)="pasteOnlyNumbers($event)">
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="col-label estilo">
+                        <label for="direccion" class="col-form-label">{{'pantalla.sucursales.campo.domicilio' |
+                            translate}}</label>
+                    </div>
+                    <div class="col-input estilo">
+                        <input type="text" class="form-control estilo removeTextTransform" id="direccion"
+                            formControlName="direccion" [(ngModel)]="direccion" maxlength="40" size="40"
+                            (keypress)="onlyAlphaNumberPointAndSpace($event)"
+                            (paste)="pasteOnlyAlphaNumberPointAndSpace($event)">
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="col-label estilo">
+                        <label for="latitud" class="col-form-label">{{'pantalla.sucursales.campo.latitud' |
+                            translate}}</label>
+                    </div>
+                    <div class="col-input estilo">
+                        <input type="text" class="form-control estilo removeTextTransform" id="latitud"
+                            formControlName="latitud" [(ngModel)]="latitud" maxlength="50"
+                            (keypress)="onlyNumbersAndPoint($event)" (paste)="pasteOnlyNumbersAndPoint($event)">
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="col-label estilo">
+                        <label for="longitud" class="col-form-label">{{'pantalla.sucursales.campo.longitud' |
+                            translate}}</label>
+                    </div>
+                    <div class="col-input estilo">
+                        <input type="text" class="form-control estilo removeTextTransform" id="longitud"
+                            formControlName="longitud" [(ngModel)]="longitud" maxlength="50"
+                            (keypress)="onlyNumbersAndPoint($event)" (paste)="pasteOnlyNumbersAndPoint($event)">
+                        <input type="hidden" id="activo" formControlName="activo" [(ngModel)]="activo">
+                    </div>
+                </div>
+            </form>
+
+        </div>
+    </div>
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 margin">
+        <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-1 estilo">
+            <button type="button" class="btn btn-danger" (click)="cleanDatos()">{{'btn.limpiar'
+                | translate}}</button>
+        </div>
+        <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-8 estilo">
+            <button type="button" class="btn btn-danger" (click)="saveSucursal()">{{'btn.guardar'
+                | translate}}</button>
+        </div>
+    </div>
+</div>

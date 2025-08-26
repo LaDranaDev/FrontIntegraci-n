@@ -1,0 +1,9 @@
+.img{
+    width: 70px;
+    height:70px
+}
+.modal-export{
+    display: grid;
+    justify-content: center;
+    margin: 2em 2em 5em 2em;
+}

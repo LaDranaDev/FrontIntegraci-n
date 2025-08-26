@@ -1,0 +1,109 @@
+<app-operativa-header tituloPantalla="{{'menu.reportesConfirming' | translate}}"></app-operativa-header>
+<div id="parametriaAdicional" class="panel panel-default col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    <br>
+    <div class="card">
+        <h5 class="card-header justify-content-center">
+            {{'pantalla.datosContrato.title' | translate}}
+        </h5>
+        <app-busqueda-cliente [data]="datos"></app-busqueda-cliente> <!-- #limpiar-->
+    </div>
+
+    <br>
+
+    <div class="card">
+        <h5 class="card-header justify-content-center"><label for="">{{'adminContrato.reportesConfirming.title' |
+                translate}}</label></h5>
+        <div class="card-body">
+
+            <div class="row mt-2">
+                <div class="col-md-4 offset-4">
+                    <input type="checkbox" class="col-md-1" name="check1" id="check1"
+                        [(ngModel)]="reportesConfirming.activaCheck1" aria-label="activo">
+                    <label for="check1" class="col-auto ml-2">{{'pantallas.reportesConfirming.check1' |
+                        translate}}</label>
+                </div>
+            </div>
+            <div class="row mt-2">
+                <div class="col-md-4 offset-4">
+                    <input type="checkbox" class="col-md-1" name="check2" id="check2"
+                        [(ngModel)]="reportesConfirming.activaCheck2" aria-label="activo">
+                    <label for="check2" class="col-auto ml-2">{{'pantallas.reportesConfirming.check2' |
+                        translate}}</label>
+                </div>
+            </div>
+
+            <div class="row mt-2">
+                <div class="col-md-4 offset-4">
+                    <input type="checkbox" class="col-md-1" name="check3" id="check3"
+                        [(ngModel)]="reportesConfirming.activaCheck3" aria-label="activo">
+                    <label for="check3" class="col-auto ml-2">{{'pantallas.reportesConfirming.check3' |
+                        translate}}</label>
+                </div>
+            </div>
+
+            <div class="row mt-2">
+                <div class="col-md-4 offset-4">
+                    <input type="checkbox" class="col-1" name="check4" id="check4"
+                        [(ngModel)]="reportesConfirming.activaCheck4" aria-label="activo"
+                        (change)="valuePeriodIndx($event)">
+                    <label for="check4" class="col-auto  ml-2">{{'pantallas.reportesConfirming.check4' |
+                        translate}}</label>
+                </div>
+                <div class="col-md-4">
+                    <div class="mb-3 row">
+                        <label for="inputUser" class="col-sm-3 font-custom-size col-form-label">{{'pantallas.reportesConfirming.combo1' |
+                            translate}}</label>
+                        <div class="col-md-2">
+                            <select id="inputUser" name="inputUser" class="form-select form-select-sm form-control"
+                                [disabled]="!reportesConfirming.activaCheck4" [(ngModel)]="reportesConfirming.indtx">
+                                <option *ngFor="let ci of comboInditex" [value]="ci.valor">{{ci.desc}}</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mt-2">
+                <div class="col-md-4 offset-4">
+                    <input type="checkbox" class="col-md-1" name="check5" id="check5"
+                        [(ngModel)]="reportesConfirming.activaCheck5" aria-label="activo">
+                    <label for="check5" class="col-auto ml-2">{{'pantallas.reportesConfirming.check5' |
+                        translate}}</label>
+                </div>
+            </div>
+            <div class="row mt-2">
+                <div class="col-md-4 offset-4">
+                    <div class="mb-3 row">
+                        <label for="inputUser" class="col-md-4 font-custom-size col-form-label">{{'pantallas.reportesConfirming.combo2' | translate}}</label>
+                        <div class="col-md-5">
+                            <select id="inputUser" name="inputUser"
+                            class="form-select form-select-sm form-control" [(ngModel)]="reportesConfirming.canales">
+                            <option [value]="item.idChannel" *ngFor="let item of canal">{{item.description}}</option>
+                        </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+
+    <br>
+
+    <div class="row">
+        <div class="col-md-12">
+            <button type="button" class="btn btn-danger float-left" (click)="limpiar()">{{'btn.limpiar' |
+                translate}}</button>
+            <button type="button" class="btn btn-danger float-right" (click)="guardarReporte()">{{'btn.guardar' |
+                translate}}</button>
+        </div>
+        <br>
+        <br>
+        <div class="col-md-12">
+            <button type="button" class="btn btn-danger float-right" (click)="openModal()">{{'btn.exportar' |
+                translate}}</button>
+        </div>
+    </div>
+
+</div>

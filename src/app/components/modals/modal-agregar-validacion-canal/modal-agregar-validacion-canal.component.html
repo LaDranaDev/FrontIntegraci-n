@@ -1,0 +1,46 @@
+<div class="modal-button"></div>
+<div id="popup_container">
+  <div class="titles">
+    <div class="titles-sub">
+      <div>
+        <label class="title-bold" [ngStyle]="{ color: color }" for=""
+          >{{'pantalla.moduloAdministracion.gestionBancos.seleccione' | translate}}</label
+        >
+      </div>
+    </div>
+  </div>
+  <div class="content-padding" id="popup_content">
+    <div id="img" class="txt-center"><img [src]="img" alt="" /></div>
+    <div>
+      <form [formGroup]="validacionForm">
+        <label class="text-blod"><strong>{{'gestionValidaciones.msjERRRC00Titulo' | translate}}</strong></label>
+        <mat-radio-group formControlName="radio" class="radio">
+            <ng-container *ngIf="!data?.edit">
+                <mat-radio-button [checked]="idNew" [value]="1" >{{'gestionValidaciones.msjSeleccioneAgregaCampo' | translate}}</mat-radio-button>
+                <mat-radio-button [value]="2">{{'gestionValidaciones.msjSeleccioneAgregaValidacion' | translate}}</mat-radio-button>
+            </ng-container>
+            <ng-container *ngIf="data?.edit">
+                <mat-radio-button [checked]="!idNew" [value]="3">{{'gestionValidaciones.msjSeleccioneModificaCampo' | translate}}</mat-radio-button>
+                <mat-radio-button [value]="4">{{'gestionValidaciones.msjSeleccioneModificaValidacion' | translate}}</mat-radio-button>
+            </ng-container>
+        </mat-radio-group>
+      </form>
+    </div>
+  </div>
+  <mat-dialog-actions class="center">
+    <div class="col text-center mb-4">
+      <button
+        type="button"
+        class="btn btn-outline-danger justify-content-center mr-2"
+        mat-dialog-close
+        (click)="enviar()"
+      >
+        OK
+      </button>
+      <button type="button" class="btn btn-outline-danger" mat-dialog-close>
+        Cancelar
+      </button>
+    </div>
+  </mat-dialog-actions>
+</div>
+<div class="modal-button"></div>

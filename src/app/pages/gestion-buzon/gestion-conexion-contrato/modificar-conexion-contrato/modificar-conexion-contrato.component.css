@@ -1,0 +1,10 @@
+.spa{
+    margin: 1px;
+}
+
+.table>tbody+tbody {
+     border-top: 2px solid #ffffff;
+}
+.table tbody+tbody {
+    border-top: 2px solid #ffffff; 
+}

@@ -1,0 +1,73 @@
+.col-xs-2{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    justify-items: center;
+    margin: 1em 2em 0em 2em;
+}
+
+.col-xs-2-label{
+    display: grid;
+    grid-template-columns: 30% 70%;
+    margin: 2em 0em 1em 0em;
+    text-align: end;
+    align-items: center;
+    gap: 1em;
+    width: 100%;
+}
+
+.col-desc{
+    display: grid;
+    justify-items: center;
+    gap: 2em;
+    margin: 0em 2em 2em 2em;
+}
+
+.txt-end{
+    justify-content: flex-end;
+    display: flex;
+    gap: 2em;
+}
+
+
+.justify-left{
+    justify-content: left;
+    display: flex;
+}
+
+.padding-card{
+    padding: 0em 30em 0em 20em;
+}
+
+.padding-card-less{
+    padding: 0em 10em 0em 20em;
+}
+.estilo{
+    cursor: pointer; 
+    color: red;
+}
+ .buttons-flex{
+    justify-content: flex-end;
+    display: grid;
+    gap: 75%;
+    grid-template-columns: 1fr 1fr;
+ }
+
+ .buttons-right{
+    display: grid;
+    justify-content: flex-end;
+    gap: 1em;
+ }
+
+ .buttons-left{
+    display: grid;
+    justify-content: flex-start;
+    gap: 1em;
+    height: min-content;
+ }
+ .width-conv{
+    width: 15em;
+ }
+
+ .margin-title{
+    margin: 1em;
+}

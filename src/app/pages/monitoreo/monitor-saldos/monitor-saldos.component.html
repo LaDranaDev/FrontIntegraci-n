@@ -1,0 +1,209 @@
+<app-operativa-header tituloPantalla="{{'pantallas.monitorSaldos' | translate}}"></app-operativa-header>
+
+<div id="monitorSaldos" class="panel panel-default col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    <br>
+    <form [formGroup]="monitorSaldosForm">
+
+        <div class="card">
+            <h5 class="card-header justify-content-center">
+                 {{'pantalla.moduloAdministracion.gestionBackend.busqueda' | translate}}
+            </h5>
+            <br>
+            <div class="cin">
+                <div class="dos">
+                    <div class="dividir">
+                        <div class="card-body">
+                            <div class="form-group row2">
+                                <label for="codigoCliente" class="col-md-4  col-xs-4 col-xs-4 col-sm-4">{{'codigoCliente' | translate}}:</label>
+                                <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+                                    <input class="form-control"  type="text" name="codigoCliente" id="codigoCliente" formControlName="codigoCliente" placeholder="{{'codigoCliente' | translate}}"
+                                    (keydown.Tab)="consultaDatosCliente()" tabindex="1" (paste)="onPaste($event)"
+                                    (keypress)="numerico($event)"  maxlength="8" >
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="dividir">
+                        <div class="card-body">
+                            <div class="form-group row2">
+                                <label for="estatusContrato" class="col-md-4  col-xs-4 col-xs-4 col-sm-4">{{'estatusContrato' | translate}}:</label>
+                                <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+                                        <input class="form-control"  type="text" id="estatusContrato" name="estatusContrato" formControlName="estatusContrato" placeholder="{{'estatusContrato' | translate}}">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="dos">
+                    <div class="card-body">
+                        <div class="form-group row2">
+                            <label for="razonSocial" class="col-md-2  col-xs-2 col-xs-2 col-sm-2">{{'razonSocial' | translate}}:</label>
+                            <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
+                                <input class="form-control" id="razonSocial"  type="text" name="razonSocial" formControlName="razonSocial" placeholder="{{'razonSocial' | translate}}" >
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="dos">
+                    <div class="card-body">
+                        <div class="form-group row2">
+                            <label for="archivoProcesado" class="col-md-2  col-xs-2 col-xs-2 col-sm-2">{{'archivoProcesado' | translate}}:</label>
+                            <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
+                                <input class="form-control"  type="text" id="archivoProcesado" name="archivoProcesado" formControlName="archivoProcesado"
+                                placeholder="{{'archivoProcesado' | translate}}"
+                                (keypress)="eveValidate($event)"
+                                (ondragenter)="disableEvent($event)"
+                                (dragover)="disableEvent($event)"
+                                (ondrop)="disableEvent($event)"
+                                size="100" maxlength="100"
+                                >
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="dos">
+                    <div class="card-body">
+                        <div class="form-group row2">
+                            <label for="producto" class="col-md-2  col-xs-2 col-xs-2 col-sm-2">{{'producto' | translate}}:</label>
+                        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                            <select class="form-select form-select-sm form-control" formControlName="producto" id="producto"  aria-label=".form-select-sm example" (change)="valueChange($event)">
+                                <option value="">{{'todos' | translate}}</option>
+                                <option [value]="item.claveProducto" *ngFor="let item of productos" >{{item.descProducto}}</option>
+                            </select>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="dos">
+                    <div class="dividir">
+                        <div class="card-body">
+                            <div class="form-group row2">
+                                <label for="inputFechaInicial" class="col-md-4  col-xs-4 col-xs-4 col-sm-4">{{'fechaInicio' | translate}}:</label>
+                                <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" id="inputFechaInicial" name="v_fechaInicial" readonly required
+                                        bsDatepicker #dpFechaIni="bsDatepicker" [bsConfig]="datePickerConfig" formControlName="fechaInicial" [maxDate]="getMaxDate()">
+                                        <div class="input-group-append">
+                                            <button class="btn btn-outline-danger" type="button" id="btnFechaInicio" name="btnFechaInicio" (click)="dpFechaIni.toggle()"
+                                            [attr.aria-expanded]="dpFechaIni.isOpen">
+                                                <em class="fa fa-calendar"></em>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="dividir">
+                        <div class="card-body">
+                            <div class="form-group row2">
+                                <label for="fechaFinal" class="col-md-4  col-xs-4 col-xs-4 col-sm-4">{{'fechaFinal' | translate}}:</label>
+                                <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" id="fechaFinal" name="fechaFinal" readonly required
+                                        bsDatepicker #dpFechaFin="bsDatepicker" [bsConfig]="datePickerConfig" formControlName="fechaFinal" [maxDate]="getMaxDate()">
+                                       <div *ngIf="submittedMonitor && formControlMonitor['fechaFinal'].errors" class="text-danger text-left mt-2">
+                                        <div *ngIf="formControlMonitor['fechaFinal'].errors['required']">{{'pantallas.catalogoDin.valor.error' | translate}}</div>
+                                    </div>
+                                        <div class="input-group-append">
+                                            <button class="btn btn-outline-danger" type="button" id="btnFechaFin" name="btnFechaFin" (click)="dpFechaFin.toggle()"
+                                            [attr.aria-expanded]="dpFechaFin.isOpen">
+                                                <em class="fa fa-calendar"></em>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+              </div>
+        </div>
+
+        <br>
+        <div class="card" *ngIf="banderaHasRows">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                       <table class="table table-striped table-hover" aria-describedby="listaConsultaPais">
+                        <caption></caption>
+                            <thead>
+                                <tr>
+                                    <th class="text-center" scope="col"> {{'FEC' | translate}}</th>
+                                    <th class="text-center" scope="col"> {{'HEC' | translate}}</th>
+                                    <th class="text-center" scope="col"> {{'menu.adminContrato.cuentasOrdenantes' | translate}}</th>
+                                    <th class="text-center" scope="col"> {{'archivoProcesado' | translate}}</th>
+                                    <th class="text-center" scope="col"> {{'MR' | translate}}</th>
+                                    <th class="text-center" scope="col"> {{'SD' | translate}}</th>
+                                    <th class="text-center" scope="col"> {{'MF' | translate}}</th>
+                                    <th class="text-center" scope="col"> {{'producto' | translate}}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <ng-container *ngIf="banderaHasRows; then templateFillTable; else templateEmptyTableMS">
+                                </ng-container>
+                                <ng-template #templateFillTable>
+                                    <tr *ngFor="let tab of tabla">
+                                        <td class="text-center">{{tab.fechaEnvioConsulta | uppercase}}</td>
+                                        <td class="text-center">{{tab.horaEnvioConsulta | uppercase}}</td>
+                                        <td class="text-center">{{tab.cuentaOrdenante | uppercase}}</td>
+                                        <td class="text-center">{{tab.nombreArchivo}}</td>
+                                        <td class="text-center">{{tab.montoRequerido | uppercase}}</td>
+                                        <td class="text-center">{{tab.saldoConsulta | uppercase}}</td>
+                                        <td class="text-center">{{tab.saldoFaltante | uppercase}}</td>
+                                        <td class="text-center">{{tab.producto | uppercase}}</td>
+                                    </tr>
+                                </ng-template>
+                                <ng-template #templateEmptyTableMS>
+                                    <tr>
+                                        <td class="text-center" colspan="12"> {{'noResult' | translate}} </td>
+                                    </tr>
+                                </ng-template>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mt-1">
+                       <div class="d-flex justify-content-center" *ngIf="banderaHasRows">
+                            <pagination
+                                [boundaryLinks]="showBoundaryLinksMS"
+                                [directionLinks]="showDirectionLinksMS"
+                                [totalItems]="totalElements"
+                                [itemsPerPage]="rowsPorPagina"
+                                [maxSize]="rowsPorPagina"
+                                [(ngModel)]="page"
+                                previousText="&lsaquo;" nextText="&rsaquo;"
+                                firstText="{{'paginador.inicio' | translate}}" lastText="{{'paginador.fin' | translate}}"
+                                (pageChanged)="onPageChanged($event)">
+                            </pagination>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-2">
+            <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-1 offset-sm-1 offset-md-1 offset-lg-1">
+                <button type="button" class="btn btn-danger" (click)="limpiar()">{{'btn.limpiar' | translate}}</button>
+            </div>
+            <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-8 offset-sm-8 offset-md-8 offset-lg-8">
+                <button type="button" class="btn btn-danger" (click)="consultar()" >{{'btn.consultar' | translate}}</button>
+            </div>
+        </div>
+        <div class="row mt-2" *ngIf="banderaHasRows">
+            <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-1 offset-sm-1 offset-md-1 offset-lg-1">
+
+            </div>
+            <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-8 offset-sm-8 offset-md-8 offset-lg-8">
+                <button type="button" class="btn btn-danger" (click)="exportar()">{{'btn.exportar' | translate}}</button>
+            </div>
+        </div>
+    </form>
+
+</div>

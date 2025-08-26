@@ -1,0 +1,186 @@
+<app-operativa-header tituloPantalla="{{'MO' | translate}}"></app-operativa-header>
+<form [formGroup]="datosForm">
+    <div class="card">
+        <h5 class="card-header justify-content-center">
+           {{'MO.DG' | translate}}:
+        </h5>
+        <div class="inpu">
+            <label for="producto" class="col-form-label col-xs-2 col-sm-2 col-md-1"> {{'MO.P' | translate}}: </label>
+            <input type="text" class="form-control" id="producto" name="producto" formControlName="producto">
+        </div>
+        <div class="inpu">
+            <div class="dos">
+                <label for="codigoCliente" class="col-form-label col-xs-2 col-sm-2 col-md-2"> {{'MO.CC' | translate}}: </label>
+                <input type="text" class="form-control" id="codigoCliente" name="codigoCliente" formControlName="codigoCliente">
+            </div>
+            <div class="dos">
+                <label for="estatus" class="col-form-label col-xs-2 col-sm-2 col-md-2">{{'MO.E' | translate}}: </label>
+                <input type="text" class="form-control" id="estatus" name="estatus" formControlName="estatus">
+            </div>
+        </div>
+        <div class="inpu">
+            <div class="dos" *ngIf="id === '91'">
+                <label for="fechaVencimiento" class="col-form-label col-xs-2 col-sm-2 col-md-2">{{'MO.FV' | translate}}: </label>
+                <input type="text" class="form-control" id="fechaVencimiento" name="fechaVencimiento" formControlName="fechaVencimiento" >
+            </div>
+            <div class="dos" *ngIf="id !== '91'">
+                <label for="fechaAplicacion" class="col-form-label col-xs-2 col-sm-2 col-md-2">{{'MO.FA' | translate}}: </label>
+                <input type="text" class="form-control" id="fechaAplicacion" name="fechaAplicacion" formControlName="fechaAplicacion">
+            </div>
+            <div class="dos">
+                <label for="fechaPresentacion" class="col-form-label col-xs-2 col-sm-2 col-md-2">{{'MO.PR' | translate}}: </label>
+                <input type="text" class="form-control" id="fechaPresentacion" name="fechaPresentacion" formControlName="fechaPresentacion">
+            </div>
+        </div>
+        <div class="inpu"  *ngIf="id === '02' || id === 99 ">
+            <label for="horarioProg" class="col-form-label col-xs-2 col-sm-2 col-md-1">{{'MO.HP' | translate}}: </label>
+            <input type="text" class="form-control" id="horarioProg" name="horarioProg" formControlName="horarioProg" >
+        </div>
+        <div class="inpu">
+            <label for="nombreArchivo" class="col-form-label col-xs-2 col-sm-2 col-md-1">{{'MO.NA' | translate}}: </label>
+            <input type="text" class="form-control" id="nombreArchivo" name="nombreArchivo" formControlName="nombreArchivo" >
+        </div>
+        <div class="inpu">
+            <div class="dos">
+                <label for="referencia" class="col-form-label col-xs-2 col-sm-2 col-md-2">{{'MO.R' | translate}}: </label>
+                <input type="text" class="form-control" id="referencia" name="referencia" formControlName="referencia" >
+            </div>
+            <div class="dos" *ngIf="id === '91'">
+                <label for="referencia2" class="col-form-label col-xs-2 col-sm-2 col-md-2">{{'MO.R2' | translate}}: </label>
+                <input type="text" class="form-control" id="referencia2" name="referencia2" formControlName="referencia2">
+            </div>
+            <div class="dos" *ngIf="id === '01' || id === '02' || id === '38' || id === '97'">
+                <label for="numConvenioDetalle" class="col-form-label col-xs-2 col-sm-2 col-md-2">{{'consultaDocumentosCFDI.lblClaveRastreo' | translate}}: </label>
+                <input type="text" class="form-control" id="numConvenioDetalle" name="numConvenio" formControlName="numConvenio">
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <h5 class="card-header justify-content-center">
+           {{'MO.DO' | translate}}:
+        </h5>
+        <div class="inpu">
+            <label for="banco" class="col-form-label col-xs-2 col-sm-2 col-md-1">{{'MO.B' | translate}}: </label>
+            <input type="text" class="form-control" id="banco" name="banco" formControlName="banco">
+        </div>
+        <div class="inpu">
+            <label for="nombre" class="col-form-label col-xs-2 col-sm-2 col-md-1">{{'MO.N' | translate}}: </label>
+            <input type="text" class="form-control" id="nombre" name="nombre" formControlName="nombre">
+        </div>
+        <div class="inpu">
+            <div class="dos">
+                <label for="cuenta" class="col-form-label col-xs-2 col-sm-2 col-md-2">{{'MO.C' | translate}}: </label>
+                <input type="text" class="form-control" id="cuenta" name="cuenta" formControlName="cuenta">
+            </div>
+            <div class="dos">
+                <label for="divisaOrd" class="col-form-label col-xs-2 col-sm-2 col-md-2">{{'MO.D' | translate}}: </label>
+                <input type="text" class="form-control" id="divisaOrd" name="divisaOrd" formControlName="divisaOrd" >
+            </div>
+        </div>
+        <div class="inpu">
+            <div class="dos">
+                <label for="importe" class="col-form-label col-xs-2 col-sm-2 col-md-2">{{'MO.I' | translate}}: </label>
+                <input type="text" class="form-control" id="importe" name="importe" formControlName="importe" >
+            </div>
+            <div class="dos" *ngIf="id !== '91'"></div>
+            <div class="dos" *ngIf="id === '91'">
+                <label for="iva" class="col-form-label col-xs-2 col-sm-2 col-md-2">{{'MO.IVA' | translate}}: </label>
+                <input type="text" class="form-control" id="iva" name="iva" formControlName="iva">
+            </div>
+        </div>
+        <div class="inpu"  *ngIf="id === '32'">
+            <label for="claveDes" class="col-form-label col-xs-2 col-sm-2 col-md-1">{{'MO.CD' | translate}}: </label>
+            <input type="text" class="form-control" id="claveDes" name="claveDes" formControlName="claveDes">
+        </div>
+        <div class="inpu"  *ngIf="id === '32'">
+            <label for="tipoCambio" class="col-form-label col-xs-2 col-sm-2 col-md-1">{{'MO.TC' | translate}}: </label>
+            <input type="text" class="form-control" id="tipoCambio" name="tipoCambio" formControlName="tipoCambio" >
+        </div>
+    </div>
+
+    <div class="card">
+        <h5 class="card-header justify-content-center">
+           {{'MO.DR' | translate}}:
+        </h5>
+        <div class="inpu" *ngIf="id === '38' || id === '39'">
+            <label for="bancoIntermediario" class="col-form-label col-xs-2 col-sm-2 col-md-1">{{'MO.BI' | translate}}: </label>
+            <input type="text" class="form-control" id="bancoIntermediario" name="bancoIntermediario" formControlName="bancoIntermediario">
+        </div>
+        <div class="inpu" *ngIf="id === '38' || id === '39'">
+            <label for="bancoPagador" class="col-form-label col-xs-2 col-sm-2 col-md-1">{{'MO.BP' | translate}}: </label>
+            <input type="text" class="form-control" id="bancoPagador" name="bancoPagador" formControlName="bancoPagador" >
+        </div>
+        <div class="inpu" *ngIf="id !== '38' && id !== '39'">
+                <label for="bancoReceptor" class="col-form-label col-xs-2 col-sm-2 col-md-1">{{'MO.B' | translate}}: </label>
+                <input type="text" class="form-control" id="bancoReceptor" name="bancoReceptor" formControlName="bancoReceptor">
+        </div>
+        <div class="inpu" *ngIf="id === '38' || id === '39'">
+            <label for="vostroCta" class="col-form-label col-xs-2 col-sm-2 col-md-1">{{'MO.CVB' | translate}}: </label>
+            <input type="text" class="form-control" id="vostroCta" name="vostroCta" formControlName="vostroCta">
+        </div>
+        <div class="inpu">
+            <label for="nombreBenef" class="col-form-label col-xs-2 col-sm-2 col-md-1" *ngIf="id === '38' || id === '39'">{{'MO.NBF' | translate}}: </label>
+            <label for="nombreBenef" class="col-form-label col-xs-2 col-sm-2 col-md-1" *ngIf="id !== '38' && id !== '39'">{{'MO.N' | translate}}: </label>
+            <input type="text" class="form-control" id="nombreBenef" name="nombreBenef" formControlName="nombreBenef" >
+        </div>
+        <div class="inpu" *ngIf="datosForm.value.numeMovil !== null">
+            <label for="numeMovil" class="col-form-label col-xs-2 col-sm-2 col-md-1">{{'MO.CCH' | translate}}: </label>
+            <input type="text" class="form-control" id="numeMovil" name="numeMovil" formControlName="numeMovil" >
+        </div>
+        <div class="inpu">
+            <div class="dos">
+                <label for="ctaAbono" class="col-form-label col-xs-2 col-sm-2 col-md-2" *ngIf="id === '38' || id === '39'">{{'MO.CBF' | translate}}: </label>
+                <label for="ctaAbono" class="col-form-label col-xs-2 col-sm-2 col-md-2" *ngIf="id !== '38' && id !== '39'">{{'MO.C' | translate}}: </label>
+                <input type="text" class="form-control" id="ctaAbono" name="ctaAbono" formControlName="ctaAbono">
+            </div>
+            <div class="dos">
+                <label for="divisaD" class="col-form-label col-xs-2 col-sm-2 col-md-2">{{'MO.D' | translate}}: </label>
+                <input type="text" class="form-control" id="divisaD" name="divisa" formControlName="divisa">
+            </div>
+        </div>
+        <div class="inpu">
+            <div class="dos">
+                <label for="importeD" class="col-form-label col-xs-2 col-sm-2 col-md-2">{{'MO.I' | translate}}: </label>
+                <input type="text" class="form-control" id="importeD" name="importe" formControlName="importe">
+            </div>
+            <div class="dos"></div>
+        </div>
+    </div>
+    <div class="card">
+        <h5 class="card-header justify-content-center">
+            {{'MO.CO' | translate}}:
+        </h5>
+        <div class="inpu">
+            <label for="comentarioD"></label>
+            <input type="text" class="form-control" id="comentarioD" name="comentario" formControlName="comentario">
+        </div>
+    </div>
+
+    <div class="row mt-2">
+        <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-1 offset-sm-1 offset-md-1 offset-lg-1">
+            <button type="button" class="btn btn-danger" (click)="regresarD()">{{'MO.Regr' | translate}}</button>
+        </div>
+        <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-8 offset-sm-8 offset-md-8 offset-lg-8">
+            <button type="button" class="btn btn-danger" (click)="historialD()">{{'MO.H' | translate}}</button>
+        </div>
+    </div>
+    <div class="row mt-2" *ngIf="idEstatus === '7' || idEstatus === '81'">
+        <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-1 offset-sm-1 offset-md-1 offset-lg-1">
+            <button type="button" class="btn btn-danger" (click)="reintentarD()">{{'MO.Repro' | translate}}</button>
+        </div>
+        <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-8 offset-sm-8 offset-md-8 offset-lg-8">
+            <button type="button" class="btn btn-danger" (click)="rechazarD()">{{'MO.Rech' | translate}}</button>
+        </div>
+    </div>
+    <div class="row mt-2">
+        <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-1 offset-sm-1 offset-md-1 offset-lg-1">
+            <button type="button" class="btn btn-danger" (click)="refrescarD()">{{'MO.Refr' | translate}}</button>
+        </div>
+    </div>
+    <div class="row mt-2" *ngIf="idEstatus === '13'">
+        <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-1 offset-sm-1 offset-md-1 offset-lg-1">
+            <button type="button" class="btn btn-danger" (click)="procesarD()">{{'MO.Proc' | translate}}</button>
+        </div>
+    </div>
+</form>

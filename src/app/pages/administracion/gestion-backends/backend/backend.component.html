@@ -1,0 +1,64 @@
+<app-operativa-header tituloPantalla="{{'pantalla.gestionBackend.titulo.alta' | translate}}" *ngIf="back === null"></app-operativa-header>
+<app-operativa-header tituloPantalla="{{'pantalla.gestionBackend.titulo.modificar' | translate}}" *ngIf="back !== null"></app-operativa-header>
+
+<div id="backends" class="panel panel-default col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    <br>
+    <!-- --- Seccion Alta de Backend --- -->
+    <div class="card mt-3">
+        <h5 class="card-header justify-content-center" *ngIf="back === null">
+           {{'pantalla.gestionBackend.datosBack' | translate}}
+        </h5>
+        <div class="card-body">
+            <form [formGroup]="formBackend" class="row" autocomplete="off">
+                <div class="col-12">
+                    <div class="col-label estilo">
+                        <label for="nameBackend" class="col-form-label">{{'pantalla.gestionBackend.nombBackend' | translate}}:</label>
+                    </div>
+                    <div class="col-input estilo">
+                        <input type="text" class="form-control estilo" id="nameBackend" formControlName="nameBackend" size="50" maxlength="50" (keypress)="validaKey($event)"
+                            (ondragenter)="disableEvent($event)" (dragover)="disableEvent($event)" (ondrop)="disableEvent($event)" (paste)="eventoOnPasteBlock($event)">
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="col-label">
+                        <label for="address" class="col-form-label">{{'pantalla.gestionBackend.direccionIP' | translate}}:</label>
+                    </div>
+                    <div class="col-input">
+                        <input type="text" class="form-control estilo" id="address" formControlName="address" (keypress)="validaKey($event)" size="15" maxlength="15"
+                            (ondragenter)="disableEvent($event)" (dragover)="disableEvent($event)" (ondrop)="disableEvent($event)" (paste)="eventoOnPasteBlock($event)">
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="col-label estilo">
+                        <label for="proto" class="col-form-label">{{'pantalla.moduloAdministracion.gestionBackend.protocolo' | translate}}:</label>
+                    </div>
+                    <div class="col-input estilo">
+                        <select class="form-control display" id="proto" formControlName="protocol">
+                            <option *ngFor="let dato of listaProtocolo" [value]="dato.idPtcl">{{dato.nombre}}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="col-label">
+                        <label for="inpucheck" class="col-form-label">{{'pantalla.gestionParametrosCanal.activo' | translate}}:</label>
+                    </div>
+                    <div class="col-input">
+                        <input class="estilo" type="checkbox" id="inpucheck" formControlName="active" (change)="cambio($event)">
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 margin">
+        <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-1 estilo">
+            <button type="button" class="btn btn-danger" (click)="regresarToConsult()">{{'btn.cancelarBanco' |
+                translate}}</button>
+        </div>
+        <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-8 estilo">
+            <button type="button" class="btn btn-danger" (click)="guardarCatalogo()" *ngIf="back === null">{{'btn.guardar' |
+                translate}}</button>
+            <button type="button" class="btn btn-danger" (click)="putBackend()" *ngIf="back !== null">{{'btn.guardar' |
+                translate}}</button>
+        </div>
+    </div>
+</div>

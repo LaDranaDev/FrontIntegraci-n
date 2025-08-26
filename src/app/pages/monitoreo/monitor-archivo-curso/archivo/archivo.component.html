@@ -1,0 +1,122 @@
+<app-operativa-header tituloPantalla="{{'pantalla.monitoreo.monitorArchivoCurso.archivo.title' | translate}}"></app-operativa-header>
+
+<div id="gestionAlarma" class="panel panel-default col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    <br>
+    <label for="">{{'C' | translate}}: {{register[0].cliente}}</label>
+    <!-- --- Seccion de Resultado --- -->
+    <div class="card mt-3">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <table class="table table-striped table-hover">
+                        <caption></caption>
+                        <thead>
+                            <tr>
+                            
+                            <th scope="col" class="text-center">{{'pantalla.monitoreo.monitorArchivoCurso.nombreArchivo' | translate}}</th>
+                            <th scope="col" class="text-center">{{'pantalla.monitoreo.monitorArchivoCurso.fechaRecepcion' | translate}}</th>
+                            <th scope="col" class="text-center">{{'pantalla.monitoreo.monitorArchivoCurso.archivo.estatus' | translate}}</th>
+                            <th scope="col" class="text-center">{{'pantalla.monitoreo.monitorArchivoCurso.archivo.noMovimientos' | translate}}</th>
+                            <th scope="col" class="text-center">{{'pantalla.monitoreo.monitorArchivoCurso.monto' | translate}}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let dato of register">
+                                <td class="text-center">{{dato.nombreArch}}</td>
+                                <td class="text-center">{{dato.fechaRegistro}}</td>
+                                <td class="text-center">{{dato.descEstatus}}</td>
+                                <td class="text-center"><a  (click)="go(dato, true)">{{dato.totalOper}}</a></td>
+                                <td class="text-center">{{'$' + dato.totalMont}}</td>
+                            </tr>
+                            <ng-template #noHayInformación>
+                                <tr>
+                                    <td class="text-center" colspan="12">{{'administracion.productos.periodo.Nodata' | translate}} </td>
+                                </tr>
+                            </ng-template>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+           
+        </div>
+    </div>
+
+    <!-- --- Seccion de Busqueda --- -->
+    <div class="card mt-3">
+        <h5 class="card-header justify-content-center">
+            {{'BNP' | translate}}
+        </h5>
+        <div class="card-body">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <form [formGroup]="matForm" class="row">
+                    <div class="col-xs-3">
+                        <div>
+                            <label for="producto">{{'pantalla.monitoreo.monitorArchivoCurso.producto' | translate}}:</label>
+                            <select class="form-control display" id="producto" formControlName="producto" >
+                                <option  value=""></option>
+                                <option *ngFor="let products of catProductos" value="{{products.id}}">{{ products.valor }}</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="estatus" >{{'EO' | translate}}:</label>
+                            <select class="form-control display" id="estatus" formControlName="estatus">
+                                <option  value=""></option>
+                                <option *ngFor="let status of catEstatus" value="{{status.id}}">{{ status.valor }}</option>
+                            </select>
+                        </div>
+                        <div> 
+                            <button type="button" class="btn btn-danger" (click)="eventoConsultar()">{{'btn.buscar' | translate}}</button>
+                        </div>
+                        
+                    </div>
+                </form>
+                <div class="card mt-3">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                <table class="table table-striped table-hover">
+                                    <caption></caption>
+                                    <thead>
+                                        <tr>
+                                        <th scope="col" class="text-center">{{'producto' | translate}}</th>
+                                        <th scope="col" class="text-center">{{'pantalla.monitoreo.monitorArchivoCurso.archivo.noMovimientos' | translate}}</th>
+                                        <th scope="col" class="text-center">{{'EO' | translate}}</th>
+                                        <th scope="col" class="text-center">{{'pantalla.monitoreo.monitorArchivoCurso.monto' | translate}}</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let dato of datosNivelProd">
+                                            <td class="text-center">{{dato.descProd}}</td>
+                                            <td class="text-center"><a  (click)="go(dato)">{{dato.totalOper}}</a></td>
+                                            <td class="text-center">{{dato.descEstatus}}</td>
+                                            <td class="text-center">{{'$' + (dato.totalMont !== null ? dato.totalMont : 0)}}</td>
+                                        </tr>
+                                        <ng-template #noHayInformación>
+                                            <tr>
+                                                <td class="text-center" colspan="12"> {{'administracion.productos.periodo.Nodata' | translate}}  </td>
+                                            </tr>
+                                        </ng-template>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                       
+                    </div>
+                </div>
+                <div class="col-xs-12 form-group col-sm-12 col-md-12 col-lg-12 buttons-flex margins-top" >
+               
+                    <div class="buttons-left">
+                        <button type="button " class="float-right btn btn-danger " (click)="goBack() " >{{'btn.regresar' | translate}}</button>
+                        <button type="button " class="float-right btn btn-danger " (click)="refrescar() " >{{'menu.monitoreo.comprobantesFormatoCDMX.btn.refrescar' | translate}}</button>
+                    </div>
+                     <div class="buttons-right">
+                        <button type="button" class="float-left btn btn-danger " (click)="exportaProducto()" >{{'btn.exportar' | translate}}</button>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

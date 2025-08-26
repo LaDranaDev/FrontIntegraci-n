@@ -1,0 +1,99 @@
+<app-operativa-header tituloPantalla="{{'pantalla.catalogoDin.modificar.titulo' | translate}}"></app-operativa-header>
+<div id="catalogoDinamico" class="panel panel-default col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    <br>
+    <div class="card">
+        <h5 class="card-header justify-content-center">
+            {{'pantalla.catalogoDin.modificar.titulo' | translate}}
+        </h5>
+        <div class="card-body">
+            <div class="row justify-content-center">
+                <div class="col-xs-6 col-sm-6 col-md-6 offset-xs-2 offset-sm-2 offset-md-2">
+                    <div class="form-group row">
+                        <div class="col-sm-6">
+                            <input type="text" class="form-control" id="inputDescripcionModificar"
+                                name="inputDescripcionModificar" [(ngModel)]="valorDescrCatalogo"
+                                (keyup)="validateContenidoRegex($event, 'D','valorDescrCatalogo')" (blur)="validateContenidoRegex($event, 'D', 'valorDescrCatalogo')"
+                                aria-label="inputDescripcionModificar" size="45" disabled>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <form [formGroup]="formCatalogoDinamico" autocomplete="off">
+                <div class="row justify-content-center">
+                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                        <div class="form-group row align-items-center">
+                            <label for="inputValor"
+                                class="col-xs-2 col-sm-2 col-md-2 col-lg-2 col-form-label text-right">{{'pantalla.catalogoDin.valor'
+                                | translate}}:</label>
+                            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                <input type="text" class="form-control removeTextTransform" id="inputValor"
+                                    name="v_Valor" [(ngModel)]="valorSubCatalogo" formControlName="valor"
+                                    (keypress)="eveValidateTexto($event)"
+                                    (paste)="eventoPaste($event)"
+                                    (ondragenter)="disableEvent($event)" 
+                                    (dragover)="disableEvent($event)" 
+                                    (ondrop)="disableEvent($event)"
+                                    maxlength="50" size="40">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row justify-content-center">
+                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                        <div class="form-group row align-items-center">
+                            <label for="inputDescripcion"
+                                class="col-xs-2 col-sm-2 col-md-2 col-lg-2 col-form-label text-right">{{'pantalla.catalogoDin.descripcion'
+                                | translate}}:</label>
+                            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                <input type="text" class="form-control removeTextTransform" id="inputDescripcion"
+                                    name="v_Descripcion" [(ngModel)]="descripcionSubCatalogo"
+                                    (keypress)="eveValidateTexto2($event)"
+                                    (paste)="eventoPaste2($event)"
+                                    (ondragenter)="disableEvent($event)" 
+                                    (dragover)="disableEvent($event)" 
+                                    (ondrop)="disableEvent($event)"
+                                    formControlName="descripcion" maxlength="50" size="40">
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </form>
+            <ng-container
+                *ngIf="banderaShowButtonModificar; then templateShowButtonModificar; else templateShowButtoAgregar;">
+            </ng-container>
+            <ng-template #templateShowButtonModificar>
+                <div class="row mb-2">
+                    <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-1 offset-sm-1 offset-md-1 offset-lg-1">
+                        <button type="button" class="btn btn-danger"
+                            (click)="saveOrUpdateSubCatalogo()">{{'btn.modificar' |
+                            translate}}</button>
+                    </div>
+                    <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-8 offset-sm-8 offset-md-8 offset-lg-8">
+                        <button type="button" class="btn btn-danger" (click)="regresarToConsult()">{{'btn.regresar' |
+                            translate}}</button>
+                    </div>
+                </div>
+            </ng-template>
+            <ng-template #templateShowButtoAgregar>
+                <div class="row mb-2">
+                    <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-1 offset-sm-1 offset-md-1 offset-lg-1">
+                        <button type="button" class="btn btn-danger" (click)="saveOrUpdateSubCatalogo()">{{'btn.agregar'
+                            |
+                            translate}}</button>
+                    </div>
+                    <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-8 offset-sm-8 offset-md-8 offset-lg-8">
+                        <button type="button" class="btn btn-danger" (click)="regresarToConsult()">{{'btn.regresar' |
+                            translate}}</button>
+                    </div>
+                </div>
+            </ng-template>
+            <div class="row">
+                <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-1 offset-sm-1 offset-md-1 offset-lg-1">
+                    <button type="button" class="btn btn-danger" (click)="cleanForm()">{{'btn.limpiar' |
+                        translate}}</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

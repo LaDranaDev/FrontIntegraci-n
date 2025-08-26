@@ -1,0 +1,97 @@
+input[type="checkbox"] {
+    appearance: none;
+    width: 2em;
+    height: 2em;
+    margin-top: 0.5em;
+    vertical-align: top;
+    background-color: #E6E4E4;
+    position: relative;
+    border: 1px solid rgba(0, 0, 0, 0.25);
+    border-radius: 0.25em;
+    cursor: pointer;
+}
+
+input[type="checkbox"]:after {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    font-family: FontAwesome,sans-serif;
+    font-weight: 600;
+    content: "\f00c";
+    color: #fff;
+    font-size: 15px;
+    display: none
+}
+
+input[type="checkbox"]:checked,
+input[type="checkbox"]:checked:hover {
+    background-color: #FE2E2E;
+}
+
+input[type="checkbox"]:checked::after {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+input[type="checkbox"]:hover {
+    background-color: #ddd;
+}
+
+input[type="checkbox"]:disabled {
+    background: #b9aaaa;
+}
+
+input[type="checkbox"]:disabled:hover {
+    background: #b9aaaa;
+}
+
+.removeTextTransform{
+    text-transform: none !important;
+}
+
+/** CSS para los radio buttons */
+.option-input {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    -ms-appearance: none;
+    -o-appearance: none;
+    appearance: none;
+    position: relative;
+    width: 2em;
+    height: 2em;
+    transition: all 0.15s ease-out 0s;
+    background: #E6E4E4;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+    display: inline-block;
+    margin-right: 0.5rem;
+    outline: none;
+    z-index: 1000;
+}
+
+.option-input:hover {
+    background: #ddd;
+}
+
+.option-input:checked {
+    background: #FE2E2E;
+}
+
+.option-input:checked::before {
+    width: 100%;
+    height: 100%;
+    display:flex;
+    content: "\f00c";
+    font-size: 15px;
+    font-weight:600;
+    position: absolute;
+    align-items:center;
+    justify-content:center;
+    font-family:FontAwesome,sans-serif;
+}
+
+.option-input.radio {
+    border-radius: 50%;
+}

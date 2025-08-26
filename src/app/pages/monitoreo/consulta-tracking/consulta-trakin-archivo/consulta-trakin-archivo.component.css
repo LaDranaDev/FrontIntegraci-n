@@ -1,0 +1,62 @@
+.estilo{
+    display: inline-block !important;
+}
+
+.divide{
+    display: flex
+
+}
+
+.row{
+    width: 30%;
+    margin: 5px;
+}
+.rof{    
+    width: 100%;
+    margin: 5px;
+    display: flex;
+}
+.rot{    
+    width: 100%;
+    margin: 5px;
+    display: flex;
+}
+.row2{
+    width: 70%;
+    margin: 5px;
+}
+
+.rowTi{
+    width: 100%;
+    margin: 5px;
+}
+
+.dis{
+    display: flex;
+}
+
+.color {
+    color: blue;
+
+  }
+
+  .text-center {
+    text-align: center;
+}
+.text-center3 {
+    text-align: center;
+}
+
+
+.tipo{
+        text-align: -webkit-center;
+}
+
+
+.operaciones{
+    width:50px
+}
+
+input[type="text"] {
+    text-transform: none;
+}

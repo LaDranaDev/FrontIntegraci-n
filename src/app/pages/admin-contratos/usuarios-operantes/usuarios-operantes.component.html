@@ -1,0 +1,263 @@
+<div id="usuariosOperantes" class="panel panel-default col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    <app-operativa-header tituloPantalla="{{'pantallas.usuarioOperantes.title' | translate}}"></app-operativa-header>
+
+    <br>
+    <div class="card">
+        <h5 class="card-header justify-content-center">
+            {{'pantalla.datosContrato.title' | translate}}
+        </h5>
+        <app-busqueda-cliente [data]="dataContract"></app-busqueda-cliente>
+    </div>
+
+    <!-- Administracion de Usuarios -->
+    <div class="card" *ngIf="mostrarTablaCliente">
+        <h5 class="card-header justify-content-center">
+            <label>
+                {{'pantallas.usuarioOperantes.adminUsuarios' | translate}}
+            </label>
+        </h5>
+        <div class="card-body" [formGroup]="formAdmonUsuarios">
+            <div class="col-12">
+                <div class="row">
+                    <div class="col-6">
+                        <div class="form-group row">
+                            <label for="bucClienteAU" class="col-form-label col-2">
+                                {{'pantallas.usuarioOperantes.codigoCliente' | translate}}</label>
+                            <div class="col-10">
+                                <input type="text" name="bucClienteAU" id="bucClienteAU" class="form-control"
+                                    (keydown.Tab)="recuperarDatosCodCliente()" tabindex="1" appInputMask="numerico"
+                                    formControlName="bucCliente" maxlength="8">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group row">
+                            <div class="col-1 pr-0 align-self-center text-center">
+                                <input type="checkbox" name="bloqueado" id="bloqueado" formControlName="bloqueado"
+                                    (change)="bloquear()">
+                            </div>
+                            <div class="col-11 px-0">
+                                <label for="bloqueado" class="col-form-label">
+                                    {{'pantallas.usuarioOperantes.bloqueante' | translate}}
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6">
+                        <div class="form-group row">
+                            <label for="nombre" class="col-form-label col-2">
+                                {{'pantallas.usuarioOperantes.Nombre' | translate}}
+                            </label>
+                            <div class="col-10">
+                                <input type="text" name="nombre" id="nombre" class="form-control" tabindex="1"
+                                    formControlName="nombre">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group row">
+                            <label for="descripcion" class="col-form-label col-2 text-center">
+                                {{'pantallas.usuarioOperantes.Descripcion' | translate}}
+                            </label>
+                            <div class="col-10 pl-0">
+                                <input type="text" id="descripcion" name="descripcion" class="form-control"
+                                    appInputMask="alfabetico" formControlName="descripcion">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 form-group">
+                        <button type="button" class="btn btn-outline-danger float-start"
+                            [disabled]="this.dataContract.descEstatus !== 'ACTIVO'" (click)="registrarAdmonUsuarios()">
+                            {{'pantallas.usuarioOperantes.bntRegistrar' | translate}}
+                        </button>
+                        <button type="button" class="btn btn-outline-danger float-end"
+                            [disabled]="this.dataContract.descEstatus !== 'ACTIVO'" (click)="limpiarAdmonUsuarios()">
+                            {{'pantallas.usuarioOperantes.bntLimpiar' | translate}}
+                        </button>
+                    </div>
+                    <!--<div class="col-12">
+                        <button type="button" class="btn btn-outline-danger float-start"
+                            [disabled]="this.dataContract.descEstatus !== 'ACTIVO'">
+                            {{'pantallas.usuarioOperantes.btnBETSAM' | translate}}
+                        </button>
+                    </div>-->
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Fin Administracion de Usuarios -->
+
+    <!-- Usuario a Consultar -->
+    <div class="card" *ngIf="mostrarTablaCliente">
+        <h5 class="card-header justify-content-center">
+            <label>
+                {{ mostrarTablaCliente ?  ('pantallas.clientes.usuarioConsultar' | translate) : ('headerOpe.perfil' | translate) }}
+            </label>
+        </h5>
+        <div class="card-body" [formGroup]="formUsuario" >
+            <div class="row justify-content-end">
+                <div class="col-9">
+                    <div class="form-group row">
+                        <label for="nombre" class="col-form-label col-sm-2 text-right">
+                            {{'pantallas.usuarioOperantes.usuario' | translate}}
+                        </label>
+                        <div class="col-sm-4">
+                            <input type="text" maxlength="8" name="nombre" id="nombre" class="form-control"
+                                appInputMask="numerico" formControlName="usuario">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <button type="button" class="btn btn-outline-danger float-end" (click)="buscarUsuario()"
+                    [disabled]="this.dataContract.descEstatus !== 'ACTIVO'"
+                    *ngIf="datosTablaUsuarios.length > 0 && mostrarTablaCliente">
+                    {{'btn.buscar' | translate}}
+                </button>
+            </div>
+        </div>
+        
+        
+    </div>
+    <!-- when click Modify perfil -->
+    <div class="card" *ngIf="datosTablaRoles !== null && mostrarTablaRoles">
+    <div class="card-body" >
+        <div class="row justify-content-end">
+            <div class="col-9">
+                <div class="form-group row">
+                    <label for="codCli" class="col-form-label col-sm-2 text-right">
+                        {{'pantallas.usuarioOperantes.codigoCliente' | translate}}
+                    </label>
+                    <div class="col-sm-4">
+                        <input type="text" name="codCli" id="codCli" class="form-control"
+                            [value]="clienteSeleccionado?.buc" disabled>
+                    </div>
+                </div>
+            </div>
+            <div class="col-9">
+                <div class="form-group row">
+                    <label for="nombrePerf" class="col-form-label col-sm-2 text-right">
+                        {{'administracion.protocolos.nombre' | translate}}
+                    </label>
+                    <div class="col-sm-4">
+                        <input type="text" name="nombrePerf" id="nombrePerf" class="form-control"
+                            [value]="clienteSeleccionado?.nombreCliente" disabled>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    <!-- Fin Usuario a Consultar -->
+
+    <!-- Tabla usuarios -->
+    <div class="card" *ngIf="(datosTablaUsuarios.length > 0 && mostrarTablaCliente) ">
+        <table mat-table aria-describedby="mydesc" [dataSource]="returnedArray">
+            <!-- Position Column -->
+            <ng-container matColumnDef="sel">
+                <th id="matCellSel" mat-header-cell *matHeaderCellDef>{{'pantallas.usuarioOperantes.sel' | translate}}
+                </th>
+                <td mat-cell *matCellDef="let element">
+                    <mat-radio-button class="padding-top" [value]="element.id" (change)="enviarDatosForm(element)"
+                        name="radioButon"></mat-radio-button>
+                </td>
+            </ng-container>
+            <!-- Name Column -->
+            <ng-container matColumnDef="codigoCliente">
+                <th id="matCellCod" mat-header-cell *matHeaderCellDef>{{'pantallas.usuarioOperantes.codigoCliente' |
+                    translate}} </th>
+                <td mat-cell *matCellDef="let element"> {{element.buc}} </td>
+            </ng-container>
+            <!-- Weight Column -->
+            <ng-container matColumnDef="nombre">
+                <th id="matCellNom" mat-header-cell *matHeaderCellDef>{{'pantallas.usuarioOperantes.Nombre' |
+                    translate}}</th>
+                <td mat-cell *matCellDef="let element"> {{element.nombreCliente}} </td>
+            </ng-container>
+            <!-- Symbol Column -->
+            <ng-container matColumnDef="bloqueante">
+                <th id="matCellBlo" mat-header-cell *matHeaderCellDef>{{'pantallas.usuarioOperantes.bloqueante' |
+                    translate}}</th>
+                <td mat-cell *matCellDef="let element">
+                    <mat-checkbox disabled></mat-checkbox>
+                </td>
+            </ng-container>
+            <!-- Symbol Column -->
+            <ng-container matColumnDef="descripcion">
+                <th id="matCellDes" mat-header-cell *matHeaderCellDef>{{'pantallas.usuarioOperantes.Descripcion' |
+                    translate}}</th>
+                <td mat-cell *matCellDef="let element"> {{element.descripcion}} </td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="columnasTablaUsuarios"></tr>
+            <tr mat-row *matRowDef="let row; columns: columnasTablaUsuarios;"></tr>
+        </table>
+
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mt-1">
+            <div class="d-flex justify-content-center">
+                <pagination [boundaryLinks]="showBoundaryLinks" [directionLinks]="showDirectionLinks"
+                    [totalItems]="totalElements" [itemsPerPage]="rowsPerPage" [maxSize]="rowsPerPage" [(ngModel)]="page"
+                    previousText="&lsaquo;" nextText="&rsaquo;" firstText="{{ 'paginador.inicio' | translate }}"
+                    lastText="{{ 'paginador.fin' | translate }}" (pageChanged)="onPageChanged($event)"
+                    [hidden]="usuariosList.length === 0">
+                </pagination>
+            </div>
+        </div>
+
+        <div class="col-12 form-group pr-4">
+            <button type="button" class=" ms-3 btn btn-outline-danger float-start" (click)="eliminarRegistro()">
+                {{'btn.eliminar' | translate}}
+            </button>
+            <button type="button" class="btn me-3 btn-outline-danger float-end" (click)="editarPerfilRegistro()">
+                {{'btn.editarPerfil' | translate}}
+            </button>
+        </div>
+        <div class="col-12 form-group pr-4">
+            <button type="button" class="btn ms-3 btn-outline-danger float-start" (click)="modificarRegistro()">
+                {{'btn.modificar' | translate}}
+            </button>
+            <button type="button" class="btn me-3 btn-outline-danger float-end" (click)="getReport()">
+                {{'btn.exportar' | translate}}
+            </button>
+        </div>
+    </div>
+    <!-- Fin Tabla usuarios -->
+
+    <!-- Tabla Roles de Perfilamiento -->
+    <div class="card" *ngIf="datosTablaRoles !== null && mostrarTablaRoles">
+        <table mat-table [dataSource]="datosTablaRoles" class="mat-elevation-z8 demo-table">
+            <caption>Usuario operante</caption>
+            <!-- Sel Column -->
+            <ng-container matColumnDef="sel">
+                <th id="matCellRSel" mat-header-cell *matHeaderCellDef>{{'pantallas.usuarioOperantes.sel' | translate}}
+                </th>
+                <td mat-cell *matCellDef="let element">
+                    <mat-radio-button class="padding-top" (change)="optionPerfilSelected(element)" [value]="element.valor"
+                        name="radioButon" [checked]="element.estatusActivo"
+                          ></mat-radio-button>
+                </td>
+            </ng-container>
+            <!-- Perfil Column -->
+            <ng-container matColumnDef="descripcionCatalogo">
+                <th id="matCellPer" mat-header-cell *matHeaderCellDef>{{'pantallas.usuarioOperantes.perfil' |
+                    translate}} </th>
+                <td mat-cell *matCellDef="let element"> {{element.descripcionCatalogo}} </td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="columnasTablaRoles"></tr>
+            <tr mat-row *matRowDef="let row; columns: columnasTablaRoles;"></tr>
+        </table>
+        <br>
+        <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12" *ngIf="datosTablaUsuarios !== null">
+            <button type="button" class="btn mr-2 btn-outline-danger float-start" (click)="savePerrfil()">{{'btn.guardar' | translate}}</button>
+            <button type="button" class="btn btn-outline-danger float-end" (click)="getReportPerfil()">{{'btn.exportar' | translate}}</button>
+        </div>
+        <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12" *ngIf="datosTablaUsuarios !== null">
+            <button type="button" class="btn btn-outline-danger float-start" (click)="regresar()">{{'btn.regresar' | translate}}</button>
+        </div>
+    </div>
+    <!-- Fin Tabla Roles de Perfilamiento -->
+    <br>
+</div>

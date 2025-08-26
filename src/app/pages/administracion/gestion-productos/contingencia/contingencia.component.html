@@ -1,0 +1,176 @@
+<app-operativa-header tituloPantalla="{{'administracion.productos.periodo.consultaDiaProductos' | translate}}"
+    *ngIf="origen === 'periodo'"></app-operativa-header>
+<app-operativa-header tituloPantalla="{{'administracion.productos.contingencia.Modificar' | translate}}"
+    *ngIf="origen === 'contingencia'"></app-operativa-header>
+
+<div id="contingencia" class="panel panel-default col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    <br>
+
+    <div class="card mt-3">
+        <h5 class="card-header justify-content-center" *ngIf="origen === 'periodo'">
+            {{'administracion.productos.periodo.datosPeriodo' | translate}} {{descProd}}
+        </h5>
+        <h5 class="card-header justify-content-center" *ngIf="origen === 'contingencia'">
+            {{'administracion.productos.contingencia.subtitulo' | translate}} {{descProd}}
+        </h5>
+        <div class="card-body">
+            <form class="row" [formGroup]="formContingencia" *ngIf="origen === 'periodo' ">
+                <div class="col-12">
+                    <label for="idBack" class="col-form-label">{{'pantalla.controlVolumenOperativo.graficaEstatusClienteParametrizada.dia' | translate}}</label>
+                    <select class="form-control display" id="idBack" formControlName="dia">
+                        <option [value]="null">{{'seleccione' | translate}}</option>
+                        <option value="1">{{'days.0' | translate}}</option>
+                        <option value="2">{{'days.1' | translate}}</option>
+                        <option value="3">{{'days.2' | translate}}</option>
+                        <option value="4">{{'days.3' | translate}}</option>
+                        <option value="5">{{'days.4' | translate}}</option>
+                        <option value="6">{{'days.5' | translate}}</option>
+                        <option value="7">{{'days.6' | translate}}</option>
+                    </select>
+                </div>
+                <div class="col-12">
+                    <label for="horaIni" class="col-form-label">{{'administracion.productos.periodo.horaIni' | translate}} (HH:mm)</label>
+                    <input type="hidden" id="horaCiePend" name="horaCiePend" formControlName="horaCiePend">
+                    <input type="text" class="form-control" id="horaIni" formControlName="horaIni" maxlength="5"
+                        (blur)="applyTrim($event)" (keypress)="validateFormatHora($event)">
+                </div>
+                <div class="col-12">
+                    <label for="horaFin" class="col-form-label">{{'administracion.productos.periodo.horaFin' | translate}} (HH:mm)</label>
+                    <input type="text" class="form-control" id="horaFin" formControlName="horaFin" maxlength="5"
+                        (change)="calculateHoraCierre('periodo')" (blur)="applyTrim($event)" (keypress)="validateFormatHora($event)">
+                </div>
+                <div class="col-12">
+                    <label for="horaCie" class="col-form-label">{{'administracion.productos.periodo.horaCierre' | translate}} (HH:mm)</label>
+                    <input type="text" class="form-control" id="horaCie" formControlName="horaCie" maxlength="5"
+                        readonly (blur)="applyTrim($event)" (keypress)="validateFormatHora($event)">
+                </div>
+                <div class="col-12">
+                    <label for="bandActivo" class="col-form-label">{{'pantalla.gestionParametrosCanal.activo' | translate}}</label>
+                    <input type="checkbox" id="bandActivo" name="bandActivo" formControlName="activo">
+                </div>
+            </form>
+            <form class="row" [formGroup]="formContingencia" *ngIf="origen === 'contingencia' ">
+                <div class="col-12">
+                    <label for="dia" class="col-form-label">{{'pantalla.controlVolumenOperativo.graficaEstatusClienteParametrizada.dia' | translate}}</label>
+                    <select  [attr.disabled]="true" class="form-control display" id="dia" formControlName="dia"  readonly >
+                        <option [value]="null">{{'seleccione' | translate}}</option>
+                        <option value="1">{{'days.00' | translate}}</option>
+                        <option value="2">{{'days.10' | translate}}</option>
+                        <option value="3">{{'days.20' | translate}}</option>
+                        <option value="4">{{'days.30' | translate}}</option>
+                        <option value="5">{{'days.40' | translate}}</option>
+                        <option value="6">{{'days.50' | translate}}</option>
+                        <option value="7">{{'days.60' | translate}}</option>
+                    </select>
+                </div>
+                <div class="col-12">
+                    <label for="horaIni" class="col-form-label">{{'administracion.productos.periodo.horaIni' | translate}} (HH:mm)</label>
+                    <input type="text" class="form-control" id="horaIni" formControlName="horaIni" maxlength="5"
+                        [readOnly]="noData" (keypress)="validateFormatHora($event)">
+                </div>
+                <div class="col-12">
+                    <label for="horaFin" class="col-form-label">{{'administracion.productos.periodo.horaFin' | translate}} (HH:mm)</label>
+                    <input type="text" class="form-control" id="horaFin" formControlName="horaFin" maxlength="5"
+                        (change)="calculateHoraCierre('periodo')" [readOnly]="noData" (keypress)="validateFormatHora($event)">
+                </div>
+                <div class="col-12">
+                    <label for="horaCie" class="col-form-label">{{'administracion.productos.periodo.horaCierre' | translate}} (HH:mm)</label>
+                    <input type="text" class="form-control" id="horaCie" formControlName="horaCie" maxlength="5"
+                        readonly (keypress)="validateFormatHora($event)">
+                </div>
+            </form>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mb-3">
+            <ng-container *ngIf="origen === 'contingencia'">
+                <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-1 mb-3">
+                    <button type="button" class="btn btn-danger" (click)="regresarToConsult()">{{'btn.regresar' | translate}}</button>
+                </div>
+                <div  *ngIf="verAgregarContingencia === true"  class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-8 mt-1">
+                    <button type="button" class="btn btn-danger" (click)="saveContingecia()"
+                        [disabled]="noData">{{'btn.guardar' | translate}}</button>
+                </div>
+                <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 offset-1">
+                    <button type="button" class="btn btn-danger" (click)="onClickClean()">{{'btn.limpiar' | translate}}</button>
+                </div>
+            </ng-container>
+            <ng-container *ngIf="origen === 'periodo'">
+                <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-1">
+                    <button type="button" class="btn btn-danger" (click)="regresarToConsult()">{{'btn.regresar' | translate}}</button>
+                </div>
+                <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-8 mb-1">
+                    <button type="button" class="btn btn-danger" (click)="onClickClean()">{{'btn.limpiar' | translate}}</button>
+                </div>
+                <div *ngIf="verAgregar === true" class="col-xs-2 col-sm-2 col-md-2 col-lg-2 offset-10 mt-3">
+                    <button type="button" class="btn btn-danger" (click)="savePeriodo()">{{'btn.guardar' | translate}}
+                    </button>
+                </div>
+            </ng-container>
+        </div>
+    </div>
+
+    <div class="card mt-3" *ngIf="origen === 'periodo'">
+        <h5 class="card-header justify-content-center">
+            {{'pantalla.consultarBuzon.resultadoBusqueda.title' | translate}}
+        </h5>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <table class="table table-striped table-hover" aria-describedby="listaConsultacontingencia">
+                        <thead>
+                            <tr>
+                                <th scope="col" class="text-center">{{'pantalla.controlVolumenOperativo.graficaEstatusClienteParametrizada.dia' | translate}}</th>
+                                <th scope="col" class="text-center">{{'administracion.productos.periodo.horaIni' | translate}}</th>
+                                <th scope="col" class="text-center">{{'administracion.productos.periodo.horaFin' | translate}}</th>
+                                <th scope="col" class="text-center">{{'administracion.productos.periodo.horaCierre' | translate}}</th>
+                                <th scope="col" class="text-center">{{'pantalla.gestionParametrosCanal.activo' | translate}}</th>
+                                <th scope="col" class="text-center">{{'btn.seleccionar' | translate}}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let dato of listado">
+                                <td class="text-center">
+                                    <p *ngIf="dato.dia === 1">{{'days.0' | translate}}</p>
+                                    <p *ngIf="dato.dia === 2">{{'days.1' | translate}}</p>
+                                    <p *ngIf="dato.dia === 3">{{'days.2' | translate}}</p>
+                                    <p *ngIf="dato.dia === 4">{{'days.3' | translate}}</p>
+                                    <p *ngIf="dato.dia === 5">{{'days.4' | translate}}</p>
+                                    <p *ngIf="dato.dia === 6">{{'days.5' | translate}}</p>
+                                    <p *ngIf="dato.dia === 7">{{'days.6' | translate}}</p>
+                                </td>
+                                <td class="text-center">{{dato.horaIni}}</td>
+                                <td class="text-center">{{dato.horaFin}}</td>
+                                <td class="text-center">{{dato.horaCierre}}</td>
+                                <td class="text-center">
+                                    <label for="inp"></label>
+                                    <input type="checkbox" name="inp" id="inp"
+                                        [checked]="dato.bandActivo === 'A' ? true : false" disabled />
+                                </td>
+                                <td *ngIf="verEditar === true"  class="text-center">
+                                    <label for="che"></label>
+                                    <input type="checkbox" name="che" id="che" [(ngModel)]="dato._checked">
+                                </td>
+                            </tr>
+                            <ng-template #noHayInformación>
+                                <tr>
+                                    <td class="text-center" colspan="6"> {{'administracion.productos.periodo.Nodata' | translate}} </td>
+                                </tr>
+                            </ng-template>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mb-3"
+            *ngIf="origen === 'periodo' && listado && listado.length">
+            <div *ngIf="verEditar === true" class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-1">
+                <button type="button" class="btn btn-danger" (click)="edit()"
+                    [disabled]="numChecked() !== 1">{{'btn.modificar' | translate}}</button>
+            </div>
+            <div *ngIf="verEliminar === true" class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-8">
+                <button type="button" class="btn btn-danger" (click)="delete()"
+                    [disabled]="numChecked() < 1">{{'btn.eliminar' | translate}}</button>
+            </div>
+        </div>
+    </div>
+</div>

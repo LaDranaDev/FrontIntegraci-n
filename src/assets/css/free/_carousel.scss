@@ -1,0 +1,21 @@
+.carousel-control-prev-icon {
+  &::after {
+    content: '\f053';
+    font-weight: $font-weight-bold;
+    font-family: Helvetica, Arial, Verdana, Tahoma, sans-serif;
+    font-size: 1.7rem;
+  }
+}
+.carousel-control-next-icon {
+  &::after {
+    content: '\f054';
+    font-weight: $font-weight-bold;
+    font-family: Helvetica, Arial, Verdana, Tahoma, sans-serif;
+    font-size: 1.7rem;
+  }
+}
+.carousel-indicators {
+  [data-mdb-target] {
+    @extend [data-bs-target] !optional;
+  }
+}

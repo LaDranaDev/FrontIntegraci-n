@@ -1,0 +1,102 @@
+<app-operativa-header tituloPantalla="{{'CTNO' | translate}}" *ngIf="!banderaArchDuplicados"></app-operativa-header>
+<app-operativa-header tituloPantalla="{{'monitorArchivoOperaciones.nivelOperacionHist.titulo' | translate}}"*ngIf="banderaArchDuplicados"></app-operativa-header>
+
+<div id="traking" class="panel panel-default col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    <br>
+    <!-- --- Tabla de totales Superior --- -->
+    <div class="card mt-3">
+        <div class="card-body">
+            <div class="rowTi">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <table class="table table-striped table-hover">
+                        <caption></caption>
+                    <thead>
+                        <tr>
+                        <th scope="col" class="text-center"> {{'nombreArchivo' | translate}}</th>
+                        <th scope="col" class="text-center"> {{'pantalla.monitoreo.monitorArchivoCurso.archivo.estatus' | translate}}</th>
+                        <th scope="col" class="text-center"> {{'producto' | translate}}</th>
+                        <th scope="col" class="text-center"> {{'idMovimiento' | translate}}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="text-center">{{datos?.nomArch}}</td>
+                            <td class="text-center">{{datos?.estatusArch}}</td>
+                            <td class="text-center">{{datos?.producto}}</td>
+                            <td class="text-center">{{datos?.idReg}}</td>
+                        </tr>
+                        <ng-template #noHayInformación>
+                            <tr>
+                                <td class="text-center" colspan="12"> {{'noResult'| translate}} </td>
+                            </tr>
+                        </ng-template>
+                    </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+        <div class="card mt-3">
+            <div class="card-body">
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                        <table class="table table-striped table-hover">
+                            <caption></caption>
+                            <thead>
+                                <tr>
+                                    <th scope="col" class="text-center">{{'EI'| translate}}</th>
+                                    <th scope="col" class="text-center">{{'EF'| translate}}</th>
+                                    <th scope="col" class="text-center">{{'FC'| translate}}</th>
+
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                <ng-container *ngIf="banderaHasRows; then templateFillTable; else templateEmptyTable2">
+                                </ng-container>
+                                <ng-template #templateFillTable>
+                                    <tr *ngFor="let dato of conten">
+                                        <td class="text-center">{{dato?.statusIni}}</td>
+                                        <td class="text-center">{{dato?.statusFin}}</td>
+                                        <td class="text-center">{{dato?.fechaAplic}}</td>
+                                    </tr>
+                                </ng-template>
+                                <ng-template #templateEmptyTable2>
+                                    <tr>
+                                        <td class="text-center" colspan="12">{{'noResult'| translate}} </td>
+                                    </tr>
+                                </ng-template>
+
+                            </tbody>
+                        </table>
+                    </div>
+            </div>
+            <div class="rot">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mt-1">
+                    <div class="d-flex justify-content-center" *ngIf="banderaHasRows">
+                        <pagination [boundaryLinks]="showBoundaryLinksHistorica" [directionLinks]="showDirectionLinksHistorica"
+                            [totalItems]="totalElements" [itemsPerPage]="rowsPorPagina" [maxSize]="rowsPorPagina"
+                            [(ngModel)]="page" previousText="&lsaquo;" nextText="&rsaquo;" firstText="{{'paginador.inicio' | translate}}"
+                            lastText="{{'paginador.fin' | translate}}" (pageChanged)="onPageChanged($event)">
+                        </pagination>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="rof mt-2">
+            <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-1 offset-sm-1 offset-md-1 offset-lg-1">
+                <button type="button" class="btn btn-danger" (click)="regresar()">{{'btn.regresar' | translate}}</button>
+            </div>
+            <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-8 offset-sm-8 offset-md-8 offset-lg-8">
+                <button type="button" class="btn btn-danger" [disabled]="!banderaBtnExportar"  (click)="exportar5()"> {{'btn.exportar' | translate}}</button>
+            </div>
+        </div>
+        <div class="rof mt-2">
+            <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-1 offset-sm-1 offset-md-1 offset-lg-1">
+                <button type="button" class="btn btn-danger" (click)="refrescar()">{{'menu.monitoreo.comprobantesFormatoCDMX.btn.refrescar' | translate}}</button>
+            </div>
+        </div>
+</div>

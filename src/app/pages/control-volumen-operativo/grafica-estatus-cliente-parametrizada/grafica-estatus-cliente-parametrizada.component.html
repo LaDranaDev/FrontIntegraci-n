@@ -1,0 +1,218 @@
+<app-operativa-header tituloPantalla="{{
+    'pantalla.controlVolumenOperativo.graficaEstatusClienteParametrizada.title'
+      | translate
+  }}"></app-operativa-header>
+
+<div id="gestionAlarma" class="panel panel-default col-xs-12 col-sm-12 col-md-12 col-lg-12">
+  <br />
+  <!-- --- Seccion de Busqueda --- -->
+  <div class="card mt-3" *ngIf="this.datos.length <= 0">
+    <h5 class="card-header justify-content-center">
+      {{ "pantalla.monitoreo.monitorArchivoCurso.busqueda" | translate }}
+    </h5>
+    <div class="card-body">
+      <form [formGroup]="graficoEstatusClienteForm">
+        <div class="row justify-content-center">
+          <!-- Código cliente -->
+          <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 align-self-center">
+            <div class="form-group row justify-content-center align-items-center">
+              <label for="codClient" class="col-md-4 col-form-label">{{
+                "pantalla.controlVolumenOperativo.graficaEstatusClienteParametrizada.codigoCliente"
+                | translate
+                }}</label>
+              <div class="col-md-8">
+                <input type="text" maxlength="8" appInputMask="numerico" class="form-control" name="codClient" appInputMask="numerico"
+                  formControlName="codigoCliente" aria-label="activo" />
+              </div>
+            </div>
+          </div>
+          <!-- Radio día, mes, anio -->
+          <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 align-self-center">
+            <div class="form-check form-check-inline">
+              <input type="radio" id="customRadioInline1" name="customRadioInline1" class="form-check-input"
+                (click)="setFilter('DIA', true)" />&nbsp;
+              <label class="form-check-label" for="customRadioInline1">{{
+                "pantalla.controlVolumenOperativo.graficaEstatusClienteParametrizada.dia"
+                | translate
+                }}</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input type="radio" id="customRadioInline2" name="customRadioInline1" class="form-check-input"
+                (click)="setFilter('MES')" />&nbsp;
+              <label class="form-check-label" for="customRadioInline2">{{
+                "pantalla.controlVolumenOperativo.graficaEstatusClienteParametrizada.mes"
+                | translate
+                }}</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input type="radio" id="customRadioInline3" name="customRadioInline1" class="form-check-input"
+              (click)="setFilter('ANIO')" />&nbsp;
+            <label class="form-check-label" for="customRadioInline3">{{
+              "pantalla.controlVolumenOperativo.graficaEstatusClienteParametrizada.anio"
+              | translate
+              }}</label>
+            </div>
+          </div>
+          <!-- Días parametrizables -->
+          <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 align-self-center">
+            <div class="form-group row align-items-center">
+              <label for="parametricDays" class="col-md-5 col-form-label">{{
+                "pantalla.controlVolumenOperativo.graficaEstatusClienteParametrizada.diasParametrizables"
+                | translate
+                }}</label>
+              <div class="col-md-3">
+                <input type="number" min="1" max="365" appInputMask="numerico" class="form-control"
+                  name="parametricDays" formControlName="parametricDays" appInputMask="numerico" aria-label="activo"
+                  formControlName="diasParame" />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row justify-content-center">
+          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 align-self-center">
+            <div class="form-group row align-items-center">
+              <!-- Search by date -->
+              <div class="col-md-2">
+                <label for="period" class="col-form-label">{{
+                  "pantalla.controlVolumenOperativo.graficaEstatusClienteParametrizada.buscarFecha"
+                  | translate
+                  }}</label>
+                <input type="checkbox" class="checkBox-control" name="parametricDays" aria-label="activo"
+                  formControlName="buscarFecha" (change)="validInputDtaes()" />
+              </div>
+              <!-- Period -->
+              <label for="period" class="col-md-1 col-form-label">{{
+                "pantalla.controlVolumenOperativo.graficaEstatusClienteParametrizada.periodo"
+                | translate
+                }}</label>
+              <!-- Date picker init -->
+              <label for="dateInit" class="col-form-label col-md-auto">{{
+                "pantalla.controlVolumenOperativo.graficaEstatusClienteParametrizada.fechaInicio"
+                | translate
+                }}</label>
+              <div class="col-md-2">
+                <div class="input-group">
+                  <input type="text" class="form-control" id="dateInit" name="dateInit" bsDatepicker
+                    #dpFechaAten="bsDatepicker" [bsConfig]="datePickerConfig" formControlName="fechaInicio" />
+                  <div class="input-group-append">
+                    <button class="btn btn-outline-danger" type="button" id="btnFechaAtendida" name="btnFechaAtendida"
+                      (click)="dpFechaAten.toggle()" [disabled]="disabledInputDate"
+                      [attr.aria-expanded]="dpFechaAten.isOpen">
+                      <em class="fa fa-calendar"></em>
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <!-- Date picker end -->
+              <label for="inputDateEnd" class="col-form-label col-md-auto">{{
+                "pantalla.controlVolumenOperativo.graficaEstatusClienteParametrizada.fechaFin"
+                | translate
+                }}</label>
+              <div class="col-md-2">
+                <div class="input-group">
+                  <input formControlName="fechaFin" [disabled]="disabledInputDate" type="text" class="form-control"
+                    id="inputDateEnd" name="inputDateEnd" bsDatepicker #dpFechaFin="bsDatepicker"
+                    [bsConfig]="datePickerConfig" />
+                  <div class="input-group-append">
+                    <button class="btn btn-outline-danger" type="button" id="btnDateEnd" name="btnDateEnd"
+                      [disabled]="disabledInputDate" (click)="dpFechaFin.toggle()"
+                      [attr.aria-expanded]="dpFechaFin.isOpen">
+                      <em class="fa fa-calendar"></em>
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <!-- Estatus -->
+              <label for="estatus" class="col-form-label col-md-auto">{{
+                "pantalla.controlVolumenOperativo.graficaEstatusClienteParametrizada.Estatus"
+                | translate
+                }}</label>
+              <div class="col-md-3">
+                <select class="form-control display" id="estatus" formControlName="estatus">
+                  <option *ngFor="let dato of resultado" [value]="dato.idEstatus">
+                    {{ dato.descEstatus }}
+                  </option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mt-5 mb-5">
+      <div class="col-md-5 offset-1">
+        <button type="button" class="btn btn-danger" (click)="onClickClean()">
+          {{ "btn.limpiar" | translate }}
+        </button>
+      </div>
+      <div class="col-md-5 d-flex justify-content-end">
+        <button type="button" class="btn btn-danger" (click)="eventoConsultar()">
+          {{ "btn.buscar" | translate }}
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- --- Seccion de Resultado --- -->
+  <div class="container mt-3" [hidden]="!showCharParams">
+    <div class="row">
+      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <div class="divide2">
+          <div class="rowTable centrar-content">
+            <table class="table table-striped table-hover">
+              <caption></caption>
+              <thead>
+                <tr>
+                  <th scope="col" class="text-center">
+                    {{
+                    "pantalla.controlVolumenOperativo.graficaEstatusClienteParametrizada.totalEstatus"
+                    | translate
+                    }}
+                  </th>
+                  <th scope="col" class="text-center">
+                    {{ titleRow }}
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let dato of datos">
+                  <td class="text-center">{{ dato.totalArchivos }}</td>
+                  <td class="text-center">{{ dato.fecha }}</td>
+                </tr>
+                <ng-template #noHayInformación>
+                  <tr>
+                    <td class="text-center" colspan="6">
+                      {{
+                      "pantalla.mensaje.generico.nohaydatos"
+                      | translate
+                      }}
+                    </td>
+                  </tr>
+                </ng-template>
+              </tbody>
+            </table>
+          </div>
+          <div class="row2">
+            <div class="chart-container" width="300px" height="300px">
+              <canvas class="canvas-size" id="chartStatusParametrics"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mt-5 mb-5">
+      <div class="col-md-5 offset-1">
+        <button type="button" class="btn btn-danger" (click)="onClickClean()">
+          {{ "btn.regresar" | translate }}
+        </button>
+      </div>
+      <div class="col-md-5 d-flex justify-content-end">
+        <button type="button" class="btn btn-danger" (click)="exportReport()">
+          {{ "btn.exportar" | translate }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

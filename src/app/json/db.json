@@ -1,0 +1,673 @@
+{
+  "productos": [
+    {
+      "idProducto": 1,
+      "descripcion": "TODOS"
+    },
+    {
+      "idProducto": 2,
+      "descripcion": "ADMINISTRACION DE PROD CONFIRMING"
+    },
+    {
+      "idProducto": 3,
+      "descripcion": "ALTA CUENTA BENEFICIARIAS"
+    },
+    {
+      "idProducto": 4,
+      "descripcion": "ALTA MASIVA DE EMPLEADOS OTIMUS"
+    },
+    {
+      "idProducto": 5,
+      "descripcion": "ALTA MASIVA DE EMPLEADOS"
+    },
+    {
+      "idProducto": 6,
+      "descripcion": "APOR OBRERO PATRONALES IMSS INFONAVIT"
+    },
+    {
+      "idProducto": 7,
+      "descripcion": "CONFIRMING"
+    },
+    {
+      "idProducto": 8,
+      "descripcion": "CONSULTA DE TARJETAS PROPIAS"
+    },
+    {
+      "idProducto": 9,
+      "descripcion": "DOMICILIACIÓN CARGO RECURRENTE"
+    },
+    {
+      "idProducto": 10,
+      "descripcion": "DOMICILIACIÓN CARGO RECURRENTE INTRADIA"
+    },
+    {
+      "idProducto": 11,
+      "descripcion": "INACTIVACIÓN CUENTA BENEFICIARIA"
+    },
+    {
+      "idProducto": 12,
+      "descripcion": "IMPUESTO FEDERAL"
+    },
+    {
+      "idProducto": 13,
+      "descripcion": "NOMINA BANCARIA"
+    },
+    {
+      "idProducto": 14,
+      "descripcion": "NOMINA BANCARIA ONLINE"
+    },
+    {
+      "idProducto": 15,
+      "descripcion": "NOMINA INTERBANCARIA"
+    },
+    {
+      "idProducto": 16,
+      "descripcion": "NOMINA INTERBANCARIA ONLINE"
+    },
+    {
+      "idProducto": 17,
+      "descripcion": "ORDEN DE PAGO"
+    },
+    {
+      "idProducto": 18,
+      "descripcion": "ORDEN DE PAGO ATM"
+    },
+    {
+      "idProducto": 19,
+      "descripcion": "PAGO RECURRENTE GETNET"
+    },
+    {
+      "idProducto": 20,
+      "descripcion": "PAGO TDC SANTANDER"
+    },
+    {
+      "idProducto": 21,
+      "descripcion": "PAGO DIRECTO"
+    },
+    {
+      "idProducto": 22,
+      "descripcion": "PAGOS IMPUESTOS ADUANALES"
+    },
+    {
+      "idProducto": 23,
+      "descripcion": "SPID"
+    },
+    {
+      "idProducto": 24,
+      "descripcion": "SERVICIOS E IMPUESTOS LOCALES"
+    },
+    {
+      "idProducto": 25,
+      "descripcion": "TRANSFERENCIAS BANCARIAS"
+    },
+    {
+      "idProducto": 26,
+      "descripcion": "TRANSFERENCIAS BANCARIAS ONLINE"
+    },
+    {
+      "idProducto": 27,
+      "descripcion": "TRANSFERENCIAS SPEI"
+    },
+    {
+      "idProducto": 28,
+      "descripcion": "TRANSFERENCIAS SPEI ONLINE"
+    },
+    {
+      "idProducto": 29,
+      "descripcion": "TRANSFERENCIAS TEF"
+    },
+    {
+      "idProducto": 30,
+      "descripcion": "TRANSFERENCIAS TEF ONLINE"
+    },
+    {
+      "idProducto": 31,
+      "descripcion": "TRANSFERENCIAS INTERNACIONAL MISMA DIVISA USDUSD"
+    },
+    {
+      "idProducto": 32,
+      "descripcion": "TRANSFERENCIAS INTERNACIONAL CAMBIARIAS"
+    },
+    {
+      "idProducto": 33,
+      "descripcion": "TRANSFERENCIAS INTERNACIONAL CAMBIARIAS MXPUSD"
+    },
+    {
+      "idProducto": 34,
+      "descripcion": "TRANSFERENCIAS VOSTRO INTERBANCARIOS"
+    },
+    {
+      "idProducto": 35,
+      "descripcion": "TRANSFERENCIAS VOSTRO MISMO BANCO"
+    }
+  ],
+  "estatus": [
+    {
+      "idEstatus": 1,
+      "descripcion": "CANCELADO"
+    },
+    {
+      "idEstatus": 2,
+      "descripcion": "CREADO"
+    },
+    {
+      "idEstatus": 3,
+      "descripcion": "EN ESPERA"
+    }
+  ],
+  "divisa": [
+    {
+      "idDivisa": 1,
+      "descripcion": "MXP"
+    },
+    {
+      "idDivisa": 2,
+      "descripcion": "USD"
+    },
+    {
+      "idDivisa": 3,
+      "descripcion": "PPP"
+    }
+  ],
+  "tipo": [
+    {
+      "idTipo": 1,
+      "descripcion": "PREEXISTENTE"
+    },
+    {
+      "idTipo": 2,
+      "descripcion": "NUEVO"
+    }
+  ],
+  "tablaConsultar": [
+    {
+      "comprobante": true,
+      "codigoCliente": "260596",
+      "idMovimientoH2H": "001",
+      "cuentaCargo": "89899070711",
+      "cuentaAbono": "0442288570796",
+      "producto": "confirming",
+      "nombreArchivo": "Luis Abraham Tlapa Garcia.pdf",
+      "canal": "core",
+      "referencia": "3884562",
+      "estatus": "enviado",
+      "importe": "43270"
+    },
+    {
+      "comprobante": false,
+      "codigoCliente": "111111",
+      "idMovimientoH2H": "11",
+      "cuentaCargo": "00009070711",
+      "cuentaAbono": "423534234",
+      "producto": "texto",
+      "nombreArchivo": "Garcia Mendez pereaz.pdf",
+      "canal": "yes",
+      "referencia": "10101010",
+      "estatus": "En espera",
+      "importe": "1000000"
+    }
+  ],
+  "info": {
+    "idInfo": 1,
+    "activarPantallaContingencia": true,
+    "activarReporteHistorico": false,
+    "activarEstadoCuenta15": true,
+    "activarReporteBeneficiarioEOP": true,
+    "activarNominaPayext": true,
+    "activarReporteConsolidadoOP": true,
+    "altaCuentasBeneficiariasAME": true,
+    "activarReporteIntradiaOP": true,
+    "cambioCodigoCECOBAN": true,
+    "homologarNombreComprobanteSPE": true,
+    "backendConfirming": "yes",
+    "tipoProcesamiento": "luis",
+    "tipoFormato": [
+      {
+        "name": "Alta Masiva Empleados",
+        "checked": true
+      },
+      {
+        "name": "Afiliación",
+        "checked": true
+      },
+      {
+        "name": "Banamex",
+        "checked": true
+      },
+      {
+        "name": "Banorte Nomina Entrada",
+        "checked": true
+      },
+      {
+        "name": "Banco CFE",
+        "checked": false
+      },
+      {
+        "name": "CARGA MASIVA DE CONVENIOS",
+        "checked": true
+      },
+      {
+        "name": "CECOBAN",
+        "checked": true
+      },
+      {
+        "name": "CECOBAN CUENTAS BENEFICIARIAS",
+        "checked": true
+      },
+      {
+        "name": "CECOBAN2",
+        "checked": true
+      },
+      {
+        "name": "CONSULTA DE TARJETAS PROPIAS",
+        "checked": true
+      },
+      {
+        "name": "CROSSBORDER INTERNACIONALES CAMBIARIAS",
+        "checked": true
+      },
+      {
+        "name": "DOMICILIACION CARGO RECURRENTE",
+        "checked": true
+      },
+      {
+        "name": "ENLACE NOMINA BANCARIA",
+        "checked": true
+      },
+      {
+        "name": "ENLACE NOMINA INTERBANCARIA",
+        "checked": true
+      },
+      {
+        "name": "ENLACE PAGO A TDC",
+        "checked": true
+      },
+      {
+        "name": "ENLACE PAGO DIRECTO",
+        "checked": true
+      },
+      {
+        "name": "ENLACE PAGO DIRECTO 12",
+        "checked": true
+      },
+      {
+        "name": "ENLACE SPEI",
+        "checked": true
+      },
+      {
+        "name": "ENLACE SPID",
+        "checked": true
+      },
+      {
+        "name": "ENLACE TRANSFERENCIA MISMO BANCO",
+        "checked": true
+      },
+      {
+        "name": "Enlace alta masiva de empleados",
+        "checked": true
+      },
+      {
+        "name": "Enlace alta masiva de empleados 2",
+        "checked": true
+      },
+      {
+        "name": "Fondeo lideres comisionistas",
+        "checked": true
+      },
+      {
+        "name": "HSBC",
+        "checked": true
+      },
+      {
+        "name": "HSBC NOMINA",
+        "checked": true
+      },
+      {
+        "name": "IMP FED, PAG REF, APOR OBR",
+        "checked": true
+      },
+      {
+        "name": "Nomina empleados lideres comisionistas",
+        "checked": true
+      },
+      {
+        "name": "Nomina empleados propios",
+        "checked": true
+      },
+      {
+        "name": "OPEN ROADS",
+        "checked": false
+      },
+      {
+        "name": "PAGO DIRECTO",
+        "checked": true
+      },
+      {
+        "name": "PAYEXT",
+        "checked": true
+      },
+      {
+        "name": "SUPER CUENTA GO",
+        "checked": true
+      },
+      {
+        "name": "SWIFT MT101",
+        "checked": true
+      },
+      {
+        "name": "Transferencias SCYF",
+        "checked": true
+      },
+      {
+        "name": "WALLMART",
+        "checked": true
+      },
+      {
+        "name": "pain.001",
+        "checked": true
+      }
+    ],
+    "tipoArchivoRespuesteARecibir": "parcial"
+  },
+  "mensajeError": [
+    {
+      "id": 1,
+      "codigoErrorBack": "A",
+      "codigoPayext": "SO2",
+      "origenCodigo": "",
+      "mensajeBack": "Error creado para pagos",
+      "mensajeH2H": "A Línea de captura e importe correctos.",
+      "codigoCCBN": "",
+      "activo": true,
+      "banderaReintentos": false,
+      "tipoMensaje": "Error",
+      "banderaFinal": false,
+      "banderaPendientes": false
+    },
+    {
+      "codigoErrorBack": "12",
+      "codigoPayext": "12",
+      "origenCodigo": "1",
+      "mensajeBack": "121",
+      "mensajeH2H": "2",
+      "codigoCCBN": "12",
+      "banderaReintentos": true,
+      "banderaPendientes": "",
+      "banderaFinal": "",
+      "activo": true,
+      "tipoMensaje": "Formato",
+      "id": 2
+    },
+    {
+      "codigoErrorBack": "1996",
+      "codigoPayext": "Error Luis",
+      "origenCodigo": "2",
+      "mensajeBack": "Error de Luis",
+      "mensajeH2H": "Este Mensaje lo creo Luis",
+      "codigoCCBN": "19996",
+      "banderaReintentos": true,
+      "banderaPendientes": true,
+      "banderaFinal": true,
+      "activo": true,
+      "tipoMensaje": "Error",
+      "id": 3
+    },
+    {
+      "codigoErrorBack": "123",
+      "codigoPayext": "Erro de PDF",
+      "origenCodigo": "1",
+      "mensajeBack": "Error de descargar pdf",
+      "mensajeH2H": "Erro en pdf",
+      "codigoCCBN": "23",
+      "banderaReintentos": true,
+      "banderaPendientes": true,
+      "banderaFinal": true,
+      "activo": true,
+      "tipoMensaje": "Error",
+      "id": 4
+    },
+    {
+      "codigoErrorBack": "1",
+      "codigoPayext": "1",
+      "origenCodigo": "Cambios390",
+      "mensajeBack": "1",
+      "mensajeH2H": "1",
+      "codigoCCBN": "1",
+      "banderaReintentos": true,
+      "banderaPendientes": true,
+      "banderaFinal": true,
+      "activo": true,
+      "tipoMensaje": "Detalle",
+      "id": 5
+    },
+    {
+      "codigoErrorBack": "2",
+      "codigoPayext": "2",
+      "origenCodigo": "Back Activo",
+      "mensajeBack": "2",
+      "mensajeH2H": "2",
+      "codigoCCBN": "2",
+      "banderaReintentos": true,
+      "banderaPendientes": true,
+      "banderaFinal": true,
+      "activo": "",
+      "tipoMensaje": "Formato",
+      "id": 6
+    }
+  ],
+  "TablaInferior":[
+    {
+      "cliente": "Banco J P Morgan Sa Institucion de Bancamultiple J P MorganGroup Financiero",
+      "codCliente": 25113805,
+      "totalArch": 72,
+      "totDupl": 0,
+      "totRecib": 0,
+      "totRecha": 0,
+      "totVald": 0,
+      "enCli": 0,
+      "totEnProc": 72,
+      "totEsp": 0,
+      "totProc": 0
+    },
+    {
+      "cliente": "Luis Abraham Tlapa Garcia",
+      "codCliente": 26059600,
+      "totalArch": 200,
+      "totDupl": 40,
+      "totRecib": 50,
+      "totRecha": 10,
+      "totVald": 20,
+      "enCli": 20,
+      "totEnProc": 20,
+      "totEsp": 20,
+      "totProc": 20,
+      "totArchRecib":200,
+      "totOpeRecib":50,
+      "totMontoRecib":1000000
+    },
+    {
+      "cliente": "Oscar David Tlapa Garcia",
+      "codCliente": 27059700,
+      "totalArch": 200,
+      "totDupl": 110,
+      "totRecib": 40,
+      "totRecha": 10,
+      "totVald": 10,
+      "enCli": 10,
+      "totEnProc": 10,
+      "totEsp": 6,
+      "totProc": 4
+    },
+    {
+      "cliente": "Martha Lesli Muñoz Sedas",
+      "codCliente": 24029900,
+      "totalArch": 50,
+      "totDupl": 50,
+      "totRecib": 20,
+      "totRecha": 10,
+      "totVald": 20,
+      "enCli": 20,
+      "totEnProc": 20,
+      "totEsp": 14,
+      "totProc": 6
+    }
+  ],
+  "tablaArchivos":[
+    {
+    "codCliente": 26059600,
+    "nombreArchivo":"LuisTlapa.in",
+    "fecha":"08/10/2021 10:28:20",
+    "canal":"Core",
+    "estatus":"EN PROCESO",
+    "producto":[{
+      "numOperaciones":2,
+      "nomProducto":"Orden Pago",
+      "montoProducto":1000
+
+    },
+    {
+      "numOperaciones":4,
+      "nomProducto":"Orden ATM",
+      "montoProducto":1000
+
+    }
+  ],
+  "totalNumOperaciones": 6,
+  "totalMontoProducto":2000
+  },
+  {
+    "codCliente": 26059600,
+    "nombreArchivo":"Prueba de documento enbcontrado.in",
+    "fecha":"18/12/2022 05:28:20",
+    "canal":"Core",
+    "estatus":"EN PROCESO",
+    "producto":[{
+      "numOperaciones":2,
+      "nomProducto":"Orden Pago",
+      "montoProducto":1000
+
+    },
+    {
+      "numOperaciones":4,
+      "nomProducto":"Orden ATM",
+      "montoProducto":1000
+
+    },
+    {
+      "numOperaciones":20,
+      "nomProducto":"Orden SPEI",
+      "montoProducto":3000
+
+    },
+    {
+      "numOperaciones":24,
+      "nomProducto":"Orden Por Transferencia",
+      "montoProducto":2000
+
+    }
+  ],
+  "totalNumOperaciones": 50,
+  "totalMontoProducto":5000
+  },
+  {
+    "codCliente": 26059600,
+    "nombreArchivo":"Prueba de documento en contrado texto mas largo .in",
+    "fecha":"18/12/2022 05:28:20",
+    "canal":"Core",
+    "estatus":"EN PROCESO",
+    "producto":[{
+      "numOperaciones":2,
+      "nomProducto":"Orden Pago",
+      "montoProducto":1000
+
+    }
+  ],
+  "totalNumOperaciones": 2,
+  "totalMontoProducto":1000
+  }
+  ],
+
+  "archivo":[{
+    "codCliente": 26059600,
+    "nomArchivo":"LuisTlapa.in",
+    "fecha":"08/10/2021 10:28:20",
+    "estatus":"Validado",
+    "numMovimiento":"6",
+    "monto":"2000",
+    "producto":[
+      {
+      "numOperaciones":2,
+      "nomProducto":"Orden Pago",
+      "montoProducto":1000,
+      "estatus":"ERROR"
+
+    },
+    {
+      "numOperaciones":4,
+      "nomProducto":"Orden ATM",
+      "montoProducto":1000,
+      "estatus":"POR VALIDAR"
+  }
+  ]
+  }],
+
+  "operaciones":[{
+    "codCliente": 26059600,
+    "nomArchivo":"LuisTlapa.in",
+    "fecha":"08/10/2021 10:28:20",
+    "estatus":"Validado",
+    "numMovimiento":"6",
+    "monto":"2000",
+    "operacion":[
+      {
+        "idMovimiento": 1,
+        "estatus": "POR VALIDAR",
+        "producto": "Orden ATM",
+        "monto": 1000,
+        "cuentaCargo": 331767213412,
+        "cuentaAbono": 111122223334444,
+        "referencia":123456789,
+        "fechaAplicacion":"28/10/2020",
+        "umbral": "",
+        "horaEnvio":"",
+        "horaRegreso":""
+      },
+      {
+        "idMovimiento": 2,
+        "estatus": "VALIDAdo",
+        "producto ": "Orden ATM",
+        "monto": 2000,
+        "cuentaCargo": 331767213434,
+        "cuentaAbono": 111122223330000,
+        "referencia":987654321,
+        "fechaAplicacion":"21/10/2020",
+        "umbral": "",
+        "horaEnvio":"10:00 P.M",
+        "horaRegreso":"3:00 A.M"
+      }
+    ]
+
+  }],
+
+  "historica":[{
+    "codCliente": 26059600,
+    "nomArchivo":"LuisTlapa.in",
+    "fecha":"08/10/2021 10:28:20",
+    "estatus":"Validado",
+    "numMovimiento":"6",
+    "monto":"2000",
+    "prodcuto":"Transferencia SPEI",
+    "idMovimiento": 1,
+    "operacion":[{
+      "estatusIncicial":"--------",
+      "estatusFinal":"POR VALIDAR",
+      "fecha":"08/10/2021 10:28:20"
+    },
+    {
+      "estatusIncicial":"POR VALIDAR",
+      "estatusFinal":"CREADO",
+      "fecha":"08/10/2021 10:28:20"
+    }
+  ]
+  }]
+}

@@ -1,0 +1,1448 @@
+537 results - 115 files
+
+src\app\app.component.ts:
+  5  import { ComunesService } from './services/comunes.service';
+  6: import { parametrosService } from './services/contingencia/parametros.service';
+  7  import { NavigationEnd } from '@angular/router';
+
+src\app\components\funciones-comunes.component.ts:
+  3  import * as moment from 'moment';
+  4: import { IDownloadArchivoRequest } from '../pages/contingencia/request/idownloadarchivo-request.component';
+  5  import { TranslateService } from '@ngx-translate/core';
+
+src\app\components\modals\modal-solicitud-cambio-estatus\modal-solicitud-cambio-estatus.component.ts:
+   6  import { InsCambioEstatusRequest } from 'src/app/bean/solicitud-cambio-estatus.components';
+   7: import { SolicitudCambioEstatusService } from 'src/app/services/contingencia/solicitud-cambio-estatus.service';
+   8  import { MatDialog } from '@angular/material/dialog';
+
+  41            'error',
+  42:           this.translate.instant('contingencia.msjERR001Codigo'),
+  43            ''
+
+src\app\json\db.json:
+  211      "idInfo": 1,
+  212:     "activarPantallaContingencia": true,
+  213      "activarReporteHistorico": false,
+
+src\app\layout\layout-routing.module.ts:
+  13      { path: 'admin-contratos',loadChildren: () => import('../pages/admin-contratos/admin-contratos.module').then(m => m.AdminContratosModule)},
+  14:     { path: 'contingencia',loadChildren: () => import('../pages/contingencia/contingencia.module').then(m => m.ContingenciaModule)},
+  15      { path: 'solicitudEdoCuenta',loadChildren: () => import('../pages/solicitud-edo-cuenta/solicitud-edo-cuenta.module').then(m => m.SolicitudEdoCuentaModule)},
+
+src\app\layout\header\header.component.html:
+  137            <div class="submenu" [ngClass]="{'expanded' : showSubSubMenu2} || {'expanded' : showSubSubMenu} " *ngIf="isShowing || isExpanded ">
+  138:             <mat-list-item [class.active]="contin1 === true"  (click)="contin(1)" (click)="bloquear(); emitClickCurrentPage(1)" class=" border full-width header" routerLink="/contingencia/envioArchivos" >{{'menu.contigencia.envioArchivos' | translate}}</mat-list-item>
+  139:             <mat-list-item [class.active]="contin2 === true"  (click)="contin(2)" (click)="bloquear(); emitClickCurrentPage(2)" class=" border full-width header" routerLink="/contingencia/solicitudEdoCuentaContingencia" >{{'menu.contigencia.solicitudEdoCuentaContingencia' | translate}}</mat-list-item>
+  140:             <mat-list-item [class.active]="contin3 === true"  (click)="contin(3)" (click)="bloquear(); emitClickCurrentPage(3)" class=" border full-width header" routerLink="/contingencia/solicitudCambioEstatus" >{{'menu.contigencia.solicitudCambioEstatus' | translate}}</mat-list-item>
+  141:             <mat-list-item [class.active]="contin4 === true"  (click)="contin(4)" (click)="bloquear(); emitClickCurrentPage(4)" class=" border full-width header" routerLink="/contingencia/cifradoDescifrado" >{{'menu.contigencia.cifradoDescifrado' | translate}}</mat-list-item>
+  142:             <mat-list-item [class.active]="contin20 === true"  (click)="contin(20)" (click)="bloquear(); emitClickCurrentPage(20)" class=" border full-width header" routerLink="/contingencia/consultaDescargaArchivos" >Consulta de Buzón</mat-list-item>
+  143:             <mat-list-item [class.active]="contin5 === true"  (click)="contin(5)" (click)="bloquear(); emitClickCurrentPage(5)" class=" border full-width header" routerLink="/contingencia/cierreProductos" >{{'menu.contigencia.cierreProductos' | translate}}</mat-list-item>
+  144:             <mat-list-item [class.active]="contin6 === true"  (click)="contin(6)" (click)="bloquear(); emitClickCurrentPage(6)" class=" border full-width header" routerLink="/contingencia/parametros" >{{'menu.parametros' | translate}}</mat-list-item>
+  145:             <mat-list-item [class.active]="gesProAct5 === true"  (click)="gesPro(5)" (click)="bloquear(); emitClickCurrentPage(5)" class="border full-width header" routerLink="/contingencia/consultarBuzon" >{{'menu.contigencia.consultarBuzon' | translate}}</mat-list-item>
+  146:             <mat-list-item [class.active]="contin8 === true"  (click)="contin(8)" (click)="bloquear(); emitClickCurrentPage(8)" class=" border full-width header" routerLink="/contingencia/recargarCatalogoSFG" >{{'menu.contigencia.recargarCatalogosSFG' | translate}}</mat-list-item>
+  147            </div>
+
+src\app\layout\header\header.component.ts:
+     9  import { Router } from '@angular/router';
+    10: import { parametrosService } from 'src/app/services/contingencia/parametros.service';
+    11  import { MemoryService } from 'src/app/services/memory.service';
+
+    45    pintarConvenioContrato: any = 'H2H_CNTR_CONVENIO_CONTRATO'
+    46:   pintarContingencia: any = 'MENU_CONTINGENCIA'
+    47    pintarEoCuenta: any = 'MENU_ESTADO_CUENTA'
+
+  2765              }
+  2766:             if (value === this.pintarContingencia) {
+  2767                this.pinta16 = true
+
+  2885      }
+  2886:     this.contingencia();
+  2887      this.abriProducto();
+
+  2897  
+  2898:   contingencia() {
+  2899      if (this.contin6 !== true) {
+
+src\app\layout\menu\menu.component.html:
+  40                              <a routerLink="/depuracion/consultaVigenciaBuzones">
+  41:                                 {{'menu.contingencia.buzonesvigencia' | translate}}
+  42                              </a>
+
+src\app\pages\admin-contratos\admin-contratos-routing.module.ts:
+  22  import { EdoCuentaConsolidadoComponent } from './edo-cuenta-consolidado/edo-cuenta-consolidado.component';
+  23: import { ParametrosComponent } from '../contingencia/parametros/parametros.component';
+  24: import { EditarParametroComponent } from '../contingencia/parametros/editar-parametro/editar-parametro.component';
+  25  import { CuentasOrdenantesComponent } from './cuentas-ordenantes/cuentas-ordenantes.component';
+
+src\app\pages\admin-contratos\convenios-contratos\convenios-contratos.component.ts:
+  345          'error',
+  346:         this.translateService.instant('contingencia.msjERR003Codigo'),
+  347          this.translateService.instant('pantalla.conveniosContratos.msjERR003')
+
+src\app\pages\admin-contratos\cuentas-beneficiarias-contratos\cuentas-beneficiarias-contratos.component.ts:
+  11  import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
+  12: import { IPaginationRequest } from '../../contingencia/request/pagination-request.component';
+  13  import { ModalCuentasBeneficiariasComponent } from 'src/app/components/modals/modal-cuentas-beneficiarias/modal-cuentas-beneficiarias.component';
+
+src\app\pages\admin-contratos\edo-cuenta-consolidado\edo-cuenta-consolidado.component.ts:
+  308                  'CONT0011',//code
+  309:                 this.translate.instant('contingencia.msjERR007Titulo') //sugrencia
+  310              );
+
+  601                  this.open(
+  602:                     this.translate.instant('pantalla.solicitudEdoCtaContingencia.msjINF00016Titulo'),
+  603                      this.translate.instant('MT940'),
+
+src\app\pages\admin-contratos\edo-cuenta-intradia\edo-cuenta-intradia.component.ts:
+   378                  'CONT0011',//code
+   379:                 this.translate.instant('contingencia.msjERR007Titulo') //sugrencia
+   380              );
+
+  1051              return this.open(
+  1052:                 this.translate.instant('pantalla.solicitudEdoCtaContingencia.msjINF00016Titulo'),
+  1053                  this.translate.instant('MT9402'),
+
+  1055                  'INF00020',
+  1056:                 this.translate.instant('pantalla.solicitudEdoCtaContingencia.msjINF00016Sugerencia')
+  1057              );
+
+src\app\pages\admin-contratos\parametros-del-contrato\parametros-del-contrato.component.html:
+   20                              <div class="col-xs-1 col-sm-1 col-md-1 justify-content-center">
+   21:                                 <input type="checkbox" name="activarPantallaContingencia" formControlName="activarPantallaContingencia" aria-label="activo">
+   22                              </div>
+
+  237                      <div class="col-xs-1 col-sm-1 col-md-1 justify-content-center">
+  238:                         <input type="checkbox" name="contingenciaBuzonera" formControlName="contingenciaBuzonera" aria-label="activo">
+  239                      </div>
+  240:                     <label class="col-xs-11 col-sm-11 col-md-11">{{'pantalla.parametrosDelContrato.contingenciaBuzonera' | translate}}</label>
+  241                  </div>
+
+  244                          <div class="form-group row">
+  245:                             <label for="profileIdContingente" class="col-form-label col-xs-6 col-sm-6 col-md-6">{{'pantalla.parametrosDelContrato.contingenciaBuzonera' | translate}}</label>
+  246  
+  247:                             <input type="text" class="form-control" id="profileIdContingente" name="profileIdContingente" formControlName="profileIdContingente" placeholder="{{'pantalla.parametrosDelContrato.contingenciaBuzonera' | translate}}" (keypress)="carac($event)" (ondragenter)="disableEvent($event)"
+  248                                  (dragover)="disableEvent($event)" (ondrop)="disableEvent($event)" (paste)="eventoOnPasteBlock($event)">
+
+src\app\pages\admin-contratos\parametros-del-contrato\parametros-del-contrato.component.ts:
+  100      this.parametrosContratoForm = new UntypedFormGroup({
+  101:       activarPantallaContingencia: new UntypedFormControl('', []),
+  102        activarReporteHistorico: new UntypedFormControl('', []),
+
+  118        profileIdContingente: new UntypedFormControl('', []),
+  119:       contingenciaBuzonera: new UntypedFormControl('', []),
+  120        hsm: new UntypedFormControl('', []),
+
+  195            this.parametrosContratoForm.patchValue({
+  196:             activarPantallaContingencia:
+  197                result.checkActivarPantCon === 'A' ? true : false,
+
+  222              hsm: result.valCertHSM,
+  223:             contingenciaBuzonera:
+  224                result.paramContBuzonCntr === 'A' ? true : false,
+
+  276          this.translateService.instant(
+  277:           'contingencia.msjERR002Observacion'
+  278          ),
+
+  466      this.parametrosContratoForm.patchValue({
+  467:       activarPantallaContingencia: false,
+  468        activarReporteHistorico: false,
+
+  483        hsm: '',
+  484:       contingenciaBuzonera: false,
+  485      });
+
+  632    openConfirmYN(titulo: string, contenido: string) {
+  633:     if (this.parametrosContratoForm.value.contingenciaBuzonera && !this.parametrosContratoForm.value.profileIdContingente) {
+  634        this.open(
+
+  851        activarPantCon:
+  852:         this.parametrosContratoForm.value.activarPantallaContingencia === true
+  853            ? 'A'
+
+  906        chkCntgBuz:
+  907:         this.parametrosContratoForm.value.contingenciaBuzonera === true
+  908            ? 'A'
+
+src\app\pages\admin-contratos\parametros-domiciliaciones\parametros-domiciliaciones\parametros-domiciliaciones.component.ts:
+  10  import { Emisora, EmisoraRequest } from 'src/app/bean/parametros-domiciliaciones.component';
+  11: import { IPaginationRequest } from '../../../contingencia/request/pagination-request.component';
+  12  import { ParametrosDomiciliacionesService } from 'src/app/services/parametros-domiciliaciones/parametros-domiciliaciones.service';
+
+src\app\pages\admin-contratos\usuarios-operantes\usuarios-operantes.component.ts:
+  10  import { UsuarioOperanteService } from 'src/app/services/admin-contratos/usuario-operantes.service';
+  11: import { IPaginationRequest } from '../../contingencia/request/pagination-request.component';
+  12  import { Globals } from 'src/app/bean/globals-bean.component';
+
+src\app\pages\admin-stock-super-cuenta-go\admin-stock-super-cuenta-go\admin-stock-super-cuenta-go.component.ts:
+    8  import { Globals } from 'src/app/bean/globals-bean.component';
+    9: import { IPaginationRequest } from '../../contingencia/request/pagination-request.component';
+   10  import { MatDialog } from '@angular/material/dialog';
+
+  294            '',
+  295:           this.translate.instant('contingencia.msjERR007Observacion'),
+  296            'alert',
+
+src\app\pages\admin-stock-super-cuenta-go\consulta-tarjetas\consulta-tarjetas.component.ts:
+  3  import { CuentasGoService } from 'src/app/services/cuentaGo/cuentas-go.service';
+  4: import { IPaginationRequest } from '../../contingencia/request/pagination-request.component';
+  5  import { Globals } from 'src/app/bean/globals-bean.component';
+
+src\app\pages\administracion\administracion-routing.module.ts:
+  17  import { ProductoComponent } from './gestion-productos/producto/producto.component';
+  18: import { ContingenciaComponent } from './gestion-productos/contingencia/contingencia.component';
+  19  import { GestionCodigosPostalesComponent } from './gestion-codigos-postales/gestion-codigos-postales.component';
+
+  51    {
+  52:     path: 'contingencia/:origen/:id/:descProd',
+  53:     component: ContingenciaComponent,
+  54    },
+
+src\app\pages\administracion\administracion.module.ts:
+  30  import { ProductoComponent } from './gestion-productos/producto/producto.component';
+  31: import { ContingenciaComponent } from './gestion-productos/contingencia/contingencia.component';
+  32  import { ConsultaBicComponent } from './consulta-bic/consulta-bic.component';
+
+  68      ProductoComponent,
+  69:     ContingenciaComponent,
+  70      ConsultaBicComponent,
+
+src\app\pages\administracion\cancelacion-operaciones\cancelacion-operaciones.component.ts:
+  337  							this.openModalInfo(
+  338: 								this.translateS.instant('contingencia.msjERR007Titulo'),
+  339: 								this.translateS.instant('contingencia.msjERR007Sugerencia'),
+  340  								'info',
+  341: 								this.translateS.instant('contingencia.msjERR007Codigo'),
+  342: 								this.translateS.instant('contingencia.msjERR007Observacion'),
+  343  							);
+
+  348  				this.openModalInfo(
+  349: 					this.translateS.instant('contingencia.msjERR007Titulo'),
+  350: 					this.translateS.instant('contingencia.msjERR007Sugerencia'),
+  351  					'alert',
+  352  					this.translateS.instant('admonContratos.msjCONT0011Codigo'),
+  353: 					this.translateS.instant('contingencia.msjERR007Observacion'),
+  354  				);
+
+src\app\pages\administracion\catalogo-dinamico\catalogo-dinamico.component.ts:
+  16  import { FuncionesComunesComponent } from 'src/app/components/funciones-comunes.component';
+  17: import { IPaginationRequest } from '../../contingencia/request/pagination-request.component';
+  18  import { ComunesService } from 'src/app/services/comunes.service';
+
+src\app\pages\administracion\consulta-aba\consulta-aba.component.ts:
+  10  import { ModalInfoBeanComponents } from 'src/app/bean/modal-info-bean.component';
+  11: import { IPaginationRequest } from '../../contingencia/request/pagination-request.component';
+  12  import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+
+src\app\pages\administracion\consulta-bic\consulta-bic.component.ts:
+  7  import { ConsultasBicService } from 'src/app/services/administracion/consultas-bic.service';
+  8: import { IPaginationRequest } from '../../contingencia/request/pagination-request.component';
+  9  import { FuncionesComunesComponent } from 'src/app/components/funciones-comunes.component';
+
+src\app\pages\administracion\consulta-validaciones-canal\consulta-validaciones-canal.component.ts:
+  14  import { ModalInfoComponent } from 'src/app/components/modals/modal-info/modal-info.component';
+  15: import { IPaginationRequest } from '../../contingencia/request/pagination-request.component';
+  16  import { ModalInfoBeanComponents } from 'src/app/bean/modal-info-bean.component';
+
+src\app\pages\administracion\gestion-backends\gestion-backends.component.ts:
+  11  import { GestionBackendService } from 'src/app/services/administracion/gestion-backend.service';
+  12: import { IPaginationRequest } from '../../contingencia/request/pagination-request.component';
+  13  import { ComunesService } from 'src/app/services/comunes.service';
+
+src\app\pages\administracion\gestion-backends\backend\backend.component.ts:
+  8  import { Router } from '@angular/router';
+  9: import { IPaginationRequest } from '../../../contingencia/request/pagination-request.component';
+  10  import { ModalInfoBeanComponents } from 'src/app/bean/modal-info-bean.component';
+
+src\app\pages\administracion\gestion-bancos\gestion-bancos.component.ts:
+  3  import { GestionBancos } from 'src/app/interface/gestionBancosRespuesta.interface';
+  4: import { IPaginationRequest } from '../../contingencia/request/pagination-request.component';
+  5  import { MatDialog } from '@angular/material/dialog';
+
+src\app\pages\administracion\gestion-codigos-postales\gestion-codigos-postales.component.ts:
+   9  import { ModalInfoComponent } from 'src/app/components/modals/modal-info/modal-info.component';
+  10: import { IPaginationRequest } from '../../contingencia/request/pagination-request.component';
+  11  import { Router } from '@angular/router';
+
+src\app\pages\administracion\gestion-layouts\gestion-layouts.component.ts:
+  10  import { GestionLayoutsService } from 'src/app/services/geestion-layouts/gestion-layouts.service';
+  11: import { IPaginationRequest } from '../../contingencia/request/pagination-request.component';
+  12  import { FuncionesComunesComponent } from 'src/app/components/funciones-comunes.component';
+
+src\app\pages\administracion\gestion-mensajes-error\gestion-mensajes-error.component.ts:
+  7  import { Globals } from 'src/app/bean/globals-bean.component';
+  8: import { IPaginationRequest } from '../../contingencia/request/pagination-request.component';
+  9  import { ModalInfoComponent } from 'src/app/components/modals/modal-info/modal-info.component';
+
+src\app\pages\administracion\gestion-paises\gestion-paises.component.ts:
+  11  import { GestionPaisesService } from 'src/app/services/administracion/gestion-paises.service';
+  12: import { IPaginationRequest } from '../../contingencia/request/pagination-request.component';
+  13  import { TranslateService } from '@ngx-translate/core';
+
+src\app\pages\administracion\gestion-productos\gestion-productos.component.html:
+  91                                      (dato.cveProd.toUpperCase() === 'RC' && (dato.descProd.toUpperCase() === 'REPORTES CAPTACION' || dato.descProd.toUpperCase() === 'REPORTES CAPTACIÓN'))"
+  92:                                             (click)="goContingencia('periodo', dato.idProduct, dato.descProd)">{{'pantalla.controlVolumenOperativo.graficaArchivoCliente.periodo' | translate}}</button>
+  93                                      </td>
+
+  95                                              [disabled]="dato.cveProdOper === '95' || dato.cveProdOper === '93' || dato.cveProdOper === '96' || dato.cveProdOper === '00'"
+  96:                                             (click)="goContingencia('contingencia', dato.idProduct, dato.descProd)">{{'pantalla.envio.archivos' | translate }}</button>
+  97                                      </td>
+
+src\app\pages\administracion\gestion-productos\gestion-productos.component.ts:
+    4  import { GestionProductosRespuesta } from 'src/app/interface/gestionProductosRespuesta.interface';
+    5: import { IPaginationRequest } from '../../contingencia/request/pagination-request.component';
+    6  import { MatDialog } from '@angular/material/dialog';
+
+  119            'perfilamientoUsuario': usu,
+  120:           "url" : "/administracion/productos/consultaContingenciaProd.do",
+  121:           "componente": "consultaContingencia"
+  122          }
+
+  276  
+  277:   goContingencia(origen: any, id: any, descProd: any) {
+  278      this.savePage();
+  279:     this.router.navigate(['/moduloAdministracion/contingencia/', origen, id, descProd], { queryParams: { origen: origen, id: id, descProd: descProd } });
+  280    }
+
+src\app\pages\administracion\gestion-productos\contingencia\contingencia.component.html:
+    2      *ngIf="origen === 'periodo'"></app-operativa-header>
+    3: <app-operativa-header tituloPantalla="{{'administracion.productos.contingencia.Modificar' | translate}}"
+    4:     *ngIf="origen === 'contingencia'"></app-operativa-header>
+    5  
+    6: <div id="contingencia" class="panel panel-default col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    7      <br>
+
+   12          </h5>
+   13:         <h5 class="card-header justify-content-center" *ngIf="origen === 'contingencia'">
+   14:             {{'administracion.productos.contingencia.subtitulo' | translate}} {{descProd}}
+   15          </h5>
+   16          <div class="card-body">
+   17:             <form class="row" [formGroup]="formContingencia" *ngIf="origen === 'periodo' ">
+   18                  <div class="col-12">
+
+   51              </form>
+   52:             <form class="row" [formGroup]="formContingencia" *ngIf="origen === 'contingencia' ">
+   53                  <div class="col-12">
+
+   83          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mb-3">
+   84:             <ng-container *ngIf="origen === 'contingencia'">
+   85                  <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-1 mb-3">
+
+   87                  </div>
+   88:                 <div  *ngIf="verAgregarContingencia === true"  class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-8 mt-1">
+   89                      <button type="button" class="btn btn-danger" (click)="saveContingecia()"
+
+  117                  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+  118:                     <table class="table table-striped table-hover" aria-describedby="listaConsultacontingencia">
+  119                          <thead>
+
+src\app\pages\administracion\gestion-productos\contingencia\contingencia.component.spec.ts:
+   2  
+   3: import { ContingenciaComponent } from './contingencia.component';
+   4  
+   5: describe('ContingenciaComponent', () => {
+   6:   let component: ContingenciaComponent;
+   7:   let fixture: ComponentFixture<ContingenciaComponent>;
+   8  
+
+  10      await TestBed.configureTestingModule({
+  11:       declarations: [ ContingenciaComponent ]
+  12      })
+
+  16    beforeEach(() => {
+  17:     fixture = TestBed.createComponent(ContingenciaComponent);
+  18      component = fixture.componentInstance;
+
+src\app\pages\administracion\gestion-productos\contingencia\contingencia.component.ts:
+   19  @Component({
+   20:   selector: 'app-contingencia',
+   21:   templateUrl: './contingencia.component.html',
+   22:   styleUrls: ['./contingencia.component.css'],
+   23  })
+   24: export class ContingenciaComponent implements OnInit {
+   25    origen: any;
+
+   27    listado: any[];
+   28:   formContingencia: UntypedFormGroup;
+   29    modifica = false;
+
+   41    verEliminar: boolean = false;
+   42:   verAgregarContingencia: boolean = false;
+   43    constructor(
+
+   57      /** Se inicializa el formulario para validar el Producto */
+   58:     this.formContingencia = this.formBuilder.group({
+   59        dia: ['', Validators.required],
+
+   89        'perfilamientoUsuario': usu,
+   90:       "url": "/administracion/productos/guardarContingenciaProd.do",
+   91:       "componente": "guardarContingencia"
+   92      }
+
+  109        if (result.message === 'La operacion es valida') {*/
+  110:     this.verAgregarContingencia = true
+  111      /*}*/
+
+  117      } else {
+  118:       this.getContingenciaId(this.id);
+  119      }
+
+  135  
+  136:   get formControlContingencia() {
+  137:     return this.formContingencia.controls;
+  138    }
+
+  149            this.horaMaxPermitida = result.horaMaxPermitida;
+  150:           this.formContingencia.controls['dia'].setValue(0);
+  151:           this.formContingencia.controls['horaIni'].setValue('');
+  152:           this.formContingencia.controls['horaFin'].setValue('');
+  153:           this.formContingencia.controls['horaCie'].setValue('');
+  154:           this.formContingencia.controls['activo'].setValue('');
+  155          });
+
+  162  
+  163:   private async getContingenciaId(id: any) {
+  164      try {
+  165        await this.gestionProductosService
+  166:         .getContingenciaId(id)
+  167          .then(async (result: any) => {
+  168:           if (result.contingencia && result.contingencia.length > 0) {
+  169:             let dia = new Date(result.contingencia[0].fechOper).getDay();
+  170              if (dia === 0) dia = 7;
+  171:             this.formContingencia.setValue({
+  172                dia: dia,
+  173:               horaIni: this.formatHour(result.contingencia[0].horaIni),
+  174:               horaFin: this.formatHour(result.contingencia[0].horaFin),
+  175:               horaCie: this.formatHour(result.contingencia[0].horaCier),
+  176:               horaCiePend: this.formatHour(result.contingencia[0].horaCierPend),
+  177:               activo: result.contingencia[0].bandSesi === 'A' ? true : false,
+  178              });
+  179:             this.cveProdOper = result.contingencia[0].cveProdOper;
+  180              this.factorEnvio = result.factorEnvio;
+  181              this.factorPend = result.factorPend;
+  182:             this.formContingencia.controls['activo'].disable();
+  183:             var camposCierre = this.formContingencia.value.horaCie.split(':');
+  184              this.fechaCierreConsulta.setHours(camposCierre[0]);
+
+  186              this.fechaCierreConsulta.setSeconds(0);
+  187:             this.calculateHoraCierre('contingencia');
+  188            } else {
+
+  245        idProduct: parseInt(this.id),
+  246:       dia: parseInt(this.formContingencia.controls['dia'].value),
+  247:       horaIni: this.formContingencia.value.horaIni,
+  248:       horaFin: this.formContingencia.value.horaFin,
+  249:       horaCierre: this.formContingencia.value.horaCie,
+  250:       bandActivo: this.formContingencia.value.activo === true ? 'A' : 'I',
+  251      };
+
+  372              } else {
+  373:               this.getContingenciaId(this.id);
+  374              }
+
+  389              } else {
+  390:               this.getContingenciaId(this.id);
+  391              }
+
+  413        idProduct: parseInt(this.cveProdOper),
+  414:       dia: parseInt(this.formContingencia.controls['dia'].value),
+  415:       horaIni: this.formContingencia.value.horaIni,
+  416:       horaFin: this.formContingencia.value.horaFin,
+  417:       horaCierre: this.formContingencia.value.horaCie,
+  418:       bandActivo: this.formContingencia.value.activo === true ? 'A' : 'I',
+  419      };
+
+  493        message =
+  494:         this.translateService.instant('administracion.productos.contingencia.validaHoraCierre') +
+  495          fechaMensaje.getHours() +
+
+  499        message =
+  500:         this.translateService.instant('administracion.productos.contingencia.validaHoraCierre') +
+  501          fechaMensaje.getHours() +
+
+  526        if (result) {
+  527:         this.saveRecordContingencia(enviarDatos);
+  528        }
+
+  572  
+  573:   private async saveRecordContingencia(enviarDatos: any) {
+  574      try {
+  575        this.gestionProductosService
+  576:         .updatePeriodoContingencia(enviarDatos)
+  577          .then(async (result: any) => {
+
+  599        if (dato._checked) {
+  600:         this.formContingencia.setValue({
+  601            dia: dato.dia,
+
+  610      }
+  611:     this.formContingencia.controls['dia'].disable();
+  612    }
+
+  651      this.fechaCierrePend = new Date();
+  652:     let horaFin: any = this.formContingencia.controls['horaFin'].value;
+  653      var factorCierreEnv = parseInt(this.factorEnvio);
+
+  666      fechaCierre.setTime(fechaCierre.getTime() + (factorCierreEnv * 60 * 1000));
+  667:     if (mod !== 'contingencia') {
+  668:       this.formContingencia.controls['horaCie'].setValue(
+  669          this.fillCeros(fechaCierre.getHours().toString()) +
+
+  680      );
+  681:     if (mod === 'contingencia') {
+  682:       this.formContingencia.controls['horaCiePend'].setValue(
+  683          this.fillCeros(this.fechaCierrePend.getHours().toString()) +
+
+  711      this.modifica = false;
+  712:     this.formContingencia.controls['dia'].enable();
+  713      /**Se limpia el formulario*/
+  714:     this.formContingencia.reset();
+  715    }
+
+src\app\pages\administracion\gestion-productos\producto\producto.component.ts:
+  10  import { GestionProductosService } from 'src/app/services/administracion/gestion-productos.service';
+  11: import { IPaginationRequest } from '../../../contingencia/request/pagination-request.component';
+  12  import { AltaGestionProducto } from 'src/app/bean/alta-gestionProducto.component';
+
+src\app\pages\administracion\gestion-sucursales\gestion-sucursales.component.ts:
+  8  import { SucursalesRespuesta } from 'src/app/interface/sucursalesRespuesta.interface';
+  9: import { IPaginationRequest } from '../../contingencia/request/pagination-request.component';
+  10  import { MatDialog } from '@angular/material/dialog';
+
+src\app\pages\administracion\gestion-validaciones-canal\gestion-validaciones-canal.component.ts:
+  13  import { GestionValidacionCanalService } from 'src/app/services/administracion/gestion-validacion-canal.service';
+  14: import { IPaginationRequest } from '../../contingencia/request/pagination-request.component';
+  15  import { ActivatedRoute, Router } from '@angular/router';
+
+src\app\pages\consulta-documentos-cfdi\consulta-documentos-cfdi\consulta-documentos-cfdi.component.ts:
+  18  import { ModalInfoComponent } from 'src/app/components/modals/modal-info/modal-info.component';
+  19: import { IPaginationRequest } from '../../contingencia/request/pagination-request.component';
+  20  import { ConsultaDocumentosCFDIService } from 'src/app/services/consulta-documentos-cfdi/consulta-documentos-cfdi.service';
+
+src\app\pages\consulta-tipo-cambio\tipo-cambio\tipo-cambio.component.ts:
+  3  import { IConsultaTipoCambio } from 'src/app/interface/consultaTipoCambioRespuesta.interface';
+  4: import { IPaginationRequest } from '../../contingencia/request/pagination-request.component';
+  5  import { MatDialog } from '@angular/material/dialog';
+
+src\app\pages\consultas-reportes\cuenta-beneficiaria\cuenta-beneficiaria.component.ts:
+   10  import { ComunesService } from 'src/app/services/comunes.service';
+   11: import { IPaginationRequest } from '../../contingencia/request/pagination-request.component';
+   12  import { CuentaBeneficiariaService } from 'src/app/services/consultas-reportes/cuentabeneficiaria.service';
+
+  134          'Error',
+  135:         this.translateService.instant('contingencia.msjERR002Observacion'),
+  136          'error'
+
+  160          'Error',
+  161:         this.translateService.instant('contingencia.msjERR002Observacion'),
+  162          '',
+
+  210          'error',
+  211:         this.translateService.instant('contingencia.msjERR003Codigo')
+  212        );
+
+src\app\pages\contingencia\contingencia-routing.module.ts:
+  21      { path: 'envioArchivos', component: EnvioArchivosComponent },
+  22:     { path: 'solicitudEdoCuentaContingencia', component: SolicitudEdoCtaComponent },
+  23      { path: 'solicitudCambioEstatus', component: SolicitudCambioEstatusComponent },
+
+  30  })
+  31: export class ContingenciaRouterModule { }
+
+src\app\pages\contingencia\contingencia.module.ts:
+   9  import { CustomModule } from "../../layout/custom/custom.module";
+  10: import { ContingenciaRouterModule } from "./contingencia-routing.module";
+  11  import { RecargarCatalogoSfgComponent } from "./recargar-catalogo-sfg/recargar-catalogo-sfg.component";
+
+  27  
+  28:     imports: [ContingenciaRouterModule, CustomModule, CommonModule, ModalModule, PaginationModule, BsDatepickerModule],
+  29      providers: [
+
+  33  })
+  34: export class ContingenciaModule { }
+
+src\app\pages\contingencia\cierre-productos\cierre-productos.component.ts:
+  7  import { CierreProductoRespuesta } from 'src/app/interface/cierreProductoRespuesta.interface';
+  8: import { CierreProductosService } from 'src/app/services/contingencia/cierre-productos.service';
+  9: import { IPaginationRequest } from '../../contingencia/request/pagination-request.component';
+  10  import { ModalConfirmComponent } from 'src/app/components/modals/modal-confirm/modal-confirm.component';
+
+src\app\pages\contingencia\cifrado-descifrado\cifrado-descifrado.component.ts:
+    6  import { ModalInfoComponent } from 'src/app/components/modals/modal-info/modal-info.component';
+    7: import { CifradoDescifradoService } from 'src/app/services/contingencia/cifrado-descifrado.service';
+    8  import { TranslateService } from '@ngx-translate/core';
+
+   36    hdnContratoFolio: any;
+   37:   /** Bandera para saber si la contingencia esta habilitada */
+   38:   contingenciaHabilitada: any;
+   39    operacion: any;
+
+   66          this.showModalMsg(
+   67:           this.translate.instant('contingencia.msjINF004Titulo'),
+   68:           this.translate.instant('contingencia.msjINF004Observacion'),
+   69            'alert',
+   70:           this.translate.instant('contingencia.msjINF004Codigo'),
+   71:           this.translate.instant('contingencia.msjINF004Sugerencia')
+   72          );
+
+   84                this.hdnContratoFolio = resp.contrato.hdnContratoFolio;
+   85:               this.contingenciaHabilitada = resp.contrato.contingenciaHabilitada;
+   86                this.bandShowBotones = false;
+
+   89                this.showModalMsg(
+   90:                 this.translate.instant('contingencia.msjERR007Titulo'),
+   91:                 this.translate.instant('contingencia.msjERR007Sugerencia'),
+   92                  'info',
+   93:                 this.translate.instant('contingencia.msjERR007Codigo'),
+   94:                 this.translate.instant('contingencia.msjERR007Observacion'),
+   95                );
+
+  102        this.showModalMsg(
+  103:         this.translate.instant('contingencia.msjERR002Titulo'),
+  104:         this.translate.instant('contingencia.msjERR002Observacion'),
+  105          'error',
+  106:         this.translate.instant('contingencia.msjERR002Codigo'),
+  107:         this.translate.instant('contingencia.msjERR002Sugerencia')
+  108        );
+
+  236        this.showModalMsg(
+  237:         this.translate.instant('contingencia.msjINF002Titulo'),
+  238:         this.translate.instant('contingencia.msjINF002Observacion'),
+  239          'alert',
+  240:         this.translate.instant('contingencia.msjINF002Codigo'),
+  241:         this.translate.instant('contingencia.msjINF002Sugerencia')
+  242        );
+
+  276              this.showModalMsg(
+  277:               this.translate.instant('contingencia.msjINF001Titulo'),
+  278:               this.translate.instant('contingencia.msjINF001Observacion'),
+  279                'info',
+  280:               this.translate.instant('contingencia.msjINF001Codigo'),
+  281:               this.translate.instant('contingencia.msjINF001Sugerencia')
+  282              );
+
+  284              this.showModalMsg(
+  285:               this.translate.instant('contingencia.msjERR006Titulo'),
+  286:               this.translate.instant('contingencia.msjERR006Observacion'),
+  287                'alert',
+  288:               this.translate.instant('contingencia.msjERR006Codigo'),
+  289:               this.translate.instant('contingencia.msjERR006Sugerencia')
+  290              );
+
+  295        this.showModalMsg(
+  296:         this.translate.instant('contingencia.msjERR001Titulo'),
+  297:         this.translate.instant('contingencia.msjERR001Observacion'),
+  298          'error',
+  299:         this.translate.instant('contingencia.msjERR001Codigo'),
+  300:         this.translate.instant('contingencia.msjERR001Sugerencia')
+  301        );
+
+src\app\pages\contingencia\consultar-buzon\consultar-buzon.component.ts:
+  18  import { ComunesService } from 'src/app/services/comunes.service';
+  19: import { ConsultaBuzonService } from 'src/app/services/contingencia/consulta-buzon-service';
+  20  
+
+src\app\pages\contingencia\descarga-archivos\archivos-consulta.component.ts:
+   11  import { ModalInfoComponent } from "src/app/components/modals/modal-info/modal-info.component";
+   12: import { ContingenciaService } from "src/app/services/contingencia/contingencia.service";
+   13  import { IDownloadArchivoRequest } from "../request/idownloadarchivo-request.component";
+
+   22      styleUrls: ['./archivos-consulta.component.css'],
+   23:     providers: [ContingenciaService]
+   24  })
+
+  129          private fc: FuncionesComunesComponent,
+  130:         private descargaService: ContingenciaService,
+  131          public dialog: MatDialog,
+
+src\app\pages\contingencia\envio-archivos\envio-archivos.component.ts:
+    6  import { ModalInfoComponent } from 'src/app/components/modals/modal-info/modal-info.component';
+    7: import { EnvioArchivosService } from 'src/app/services/contingencia/envio-archivos.service';
+    8  import { TranslateService } from '@ngx-translate/core';
+
+   36    hdnContratoFolio: any;
+   37:   /** Bandera para saber si la contingencia esta habilitada */
+   38:   contingenciaHabilitada: any;
+   39    constructor(private fc: FuncionesComunesComponent,
+
+   55          this.showModalMsg(
+   56:           this.translate.instant('contingencia.msjINF004Titulo'),
+   57:           this.translate.instant('contingencia.msjINF004Observacion'),
+   58            'alert',
+   59:           this.translate.instant('contingencia.msjINF004Codigo'),
+   60:           this.translate.instant('contingencia.msjINF004Sugerencia')
+   61          );
+
+   74                this.hdnContratoFolio = resp.hdnContratoFolio;
+   75:               this.contingenciaHabilitada = resp.contingenciaHabilitada;
+   76                this.bandShowBotones = true;
+
+   79                this.showModalMsg(
+   80:                 this.translate.instant('contingencia.msjERR007Titulo'),
+   81:                 this.translate.instant('contingencia.msjERR007Sugerencia'),
+   82                  'info',
+   83:                 this.translate.instant('contingencia.msjERR007Codigo'),
+   84:                 this.translate.instant('contingencia.msjERR007Observacion'),
+   85                );
+
+   92        this.showModalMsg(
+   93:         this.translate.instant('contingencia.msjERR002Titulo'),
+   94:         this.translate.instant('contingencia.msjERR002Observacion'),
+   95          'error',
+   96:         this.translate.instant('contingencia.msjERR002Codigo'),
+   97:         this.translate.instant('contingencia.msjERR002Sugerencia')
+   98        );
+
+  200        this.showModalMsg(
+  201:         this.translate.instant('contingencia.msjINF002Titulo'),
+  202:         this.translate.instant('contingencia.msjINF002Observacion'),
+  203          'alert',
+  204:         this.translate.instant('contingencia.msjINF002Codigo'),
+  205:         this.translate.instant('contingencia.msjINF002Sugerencia')
+  206        );
+
+  219                  this.showModalMsg(
+  220:                   this.translate.instant('contingencia.msjINF001Titulo'),
+  221:                   this.translate.instant('contingencia.msjINF001Observacion'),
+  222                    'info',
+  223:                   this.translate.instant('contingencia.msjINF001Codigo'),
+  224:                   this.translate.instant('contingencia.msjINF001Sugerencia')
+  225                  );
+
+  227                  this.showModalMsg(
+  228:                   this.translate.instant('contingencia.msjERR006Titulo'),
+  229:                   this.translate.instant('contingencia.msjERR006Observacion'),
+  230                    'alert',
+  231:                   this.translate.instant('contingencia.msjERR006Codigo'),
+  232:                   this.translate.instant('contingencia.msjERR006Sugerencia')
+  233                  );
+
+  238            this.showModalMsg(
+  239:             this.translate.instant('contingencia.msjERR001Titulo'),
+  240:             this.translate.instant('contingencia.msjERR001Observacion'),
+  241              'error',
+  242:             this.translate.instant('contingencia.msjERR001Codigo'),
+  243:             this.translate.instant('contingencia.msjERR001Sugerencia')
+  244            );
+
+  253          this.showModalMsg(
+  254:           this.translate.instant('contingencia.msjERR003Titulo'),
+  255:           this.translate.instant('contingencia.msjERR003Observacion'),
+  256            'alert',
+  257:           this.translate.instant('contingencia.msjERR003Codigo'),
+  258:           this.translate.instant('contingencia.msjERR003Sugerencia') + " " + extensionesValidas
+  259          );
+
+src\app\pages\contingencia\parametros\parametros.component.ts:
+   12  
+   13: import { parametrosService } from 'src/app/services/contingencia/parametros.service';
+   14  import { IPaginationRequest } from '../request/pagination-request.component';
+
+  219      /** Se hace el redirect a la vista de alta */
+  220:     this.router.navigate(['/contingencia', 'editarParametro']);
+  221    }
+
+  232      }
+  233:     this.router.navigate(['/contingencia', 'editarParametro']);
+  234    }
+
+src\app\pages\contingencia\parametros\editar-parametro\editar-parametro.component.ts:
+   16  import { IConsultaParametros } from 'src/app/bean/iconsulta-parametros.component';
+   17: import { parametrosService } from 'src/app/services/contingencia/parametros.service';
+   18  
+
+  295    regresarToConsult() {
+  296:     this.router.navigate(['/contingencia', 'parametros']);
+  297    }
+
+src\app\pages\contingencia\recargar-catalogo-sfg\recargar-catalogo-sfg.component.ts:
+  10  import { ModalInfoComponent } from '../../../components/modals/modal-info/modal-info.component';
+  11: import { RecargaCatalogosSFGService } from '../../../services/contingencia/recarga-catalogos-sfg.service';
+  12  import { ComunesService } from 'src/app/services/comunes.service';
+
+src\app\pages\contingencia\solicitud-cambio-estatus\solicitud-cambio-estatus.component.ts:
+   10  import { ComunesService } from 'src/app/services/comunes.service';
+   11: import { SolicitudCambioEstatusService } from 'src/app/services/contingencia/solicitud-cambio-estatus.service';
+   12: import { IPaginationRequest } from '../../contingencia/request/pagination-request.component';
+   13  import { MdbModalService } from 'mdb-angular-ui-kit/modal';
+
+  130              data: new ModalInfoBeanComponents(
+  131:               this.translate.instant('contingencia.msjERR007Observacion'),
+  132                '',
+  133                'info',
+  134:               this.translate.instant('contingencia.msjERR007Codigo'),
+  135:               this.translate.instant('contingencia.msjERR007Sugerencia')
+  136              ),
+
+  366        this.open(
+  367:         this.translate.instant('contingencia.msjERR007Titulo'),
+  368:         this.translate.instant('contingencia.msjERR007Sugerencia'),
+  369          'info',
+  370:         this.translate.instant('contingencia.msjERR007Codigo'),
+  371:         this.translate.instant('contingencia.msjERR007Observacion')
+  372        );
+
+src\app\pages\contingencia\solicitud-edo-cta\solicitud-edo-cta.component.html:
+    1: <app-operativa-header  tituloPantalla="{{'menu.contigencia.solicitudEdoCuentaContingencia' | translate}}"></app-operativa-header>
+    2  <div id="envioArchivos" class="panel panel-default col-xs-12 col-sm-12 col-md-12 col-lg-12">
+
+  103                                      <label for="fecha" class="col-form-label">{{
+  104:                                           'pantalla.solicitudEdoCtaContingencia.fecha'
+  105                                            | translate
+
+  121                                      <label for="frecuencia" class="col-form-label">
+  122:                                           {{'pantalla.solicitudEdoCtaContingencia.frecuencia' | translate}}
+  123                                      </label>
+
+  146                                            <label class="col-form-label separar-check" for="recibirArchConsolidadoCta">
+  147:                                                 {{'pantalla.solicitudEdoCtaContingencia.recibirArchConsolidadoCta' |
+  148                                                  translate}}
+
+  156                                            <label class="col-form-label separar-check " for="recibirArchPorCta">
+  157:                                                 {{'pantalla.solicitudEdoCtaContingencia.recibirArchPorCta' | translate}}
+  158                                            </label>
+
+  176                                            <label class="col-form-label separar-check" for="checkCtaDescubierto">
+  177:                                                 {{'pantalla.solicitudEdoCtaContingencia.CtaDescubierto' | translate}}
+  178                                            </label>
+
+  184                                            <label class="col-form-label separar-check " for="checkConvenio">
+  185:                                                 {{'pantalla.solicitudEdoCtaContingencia.ConvenioVirtual' | translate}}
+  186                                            </label>
+
+  193                                            <label class="col-form-label separar-check combo" for="canal">
+  194:                                                 {{'pantalla.solicitudEdoCtaContingencia.canal' | translate}} </label>
+  195                                            <select class="radioCenter w-75" id="canal" name="canal" formControlName="canal">
+
+  204                                            <label class="col-form-label separar-check combo" for="formato">
+  205:                                                 {{'pantalla.solicitudEdoCtaContingencia.formato' | translate}} </label>
+  206                                            <select class="radioCenter w-75" id="formato" name="formato"
+
+  241                                            <th class="text-center" scope="col">
+  242:                                                 {{'pantalla.solicitudEdoCtaContingencia.cuenta' | translate}}</th>
+  243                                      </tr>
+
+src\app\pages\contingencia\solicitud-edo-cta\solicitud-edo-cta.component.ts:
+   11  import { ComunesService } from 'src/app/services/comunes.service';
+   12: import { SolicitudEdoCtaService } from 'src/app/services/contingencia/solicitud-edo-cta.service';
+   13  import { IPaginationRequest } from '../request/pagination-request.component';
+
+  132          this.openModal(
+  133:           this.translate.instant('pantalla.solicitudEdoCtaContingencia.msjINF001Titulo'),
+  134:           this.translate.instant('contingencia.msjERR007Sugerencia'),
+  135            'info',
+
+  141        this.openModal(
+  142:         this.translate.instant('contingencia.msjERR002Titulo'),
+  143:         this.translate.instant('contingencia.msjERR002Observacion'),
+  144          'error',
+  145:         this.translate.instant('contingencia.msjERR002Codigo'),
+  146:         this.translate.instant('contingencia.msjERR002Sugerencia')
+  147        );
+
+  156          return this.openModal(
+  157:           this.translate.instant('contingencia.msjINF004Titulo'),
+  158:           this.translate.instant('contingencia.msjINF004Sugerencia'),
+  159            'alert',
+  160:           this.translate.instant('contingencia.msjINF004Codigo'),
+  161:           this.translate.instant('contingencia.msjINF004Observacion'),
+  162          );
+
+  178          this.openModal(
+  179:           this.translate.instant('contingencia.msjERR007Titulo'),
+  180:           this.translate.instant('contingencia.msjERR007Sugerencia'),
+  181            'info',
+  182:           this.translate.instant('contingencia.msjERR007Codigo'),
+  183:           this.translate.instant('contingencia.msjERR007Observacion'),
+  184          );
+
+  190        this.openModal(
+  191:         this.translate.instant('contingencia.msjERR002Titulo'),
+  192:         this.translate.instant('contingencia.msjERR002Observacion'),
+  193          'error',
+  194:         this.translate.instant('contingencia.msjERR002Codigo'),
+  195:         this.translate.instant('contingencia.msjERR002Sugerencia')
+  196        );
+
+  335        "dividirXDivisa": this.checkDivisa,
+  336:       "anulacionesContingenciatmp": ""
+  337      }
+
+  352      return this.openModal(
+  353:       this.translate.instant('pantalla.solicitudEdoCtaContingencia.msjINF001Titulo'),
+  354:       this.translate.instant('pantalla.solicitudEdoCtaContingencia.msjINF001Observacion'),
+  355        'info',
+  356:       this.translate.instant('pantalla.solicitudEdoCtaContingencia.msjINF001Codigo'),
+  357:       this.translate.instant('pantalla.solicitudEdoCtaContingencia.msjINF001Sugerencia'),
+  358      );
+
+  409        msj = {
+  410:         obser: 'pantalla.solicitudEdoCtaContingencia.msjERR005Observacion',
+  411        }
+
+  413        msj = {
+  414:         obser: 'pantalla.solicitudEdoCtaContingencia.msjERR002Observacion',
+  415        }
+
+  417        msj = {
+  418:         obser: 'pantalla.solicitudEdoCtaContingencia.msjERR003Observacion',
+  419        }
+
+  421        msj = {
+  422:         obser: 'pantalla.solicitudEdoCtaContingencia.msjERR004Observacion',
+  423        }
+
+  430        msj = {
+  431:         obser: 'pantalla.solicitudEdoCtaContingencia.msjINF00016Observacion',
+  432:         titulo: 'pantalla.solicitudEdoCtaContingencia.msjINF00016Titulo',
+  433          type: 'info',
+  434:         errorCode: 'pantalla.solicitudEdoCtaContingencia.msjINF00016Codigo',
+  435:         sugerencia: 'pantalla.solicitudEdoCtaContingencia.msjINF00016Sugerencia',
+  436        }
+
+  439        msj = {
+  440:         titulo: 'pantalla.solicitudEdoCtaContingencia.msjERR002Titulo',
+  441          type: 'error',
+  442:         errorCode: 'pantalla.solicitudEdoCtaContingencia.msjERR002Codigo',
+  443:         sugerencia: 'pantalla.solicitudEdoCtaContingencia.msjERR002Sugerencia',
+  444          ...msj,
+
+src\app\pages\control-volumen-operativo\grafica-archivo-cliente\grafica-archivo-cliente.component.ts:
+  10  import { GraficaArchivosClienteService } from 'src/app/services/control-volumen-operativo/grafica-archivos-cliente.service';
+  11: import { IPaginationRequest } from '../../contingencia/request/pagination-request.component';
+  12  import { FuncionesComunesComponent } from 'src/app/components/funciones-comunes.component';
+
+src\app\pages\control-volumen-operativo\grafica-estatus-cliente\grafica-estatus-cliente.component.ts:
+  13  import { GraficaEstatusClienteService } from 'src/app/services/control-volumen-operativo/grafica-estatus-cliente.service';
+  14: import { IPaginationRequest } from '../../contingencia/request/pagination-request.component';
+  15  import { FuncionesComunesComponent } from 'src/app/components/funciones-comunes.component';
+
+src\app\pages\control-volumen-operativo\grafica-estatus-cliente-parametrizada\grafica-estatus-cliente-parametrizada.component.ts:
+  12  } from 'src/app/services/control-volumen-operativo/grafica-estatus-cliente-parametrizada.service';
+  13: import { IPaginationRequest } from '../../contingencia/request/pagination-request.component';
+  14  import { FuncionesComunesComponent } from 'src/app/components/funciones-comunes.component';
+
+src\app\pages\control-volumen-operativo\grafica-por-clientes\grafica-por-clientes.component.ts:
+  4  import { IGraficaCliente } from 'src/app/interface/graficaClienteRespuesta.interface';
+  5: import { IPaginationRequest } from '../../contingencia/request/pagination-request.component';
+  6  import { GraficaClienteService } from 'src/app/services/control-volumen-operativo/grafica-cliente.service';
+
+src\app\pages\duplicados\monitor-archivos-duplicados\monitor-archivos-duplicados.component.ts:
+  2  import { Subscription } from 'rxjs';
+  3: import { IPaginationRequest } from '../../contingencia/request/pagination-request.component';
+  4  import { ModalInfoBeanComponents } from 'src/app/bean/modal-info-bean.component';
+
+src\app\pages\duplicados\monitor-operaciones-duplicadas\monitor-operaciones-duplicadas.component.ts:
+  11  import { ModalSinElementosComponent } from 'src/app/components/modals/modal-sin-elementos/modal-sin-elementos.component';
+  12: import { IPaginationRequest } from '../../contingencia/request/pagination-request.component';
+  13  import { ModalInfoComponent } from 'src/app/components/modals/modal-info/modal-info.component';
+
+src\app\pages\gestion-buzon\gestion-conexion-contrato\gestion-conexion-contrato.component.ts:
+   9  import { GestionConexionContratoService } from '../../../services/gestion-buzon/gestion-conexion-contrato.service';
+  10: import { IPaginationRequest } from '../../contingencia/request/pagination-request.component';
+  11  import { PageChangedEvent } from 'ngx-bootstrap/pagination';
+
+src\app\pages\gestion-buzon\gestion-protocolos\gestion-protocolos.component.ts:
+  8  import { GestionProtocolosService } from 'src/app/services/gestion-buzon/gestion-protocolos.service';
+  9: import { IPaginationRequest } from '../../contingencia/request/pagination-request.component';
+  10  import { ModalInfoComponent } from 'src/app/components/modals/modal-info/modal-info.component';
+
+src\app\pages\gestion-buzon\gestion-protocolos\parametros-protocolo\parametros-protocolo.component.ts:
+  10  import {GestionParametros} from 'src/app/interface/gestionParametroRespuesta.interface';
+  11: import { IPaginationRequest } from 'src/app/pages/contingencia/request/pagination-request.component';
+  12  import { GestionParametrosdelProtocoloService } from 'src/app/services/gestion-buzon/gestion-parametros.service';
+
+src\app\pages\gestion-buzon\vigencia-buzones\consultar-buzones.component.ts:
+   8  import { FuncionesComunesComponent } from 'src/app/components/funciones-comunes.component';
+   9: import { ContingenciaService } from 'src/app/services/contingencia/contingencia.service';
+  10  import { IConsultaBuzon } from 'src/app/bean/iconsulta-vigencia-buzones.component';
+  11  import { Globals } from 'src/app/bean/globals-bean.component';
+  12: import { IPaginationRequest } from 'src/app/pages/contingencia/request/pagination-request.component';
+  13  import { TranslateService } from '@ngx-translate/core';
+
+  84          private modalService:BsModalService,
+  85:         private buzonesService:ContingenciaService,
+  86          private fc:FuncionesComunesComponent,
+
+src\app\pages\gestion-buzon\vigencia-buzones\alta-vigencia-buzon\alta-buzon.component.ts:
+   10  import { ModalInfoComponent } from "src/app/components/modals/modal-info/modal-info.component";
+   11: import { ContingenciaService } from "src/app/services/contingencia/contingencia.service";
+   12  
+
+   16      styleUrls: ['./alta-buzon.component.css'],
+   17:     providers:[ContingenciaService]
+   18  })
+
+   49          private formBuilder: UntypedFormBuilder,
+   50:         private buzonesService:ContingenciaService,
+   51          private router:Router,
+
+  194                      this.open('',result.message, 'info');
+  195:                     this.router.navigate(['/contingencia','consultaVigenciaBuzones']);
+  196                  }
+
+  221                      this.open('',result.message, 'info');
+  222:                     this.router.navigate(['/contingencia','consultaVigenciaBuzones']);
+  223                  }
+
+src\app\pages\monitoreo\comprobantes-formato-cdmx\consulta-operaciones-formato-cdmx\consulta-operaciones-formato-cdmx.component.ts:
+  10  import { DatePipe } from '@angular/common';
+  11: import { IPaginationRequest } from 'src/app/pages/contingencia/request/pagination-request.component';
+  12  import { FuncionesComunesComponent } from 'src/app/components/funciones-comunes.component';
+
+src\app\pages\monitoreo\comprobantes-formato-cdmx\historial-operacion-formato-cdmx.component.html\historial-operacion-formato-cdmx.component.ts:
+  10  import { ModalInfoComponent } from 'src/app/components/modals/modal-info/modal-info.component';
+  11: import { IPaginationRequest } from 'src/app/pages/contingencia/request/pagination-request.component';
+  12  import { ComprobanteFormatoCDMXService } from 'src/app/services/monitoreo/comprobantes-formato-cdmx.service';
+
+src\app\pages\monitoreo\consulta-tracking\consulta-tracking.component.ts:
+  8  import { ConsultaTrackingArchivoService } from 'src/app/services/monitoreo/consulta-tracking-archivo.service';
+  9: import { IPaginationRequest } from '../../contingencia/request/pagination-request.component';
+  10  import { Chart } from 'chart.js';
+
+src\app\pages\monitoreo\consulta-tracking\consulta-archivo\consulta-archivo.component.ts:
+  6  import { ConsultaTrackingArchivoService } from 'src/app/services/monitoreo/consulta-tracking-archivo.service';
+  7: import { IPaginationRequest } from 'src/app/pages/contingencia/request/pagination-request.component';
+  8  import { ModalExportacionComponent } from 'src/app/components/modals/modal-exportacion/modal-exportacion.component';
+
+src\app\pages\monitoreo\consulta-tracking\consulta-historica\consulta-historica.component.ts:
+  6  import { ConsultaTrackingArchivoService } from 'src/app/services/monitoreo/consulta-tracking-archivo.service';
+  7: import { IPaginationRequest } from 'src/app/pages/contingencia/request/pagination-request.component';
+  8  import { FuncionesComunesComponent } from 'src/app/components/funciones-comunes.component';
+
+src\app\pages\monitoreo\consulta-tracking\consulta-operacion\consulta-operacion.component.ts:
+  6  import { ConsultaTrackingArchivoService } from 'src/app/services/monitoreo/consulta-tracking-archivo.service';
+  7: import { IPaginationRequest } from 'src/app/pages/contingencia/request/pagination-request.component';
+  8  import { ModalExportacionComponent } from 'src/app/components/modals/modal-exportacion/modal-exportacion.component';
+
+src\app\pages\monitoreo\consulta-tracking\consulta-trakin-archivo\consulta-trakin-archivo.component.ts:
+  8  
+  9: import { IPaginationRequest } from '../../../contingencia/request/pagination-request.component';
+  10  import { ModalInfoComponent } from 'src/app/components/modals/modal-info/modal-info.component';
+
+src\app\pages\monitoreo\monitor-archivo-curso\monitor-archivo-curso.component.ts:
+  19  
+  20: import { IPaginationRequest } from '../../contingencia/request/pagination-request.component';
+  21  
+
+src\app\pages\monitoreo\monitor-operaciones\monitor-operaciones.component.ts:
+  11  import { ModalSeleccionarPaginaComponent } from 'src/app/components/modals/modal-seleccionar-pagina/modal-seleccionar-pagina.component';
+  12: import { IPaginationRequest } from '../../contingencia/request/pagination-request.component';
+  13  import { ModalInfoComponent } from 'src/app/components/modals/modal-info/modal-info.component';
+
+src\app\pages\monitoreo\monitor-saldos\monitor-saldos.component.ts:
+   9  import { Globals } from 'src/app/bean/globals-bean.component';
+  10: import { IPaginationRequest } from '../../contingencia/request/pagination-request.component';
+  11  
+
+src\app\pages\solicitud-edo-cuenta\por-demanda\por-demanda.component.ts:
+  100              data: new ModalInfoBeanComponents(
+  101:                 this.translate.instant('contingencia.msjERR007Titulo'),
+  102:                 this.translate.instant('contingencia.msjERR007Sugerencia'),
+  103                  'info',
+  104                  this.translate.instant('admonContratos.msjCONT0011Codigo'),
+  105:                 this.translate.instant('contingencia.msjERR007Observacion')
+  106              ),
+
+src\app\services\monitor-archivos-en-curso.service.ts:
+  3  import { StartupConfigService } from './wsconfig/startup-config.service';
+  4: import { IPaginationRequest } from 'src/app/pages/contingencia/request/pagination-request.component';
+  5  
+
+src\app\services\admin-contratos\cuentas-beneficiarias-contratos.service.ts:
+  2  import { ConexionService, TypeRequest } from '../conexion.service';
+  3: import { IPaginationRequest } from 'src/app/pages/contingencia/request/pagination-request.component';
+  4  
+
+src\app\services\administracion\catalogo-dinamico.service.ts:
+  4  import { IConsultaCatalogo } from "../../bean/iconsulta-catalogo-dinamico.component";
+  5: import { IPaginationRequest } from "../../pages/contingencia/request/pagination-request.component";
+  6  import { ConexionService, TypeRequest } from "../conexion.service";
+
+src\app\services\administracion\consulta-clave-aba.service.ts:
+  2  import { Injectable } from '@angular/core';
+  3: import { IPaginationRequest } from 'src/app/pages/contingencia/request/pagination-request.component';
+  4  import { ConexionService, TypeRequest } from '../conexion.service';
+
+src\app\services\administracion\consulta-validaciones-canal.service.ts:
+  2  import { Injectable } from '@angular/core';
+  3: import { IPaginationRequest } from 'src/app/pages/contingencia/request/pagination-request.component';
+  4  import { ConexionService, TypeRequest } from '../conexion.service';
+
+src\app\services\administracion\consultas-bic.service.ts:
+  2  import { Injectable } from '@angular/core';
+  3: import { IPaginationRequest } from 'src/app/pages/contingencia/request/pagination-request.component';
+  4  import { ConexionService, TypeRequest } from '../conexion.service';
+
+src\app\services\administracion\cp.service.ts:
+  1  import { Injectable } from '@angular/core';
+  2: import { IPaginationRequest } from 'src/app/pages/contingencia/request/pagination-request.component';
+  3  import { ConexionService, TypeRequest } from '../conexion.service';
+
+src\app\services\administracion\gestion-backend.service.ts:
+  2  import { Injectable } from '@angular/core';
+  3: import { IPaginationRequest } from 'src/app/pages/contingencia/request/pagination-request.component';
+  4  import { ConexionService, TypeRequest } from '../conexion.service';
+
+src\app\services\administracion\gestion-banco.services.ts:
+  3  import { GestionBancos } from 'src/app/interface/gestionBancosRespuesta.interface';
+  4: import { IPaginationRequest } from 'src/app/pages/contingencia/request/pagination-request.component';
+  5  import { ConexionService, TypeRequest } from '../conexion.service';
+
+src\app\services\administracion\gestion-mensaje-error.service.ts:
+  2  import { Injectable } from '@angular/core';
+  3: import { IPaginationRequest } from 'src/app/pages/contingencia/request/pagination-request.component';
+  4  import { ConexionService, TypeRequest } from '../conexion.service';
+
+src\app\services\administracion\gestion-paises.service.ts:
+  3  import { PaisRespuesta } from 'src/app/interface/paisRespuesta.interface';
+  4: import { IPaginationRequest } from 'src/app/pages/contingencia/request/pagination-request.component';
+  5  import { ConexionService, TypeRequest } from '../conexion.service';
+
+src\app\services\administracion\gestion-productos.service.ts:
+    3  import { AltaGestionProducto } from 'src/app/bean/alta-gestionProducto.component';
+    4: import { IPaginationRequest } from 'src/app/pages/contingencia/request/pagination-request.component';
+    5  import { ConexionService, TypeRequest } from '../conexion.service';
+
+   96  
+   97:   async getContingenciaId(id: any) {
+   98      let response: any;
+   99:     response = await this._conectionWS.peticionServicioWs(`${this.url}/gestion-productos/periodos/contingencia/consulta/${id}`, TypeRequest.GET);
+  100      return response;
+
+  102  
+  103:   async updatePeriodoContingencia(altaPeriodo: any) {
+  104      let response: any;
+
+src\app\services\administracion\gestion-sucursales.service.ts:
+  2  import { Injectable } from '@angular/core';
+  3: import { IPaginationRequest } from 'src/app/pages/contingencia/request/pagination-request.component';
+  4  import { ConexionService, TypeRequest } from '../conexion.service';
+
+src\app\services\administracion\gestion-validacion-canal.service.ts:
+  3  import { ConexionService, TypeRequest } from '../conexion.service';
+  4: import { IPaginationRequest } from 'src/app/pages/contingencia/request/pagination-request.component';
+  5  import { SaveValidationField } from 'src/app/interface/consultaValidacionesCanal.interface';
+
+src\app\services\consulta-documentos-cfdi\consulta-documentos-cfdi.service.ts:
+  3  import { ConexionService, TypeRequest } from '../conexion.service';
+  4: import { IPaginationRequest } from 'src/app/pages/contingencia/request/pagination-request.component';
+  5  
+
+src\app\services\consulta-tipo-cambio\tipo-cambio.service.ts:
+  2  import { Injectable } from '@angular/core';
+  3: import { IPaginationRequest } from 'src/app/pages/contingencia/request/pagination-request.component';
+  4  import { ConexionService, TypeRequest } from '../conexion.service';
+
+src\app\services\contingencia\cierre-productos.service.ts:
+   2  import { Injectable } from '@angular/core';
+   3: import { IPaginationRequest } from 'src/app/pages/contingencia/request/pagination-request.component';
+   4  import { ConexionService, TypeRequest } from '../conexion.service';
+
+  36      let response: any;
+  37:     response = await this._conectionWS.peticionServicioWs(`${this.url}/contingencia/cierreProductos`, TypeRequest.GET);
+  38      return response;
+
+  42      let response: any;
+  43:     response = await this._conectionWS.peticionServicioWs(`${this.url}/contingencia/cierreProductos/${producto}`, TypeRequest.PUT);
+  44      return response;
+
+src\app\services\contingencia\cifrado-descifrado.service.ts:
+  36      let response: any;
+  37:     response = await this._conectionWS.peticionServicioWs(`${this.url}/contingencia/cifradoDescrifrado/${buc}`, TypeRequest.GET);
+  38      return response;
+
+  49      let response: any;
+  50:     response = await this._conectionWS.peticionServicioWs(`${this.url}/contingencia/cifradoDescrifrado/${numContrato}/${operacion}/${idCanal}`, TypeRequest.POST_VALUES, archivo);
+  51      return response;
+
+src\app\services\contingencia\contingencia.service.ts:
+   3  import { AltaBuzon } from "../../bean/alta-vigencia-buzon.component";
+   4: import { IDownloadArchivoRequest } from "../../pages/contingencia/request/idownloadarchivo-request.component";
+   5: import { IGenerateXmlFileRequest } from "../../pages/contingencia/request/igeneratexmlfile-request.component";
+   6: import { ISearchArchivoRequest } from "../../pages/contingencia/request/isearcharchivo-request.component";
+   7: import { IPaginationRequest } from "../../pages/contingencia/request/pagination-request.component";
+   8  import { ConexionService, TypeRequest } from "../conexion.service";
+
+  12  })
+  13: export class ContingenciaService{
+  14      private url = `${this.getUrl()}`;
+
+src\app\services\contingencia\envio-archivos.service.ts:
+  36      let response: any;
+  37:     response = await this._conectionWS.peticionServicioWs(`${this.url}/contingencia/envioArchivos/${buc}`, TypeRequest.GET);
+  38      return response;
+
+  49      let response: any;
+  50:     response = await this._conectionWS.peticionServicioWs(`${this.url}/contingencia/envioArchivos/${datosContrato.bucCliente}/${datosContrato.idContrato}/${datosContrato.numContrato}/${datosContrato.razonSocial}`, TypeRequest.POST_VALUES, archivo);
+  51      return response;
+
+src\app\services\contingencia\parametros.service.ts:
+  2  import { Injectable } from "@angular/core";
+  3: import { IPaginationRequest } from '../../pages/contingencia/request/pagination-request.component';
+  4  import { ConexionService, TypeRequest } from '../conexion.service';
+
+src\app\services\contingencia\recarga-catalogos-sfg.service.ts:
+  2  import { Injectable } from '@angular/core';
+  3: import { IPaginationRequest } from '../../pages/contingencia/request/pagination-request.component';
+  4  import { ConexionService, TypeRequest } from '../conexion.service';
+
+src\app\services\contingencia\solicitud-cambio-estatus.service.ts:
+  4  import { ConsultaOperacionesRequest, InsCambioEstatusRequest } from 'src/app/bean/solicitud-cambio-estatus.components';
+  5: import { IPaginationRequest } from 'src/app/pages/contingencia/request/pagination-request.component';
+  6  
+
+src\app\services\contingencia\solicitud-edo-cta.service.ts:
+  20    getFrecuencyList(datos: any): any {
+  21:     return this._conectionWS.peticionServicioWs(`${this.url}/contratos/estadocuenta/contingencia/obtenFrecuenciasEdoCta`, TypeRequest.POST_VALUES, datos);
+  22    }
+
+  24    getChannelFormatList(datos: any): any {
+  25:     return this._conectionWS.peticionServicioWs(`${this.url}/contratos/estadocuenta/contingencia/obtenCanalesFormatos`, TypeRequest.POST_VALUES, datos);
+  26    }
+
+  28    getCtaFrecs(datos: any): any {
+  29:     return this._conectionWS.peticionServicioWs(`${this.url}/contratos/estadocuenta/contingencia/obtenCtasFrecs`, TypeRequest.POST_VALUES, datos);
+  30    }
+
+  32    subeInstruccionesEdoCta(datos: any, usuario: string | null): any {
+  33:     return this._conectionWS.peticionServicioWs(`${this.url}/contratos/estadocuenta/contingencia/subeInstruccionesEdoCta/${usuario}`, TypeRequest.POST_VALUES, datos);
+  34    }
+
+src\app\services\control-volumen-operativo\grafica-archivos-cliente.service.ts:
+  2  import { Injectable } from '@angular/core';
+  3: import { IPaginationRequest } from 'src/app/pages/contingencia/request/pagination-request.component';
+  4  import { ConexionService, TypeRequest } from '../conexion.service';
+
+src\app\services\control-volumen-operativo\grafica-cliente.service.ts:
+  3  import { ConexionService, TypeRequest } from '../conexion.service';
+  4: import { IPaginationRequest } from 'src/app/pages/contingencia/request/pagination-request.component';
+  5  
+
+src\app\services\control-volumen-operativo\grafica-estatus-cliente.service.ts:
+  2  import { Injectable } from '@angular/core';
+  3: import { IPaginationRequest } from 'src/app/pages/contingencia/request/pagination-request.component';
+  4  import { ConexionService, TypeRequest } from '../conexion.service';
+
+src\app\services\gestion-buzon\gestion-parametros.service.ts:
+  3  import { ConexionService, TypeRequest } from '../conexion.service';
+  4: import { IPaginationRequest } from 'src/app/pages/contingencia/request/pagination-request.component';
+  5  import { GestionParametros } from 'src/app/interface/gestionParametroRespuesta.interface';
+
+src\app\services\gestion-buzon\gestion-protocolos.service.ts:
+  3  import { ConexionService, TypeRequest } from '../conexion.service';
+  4: import { IPaginationRequest } from 'src/app/pages/contingencia/request/pagination-request.component';
+  5  import { GestionProtocolos } from 'src/app/interface/gestionProtocoloRespuesta.interface';
+
+src\app\services\monitoreo\consulta-tracking-archivo.service.ts:
+  3  import { Observable } from 'rxjs';
+  4: import { IPaginationRequest } from 'src/app/pages/contingencia/request/pagination-request.component';
+  5  import { ConexionService, TypeRequest } from '../conexion.service';
+
+src\app\services\monitoreo\monitor-operaciones.service.ts:
+  3  import { ConexionService, TypeRequest } from '../conexion.service';
+  4: import { IPaginationRequest } from 'src/app/pages/contingencia/request/pagination-request.component';
+  5  
+
+src\app\services\monitoreo\monitor-saldos.service.ts:
+  3  import { ConexionService, TypeRequest } from '../conexion.service';
+  4: import { IPaginationRequest } from 'src/app/pages/contingencia/request/pagination-request.component';
+  5  
+
+src\app\services\parametros-domiciliaciones\parametros-domiciliaciones.service.ts:
+  2  import { ConexionService, TypeRequest } from '../conexion.service';
+  3: import { IPaginationRequest } from 'src/app/pages/contingencia/request/pagination-request.component';
+  4  import {EmisoraRequest} from 'src/app/bean/parametros-domiciliaciones.component';
+
+src\app\services\sterling\historial-buzon.service.ts:
+  2  import { Injectable } from '@angular/core';
+  3: import { IPaginationRequest } from 'src/app/pages/contingencia/request/pagination-request.component';
+  4  import { ConexionService, TypeRequest } from '../conexion.service';
+
+src\assets\i18n\en.json:
+   233      "consultaTracking.noResultTraking": "An error occurred while obtaining the Query Tracking list",
+   234:     "contingencia.msjERR001Codigo": "ERR001",
+   235:     "contingencia.msjERR001Observacion": "An error ocurred while sending the file to FileGateway",
+   236:     "contingencia.msjERR001Sugerencia": "",
+   237:     "contingencia.msjERR001Titulo": "Grupo Financiero Santander Mexicano",
+   238:     "contingencia.msjERR002Codigo": "ERR002",
+   239:     "contingencia.msjERR002Observacion": "An error occurred while obtaining contract information",
+   240:     "contingencia.msjERR002Sugerencia": "",
+   241:     "contingencia.msjERR002Titulo": "Grupo Financiero Santander Mexicano",
+   242:     "contingencia.msjERR003Codigo": "ERR003",
+   243:     "contingencia.msjERR003Observacion": "File Contains an invalid extension",
+   244:     "contingencia.msjERR003Sugerencia": "Valid files are:",
+   245:     "contingencia.msjERR003Titulo": "Grupo Financiero Santander Mexicano",
+   246:     "contingencia.msjERR006Codigo": "ERR006",
+   247:     "contingencia.msjERR006Observacion": "An error occurred while trying to connect",
+   248:     "contingencia.msjERR006Sugerencia": "Can not send file",
+   249:     "contingencia.msjERR006Titulo": "Grupo Financiero Santander Mexicano",
+   250:     "contingencia.msjERR007Codigo": "ERR007",
+   251:     "contingencia.msjERR007Observacion": "There is no contract with the data provided.",
+   252:     "contingencia.msjERR007Sugerencia": "Review the information captured",
+   253:     "contingencia.msjERR007Titulo": "Nonexistent client",
+   254:     "contingencia.msjINF001Codigo": "INF001",
+   255:     "contingencia.msjINF001Observacion": "The file has been succesfully uploaded",
+   256:     "contingencia.msjINF001Sugerencia": "",
+   257:     "contingencia.msjINF001Titulo": "Grupo Financiero Santander Mexicano",
+   258:     "contingencia.msjINF002Codigo": "INF002",
+   259:     "contingencia.msjINF002Observacion": "The file cannot be empty",
+   260:     "contingencia.msjINF002Sugerencia": "Input file",
+   261:     "contingencia.msjINF002Titulo": "Grupo Financiero Santander Mexicano",
+   262:     "contingencia.msjINF004Codigo": "INF004",
+   263:     "contingencia.msjINF004Observacion": "The client code  must be 8 digits",
+   264:     "contingencia.msjINF004Sugerencia": "Capture a client code and press [TAB]",
+   265:     "contingencia.msjINF004Titulo": "Grupo Financiero Santander Mexicano",
+   266      "convenio": "Agreement",
+
+   488      "menu.contigencia.solicitudCambioEstatus": "Application for Change of Status",
+   489:     "menu.contigencia.solicitudEdoCuentaContingencia": "Account Statement Request",
+   490      "menu.contigencia.solicitudEstadosCuenta": "Request for Account Statements",
+   491:     "menu.contingencia.buzonesvigencia": "Mailbox Validity Update",
+   492      "menu.controlVolumenOperativo": "Operating Volume Control",
+
+  1455      "pantalla.parametrosDelContrato.configurarCifradoArchivos": "Configuration File Encryption",
+  1456:     "pantalla.parametrosDelContrato.contingenciaBuzonera": "Contingence Buzoneras",
+  1457      "pantalla.parametrosDelContrato.homologarNombreComprobanteSPEI": "Approve receipt name SPEI",
+
+  1993      "administracion.productos.periodo.consultaDiaProductos": "Product management - Period Registration",
+  1994:     "administracion.productos.contingencia.Modificar": "Product management - Modify Period Due to Contingency",
+  1995      "administracion.productos.periodo.horaIni": "Init Hour",
+
+  1997      "administracion.productos.periodo.horaCierre": "Close Hour",
+  1998:     "administracion.productos.contingencia.subtitulo": "Product Contingency",
+  1999      "administracion.productos.periodo.datosPeriodo": "Product Periodicity",
+
+  2027      "administracion.productos.periodo.leyendaErrorMayorActual": "End Time must be greater than current",
+  2028:     "administracion.productos.contingencia.validaHoraCierre": "The Closing Time is out of hours, please enter in End Time a data less than or equal to:",
+  2029  
+
+  2790      "pantalla.cuentasOrdenantes.eliminarRegistro": "Do you want to delete the selected record(s)?",
+  2791:     "pantalla.solicitudEdoCtaContingencia.fecha": "Date:",
+  2792:     "pantalla.solicitudEdoCtaContingencia.frecuencia": "Frequency:",
+  2793:     "pantalla.solicitudEdoCtaContingencia.recibirArchConsolidadoCta": "Receive Consolidated Account File",
+  2794:     "pantalla.solicitudEdoCtaContingencia.recibirArchPorCta": "Receive File by Accounts",
+  2795:     "pantalla.solicitudEdoCtaContingencia.CtaDescubierto": "Account with Overdrawn",
+  2796:     "pantalla.solicitudEdoCtaContingencia.ConvenioVirtual": "Virtual Convention",
+  2797:     "pantalla.solicitudEdoCtaContingencia.canal": "Channel:",
+  2798:     "pantalla.solicitudEdoCtaContingencia.formato": "Format:",
+  2799:     "pantalla.solicitudEdoCtaContingencia.cuenta": "Account",
+  2800:     "pantalla.solicitudEdoCtaContingencia.msjERR002Titulo": "Grupo Financiero Santander Mexicano",
+  2801:     "pantalla.solicitudEdoCtaContingencia.msjERR002Sugerencia": "Capture the field",
+  2802:     "pantalla.solicitudEdoCtaContingencia.msjERR002Codigo": "ERR002CTA",
+  2803:     "pantalla.solicitudEdoCtaContingencia.msjERR005Observacion": "The Customer Code field is required",
+  2804:     "pantalla.solicitudEdoCtaContingencia.msjERR002Observacion": "The Date field is required",
+  2805:     "pantalla.solicitudEdoCtaContingencia.msjERR003Observacion": "Select a frequency",
+  2806:     "pantalla.solicitudEdoCtaContingencia.msjERR004Observacion": "Select an option Receive Consolidated File of Accounts or Receive File by Accounts",
+  2807:     "pantalla.solicitudEdoCtaContingencia.msjINF00016Codigo": "INF00016",
+  2808:     "pantalla.solicitudEdoCtaContingencia.msjINF00016Observacion": "When the Delivery Channel is Swift FIN Only the REPORTE COBRANZA MT942 Format Type can be assigned.",
+  2809:     "pantalla.solicitudEdoCtaContingencia.msjINF00016Sugerencia": "Change the Delivery Channel or Format Type",
+  2810:     "pantalla.solicitudEdoCtaContingencia.msjINF00016Titulo": "Wrong Configuration",
+  2811:     "pantalla.solicitudEdoCtaContingencia.msjINF001Codigo": "INF001",
+  2812:     "pantalla.solicitudEdoCtaContingencia.msjINF001Observacion": "The file was uploaded successfully",
+  2813:     "pantalla.solicitudEdoCtaContingencia.msjINF001Sugerencia": "",
+  2814:     "pantalla.solicitudEdoCtaContingencia.msjINF001Titulo": "Grupo Financiero Santander Mexicano",
+  2815      "pantalla.reporteCobranzaConsolidado.VALDAT03Observacion": "You must select the number of Files",
+
+src\assets\i18n\es.json:
+   233      "consultaTracking.noResultTraking": "Ocurrió un error al obtener el listado Consulta Tracking",
+   234:     "contingencia.msjERR001Codigo": "ERR001",
+   235:     "contingencia.msjERR001Observacion": "Ocurrió un error al enviar el archivo a FileGateway",
+   236:     "contingencia.msjERR001Sugerencia": "",
+   237:     "contingencia.msjERR001Titulo": "Grupo Financiero Santander Mexicano",
+   238:     "contingencia.msjERR002Codigo": "ERR002",
+   239:     "contingencia.msjERR002Observacion": "Ocurrió un error al obtener la información del contrato",
+   240:     "contingencia.msjERR002Sugerencia": "",
+   241:     "contingencia.msjERR002Titulo": "Grupo Financiero Santander Mexicano",
+   242:     "contingencia.msjERR003Codigo": "ERR003",
+   243:     "contingencia.msjERR003Observacion": "El archivo no contiene un formato válido",
+   244:     "contingencia.msjERR003Sugerencia": "Los formatos validos son:",
+   245:     "contingencia.msjERR003Titulo": "Grupo Financiero Santander Mexicano",
+   246:     "contingencia.msjERR006Codigo": "ERR006",
+   247:     "contingencia.msjERR006Observacion": "Ocurrió un error al tratar de realizar la conexión",
+   248:     "contingencia.msjERR006Sugerencia": "Error al tratar de enviar el archivo",
+   249:     "contingencia.msjERR006Titulo": "Grupo Financiero Santander Mexicano",
+   250:     "contingencia.msjERR007Codigo": "ERR007",
+   251:     "contingencia.msjERR007Observacion": "No existe un contrato con los datos proporcionados.",
+   252:     "contingencia.msjERR007Sugerencia": "Revisar la información capturada",
+   253:     "contingencia.msjERR007Titulo": "Cliente inexistente",
+   254:     "contingencia.msjINF001Codigo": "INF001",
+   255:     "contingencia.msjINF001Observacion": "El archivo fue cargado con éxito",
+   256:     "contingencia.msjINF001Sugerencia": "",
+   257:     "contingencia.msjINF001Titulo": "Grupo Financiero Santander Mexicano",
+   258:     "contingencia.msjINF002Codigo": "INF002",
+   259:     "contingencia.msjINF002Observacion": "El archivo no puede estar vacío",
+   260:     "contingencia.msjINF002Sugerencia": "Seleccione un archivo",
+   261:     "contingencia.msjINF002Titulo": "Grupo Financiero Santander Mexicano",
+   262:     "contingencia.msjINF004Codigo": "INF004",
+   263:     "contingencia.msjINF004Observacion": "El código del cliente debe ser de 8 dígitos",
+   264:     "contingencia.msjINF004Sugerencia": "Capture un código de cliente y presione la tecla [TAB]",
+   265:     "contingencia.msjINF004Titulo": "Grupo Financiero Santander Mexicano",
+   266      "convenio": "Convenio",
+
+   316      "gestion.comprobantes.msjERR03Titulo": "No se encontraron productos, revise la configuración del contrato",
+   317:     "gestion.contngenciaFailSave": "Ocurrió un error al guardar los datos de la Contingencia del Período",
+   318      "gestion.failSave": "Ocurrió un error al guardar los datos del Período",
+   319:     "gestion.genericError": "Ocurrió un error al obtener los datos de Contingencia",
+   320      "gestion.inactivityCorrectly": "Se ha inactivado el/los registros correctamente",
+
+   483      "menu.consultaTipoCambio.tipoCambio": "Tipo de Cambio",
+   484:     "menu.contigencia": "Contingencia",
+   485      "menu.contigencia.cierreProductos": "Cierre de Productos",
+
+   490      "menu.contigencia.solicitudCambioEstatus": "Solicitud de Cambio de Estatus",
+   491:     "menu.contigencia.solicitudEdoCuentaContingencia": "Solicitud de Estados de Cuenta",
+   492      "menu.contigencia.solicitudEstadosCuenta": "Solicitud de Estados de Cuenta",
+   493:     "menu.contingencia.buzonesvigencia": "Actualización Vigencia de Buzones",
+   494      "menu.controlVolumenOperativo": "Control Volumen Operativo",
+
+  1168      "pantalla.edoCuentaConsolidado.mostrarCuenta": "Mostrar cuenta clabe virtual del movimiento",
+  1169:     "pantalla.envio.archivos": "Contingencia",
+  1170      "pantalla.envio.archivos.datosContrato.codCliente": "Código del Cliente",
+
+  1453      "pantalla.parametrosDelContrato.activarNominaPayext": "Activar Nómina Payext",
+  1454:     "pantalla.parametrosDelContrato.activarPantalla": "Activar Pantalla de Contingencia del Cliente",
+  1455      "pantalla.parametrosDelContrato.activarReporteBeneficiarioEOP": "Activar Reporte Beneficiario Extendido Orden Pago",
+
+  1462      "pantalla.parametrosDelContrato.configurarCifradoArchivos": "Configuración Cifrado de Archivo",
+  1463:     "pantalla.parametrosDelContrato.contingenciaBuzonera": "Contingencia Buzoneras",
+  1464      "pantalla.parametrosDelContrato.homologarNombreComprobanteSPEI": "Homologar nombre de comprobante SPEI",
+
+  1992      "administracion.productos.periodo.consultaDiaProductos": "Gestión de Productos - Alta de Periodo",
+  1993:     "administracion.productos.contingencia.Modificar": "Gestión de Productos - Modificar periodo por contingencia",
+  1994      "administracion.productos.periodo.horaIni": "Hora inicial",
+
+  1996      "administracion.productos.periodo.horaCierre": "Hora cierre",
+  1997:     "administracion.productos.contingencia.subtitulo": "Contingencia del Producto",
+  1998      "administracion.productos.periodo.datosPeriodo": "Periodicidad del Producto",
+
+  2022      "administracion.productos.periodo.leyendaErrorMayorActual": "La Hora fin debe ser mayor a la actual",
+  2023:     "administracion.productos.contingencia.validaHoraCierre": "La Hora Cierre está fuera de horario, por favor ingrese en Hora Final un dato menor o igual a: ",
+  2024      "administracion.productos.periodo.leyendaTituloCierre": "Confirmar - Alta de periodo cerrado",
+
+  2757      "pantalla.cuentasOrdenantes.eliminarRegistro": "¿Desea Eliminar el/los Registros Seleccionado(s)?",
+  2758:     "pantalla.solicitudEdoCtaContingencia.fecha": "Fecha:",
+  2759:     "pantalla.solicitudEdoCtaContingencia.frecuencia": "Frecuencias:",
+  2760:     "pantalla.solicitudEdoCtaContingencia.recibirArchConsolidadoCta": "Recibir Archivo Consolidado de Cuentas",
+  2761:     "pantalla.solicitudEdoCtaContingencia.recibirArchPorCta": "Recibir Archivo por Cuentas",
+  2762:     "pantalla.solicitudEdoCtaContingencia.CtaDescubierto": "Cuenta con Descubierto",
+  2763:     "pantalla.solicitudEdoCtaContingencia.ConvenioVirtual": "Convenio Virtual",
+  2764:     "pantalla.solicitudEdoCtaContingencia.canal": "Canal:",
+  2765:     "pantalla.solicitudEdoCtaContingencia.formato": "Formato:",
+  2766:     "pantalla.solicitudEdoCtaContingencia.cuenta": "Cuenta",
+  2767:     "pantalla.solicitudEdoCtaContingencia.msjERR002Titulo": "Grupo Financiero Santander Mexicano",
+  2768:     "pantalla.solicitudEdoCtaContingencia.msjERR002Sugerencia": "Capture el campo",
+  2769:     "pantalla.solicitudEdoCtaContingencia.msjERR002Codigo": "ERR002CTA",
+  2770:     "pantalla.solicitudEdoCtaContingencia.msjERR005Observacion": "El campo Código del Cliente es obligatorio",
+  2771:     "pantalla.solicitudEdoCtaContingencia.msjERR002Observacion": "El campo Fecha es obligatorio",
+  2772:     "pantalla.solicitudEdoCtaContingencia.msjERR003Observacion": "Seleccione una frecuencia",
+  2773:     "pantalla.solicitudEdoCtaContingencia.msjERR004Observacion": "Seleccione una opción Recibir Archivo Consolidado de Cuentas ó Recibir Archivo por Cuentas",
+  2774:     "pantalla.solicitudEdoCtaContingencia.msjINF00016Codigo": "INF00016",
+  2775:     "pantalla.solicitudEdoCtaContingencia.msjINF00016Observacion": "Cuando el Canal de Entrega es Swift FIN Solo se Puede Asignar el Tipo de Formato REPORTE COBRANZA MT942",
+  2776:     "pantalla.solicitudEdoCtaContingencia.msjINF00016Sugerencia": "Cambie el Canal de Entrega o el Tipo de Formato",
+  2777:     "pantalla.solicitudEdoCtaContingencia.msjINF00016Titulo": "Configuración Erronea",
+  2778:     "pantalla.solicitudEdoCtaContingencia.msjINF001Codigo": "INF001",
+  2779:     "pantalla.solicitudEdoCtaContingencia.msjINF001Observacion": "El archivo fue cargado con éxito",
+  2780:     "pantalla.solicitudEdoCtaContingencia.msjINF001Sugerencia": "",
+  2781:     "pantalla.solicitudEdoCtaContingencia.msjINF001Titulo": "Grupo Financiero Santander Mexicano",
+  2782      "pantalla.reporteCobranzaConsolidado.VALDAT03Observacion": "Debe seleccionar la cantidad de Archivos",

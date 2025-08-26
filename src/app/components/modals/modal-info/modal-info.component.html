@@ -1,0 +1,86 @@
+<div class="modal-button"></div>
+<div id="popup_container">
+    <div class="titles">
+        <div class="txt-center">
+
+        </div>
+        <div class="titles-sub">
+            <div class="txt-start">
+                <label class="title-bold" [ngStyle]="{ 'color': color }" for="">{{typeTitle}}</label>
+            </div>
+            <div class="txt-end">
+                <label class="title-bold" [ngStyle]="{ 'color': color }" for="">{{data.errorCode}}</label>
+            </div>
+
+
+        </div>
+
+
+    </div>
+    <div class="content-padding" id="popup_content">
+        <div id="img" class="txt-center"> <img src="{{img}}" alt=""></div>
+        <div>
+            <div class="txt-wordbreak">
+                <label class="title-bold" for="">{{data.titulo}}</label>
+            </div>
+
+            <div id="popup_message">
+                <div id="tipoMsg"></div>
+                <mat-dialog-content [ngClass]="data.type === 'selectAction' ? 'customRadio': ''">
+                    <br>
+                    <ng-container *ngIf="data.type !== 'selectAction'">
+                        <div class="txt-wordbreak">
+                            <label for="">{{data.sugerencia}}</label>
+                        </div>
+                        <br>
+                        <div class="txt-wordbreak">
+                            <label for="">{{data.contenido}}</label>
+                        </div>
+                    </ng-container>
+
+                    <mat-radio-group *ngIf="data.type === 'selectAction'" aria-label="Select an option" [(ngModel)]="radioSelectOpt">
+                        <mat-radio-button value="0">{{'pagina' | translate}}
+                        </mat-radio-button>
+                        <br>
+                        <mat-radio-button value="1">{{'todos' | translate}}</mat-radio-button>
+                    </mat-radio-group>
+                </mat-dialog-content>
+
+
+            </div>
+        </div>
+
+    </div>
+    <mat-dialog-actions class="center">
+        <div *ngIf="data.type === 'confirm' || data.type === 'selectAction'" class="col text-center display-buttons">
+            <div class="txt-end">
+                <button *ngIf="!this.data.emailToAddUpdate; else gestionNotificaciones" type="button" class="btn btn-outline-danger justify-content-center buttons-okcancel" mat-dialog-close (click)="accept()">OK</button>
+                <ng-template #gestionNotificaciones>
+                    <button type="button" class="btn btn-outline-danger justify-content-center buttons-okcancel" (click)="accept()">OK</button>
+                </ng-template>
+            </div>
+            <div class="txt-start">
+                <button type="button" class="btn btn-outline-danger buttons-okcancel" mat-dialog-close>{{'btn.cancelar' | translate}}</button>
+            </div>
+
+
+        </div>
+        <div *ngIf="data.type === 'yesNo'" class="col text-center display-buttons">
+
+            <div class="txt-end">
+                <button type="button" class="btn btn-outline-danger justify-content-center buttons-okcancel" mat-dialog-close (click)="respuesta('si')">{{'btn.si' | translate}} </button>
+            </div>
+            <div class="txt-start">
+                <button type="button" class="btn btn-outline-danger buttons-okcancel" (click)="respuesta('no')" mat-dialog-close>No</button>
+            </div>
+
+
+        </div>
+
+        <div *ngIf="data.type !== 'confirm' && data.type !== 'yesNo' && data.type !== 'selectAction'" class="padding-button">
+            <button type="button" class="btn btn-outline-danger float-right" mat-dialog-close>OK</button>
+        </div>
+
+    </mat-dialog-actions>
+</div>
+<div class="modal-button"></div>

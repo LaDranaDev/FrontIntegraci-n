@@ -1,0 +1,49 @@
+<app-operativa-header tituloPantalla="{{'menu.monitoreo.comprobantesFormatoCDMX.historial' | translate}}"></app-operativa-header>
+<div id="consultaOperaciones" class="panel panel-default col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    <div class="card-body">
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+               <table class="table table-striped table-hover" aria-describedby="listaConsultaComprobantes">
+                    <thead>
+                        <tr>
+                            <th class="text-center" scope="col">{{'pantallas.monitorOperacionesOnline.idMovimiento' | translate}}</th>
+                            <th class="text-center" scope="col">{{'pantallas.consultacfdi.complemento.table.estatus' | translate}}</th>
+                            <th class="text-center" scope="col">{{'menu.monitoreo.comprobantesFormatoCDMX.historial.fecha' | translate}}</th>
+                            <th class="text-center" scope="col">{{'menu.monitoreo.comprobantesFormatoCDMX.historial.hora' | translate}}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <ng-container *ngIf="banderaHasRows; then templateFillTable; else templateEmpTable">
+                        </ng-container>
+                        <ng-template #templateFillTable>
+                            <tr *ngFor="let comprobante of tablaHistorial">
+                                <td class="text-center">{{comprobante.refOper}}</td>
+                                <td class="text-center">{{comprobante.estatus}}</td>
+                                <td class="text-center">{{comprobante.fecha}}</td>  
+                                <td class="text-center">{{comprobante.hora}}</td>  
+                            </tr>
+                        </ng-template>
+                        <ng-template #templateEmpTable>
+                            <tr>
+                                <td class="text-center" colspan="6"> {{'pantalla.consultarBuzon.resultadoBusqueda.title' | translate}} </td>
+                            </tr>
+                        </ng-template>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="row mt-2">
+            <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">
+                <button type="button" class="btn btn-danger" (click)="regresar()">{{'btn.regresar' | translate}}</button>
+            </div>
+            <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-10 offset-sm-10 offset-md-10 offset-lg-10">
+                <button type="button" class="btn btn-danger" (click)="onExportar()"> {{'btn.exportar' | translate}}</button>
+            </div>
+        </div>
+        <div class="row mt-2">
+            <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">
+                <button type="button" class="btn btn-danger" (click)="getHistorial()">{{'menu.monitoreo.comprobantesFormatoCDMX.btn.refrescar' | translate}}</button>
+            </div>
+        </div>
+    </div>
+</div>

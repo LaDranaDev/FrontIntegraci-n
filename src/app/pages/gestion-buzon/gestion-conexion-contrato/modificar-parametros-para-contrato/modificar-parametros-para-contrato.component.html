@@ -1,0 +1,86 @@
+<app-operativa-header tituloPantalla="{{'PDC'| translate}}: {{datos.numeroContrato}}"></app-operativa-header>
+<div id="modificarConexionContrato" class="panel panel-default col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    <br>
+        <div class="card"> <h5 class="card-header justify-content-center">{{'LP'| translate}}</h5>
+        <div class="card-body"><div class="row" ><div class="col-6 ">
+                        <div class="form-group row">
+                           <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                <label for="protocolo1"></label>
+                                <select class="form-control" name="protocolo" id="protocolo1" (change)="valueChange($event)" *ngIf="modifica === false">
+                                    <option value="">{{'seleccione'| translate}}</option>
+                                    <option *ngFor="let catalogo of protocolo" [value]="catalogo['idProtocolo']" [selected]="catalogo.idProtocolo === idProtocol">{{catalogo['nombre']}}</option>
+                                </select>
+                                <label for="protocolo"></label>
+                                <select class="form-control" name="protocolo" id="protocolo"(change)="valueChange($event)" *ngIf="modifica === true" disabled>
+                                    <option value=""> {{'seleccione'| translate}} </option>
+                                    <option *ngFor="let catalogo of protocolo" [value]="catalogo['idProtocolo']" [selected]="catalogo.idProtocolo === idProtocol">{{catalogo['nombre']}}</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div></div></div>
+        </div>
+
+        <div class="row">
+
+            <div class="card col-sm-12 col-md-6" *ngIf="activa === true">
+                <h5 class="card-header justify-content-center">
+                    {{'GPC.put'| translate}}
+                </h5>
+                <div class="card-body">
+                    <div class="row m-1">
+                        <label class="tex col-sm-6">{{'GPC.nombre'| translate}}:</label>
+                        <label class="tex col-sm-6">{{'GPC.valor'| translate}}:</label>
+                    </div>
+
+                    <div class="row m-1" *ngFor="let param of paramNames; index as i">
+                        <label class="tex col-sm-6">{{ param }}:</label>
+                        <input class="form-control col-sm-6 border" [name]="param"
+                            [maxLength]="paramsPut[i].longParametro" [required]="paramsPut[i].obliParametro ==='1'"
+                            [class.border-primary]="paramsPut[i].obliParametro === '1'"
+                            [(ngModel)]="paramsPut[i].valorParametro" (keypress)="validarParametro($event)">
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="card col-sm-12 col-md-6"  *ngIf="activa === true">
+                <h5 class="card-header justify-content-center">
+                    {{'GPC.get'| translate}}
+                </h5>
+                <div class="card-body">
+                    <div class="row m-1">
+                        <label class="tex col-sm-6">{{'GPC.nombre'| translate}}:</label>
+                        <label class="tex col-sm-6"> {{'GPC.valor'| translate}}:</label>
+                    </div>
+
+                    <div class="row m-1" *ngFor="let param of paramNames; index as i">
+                        <label class="tex col-sm-6">{{ param }}:</label>
+                        <input class="form-control col-sm-6" [name]="param" [maxLength]="paramsGet[i].longParametro"
+                            [required]="paramsPut[i].obliParametro === '1'"
+                            [class.border-primary]="paramsPut[i].obliParametro === '1'"
+                            [(ngModel)]="paramsGet[i].valorParametro" (keypress)="validarParametro($event)">
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+        
+        <div class="row mt-2">
+            <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-1 offset-sm-1 offset-md-1 offset-lg-1">
+                <button type="button" class="btn btn-danger" (click)="cancelar()">{{'btn.cancelar' | translate}}</button>
+            </div>
+            <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-8 offset-sm-8 offset-md-8 offset-lg-8" *ngIf="modifica === false">
+                <button type="button" class="btn btn-danger" (click)="guardarProto()">{{'btn.guardar' | translate}}</button>
+            </div>
+            <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-8 offset-sm-8 offset-md-8 offset-lg-8"  *ngIf="modifica === true">
+                <button type="button" class="btn btn-danger" (click)="actualizaPro()">{{'btn.guardar' | translate}}</button>
+            </div>
+        </div>
+        <div class="row mt-2">
+            <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-1 offset-sm-1 offset-md-1 offset-lg-1">
+                <button type="button" class="btn btn-danger" (click)="limpiar()">{{'btn.limpiar' | translate}}</button>
+            </div>
+        </div>
+</div>  

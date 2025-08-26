@@ -1,0 +1,261 @@
+<app-operativa-header tituloPantalla="{{'pantalla.edoCuentaConsolidado' | translate}}"></app-operativa-header>
+<div id="EdoCuentaConsolidado" class="panel panel-default col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    <br>
+    <div class="card">
+        <h5 class="card-header justify-content-center">
+        </h5>
+        <app-busqueda-cliente [data]="datos"></app-busqueda-cliente>
+    </div>
+
+    <div class="card mt-3">
+        <h5 class="card-header justify-content-center unir">
+           <div class="esp">{{'pantalla.edoCuentaIntradia.frecuencia'| translate}}:</div>
+           <div>{{'pantalla.edoCuentaIntradia.contenido'| translate}}:</div>
+        </h5>
+
+        <div class="card-body">
+            <div class="row justify-content-center">
+                <div class="col-xs-3 col-sm-3 col-md-3"></div>
+                <div class="col-xs-3 col-sm-3 col-md-3">
+                        <div class="form-group row tam ml">
+                            <div class="col-xs-2 col-sm-2 col-md-2 justify-content-center">
+                                <input type="checkbox" name="dia" id="dia" [(ngModel)]="cuentaConsolidada.dia" aria-label="activo"  [disabled]='disableTextbox || disablecheckdia'>
+                            </div>
+                            <label class="col-xs-9 col-sm-9 col-md-9">{{'pantalla.edoCuentaConsolidado.dia'| translate}}</label>
+                        </div>
+                        <div class="form-group row tam ml">
+                            <div class="col-xs-2 col-sm-2 col-md-2 justify-content-center">
+                                <input type="checkbox" name="semanal" id="semanal" [(ngModel)]="cuentaConsolidada.semanal" aria-label="activo"  [disabled]='disableTextbox || disablecheckSemanal'>
+                            </div>
+                            <label class="col-xs-9 col-sm-9 col-md-9">{{'pantalla.edoCuentaConsolidado.semanal'| translate}}:</label>
+                        </div>
+                        <div class="form-group row tam ml" *ngIf="cuentaConsolidada.semanal === true">
+                            <label class="col-xs-9 col-sm-9 col-md-9">{{'pantalla.edoCuentaConsolidado.selDia'| translate}}</label>
+                            <div class="col-md-8">
+                                <select class="form-select form-select-sm form-control mar"  [(ngModel)]="cuentaConsolidada.selectDia" id="selectDia"  aria-label=".form-select-sm example"  [disabled]='disableTextbox'>
+                                    <option value="">{{'seleccione' | translate}}</option>
+                                    <option *ngFor="let item of dias" [value]="item.idCatalogo">{{item.descripcionCatalogo}}</option>
+                                </select>
+                            </div>
+                           
+                        </div>
+                        <div class="form-group row tam ml" *ngIf="cuentaConsolidada.semanal === false">
+                            <label class="col-xs-9 col-sm-9 col-md-9">{{'pantalla.edoCuentaConsolidado.selDia'| translate}}</label>
+                            <div class="col-md-8">
+                                <select class="form-select form-select-sm form-control mar" disabled [(ngModel)]="cuentaConsolidada.selectDia" id="selectDia"  aria-label=".form-select-sm example">
+                                    <option value="">{{'seleccione' | translate}}</option>
+                                    <option *ngFor="let item of dias" [value]="item.idCatalogo">{{item.descripcionCatalogo}}</option>
+                                </select>
+                            </div>
+                           
+                        </div>
+                        <div class="form-group row tam ml">
+                            <div class="col-xs-2 col-sm-2 col-md-2 justify-content-center">
+                                <input type="checkbox" name="quincenal" id="quincenal" [(ngModel)]="cuentaConsolidada.quincenal" aria-label="activo"  [disabled]='disableTextbox || disablecheckQuincenal'>
+                            </div>
+                            <label class="col-xs-9 col-sm-9 col-md-9">{{'pantalla.edoCuentaConsolidado.quincenal'| translate}}</label>
+                        </div>
+                        <div class="form-group row tam ml">
+                            <div class="col-xs-2 col-sm-2 col-md-2 justify-content-center">
+                                <input type="checkbox" name="mensual" id="mensual" [(ngModel)]="cuentaConsolidada.mensual" aria-label="activo"  [disabled]='disableTextbox || disablecheckMensual'>
+                            </div>
+                            <label class="col-xs-9 col-sm-9 col-md-9">{{'pantalla.edoCuentaConsolidado.mensual'| translate}}</label>
+                        </div>
+                        <div class="form-group row tam ml">
+                            <div class="col-xs-2 col-sm-2 col-md-2 justify-content-center">
+                                <input type="checkbox" name="negativos" id="negativos" [(ngModel)]="cuentaConsolidada.negativos" aria-label="activo"  [disabled]='disableTextbox'>
+                            </div>
+                            <label class="col-xs-9 col-sm-9 col-md-9">{{'pantalla.edoCuentaConsolidado.sigNegativos'| translate}}</label>
+                        </div>
+                        
+                </div>
+
+                <div class="col-xs-6 col-sm-6 col-md-6">
+                    <div class="row justify-content-center margin-iz ">
+                        <div class="col-12">
+                            <div class="form-group row tam mr">
+                                <label 
+                                    class="col-form-label col-sm-8 text-style" for="selectHorasToAddAndRemoveC">{{'pantalla.cuenta.Consolidado'
+                                    | translate}}</label>
+                            </div>
+                            <div class="form-group row align-items-center">
+                                <div class="col-sm-4">
+                                    <select class="form-control" size="10" name="selectHorasToAddAndRemoveC"  [disabled]='disableTextbox'
+                                        id="selectHorasToAddAndRemoveC" multiple [(ngModel)]="listHorasSelectedIzquierda">
+                                        <option *ngIf="listHorasFirstSelect.length > 1" value="-1"> {{'Todos'| translate}} </option>
+                                        <option *ngFor="let hora1 of listHorasFirstSelect" [value]="hora1">{{hora1['numCuenta']}}</option>
+                                    </select>
+                                    <label class="col-form-label text-style d-flex justify-content-center" for="selectHorasToAddAndRemoveC">
+
+                                        <button
+                                        class="btn"
+                                        [disabled]="!canMoveToPreviousPage"
+                                        (click)="moveToFirstPageT()"
+                                      >
+                                        <em class="fa fa-angle-double-left"></em>
+                                      </button>
+                                      <button
+                                        class="btn"
+                                        [disabled]="!canMoveToPreviousPage"
+                                        (click)="moveToPreviousPageT()"
+                                      >
+                                        <em class="fa fa-angle-left"></em>
+                                      </button>
+                                      <button class="btn" disabled >
+                                        {{ pageIndex }} / {{ _pageCount }}
+                                      </button>
+                                      <button
+                                        class="btn"
+                                        [disabled]="!canMoveToNextPage"
+                                        (click)="moveToNextPageT()"
+                                      >
+                                        <em class="fa fa-angle-right"></em>
+                                      </button>
+                                      <button
+                                        class="btn"
+                                        [disabled]="!canMoveToNextPage"
+                                        (click)="moveToLastPageT()"
+                                      >
+                                        <em class="fa fa-angle-double-right"></em>
+                                      </button>
+
+                                    </label>
+                                </div>
+                                <div class="col-sm-1">
+                                    <span class="badge badge-secondary text-desing-badge mb-1"
+                                        (click)="addNewHour()">{{'pantalla.parametriadicional.consulta.datosparametria.sendToAnother'
+                                        | translate}}</span>
+                                    <span class="badge badge-secondary text-desing-badge"
+                                        (click)="removeHour()">{{'pantalla.parametriadicional.consulta.datosparametria.returnToAnother'
+                                        | translate}}</span>
+                                </div>
+                                <div class="col-sm-4">
+                                    <select class="form-control" size="10" name="selectHorasDestinyToAddContr2"  [disabled]='disableTextbox'
+                                        id="selectHorasDestinyToAddContr2" [(ngModel)]="listHorasSelectedDerecha" multiple
+                                        aria-label="selectHorasDestinyToAddContr">
+                                        <option *ngIf="listHorasSecondSelect.length > 1" value="-1"> {{'Todos'| translate}} </option>
+                                        <option *ngFor="let hora1 of listHorasSecondSelect" [value]="hora1">
+                                            {{hora1['numCuenta']}}</option>
+                                    </select>
+                                    <label class="col-form-label text-style d-flex justify-content-center" for="selectHorasDestinyToAddContr2">
+                                        <button
+                                        class="btn"
+                                        [disabled]="!canMoveToPreviousPage1"
+                                        (click)="moveToFirstPage1T()"
+                                      >
+                                        <em class="fa fa-angle-double-left"></em>
+                                      </button>
+                                      <button
+                                        class="btn"
+                                        [disabled]="!canMoveToPreviousPage1"
+                                        (click)="moveToPreviousPage1T()"
+                                      >
+                                        <em class="fa fa-angle-left"></em>
+                                      </button>
+                                      <button class="btn" disabled >
+                                        {{ pageIndex1}} / {{ _pageCount1 }}
+                                      </button>
+                                      <button
+                                        class="btn"
+                                        [disabled]="!canMoveToNextPage1"
+                                        (click)="moveToNextPage1T()"
+                                      >
+                                        <em class="fa fa-angle-right"></em>
+                                      </button>
+                                      <button
+                                        class="btn"
+                                        [disabled]="!canMoveToNextPage1"
+                                        (click)="moveToLastPage1T()"
+                                      >
+                                        <em class="fa fa-angle-double-right"></em>
+                                      </button>
+
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+
+                    <div>
+                        <mat-radio-group [(ngModel)]="cuentaConsolidada.radio"  [disabled]='disableTextbox' (click)="validaSepararDivisasSolEdoCta()">
+                            <mat-radio-button value="C" checked="radio1" (change)="cambio($event)">
+                                {{'configuracionEstadosCuenta.recibirArchConsCuenta'| translate}}
+                            </mat-radio-button>
+                        </mat-radio-group>
+                    </div>
+                    <div *ngIf="esconderDivisa === true" class="form-group row tam ml">
+                        <div class="col-xs-1 col-sm-1 col-md-1 justify-content-center">
+                            <input type="checkbox" name="divisa" id="divisa" [(ngModel)]="cuentaConsolidada.xDivisa" aria-label="activo">
+                        </div>
+                        <label class="col-xs-7 col-sm-7 col-md-7">{{'pantalla.edoCuentaIntradia.separacion'| translate}}</label>
+                    </div>
+                    <div>
+                        <mat-radio-group [(ngModel)]="cuentaConsolidada.radio"  [disabled]='disableTextbox'>
+                            <mat-radio-button value="P" checked="radio2" (change)="cambio($event)">
+                                {{'configuracionEstadosCuenta.recibirArchivoCuenta'| translate}}
+                            </mat-radio-button>
+                        </mat-radio-group>
+                    </div>
+
+                    <div class="form-group row tam ml">
+                        <label class="col-xs-9 col-sm-9 col-md-9">{{'configuracionEstadosCuenta.formatoArchivo'| translate}}</label>
+                        <div class="col-md-8">
+                            <select class="form-select form-select-sm form-control mar"  #STF (change)="cambioTipoFormato(STF.value)"  [(ngModel)]="cuentaConsolidada.tipoFormato" id="tipoFormato"  aria-label=".form-select-sm example"  [disabled]='disableTextbox'>
+                                <option value="">{{'seleccione' | translate}}</option>
+                                <option *ngFor="let item of tiposFormatos" [value]="item.idCatalogo">{{item.descripcionCatalogo}}</option>
+                            </select>
+                        </div>
+                       
+                    </div>
+                    <div class="form-group row tam ml">
+                        <label class="col-xs-9 col-sm-9 col-md-9">{{'pantallas.regeneraReporteCobranza.canalEntrega'| translate}}</label>
+                        <div class="col-md-8">
+                            <select class="form-select form-select-sm form-control mar"  [(ngModel)]="cuentaConsolidada.canalEntrega" id="canalEntrega"  aria-label=".form-select-sm example"  [disabled]='disableTextbox'>
+                                <option value="">{{'seleccione' | translate}}</option>
+                                <option *ngFor="let item of canales" [value]="item.idCanal">{{item.descripcion}}</option>
+                            </select>
+                        </div>
+                       
+                    </div>
+                    <div class="form-group row tam ml">
+                        <div class="col-xs-1 col-sm-1 col-md-1 justify-content-center">
+                            <input type="checkbox" name="clabeVitual" id="clabeVitual" [(ngModel)]="cuentaConsolidada.clabeVitual" aria-label="activo"  [disabled]='disableTextbox'>
+                        </div>
+                        <label class="col-xs-7 col-sm-7 col-md-7">{{'pantalla.edoCuentaConsolidado.mostrarCuenta'| translate}}</label>
+                    </div>
+                    <div class="form-group row tam ml">
+                        <div class="col-xs-1 col-sm-1 col-md-1 justify-content-center">
+                            <input type="checkbox" name="anulaciones" id="anulaciones" [(ngModel)]="cuentaConsolidada.anulaciones" aria-label="activo" >
+                        </div>
+                        <label class="col-xs-7 col-sm-7 col-md-7">{{ "pantallas.regeneraReporteCobranza.incAnulaciones" | translate }}</label>
+                    </div>
+                </div>
+            </div>
+        
+
+
+            
+
+        <div class="row mt-2">
+            <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-1 offset-sm-1 offset-md-1 offset-lg-1">
+                <button type="button" class="btn btn-danger" (click)="limpiarContrato()" [disabled]='disableTextbox'   [appInputDisabled]="datos.descEstatus">{{'btn.limpiar' |
+                    translate}}</button>
+            </div>
+            <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-8 offset-sm-8 offset-md-8 offset-lg-8">
+                <button type="button" class="btn btn-danger" (click)="guardar()"  [disabled]='disableTextbox'  [appInputDisabled]="datos.descEstatus">{{'btn.guardar' |
+                    translate}}</button>
+            </div>
+        </div>
+        <div class="row mt-2">
+            <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-1 offset-sm-1 offset-md-1 offset-lg-1">
+            </div>
+            <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-8 offset-sm-8 offset-md-8 offset-lg-8">
+                <button type="button" (click)="openModal()" class="btn btn-danger">{{'btn.exportar' |
+                    translate}}</button>
+            </div>
+        </div>
+    </div>
+
+    </div>
+</div>

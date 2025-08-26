@@ -1,0 +1,22 @@
+<app-operativa-header tituloPantalla="{{'DAPI.titulo' | translate}}"></app-operativa-header>
+<div id="conexionContrato" class="panel panel-default col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    <br>
+    <div class="card">
+        <h5 class="card-header justify-content-center">
+            {{'DAPI.subtitulo' | translate}}
+        </h5>
+        <div class="card-body">
+            <div class="col-xs-12 col-sm-12 col-md-12 justi">
+                <div class="form-group row">
+                    <label for="usuario" class="col-form-label col-xs-2 col-sm-2 col-md-2 col-xs-4 col-sm-4 col-md-4">{{'DAPI.usuario' | translate}}:</label>
+                    <input type="text" class="form-control" id="usuario" name="usuario"  [(ngModel)]="data.usuario" disabled >
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-2">
+        <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-10 offset-sm-10 offset-md-10 offset-lg-10">
+            <button type="button" class="btn btn-danger" (click)="descargar()" >{{'btn.descargar' | translate}}</button>
+        </div>
+    </div>
+</div>

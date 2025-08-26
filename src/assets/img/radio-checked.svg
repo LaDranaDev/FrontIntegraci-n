@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 19.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="-613 314 22 22" style="enable-background:new -613 314 22 22;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill:url(#XMLID_2_);}
+	.st1{fill:#D2D3D3;}
+	.st2{fill:#928E8B;}
+	.st3{fill:none;}
+</style>
+<g id="radio-activo_2_">
+	<g>
+		
+			<linearGradient id="XMLID_2_" gradientUnits="userSpaceOnUse" x1="-602" y1="329.7112" x2="-602" y2="316.9848" gradientTransform="matrix(1 0 0 -1 0 652)">
+			<stop  offset="0" style="stop-color:#FFFFFF"/>
+			<stop  offset="1" style="stop-color:#D9D9D8"/>
+		</linearGradient>
+		<path id="XMLID_365_" class="st0" d="M-602,334.5c-5.2,0-9.5-4.3-9.5-9.5s4.3-9.5,9.5-9.5s9.5,4.3,9.5,9.5S-596.8,334.5-602,334.5
+			z"/>
+		<path id="XMLID_362_" class="st1" d="M-602,316c5,0,9,4,9,9s-4,9-9,9s-9-4-9-9S-607,316-602,316 M-602,315c-5.5,0-10,4.5-10,10
+			s4.5,10,10,10s10-4.5,10-10S-596.5,315-602,315L-602,315z"/>
+	</g>
+	<path class="st2" d="M-602,321c2.2,0,4,1.8,4,4s-1.8,4-4,4s-4-1.8-4-4S-604.2,321-602,321z"/>
+</g>
+<rect id="_x3C_Sector_x3E__92_" x="-613" y="314" class="st3" width="22" height="22"/>
+</svg>

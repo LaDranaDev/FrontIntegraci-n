@@ -1,0 +1,193 @@
+
+<div id="adminBuzon" class="panel panel-default col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    <app-operativa-header tituloPantalla="{{'administracion.buzon.operacion.titulo' | translate}}"></app-operativa-header>
+    <br>
+    <h5 class="card-header justify-content-center">
+        {{'administracion.buzon.operacion.titulo2' | translate}}
+    </h5>
+    <div class="card">        
+        <div class="card-body">
+            <div class="row">
+                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                    <div class="form-group row justify-content-center align-items-center">
+                        <label for="nomArchivo" class="col-xs-6 col-sm-10 col-md-6 col-lg-4 col-form-label">{{'administracion.buzon.operacion.nombre.archivo' | translate}}</label>
+                        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                            <input class="form-control removeTextUpper" type="text" name="nomArchivo" id="nomArchivo"  placeholder="{{'administracion.buzon.operacion.nombre.archivo' | translate}}" 
+                            [(ngModel)]="datosBuzonRequest.nombreArchivo" tabindex="1"  maxlength="200" > 
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                    <div class="form-group row justify-content-center align-items-center">
+                        <label for="tipoArchivo" class="col-xs-6 col-sm-10 col-md-6 col-lg-4 col-form-label">{{'administracion.buzon.operacion.tipo.archivo' | translate}}</label>
+                        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                            <select class="form-control" id="tipoArchivo" title="Seleccionar..." [(ngModel)]="datosBuzonRequest.tipoArchivo" 
+                                name="tipoArchivo" >
+                                <option value="">Seleccionar..</option>
+                                <option value="in"> Entrada </option>
+                                <option value="out"> Salida </option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                    <div class="form-group row justify-content-center align-items-center">
+                        <label for="fechaInicio" class="col-xs-6 col-sm-10 col-md-6 col-lg-4 col-form-label">{{'administracion.buzon.operacion.fecha.inicial' | translate}}</label>
+                        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                            <div class="input-group">
+
+                                <input type="text" class="form-control" id="fechaInicio" [(ngModel)]="datosBuzonRequest.fechaInicio"  name="fechaInicio" readonly required bsDatepicker
+                                    #dpFechaInicio="bsDatepicker" [bsConfig]="datePickerConfig" [minDate]="getMinDate()">
+                                <div class="input-group-append">
+                                    <button class="btn btn-outline-danger" type="button" id="btnfechaInicio"  name="btnfechaInicio" (click)="dpFechaInicio.toggle()"
+                                        [attr.aria-expanded]="dpFechaInicio.isOpen">
+                                        <em class="fa fa-calendar"></em>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                    <div class="form-group row justify-content-center align-items-center">
+                        <label for="fechaFin"class="col-xs-6 col-sm-10 col-md-6 col-lg-4 col-form-label">{{'administracion.buzon.operacion.fecha.final' | translate}}</label>
+                        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="fechaFin" name="fechaFin" readonly required bsDatepicker
+                                    #dpFechaFin="bsDatepicker" [bsConfig]="datePickerConfig"  [(ngModel)]="datosBuzonRequest.fechaFin" [minDate]="getMinDate()" >
+                                <div class="input-group-append">
+                                    <button class="btn btn-outline-danger" type="button" id="btnFechaFin"
+                                        name="btnFechaFin" (click)="dpFechaFin.toggle()"
+                                        [attr.aria-expanded]="dpFechaFin.isOpen">
+                                        <em class="fa fa-calendar"></em>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                    <div class="form-group row justify-content-center align-items-center">
+                        <label for="codCliente" class="col-xs-6 col-sm-10 col-md-6 col-lg-4 col-form-label">{{'administracion.buzon.operacion.codigo.cliente' | translate}}</label>
+                        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                            <div class="input-group">
+                                <div class="input-group-append">
+                                    <input class="form-control" type="text" name="codCliente" id="codCliente"  placeholder="{{'administracion.buzon.operacion.codigo.cliente' | translate}}" 
+                                    (keydown.Tab)="consultaDatosCliente()"
+                                    (keydown.Enter)="consultaDatosCliente()"
+                                    (blur)="consultaDatosCliente()"
+                                    [(ngModel)]="datosBuzonRequest.codigoCliente" (keypress)="eventOnKeyOnlyNumbers($event)" tabindex="1" maxlength="8"  > 
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                    <div class="form-group row justify-content-center align-items-center">
+                        <label for="contrato" class="col-xs-6 col-sm-10 col-md-6 col-lg-4 col-form-label">{{'administracion.buzon.operacion.contrato' | translate}}</label>
+                        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                            <div class="input-group">
+                                <div class="input-group-append">
+                                    <input class="form-control" type="text" name="contrato" id="contrato"  placeholder="{{'administracion.buzon.operacion.contrato' | translate}}" 
+                                    [(ngModel)]="datosBuzonRequest.contrato" disabled tabindex="1"  maxlength="200" > 
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-sm-1 col-md-1 col-lg-1 offset-sm-1 offset-md-1 offset-lg-1 mt-1">
+                <button type="button" class="btn btn-danger" (click)="onClickLimpiar()">{{'btn.limpiar' | translate}}</button>
+            </div>
+            <div class="col-xs-12 col-sm-1 col-md-1 col-lg-1 offset-sm-6 offset-md-8 offset-lg-8 mt-1">
+                <button type="button" class="btn btn-danger" (click)="onClickConsultar()">{{'btn.consultarConexion' | translate}}</button>
+            </div>
+        </div>       
+        <br/> 
+    </div>
+
+    <div *ngIf="banderaTabla">
+        <h5 class="card-header justify-content-center"><label>{{'pantalla.moduloAdministracion.consultasBics.resultados.busqueda' | translate}}</label></h5>
+        <div class="card-body">
+            <div class="row">
+                <table class="table align-middle mb-0 bg-white">
+                    <thead class="bg-light">
+                        <tr>
+                            <th scope="col" >{{'administracion.buzon.operacion.nombre.archivo' | translate }}</th>
+                            <th scope="col" class="text-center">{{'administracion.buzon.operacion.nombre.fecha' | translate }}</th>
+                            <th scope="col" class="text-center">{{'administracion.buzon.operacion.nombre.tipo' | translate }}</th>
+                            <th scope="col" class="text-center">{{'administracion.buzon.operacion.nombre.estatus' | translate }}</th>
+                            <th scope="col" class="text-center">{{'administracion.buzon.operacion.nombre.descarga' | translate }}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <ng-container *ngIf="items; then templateFillTable; else templateEmptyTable">
+                        </ng-container>
+                        <ng-template #templateFillTable>
+                            <tr *ngFor="let item of items">
+                                <td >{{item.nombreArchivo}}</td>
+                                <td class="text-center">{{item.fechaRegistro}}</td>
+                                <td class="text-center">{{item.tipoArchivo}}</td>
+                                <td>{{item.descEstatus}}</td>
+                                <td class="text-center">
+                                    <div *ngIf="item.bandDispWeb ==='I'">
+                                        <a class="text-danger link" (click)="solicitar(item)"> {{'btn.solicitar' | translate}} </a>
+                                    </div>
+                                    <div *ngIf="item.bandDispWeb ==='A'">
+                                        <a class="text-danger link" (click)="descargaFile(item)"> {{'btn.descargar' | translate}} </a>
+                                    </div>
+                                    <div *ngIf="item.bandDispWeb ==='P'">
+                                        En proceso...
+                                    </div>
+                                </td>
+                            </tr>
+                        </ng-template>
+                        <ng-template #templateEmptyTable>
+                            <tr>
+                                <td class="text-center" colspan="6"> {{'noResult' | translate}} </td>
+                            </tr>
+                        </ng-template>
+
+                    </tbody>
+                </table>                
+            </div>
+
+            <div *ngIf="items.length > 0">
+                <div class="row">
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mt-1">
+                        <div class="d-flex justify-content-center">
+                            <pagination 
+                                [boundaryLinks]="true" 
+                                [directionLinks]="true" 
+                                [totalItems]="totalElements"
+                                [itemsPerPage]="rowsPorPagina" 
+                                [maxSize]="10" 
+                                [(ngModel)]="page" 
+                                previousText="&lsaquo;"
+                                nextText="&rsaquo;" 
+                                firstText="{{'paginador.inicio' | translate}}"
+                                lastText="{{'paginador.fin' | translate}}" 
+                                (pageChanged)="onPageChanged($event)">
+                            </pagination>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-12 col-sm-1 col-md-1 col-lg-1 offset-sm-1 offset-md-1 offset-lg-1 mt-1"> </div>
+                    <div class="col-xs-12 col-sm-1 col-md-1 col-lg-1 offset-sm-6 offset-md-8 offset-lg-8 mt-1">
+                        <button type="button" class="btn btn-danger" (click)="exportar()">{{'btn.exportar' | translate}}</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>  
+</div>

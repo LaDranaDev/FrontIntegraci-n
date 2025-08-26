@@ -1,0 +1,197 @@
+<app-operativa-header
+  tituloPantalla="{{ 'pantalla.controlVolumenOperativo.graficaHistorialBuzon.title' | translate }}{{rutaBuzon}}"
+></app-operativa-header>
+
+<div
+  id="graficaHistorialBuzon"
+  class="panel panel-default col-xs-12 col-sm-12 col-md-12 col-lg-12"
+>
+  <br />
+  <!-- --- Seccion de Busqueda --- -->
+  <div class="card mt-3" *ngIf="tabla.length <= 0">
+    <h5 class="card-header justify-content-center">
+      {{ "pantalla.monitoreo.monitorArchivoCurso.busqueda" | translate }}
+    </h5>
+    <div class="card-body">
+      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <form [formGroup]="formHistorialAnualBuzon" class="row">
+          <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 offset-1">
+            <div class="input-group mb-3">
+              <label class="input-group-text" for="buzon" id="basic-addon1">{{
+                "pantalla.sterling.historialAnualBuzon.buzon" | translate
+              }}</label>
+              <input
+                class="form-control display removeTextTransform"
+                id="buzon"
+                formControlName="buzon"
+              />
+            </div>
+          </div>
+
+          <div class="col-md-4 text-center">
+            <label class="col-form-label col-sm-5 pt-0">{{
+              "menu.sterling.tamanobuzon.agrupar" | translate
+            }}</label>
+            <div class="form-check col-xs-3 col-sm-3 col-md-3 col-lg-3">
+              <input
+                class="form-check-input"
+                type="radio"
+                name="flexRadioDefault"
+                id="flexRadioDefault1"
+                [checked]="this.formHistorialAnualBuzon.get('tamano')?.value"
+                (click)="getValueRadio('tamano')"
+              />&nbsp;&nbsp;
+              <label class="form-check-label" for="flexRadioDefault1">{{
+                "pantalla.sterling.historialAnualBuzon.mb" | translate
+              }}</label>
+            </div>
+            <div class="form-check col-xs-3 col-sm-3 col-md-3 col-lg-3">
+              <input
+                class="form-check-input"
+                type="radio"
+                name="flexRadioDefault"
+                id="flexRadioDefault2"
+                [checked]="this.formHistorialAnualBuzon.get('total')?.value"
+                (click)="getValueRadio('total')"
+              />&nbsp;&nbsp;
+              <label class="form-check-label" for="flexRadioDefault2">
+                {{ "pantalla.sterling.historialAnualBuzon.total" | translate }}
+              </label>
+            </div>
+          </div>
+
+          <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 offset-4">
+            <div class="input-group mb-3">
+              <label for="anio" class="input-group-text" id="basic-addon1">{{
+                "pantalla.sterling.historialAnualBuzon.anio" | translate
+              }}</label>
+              <select
+                class="form-control display"
+                id="anio"
+                formControlName="anio"
+              >
+                <option selected disabled value="">{{'seleccione' | translate}}</option>
+                <option *ngFor="let year of getYearMailbox" [value]="year">
+                  {{ year }}
+                </option>
+              </select>
+            </div>
+          </div>
+
+
+
+
+
+        </form>
+
+        <div class="row">
+          <div class="col-md-5 offset-1">
+            <button
+              type="button"
+              class="btn btn-danger"
+              (click)="onClickClean()"
+            >
+              {{ "btn.limpiar" | translate }}
+            </button>
+          </div>
+          <div class="col-md-1 offset-4">
+            <button
+              type="button"
+              class="btn btn-danger"
+              (click)="gethistorialbuzon()"
+            >
+              {{ "btn.buscar" | translate }}
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="card my-1 mt-3" *ngIf="tabla.length > 0">
+    <h5 class="card-header justify-content-center">
+      {{ "pantalla.consultarBuzon.resultadoBusqueda.title" | translate }}
+    </h5>
+    <div class="card-body">
+      <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+          <table
+            class="table table-striped table-hover"
+            aria-describedby="graficaHistBuzon"
+          >
+            <thead>
+              <tr>
+                <th class="text-center" scope="col">
+                  {{
+                    "pantalla.sterling.historialAnualBuzon.varmes" | translate
+                  }}
+                </th>
+                <th class="text-center" scope="col">
+                  {{
+                    "pantalla.sterling.historialAnualBuzon.varmin" | translate
+                  }}
+                </th>
+                <th class="text-center" scope="col">
+                  {{
+                    "pantalla.sterling.historialAnualBuzon.varmax" | translate
+                  }}
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <ng-container *ngIf="tabla.length > 0">
+                <tr *ngFor="let buzon of tabla">
+                  <td class="text-center">{{ buzon.mes }}</td>
+                  <td class="text-center">{{ buzon.minimo }}</td>
+
+                  <td class="text-center">{{ buzon.maximo }}</td>
+                </tr>
+              </ng-container>
+              <ng-container *ngIf="tabla.length <= 0">
+                <tr>
+                  <td class="text-center" colspan="12">
+                    {{
+                      "pantalla.moduloAdministracion.gestionBancos.resultadoBusqueda"
+                        | translate
+                    }}
+                  </td>
+                </tr>
+              </ng-container>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mt-1">
+          <div class="d-flex justify-content-center">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div>
+    <div class="chart-container" width="300px" height="300px"  [hidden]="tabla.length <= 0">
+      <canvas id="chartBuzonAnual"></canvas>
+    </div>
+
+    <div class="container mt-3 mb-5" *ngIf="tabla.length > 0">
+      <button
+        type="button"
+        class="btn btn-danger float-left"
+        (click)="goBack()"
+      >
+        {{'btn.regresar' | translate}}
+      </button>
+      <button
+        [disabled]="tabla.length <= 0"
+        type="button"
+        class="btn btn-danger float-right"
+        (click)="exportGraph()"
+      >
+        {{'btn.exportar' | translate }}
+      </button>
+      <br />
+      <br />
+      <br />
+    </div>
+  </div>
+</div>

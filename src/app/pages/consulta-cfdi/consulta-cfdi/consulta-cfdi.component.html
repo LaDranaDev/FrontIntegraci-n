@@ -1,0 +1,165 @@
+<div id="consultaCfdi" class="panel panel-default col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    <app-operativa-header tituloPantalla="{{'pantallas.consultacfdi' | translate}}"></app-operativa-header>
+    <h5 class="card-header justify-content-center"><label>{{'pantalla.datosContrato.title' | translate}}</label></h5>
+    <div class="card-body ">
+        <div class="row">
+            <div class="col-xs-6 col-sm-6 col-md-6">
+                <div class="form-group row">
+                    <label for="cod" class="col-form-label col-sm-3">{{'pantallas.regeneraReporteCobranza.cliente' | translate }}</label>
+                    <div class="col-sm-4">
+                        <input type="text" id="cod" name="cod" class="form-control" placeholder="Codigo Cliente"  tabindex="1" maxlength="8" (keydown.Tab)="consultaDatosCliente()" [(ngModel)]="datospersonales.bucCliente"
+                        (keypress)="eventOnKeyOnlyNumbers($event)" [ngClass]="{'is-invalid' : submittedSearchArchivos && formControlSearchArchivo['codigoCliente'].errors}">
+                        <div *ngIf="submittedSearchArchivos && formControlSearchArchivo['codigoCliente'].errors" class="text-danger text-left">
+                            <div *ngIf="formControlSearchArchivo['codigoCliente'].errors['numClienteEmpty']">{{'pantallas.consultacfdi.codigoCliente.error' | translate}}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6 col-md-6">
+                <div class="form-group row">
+                    <label for="rzs" class="col-form-label col-sm-3">{{'pantallas.regeneraReporteCobranza.razon' | translate }}</label>
+                    <div class="col-sm-9">
+                        <input type="text" id="rzs" name="rzs" class="form-control" placeholder="Razón Social" tabindex="1" [(ngModel)]="datospersonales.razonSocial" disabled>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+        <div class="col-xs-6 col-sm-6 col-md-6">
+            <div class="form-group row">
+                <label for="n" class="col-form-label col-sm-3">{{'numContrato' | translate }}</label>
+                <div class="col-sm-4">
+                    <input type="text" class="form-control" name="n" id="n" placeholder="Número de Contrato" tabindex="1" [(ngModel)]="datospersonales.numContrato" disabled>
+                </div>
+            </div>
+        </div>
+        </div>
+    </div>
+    <h5 class="card-header justify-content-center"><label>{{'pantallas.consultacfdi.complemento' | translate}}</label></h5>
+     <form [formGroup]="formSearchArchivo">
+        <div class="row card-body ">
+            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 mt-2">
+                <div class="form-group row">
+                    <label for="inputFechaInicialCFDI3" class="col-xs-2 col-sm-2 col-md-2 col-lg-2 col-form-label">{{'pantallas.consultacfdi.complemento.fechaInicio' | translate}}:</label>
+                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="inputFechaInicialCFDI3" name="inputFechaInicialCFDI3" readonly required
+                            bsDatepicker #dpFechaIni="bsDatepicker" [bsConfig]="datePickerConfig" formControlName="fechaInicio1" [minDate]="getMinDate()"
+                            [ngClass]="{ 'is-invalid': submittedSearchArchivos && formControlSearchArchivo['fechaInicio1'].errors}">
+                            <div class="input-group-append">
+                                <button class="btn btn-outline-danger" type="button" id="btnFechaIniciocfdi" name="btnFechaIniciocfdi" (click)="dpFechaIni.toggle()"
+                                [attr.aria-expanded]="dpFechaIni.isOpen">
+                                    <em class="fa fa-calendar"></em>
+                                </button>
+                            </div>
+                        </div>
+                        <div *ngIf="submittedSearchArchivos && formControlSearchArchivo['fechaInicio1'].errors" class="text-danger text-left">
+                            <div *ngIf="formControlSearchArchivo['fechaInicio1'].errors['invalidRange']">{{'pantallas.consultacfdi.fechaInicial.error' | translate}}</div>
+                        </div>
+                        <div *ngIf="submittedSearchArchivos && formControlSearchArchivo['fechaInicio1'].errors" class="text-danger text-left">
+                            <div *ngIf="formControlSearchArchivo['fechaInicio1'].errors['startDateMayor']">{{'pantallas.descargaArchivos.fechaInicial.error' | translate}}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 mt-2">
+                <div class="form-group row">
+                    <label for="inputFechaInicialCFDI4" class="col-xs-2 col-sm-2 col-md-2 col-lg-2 col-form-label">{{'pantallas.consultacfdi.complemento.fechaFin' | translate}}:</label>
+                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="inputFechaInicialCFDI4" name="inputFechaInicialCFDI4" readonly required
+                            bsDatepicker #dpFechaFin="bsDatepicker" [bsConfig]="datePickerConfig" formControlName="fechaFin1" [minDate]="getMinDate()"
+                            [ngClass]="{'is-invalid' : submittedSearchArchivos && formControlSearchArchivo['fechaFin1'].errors}">
+                            <div class="input-group-append">
+                                <button class="btn btn-outline-danger" type="button" id="btnFechaFinCfdi" name="btnFechaFinCfdi" (click)="dpFechaFin.toggle()"
+                                [attr.aria-expanded]="dpFechaFin.isOpen">
+                                    <em class="fa fa-calendar"></em>
+                                </button>
+                            </div>
+                        </div>
+                        <div *ngIf="submittedSearchArchivos && formControlSearchArchivo['fechaFin1'].errors" class="text-danger text-left">
+                            <div *ngIf="formControlSearchArchivo['fechaFin1'].errors['invalidRange']">{{'pantallas.consultacfdi.fechaFin.error' | translate}}</div>
+                        </div>
+                        <div *ngIf="submittedSearchArchivos && formControlSearchArchivo['fechaFin1'].errors" class="text-danger text-left">
+                            <div *ngIf="formControlSearchArchivo['fechaFin1'].errors['endDateMenor']">{{'pantallas.descargaArchivos.fechaFinal.error' | translate}}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+    <div class="row justify-content-between">
+        <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">
+            <button type="button" class="btn btn-outline-danger" (click)="limpiar()">{{'btn.limpiar' | translate}}</button>
+        </div>
+        <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">
+            <button type="button" class="btn btn-outline-danger" (click)="onConsultar('N')" >{{'btn.consultar' | translate}}</button>
+        </div>
+    </div>    <div class="row mt-3">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mb-4">
+            <hr class="hr-text" data-content="Listado de Archivos para Generar Archivo xml">
+        </div>
+        <div [ngClass]="countRowsXml > 10 ? 'col-xs-12 col-sm-12 col-md-12 col-lg-12 table-swap' : 'col-xs-12 col-sm-12 col-md-12 col-lg-12'">
+            <table class="table table-striped table-hover" aria-describedby="ListadoArchivosXml">
+                <thead>
+                    <tr>
+                        <th scope="col"></th>
+                        <th scope="col">{{'pantallas.consultacfdi.complemento.table.uuid' | translate}}</th>
+                        <th scope="col">{{'pantallas.consultacfdi.complemento.table.folio' | translate}}</th>
+                        <th scope="col">{{'pantallas.consultacfdi.complemento.table.folioInterno' | translate}}</th>
+                        <th scope="col">{{'pantallas.consultacfdi.complemento.table.estatus' | translate}}</th>
+                        <th scope="col">{{'pantallas.consultacfdi.complemento.table.rfcEmisor' | translate}}</th>
+                        <th scope="col">{{'pantallas.consultacfdi.complemento.table.rfcReceptor' | translate}}</th>
+                        <th scope="col">{{'pantallas.consultacfdi.complemento.table.fechaEmision' | translate}}</th>
+                        <th scope="col">{{'pantallas.consultacfdi.complemento.table.subtotal' | translate}}</th>
+                        <th scope="col">{{'pantallas.consultacfdi.complemento.table.iva' | translate}}</th>
+                        <th scope="col">{{'pantallas.consultacfdi.complemento.table.total' | translate}}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <ng-container *ngIf="consultaVacia; then templateConsultaCfdi; else templateEmptyCfdi">
+                    </ng-container>
+                    <ng-template #templateConsultaCfdi>
+                        <tr *ngFor="let cfdi of listcfdi">
+                            <td>
+                                <input type="radio" name="idArchivo" aria-label="idArchivo" value={{cfdi.uuid}} (click)="seleccionarRegistro(cfdi)">
+                            </td>
+                            <td>{{cfdi.uuid}}</td>
+                            <td>{{cfdi.folio}}</td>
+                            <td>{{cfdi.folioInterno}}</td>
+                            <td>{{cfdi.estatus}}</td>
+                            <td>{{cfdi.rfcEmisor}}</td>
+                            <td>{{cfdi.rfcReceptor}}</td>
+                            <td>{{cfdi.fechaEmision | date: "dd/MM/yyyy"}}</td>
+                            <td>{{cfdi.subtotal}}</td>
+                            <td>{{cfdi.iva}}</td>
+                            <td>{{cfdi.total}}</td>
+                        </tr>
+                    </ng-template>
+                    <ng-template #templateEmptyCfdi>
+                        <tr>
+                            <td class="text-center" colspan="11"> {{'consulta.vacia' | translate}}</td>
+                        </tr>
+                    </ng-template>
+                </tbody>
+            </table>
+        <!--inicia Bloque de paginador-->
+
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mt-1">
+                <div class="d-flex justify-content-center" *ngIf="banderaHasRows">
+                    <pagination [boundaryLinks]="showBoundaryLinks" [directionLinks]="showDirectionLinks"
+                    [totalItems]="totalElements" [itemsPerPage]="rowsPorPagina" [(ngModel)]="page"
+                    previousText="&lsaquo;" nextText="&rsaquo;" firstText="{{'paginador.inicio' | translate}}" lastText="{{'paginador.fin' | translate}}"
+                    (pageChanged)="onPageChanged($event)">
+                </pagination>
+                </div>
+            </div>
+        <!--Termina Bloque de paginador-->
+        </div>
+        <div class="offset-xs-11 col-xs-1 offset-sm-11 col-sm-1 offset-md-11 col-md-1 offset-lg-11 col-lg-1">
+            <button type="button" class="btn btn-outline-danger" (click)="descagarDcoumento()" [disabled]="!banderaDescarga">{{'btn.exportar' | translate}}</button>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,135 @@
+<app-operativa-header tituloPantalla="{{'menu.monitoreo.comprobantesFormatoCDMX' | translate}}"></app-operativa-header>
+<div id="consultaBanco" class="panel panel-default col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    <br>
+    <div class="card">
+    <h5 class="card-header justify-content-center">
+        {{'pantallas.monitorOperacionesOnline.busquedad' | translate}}
+    </h5>
+    <div class="card-body">
+    <form [formGroup]="comprobanteFormatoForm">
+        <div class="row">
+            <div class="col-xs-6 col-sm-6 col-md-6">
+                <div class="form-group row">
+                    <label for="buc" class="col-form-label col-sm-3">{{'menu.monitoreo.comprobantesFormatoCDMX.codigo'| translate}}:</label>
+                    <div class="col-sm-4">
+                        <input class="form-control"  type="text" id="buc" name="buc" formControlName="buc">
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-6 col-sm-6 col-md-6">
+                <div class="form-group row">
+                    <label for="cuentaCargo" class="col-form-label col-sm-3">{{'pantallas.monitorOperacionesOnline.cuentaCargo'| translate}}</label>
+                    <div class="col-sm-4">
+                        <input class="form-control"  type="text" name="cuentaCargo" id="cuentaCargo" formControlName="cuentaCargo">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-6 col-sm-6 col-md-6">
+                <div class="form-group row">
+                    <label for="nombreArchivo" class="col-form-label col-sm-3">{{'nombreArchivo'| translate}}:</label>
+                    <div class="col-sm-4">
+                        <input class="form-control"  type="text" name="nombreArchivo" id="nombreArchivo" formControlName="nombreArchivo">
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-6 col-sm-6 col-md-6">
+                <div class="form-group row">
+                    <label for="lineaCaptura" class="col-form-label col-sm-3">{{'lineaCaptura'| translate}}:</label>
+                    <div class="col-sm-4">
+                        <input class="form-control"  type="text" name="lineaCaptura" id="lineaCaptura" formControlName="lineaCaptura">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-6 col-sm-6 col-md-6">
+                <div class="form-group row">
+                    <label for="contrato" class="col-form-label col-sm-3">{{'numContrato'| translate}}:</label>
+                    <div class="col-sm-4">
+                        <input class="form-control"  type="text" name="contrato" id="contrato" formControlName="contrato">
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-6 col-sm-6 col-md-6">
+                <div class="form-group row">
+                    <label for="idReg" class="col-form-label col-sm-3">{{'menu.monitoreo.comprobantesFormatoCDMX.idMovimiento'| translate}}</label>
+                    <div class="col-sm-4">
+                        <input class="form-control"  type="text" name="idReg" id="idReg" formControlName="idReg">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-6 col-sm-6 col-md-6">
+                <div class="form-group row">
+                    <label for="fechaInicial" class="col-form-label labelDate col-sm-3">{{'menu.monitoreo.comprobantesFormatoCDMX.fechaInicial' | translate}}</label>
+                    <div class="col-sm-4">
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="fechaInicial" name="fechaInicial" readonly required
+                            bsDatepicker #dpFechaIni="bsDatepicker" [bsConfig]="datePickerConfig" formControlName="fechaInicial">
+                            <div class="input-group-append">
+                                <button class="btn btn-outline-danger" type="button" id="btnFechaInicio" name="btnFechaInicio" (click)="dpFechaIni.toggle()"
+                                [attr.aria-expanded]="dpFechaIni.isOpen">
+                                    <em class="fa fa-calendar"></em>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-6 col-sm-6 col-md-6">
+                <div class="form-group row">
+                    <label for="fechaFinal" class="col-form-label labelDate col-sm-3">{{'fechaFinal' | translate}}:</label>
+                    <div class="col-sm-4">
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="fechaFinal" name="fechaFinal" readonly required
+                            bsDatepicker #dpFechaFin="bsDatepicker" [bsConfig]="datePickerConfig" formControlName="fechaFinal">
+                            <div class="input-group-append">
+                                <button class="btn btn-outline-danger" type="button" id="btnFechaFin" name="btnFechaFin" (click)="dpFechaFin.toggle()"
+                                [attr.aria-expanded]="dpFechaFin.isOpen">
+                                    <em class="fa fa-calendar"></em>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-6 col-sm-6 col-md-6">
+                <div class="form-group row">
+                    <label for='tipOperacion' class="col-form-label col-sm-3">{{'menu.monitoreo.comprobantesFormatoCDMX.tipo'| translate}}:</label>
+                    <div class="col-sm-4">
+                        <select class="form-select form-select-sm form-control" id="tipOperacion" formControlName="tipo" aria-label="tipOperacion">
+                            <option value="">{{'seleccione'| translate}}</option>
+                            <option [value]="item.key" *ngFor="let item of listaTipoPagoCmb" >{{item.value}}</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-6 col-sm-6 col-md-6">
+                <div class="form-group row">
+                    <label for='descripcionEstatus' class="col-form-label col-sm-3">{{'pantallas.consultacfdi.complemento.table.estatus'| translate}}:</label>
+                    <div class="col-sm-4">
+                        <select class="form-select form-select-sm form-control" id="descripcionEstatus" formControlName="idEstatus" aria-label="descripcionEstatus">
+                            <option value="">{{'seleccione'| translate}}</option>
+                            <option [value]="item.key" *ngFor="let item of listaEstatusCmb" >{{item.value}}</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+        <div class="row mt-2">
+            <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-1 offset-sm-1 offset-md-1 offset-lg-1">
+                <button type="button" class="btn btn-danger" (click)="eventClean()">{{'btn.limpiar' | translate}}</button>
+            </div>
+            <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-8 offset-sm-8 offset-md-8 offset-lg-8">
+                <button type="button" class="btn btn-danger" (click)="consultaFormato()" >{{'btn.consultar' | translate}}</button>
+            </div>
+        </div>
+    </div>
+    </div>
+</div>

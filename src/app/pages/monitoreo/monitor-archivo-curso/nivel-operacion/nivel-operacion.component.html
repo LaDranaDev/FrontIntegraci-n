@@ -1,0 +1,132 @@
+<app-operativa-header tituloPantalla="{{'pantalla.monitoreo.monitorArchivoCurso.operacion.title' | translate}}"></app-operativa-header>
+
+<div class="panel panel-default col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    <br>
+    <label for="">{{'C' | translate}}: {{register.archivo[0].cliente}}</label>
+    <!-- --- Seccion de Resultado --- -->
+    <div class="card mt-3">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <table class="table table-striped table-hover">
+                        <caption></caption>
+                        <thead>
+                            <tr>
+                            
+                            <th scope="col">{{'pantalla.monitoreo.monitorArchivoCurso.nombreArchivo' | translate}}</th>
+                            <th scope="col">{{'pantalla.monitoreo.monitorArchivoCurso.fechaRecepcion' | translate}}</th>
+                            <th scope="col">{{'pantalla.monitoreo.monitorArchivoCurso.archivo.estatus' | translate}}</th>
+                            <th scope="col">{{'pantalla.monitoreo.monitorArchivoCurso.archivo.noMovimientos' | translate}}</th>
+                            <th scope="col">{{'pantalla.monitoreo.monitorArchivoCurso.monto' | translate}}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let dato of register.archivo">
+                                <td>{{dato.nombreArch}}</td>
+                                <td>{{dato.fechaRegistro}}</td>
+                                <td>{{dato.descEstatus}}</td>
+                                <td>{{register.producto.totalOper}}</td>
+                                <td>{{'$' + register.producto.totalMont}}</td>
+                            </tr>
+                            <ng-template #noHayInformación>
+                                <tr>
+                                    <td class="text-center" colspan="12"> {{'administracion.productos.periodo.Nodata ' | translate}} </td>
+                                </tr>
+                            </ng-template>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+           
+        </div>
+    </div>
+
+    <!-- --- Seccion de Busqueda --- -->
+    <div class="card mt-3">
+        <h5 class="card-header justify-content-center">
+            {{'BNO' | translate}}
+        </h5>
+        <div class="card-body">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <form [formGroup]="matForm" class="row">
+                    <div class="col-xs-3">
+                        <div>
+                           
+                        </div>
+                        <div>
+                            <label for="estatus" >{{'EMOV'  | translate}}:</label>
+                            <select class="form-control display" id="estatus" formControlName="estatus">
+                                <option  value=""></option>
+                                <option *ngFor="let status of catEstatus" value="{{status.id}}">{{ status.valor }}</option>
+                            </select>
+                        </div>
+                        <div> 
+                            <button type="button" class="btn btn-danger" (click)="eventoConsultar()">{{'btn.buscar' | translate}}</button>
+                        </div>
+                        
+                    </div>
+                </form>
+                <div class="card mt-3">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                <table class="table table-striped table-hover">
+                                    <caption></caption>
+                                    <thead>
+                                        <tr>
+                                        <th scope="col" class="text-center"> {{'idMovimiento' | translate}}</th>
+                                        <th scope="col" class="text-center"> {{'EMOV' | translate}}</th>
+                                        <th scope="col" class="text-center">{{'producto' | translate}}</th>
+                                        <th scope="col" class="text-center">{{'pantalla.monitoreo.monitorArchivoCurso.monto' | translate}}</th>
+                                        <th scope="col" class="text-center"> {{'consultaDocumentosCFDI.lblCuentaCargo' | translate}}</th>
+                                        <th scope="col" class="text-center"> {{'consultaDocumentosCFDI.lblCuentaAbono' | translate}}</th>
+                                        <th scope="col" class="text-center"> {{'RBE' | translate}}</th>
+                                        <th scope="col" class="text-center"> {{'FA' | translate}}</th>
+                                        <th scope="col" class="text-center">{{'UBE' | translate}}</th>
+                                        <th scope="col" class="text-center"> {{'HUBE' | translate}}</th>
+                                        <th scope="col" class="text-center">{{'HRBE' | translate}}</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let dato of datosNivelOper">
+                                            <td class="text-center"><a  (click)="go(dato)">{{dato.idReg}}</a></td>
+                                            <td class="text-center">{{dato.descEstatus}}</td>
+                                            <td class="text-center">{{dato.descProd}}</td>
+                                            <td class="text-center">{{'$' + (dato.importe !== null ? dato.importe : 0)}}</td>
+                                            <td class="text-center">{{dato.ctaOrd}}</td>
+                                            <td class="text-center">{{dato.ctaBen}}</td>
+                                            <td class="text-center">{{dato.cveRasteroSpei}}</td>
+                                            <td class="text-center">{{dato.fechaApli}}</td>
+                                            <td class="text-center">{{dato.umbr}}</td>
+                                            <td class="text-center">{{dato.fechaEnvBe}}</td>
+                                            <td class="text-center">{{dato.fechaRespBe}}</td> 
+                                        </tr>
+                                        <ng-template #noHayInformación>
+                                            <tr>
+                                                <td class="text-center" colspan="12">{{'administracion.productos.periodo.Nodata' | translate}}  </td>
+                                            </tr>
+                                        </ng-template>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                       
+                    </div>
+                </div>
+                <div class="col-sm-12 form-group col-xs-12  col-md-12 col-lg-12 buttons-flex margins-top" >
+               
+                    <div class="buttons-left">
+                        <button type="button" class="btn-danger btn float-right " (click)="goBack()" >{{'btn.regresar' | translate}} </button>
+                        <button type="button" class="btn-danger btn float-right " (click)="refrescar()" >{{'menu.monitoreo.comprobantesFormatoCDMX.btn.refrescar' | translate}} </button>
+                    </div>
+                     <div class="buttons-right">
+                        <button type="button" class="btn-danger btn float-left" (click)="exportaOperacion()" >{{'btn.exportar' | translate}} </button>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

@@ -1,0 +1,81 @@
+<app-operativa-header tituloPantalla="{{'MO' | translate}}"></app-operativa-header>
+<form [formGroup]="datosForm">
+    <div class="card">
+        <h5 class="card-header justify-content-center">
+            {{'MO.DMP' | translate}}
+        </h5>
+        <div class="inpu">
+            <label for="nombreProveedor" class="col-form-label col-xs-2 col-sm-2 col-md-1">{{'MO.NP' | translate}}: </label>
+            <input type="text" class="form-control removeTextTransform" id="nombreProveedor" name="nombreProveedor" formControlName="nombreProveedor">
+        </div>
+        <div class="inpu">
+            <label for="tipoOperacion" class="col-form-label col-xs-2 col-sm-2 col-md-1">{{'MO.TO' | translate}}: </label>
+                <input type="text" class="form-control removeTextTransform" id="tipoOperacion" name="tipoOperacion" formControlName="tipoOperacion">
+        </div>
+        <div class="inpu">
+            <div class="dos">
+                <label for="cveProveedor" class="col-form-label col-xs-2 col-sm-2 col-md-2">{{'MO.CP' | translate}}: </label>
+                <input type="text" class="form-control removeTextTransform" id="cveProveedor" name="cveProveedor" formControlName="cveProveedor">
+            </div>
+            <div class="dos">
+                <label for="tipoPerJuridica" class="col-form-label col-xs-2 col-sm-2 col-md-2">{{'MO.TPJ' | translate}}: </label>
+                <input type="text" class="form-control removeTextTransform" id="tipoPerJuridica" name="tipoPerJuridica" formControlName="tipoPerJuridica">
+            </div>
+        </div>
+        <div class="inpu">
+            <div class="dos">
+                <label for="fechaAplic" class="col-form-label col-xs-2 col-sm-2 col-md-2">{{'MO.FA' | translate}}: </label>
+                <input type="text" class="form-control removeTextTransform" id="fechaAplic" name="fechaAplic" formControlName="fechaAplic">
+            </div>
+            <div class="dos">
+                <label for="numFolio" class="col-form-label col-xs-2 col-sm-2 col-md-2">{{'MO.NF' | translate}}:</label>
+                <input type="text" class="form-control removeTextTransform" id="numFolio" name="numFolio" formControlName="numFolio">
+            </div>
+        </div>
+        <div class="inpu">
+            <div class="dos">
+                <label for="estatus" class="col-form-label col-xs-2 col-sm-2 col-md-2">{{'MO.E' | translate}}: </label>
+                <input type="text" class="form-control removeTextTransform" id="estatus" name="estatus" formControlName="estatus">
+            </div>
+            <div class="dos">
+                <label for="codRegistro" class="col-form-label col-xs-2 col-sm-2 col-md-2">{{'MO.CR' | translate}}:</label>
+                <input type="text" class="form-control removeTextTransform" id="codRegistro" name="codRegistro" formControlName="codRegistro" >
+            </div>
+        </div>
+    </div>
+    <div class="card">
+        <h5 class="card-header justify-content-center">
+            {{'MO.CO' | translate}}
+        </h5>
+        <div class="inpu">
+            <label for="comentario1"></label>
+            <input type="text" class="form-control removeTextTransform" id="comentario1" name="comentario" formControlName="comentario" >
+        </div>
+    </div>
+    <div class="row mt-2">
+        <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-1 offset-sm-1 offset-md-1 offset-lg-1">
+            <button type="button" class="btn btn-danger" (click)="regresar1()">{{'MO.Regr' | translate}}</button>
+        </div>
+        <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-8 offset-sm-8 offset-md-8 offset-lg-8">
+            <button type="button" class="btn btn-danger" (click)="historial1()"> {{'MO.H' | translate}}</button>
+        </div>
+    </div>
+    <div class="row mt-2" *ngIf="idEstatus === '7'">
+        <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-1 offset-sm-1 offset-md-1 offset-lg-1">
+            <button type="button" class="btn btn-danger" (click)="Reintentar1()">{{'MO.Rei' | translate}}</button>
+        </div>
+        <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-8 offset-sm-8 offset-md-8 offset-lg-8">
+            <button type="button" class="btn btn-danger" (click)="rechazar1()">{{'MO.Rech' | translate}}</button>
+        </div>
+    </div>
+    <div class="row mt-2">
+        <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-1 offset-sm-1 offset-md-1 offset-lg-1">
+            <button type="button" class="btn btn-danger" (click)="refrescar1()">{{'MO.Refr' | translate}}</button>
+        </div>
+    </div>
+    <div class="row mt-2" *ngIf="idEstatus === '13'">
+        <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-1 offset-sm-1 offset-md-1 offset-lg-1">
+            <button type="button" class="btn btn-danger" (click)="procesar1()">{{'MO.Proc' | translate}}</button>
+        </div>
+    </div>
+</form>

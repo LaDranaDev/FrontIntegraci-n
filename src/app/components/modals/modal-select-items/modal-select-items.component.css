@@ -1,0 +1,96 @@
+.modal {
+    display: block !important;
+}
+
+.modal-header {
+    background-color: red;
+    color: white;
+    font-weight: bold;
+    padding: 0;
+    padding-left: 1em;
+}
+
+.modal-dialog {
+    overflow-y: initial !important
+}
+
+.modal-body {
+    height: 450px;
+    overflow-y: auto;
+}
+
+.justify-row {
+    justify-content: center;
+    display: flex;
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.filtro {
+    width: 100%;
+    text-transform: none !important;
+    margin-bottom: 0.5em;
+}
+
+.ajustar-texto {
+    word-wrap: break-word;
+    white-space: pre-line;
+}
+
+.link {
+    background: none !important;
+    border: none;
+    /*optional*/
+    font-family: arial, sans-serif;
+    font-size: 11px;
+    /*input has OS specific font-family*/
+    color: blue;
+    text-decoration: underline;
+    cursor: pointer;
+    margin-top: 0.5em;
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.ajust-button {
+    flex-wrap: nowrap;
+    align-items: baseline;
+    margin-bottom: 0.5em;
+}
+
+.separador {
+    display: flex;
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+}
+
+
+.btn-close {
+    padding: 0;
+    margin-right: 0.5em;
+    border: 0;
+    background: none !important;
+    font-family: Arial, sans-serif;
+    color: white;
+    font-weight: bold;
+    align-self: stretch;
+}
+
+.title {
+    line-height: 1.5;
+}
+
+.align-check {
+    text-align: center;
+    vertical-align: middle;
+}
+
+.label-number {
+    font-size: small;
+}
+
+.hidden {
+    display: none;
+}

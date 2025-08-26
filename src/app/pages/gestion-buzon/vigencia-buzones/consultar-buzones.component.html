@@ -1,0 +1,105 @@
+<app-operativa-header tituloPantalla="{{'pantallas.vigenciaBuzones' | translate}}"></app-operativa-header>
+<div id="vigenciaBuzones" class="panel panel-default col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    <br>
+    <div class="row mb-3">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <form class="row" [formGroup]="formSearchBuzon">
+                <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">
+                    <label for="inputNombreBuzon" class="col-form-label">{{'pantallas.vigenciaBuzones.nombreBuzon' | translate}}</label>
+                </div>
+                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+                    <input type="text" class="form-control removeTextTransform" id="inputNombreBuzon" formControlName="nameSearch" name="wordSearch"
+                    [(ngModel)]="busquedaBuzon" (keypress)="eventAlphaNumericOnly($event)" (paste)="onPaste($event)"
+                    [ngClass]="{ 'is-invalid': submittedBuzonSearch && formControlSearchBuzon['nameSearch'].errors}">
+                    <div *ngIf="submittedBuzonSearch && formControlSearchBuzon['nameSearch'].errors" class="text-danger text-left">
+                        <div *ngIf="formControlSearchBuzon['nameSearch'].errors['required']">{{'pantallas.vigenciaBuzones.nombreBuzon.error' | translate}}</div>
+                    </div>
+                </div>
+                <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">
+                    <button type="button" class="btn btn-outline-secondary" (click)="searchBuzones()">{{'btn.buscar' | translate}}</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="row mb-3">
+        <div [ngClass]="totalElements > 10 ? 'col-xs-12 col-sm-12 col-md-12 col-lg-12 table-swap' : 'col-xs-12 col-sm-12 col-md-12 col-lg-12'">
+            <table class="table table-striped table-hover" aria-describedby="listaConsultaBuzones">
+                <thead>
+                    <tr>
+                        <th class="text-center" scope="col">{{'pantallas.vigenciaBuzones.nombre' | translate}}</th>
+                        <th class="text-center" scope="col">{{'pantallas.vigenciaBuzones.periodo' | translate}}</th>
+                        <th class="text-center" scope="col">{{'pantallas.vigenciaBuzones.fechaPurgado' | translate}}</th>
+                        <th class="text-center" scope="col">{{'pantallas.vigenciaBuzones.tamano' | translate}}</th>
+                        <th class="text-center" scope="col">{{'pantallas.vigenciaBuzones.mensajes' | translate}}</th>
+                        <th class="text-center" scope="col">{{'pantallas.vigenciaBuzones.expRegular' | translate}}</th>
+                        <th class="text-center" scope="col">{{'pantallas.vigenciaBuzones.buzonConsultado' | translate}}</th>
+                        <th class="text-center" scope="col">{{'pantallas.vigenciaBuzones.respaldoPrevio' | translate}}</th>
+                        <th scope="col"></th>
+                        <th scope="col"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <ng-container *ngIf="banderaHasRows; then templateFillTable; else templateEmptyTable">
+                    </ng-container>
+                    <ng-template #templateFillTable>
+                        <tr *ngFor="let consultaBuzon of listBuzones">
+                            <td><p class="pl-4">{{consultaBuzon.rutaMBox}}</p></td>
+                            <td class="text-right"><p class="pr-5">{{consultaBuzon.periodoVigencia}}</p></td>
+                            <td class="text-center"><p>{{consultaBuzon.fecha | date: "dd/MM/yyyy"}}</p></td>
+                            <td class="text-right"><p class="pr-5">{{consultaBuzon.mbsize}}</p></td>
+                            <td class="text-right"><p class="pr-5">{{consultaBuzon.numMsg}}</p></td>
+                            <td class="text-center"><p>{{consultaBuzon.regex}}</p></td>
+                            <td class="text-center"><p>{{consultaBuzon.statusLeido}}</p></td>
+                            <td class="text-center"><p>{{consultaBuzon.respaldar}}</p></td>
+                            <td><button type="button" class="btn btn-outline-danger" (click)="editBuzon(consultaBuzon)">{{'btn.modificar' | translate}}</button></td>
+                            <td><button type="button" class="btn btn-outline-danger" (click)="showConfirmDeleteBuzon(modalConfirmDelete,consultaBuzon.id)">{{'btn.eliminar' | translate}}</button></td>
+                        </tr>
+                    </ng-template>
+                    <ng-template #templateEmptyTable>
+                        <tr>
+                            <td class="text-center" colspan="8"> No se encontraron resultados </td>
+                        </tr>
+                    </ng-template>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mt-1">
+            <div class="d-flex justify-content-center" *ngIf="banderaHasRows">
+                <pagination
+                    [boundaryLinks]="showBoundaryLinks"
+                    [directionLinks]="showDirectionLinks"
+                    [totalItems]="totalElements"
+                    [itemsPerPage]="rowsPorPagina"
+                    [(ngModel)]="page"
+                    previousText="&lsaquo;" nextText="&rsaquo;"
+                    firstText="{{'paginador.inicio' | translate}}" lastText="{{'paginador.fin' | translate}}"
+                    (pageChanged)="onPageChanged($event)">
+                </pagination>
+            </div>
+        </div>
+    </div>
+    <div class="row justify-content-between mb-2">
+        <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">
+            <button type="button" class="btn btn-danger" (click)="onCllickAltaBuzon()">{{'btn.alta' | translate}}</button>
+        </div>
+        <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">
+            <button type="button" class="btn btn-danger" (click)="onClickClean()">{{'btn.limpiar' | translate}}</button>
+        </div>
+    </div>
+</div>
+
+<ng-template #modalConfirmDelete let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title pull-left">{{'pantallas.vigenciaBuzones.eliminarRegistro' | translate}}</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="closeModalConfirmacion()">
+            <span aria-hidden="true">×</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <p>¿Desea eliminar el registro?</p>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-danger" (click)="deleteBuzon()">{{'btn.aceptar' | translate}}</button>
+        <button type="button" class="btn btn-outline-secondary" (click)="closeModalConfirmacion()">{{'btn.cancelar' | translate}}</button>
+    </div>
+</ng-template>

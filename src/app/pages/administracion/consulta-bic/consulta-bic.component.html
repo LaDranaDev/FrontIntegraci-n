@@ -1,0 +1,99 @@
+<app-operativa-header tituloPantalla="{{'pantalla.moduloAdministracion.consultasBics.title' | translate}}"></app-operativa-header>
+<div id="consultaBic" class="panel panel-default col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    <br>
+    <div class="card mt-3">
+        <h5 class="card-header justify-content-center">{{'pantalla.moduloAdministracion.consultasBics.busqueda' |
+            translate}}</h5>
+        <div class="card-body">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <form [formGroup]="consultaBicForm" class="row">
+                    <div class="col-6">
+                        <div class="col-label">
+                            <label for="bicBusqueda" class="col-form-label">{{'pantalla.moduloAdministracion.consultasBics.Bic' |
+                                translate}}</label>
+                        </div>
+                        <div class="col-input">
+                            <input type="text" class="form-control removeTextTransform" id="bicBusqueda" formControlName="bic" [(ngModel)]="bicBusqueda" (keypress)="onlyAlphaNumber($event)"
+                                maxlength="12" size="25">
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="col-label">
+                            <label for="descrip" class="col-form-label">{{'pantalla.moduloAdministracion.consultasBics.descripcion' |
+                                translate}}</label>
+                        </div>
+                        <div class="col-input">
+                            <input type="text" class="form-control removeTextTransform" id="descrip" formControlName="descripcion" [(ngModel)]="descBusqueda"
+                                (keypress)="onlyAlphaNumberAndComa($event)" maxlength="200" size="55">
+                        </div>
+                    </div>
+                </form>
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-1">
+                        <button type="button" class="btn btn-danger" (click)="onClickClean()">{{'btn.limpiar' |
+                            translate}}</button>
+                    </div>
+                    <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-8">
+                        <button type="button" class="btn btn-danger" (click)="searchProductos()">{{'btn.buscar' |
+                            translate}}</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <ng-container *ngIf="banderaHasRows; then templateFillTable;">
+
+    </ng-container>
+        <ng-template #templateFillTable>
+
+        <div class="card mt-3">
+            <h5 class="card-header justify-content-center">
+                {{'pantalla.moduloAdministracion.consultasBics.resultados.busqueda'
+                | translate}}
+            </h5>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                        <table class="table table-striped table-hover" aria-describedby="listaConsultaBic">
+                            <thead>
+                                <tr>
+                                    <th scope="col" class="text-center">{{'pantalla.moduloAdministracion.resultadoBics.Bic'
+                                        | translate}}</th>
+                                    <th scope="col" class="text-center">
+                                        {{'pantalla.moduloAdministracion.resultadoBics.descripcion' | translate}}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+
+                                    <tr *ngFor="let dato of tabla">
+                                        <td class="text-center">{{dato.codigoISO}}</td>
+                                        <td class="text-center">{{dato.codigoTransfer}}</td>
+                                    </tr>
+
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mt-1">
+                        <div class="d-flex justify-content-center" *ngIf="!banderaBtnExportar">
+                            <pagination [boundaryLinks]="showBoundaryLinks"  [hidden]="banderaBtnExportar"  [directionLinks]="showDirectionLinks" [maxSize]="rowsPorPagina" [totalItems]="totalElements" [itemsPerPage]="rowsPorPagina"
+                                [(ngModel)]="page" previousText="&lsaquo;" nextText="&rsaquo;" firstText="{{'paginador.inicio' | translate}}" lastText="{{'paginador.fin' | translate}}" (pageChanged)="onPageChanged($event)">
+                            </pagination>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt-2">
+                    <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-10 offset-sm-10 offset-md-10 offset-lg-10">
+                        <button type="button" class="btn btn-danger" (click)="exportBicXls()" [hidden]="banderaBtnExportar" [disabled]="banderaBtnExportar">{{'btn.exportar' |
+                            translate}}</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </ng-template>
+
+</div>

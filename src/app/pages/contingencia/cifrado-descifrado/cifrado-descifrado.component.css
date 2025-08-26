@@ -1,0 +1,18 @@
+input[type="text"] {
+    text-transform: none;
+}
+
+.flexbox-align {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+input[type="file"] {
+    height: 35%;
+}
+
+.space-right {
+    margin-right: 5px;
+    margin-left: 15px;
+  }

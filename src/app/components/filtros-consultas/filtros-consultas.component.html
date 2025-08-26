@@ -1,0 +1,133 @@
+<form [formGroup]="formConsulta" autocomplete="off" >
+    <div class="card-body">
+            <div class="row">
+                <div class="col-xs-6 col-sm-6 col-md-6">
+                    <div class="form-group row">
+                        <label for="bucCte" class="col-form-label col-sm-3">Codigo de Cliente:</label>
+                        <div class="col-sm-4">
+                            <input type="text" id="bucCte" formControlName="bucCte" class="form-control" placeholder="Codigo Cliente" tabindex="1" (keypress)="numerico($event)"  maxlength="8">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-6 col-sm-6 col-md-6">
+                    <div class="form-group row">
+                        <label for="numCta" class="col-form-label col-sm-3">Número de Cuenta:</label>
+                        <div class="col-sm-4">
+                            <input type="text" class="form-control" formControlName="numCta" id="numCta" placeholder="Número de Cuenta" tabindex="1" (keypress)="numerico($event)"  maxlength="18">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-6 col-sm-6 col-md-6">
+                    <div class="form-group row">
+                        <label for="idProd" class="col-form-label col-sm-3">Producto:</label>
+                        <div class="col-sm-4">
+                            <select class="form-select form-select-sm form-control" formControlName="idProd" id="idProd"  aria-label=".form-select-sm example">
+                                <option value="" selected>{{'reportes.captacion.exptodos' | translate}}</option>
+                                <option [value]="item.idProducto" *ngFor="let item of productos" >{{item.descripcion}}</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-6 col-sm-6 col-md-6">
+                    <div class="form-group row">
+                        <label for="idEstatus" class="col-form-label col-sm-3">Estatus:</label>
+                        <div class="col-sm-4">
+                            <select class="form-select form-select-sm form-control" formControlName="idEstatus" aria-label="estatus">
+                                <option value="" selected>{{'reportes.captacion.exptodos' | translate}}</option>
+                                <option [value]="item.id" *ngFor="let item of estatus" >{{item.descripcion}}</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group row">
+                        <label for="iniImporte" class="col-form-label col-sm-3">Importe Inicial:</label>
+                        <div class="col-sm-4">
+                            <input type="text" id="iniImporte" formControlName="iniImporte" class="form-control" placeholder="Importe Inicial" tabindex="1" (keypress)="numerico($event)" (blur)="transformAmount($event)" maxlength="18">
+                        </div>
+                    </div>
+                </div>
+        
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group row">
+                        <label for="finImporte" class="col-form-label col-sm-3">Importe Final:</label>
+                        <div class="col-sm-4">
+                            <input type="text" id="finImporte" formControlName="finImporte" class="form-control" placeholder="Importe Final" (keypress)="numerico($event)" (blur)="transformAmount($event)" maxlength="18">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-6 col-sm-6 col-md-6">
+                    <div class="form-group row">
+                        <label for="nombre" class="col-form-label col-sm-3">Fecha Inicio Cálculo:</label>
+                        <div class="col-sm-4">
+                            <div class="input-group">
+                                <label name="iniFecha" for="iniFecha" hidden></label>
+                                <input type="text" class="form-control" id="iniFecha" formControlName="iniFecha" name="iniFecha" readonly required bsDatepicker
+                                    #dpiniFecha="bsDatepicker" [bsConfig]="datePickerConfig" [minDate]="getMinDate()">
+                                <div class="input-group-append">
+                                    <button class="btn btn-outline-danger" type="button" id="btniniFecha"  name="btniniFecha" (click)="dpiniFecha.toggle()"
+                                        [attr.aria-expanded]="dpiniFecha.isOpen">
+                                        <em class="fa fa-calendar"></em>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        
+                <div class="col-xs-6 col-sm-6 col-md-6">
+                    <div class="form-group row">
+                        <label for="nombre" class="col-form-label col-sm-3">Fecha Final Cálculo:</label>
+                        <div class="col-sm-4">
+                            <div class="input-group">
+                                <label name="finFecha" for="finFecha" hidden></label>
+                                <input type="text" class="form-control" id="finFecha" name="finFecha" readonly required bsDatepicker
+                                    #dpfinFecha="bsDatepicker" [bsConfig]="datePickerConfig"  formControlName="finFecha" [minDate]="getMinDate()" >
+                                <div class="input-group-append">
+                                    <button class="btn btn-outline-danger" type="button" id="btnfinFecha"
+                                        name="btnfinFecha" (click)="dpfinFecha.toggle()"
+                                        [attr.aria-expanded]="dpfinFecha.isOpen">
+                                        <em class="fa fa-calendar"></em>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-6 col-sm-6 col-md-6">
+                    <div class="form-group row">
+                        <label for="aliasSubs" class="col-form-label col-sm-3">Alias Subsidiaria:</label>
+                        <div class="col-sm-4">
+                            <input type="text" class="form-control" formControlName="aliasSubs" id="aliasSubs" placeholder="Alias Subsidiaria" tabindex="1"   maxlength="18" (keypress)="alphaNumberSpace($event)">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-6 col-sm-6 col-md-6">
+                    <div class="form-group row">
+                        <label for="bucSubs" class="col-form-label col-sm-3">Buc Subsidiaria:</label>
+                        <div class="col-sm-4">
+                            <input type="text" id="bucSubs" formControlName="bucSubs" class="form-control" placeholder="Subsidiaria" (keypress)="numerico($event)" tabindex="1"  maxlength="8">
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </div>
+
+            <div class="row btnConsultar">
+                <div class="col">
+                    <ng-container>
+                        <button type="submit" class="btn btn-outline-danger buton-location" (click)="buscarConsulta()">Consultar</button>
+                        <button type="button" class="btn btn-outline-danger float-left" (click)="limpiar()">Limpiar</button>
+                    </ng-container> 
+                </div>
+            </div>
+
+</form>

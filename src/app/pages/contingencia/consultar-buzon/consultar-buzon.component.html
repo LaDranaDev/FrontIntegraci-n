@@ -1,0 +1,106 @@
+<app-operativa-header tituloPantalla="{{'menu.buzon.consulta' | translate}}"></app-operativa-header>
+<div id="consultaBuzon" class="panel panel-default col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    <br>
+    <div class="card">
+        <h5 class="card-header justify-content-center">
+            {{'pantalla.consultarBuzon.title' | translate}}
+        </h5>
+        <div class="card-body">
+            <form [formGroup]="formSearchBuzon">
+                <div class="row justify-content-center">
+                    <div class="col-xs-6 col-sm-6 col-md-6">
+                        <div class="form-group row">
+                            <label for="inputSelectAplicacion"
+                                class="col-xs-2 col-sm-2 col-md-2 col-lg-2 offset-xs-1 offset-sm-1 offset-md-1 offset-lg-1 col-form-label text-right mt-1">{{'pantalla.consultarBuzon.aplicacion'
+                                | translate}}:</label>
+                            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                <select class="form-control" name="inputSelectAplicacion" id="inputSelectAplicacion"
+                                    formControlName="selectAplication">
+                                    <option value="H2H" [selected]="true">H2H</option>
+                                </select>
+                                <input type="hidden" formControlName="rutaDetalle">
+                                <input type="hidden" formControlName="rutaAnterior">
+                                <input type="hidden" formControlName="rutaPadre">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-6 col-sm-6 col-md-6">
+                        <div class="form-group row">
+                            <label for="inputRutaBuzon"
+                                class="col-xs-3 col-sm-3 col-md-3 col-lg-3 col-form-label text-right mt-1">{{'pantalla.consultarBuzon.rutaBuzon'
+                                | translate}}:</label>
+                            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                <input type="text" class="form-control removeTextTransform" id="inputRutaBuzon"
+                                    name="v_rutaPrincipal" formControlName="rutaPrincipal">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <div class="row mt-2">
+                <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-8 offset-sm-8 offset-md-8 offset-lg-8">
+                    <button type="button" class="btn btn-danger" (click)="eventoConsultar()">{{'btn.consultar' |
+                        translate}}</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br />
+    <div class="card my-1">
+        <h5 class="card-header justify-content-center">
+        </h5>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <table class="table table-striped table-hover" aria-describedby="listaConsultaBuzones">
+                        <thead>
+                            <tr>
+                                <th class="text-center" scope="col">
+                                    {{'pantalla.consultarBuzon.resultadoBusqueda.codigoBuzon' | translate}}</th>
+                                <th class="text-center" scope="col">
+                                    {{'pantalla.consultarBuzon.resultadoBusqueda.rutaBuzon' | translate}}</th>
+                                <th class="text-center" scope="col"></th>
+                                <th class="text-center" scope="col"></th>
+                                <th class="text-center" scope="col"></th>
+                                <th class="text-center" scope="col"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <ng-container *ngIf="banderaHasRows; then templateFillTable; else templateEmptyTable">
+                            </ng-container>
+                            <ng-template #templateFillTable>
+                                <tr *ngFor="let folder of folders">
+                                    <td id="folderPrincipal" class="text-center"><button class="link" name="link"
+                                            id="link"
+                                            (click)="eventoConsultarHref(folder)">{{folder.folderPrincipal}}</button>
+                                    </td>
+                                    <td class="text-center">{{folder.path}}</td>
+                                    <td class="text-center"></td>
+                                    <td class="text-center"></td>
+                                    <td class="text-center"></td>
+                                    <td class="text-center"></td>
+                                </tr>
+                                <tr *ngFor="let archivo of archivos">
+                                    <td class="text-center"></td>
+                                    <td class="text-center"></td>
+                                    <td class="text-center">{{archivo.nombre}}</td>
+                                    <td class="text-center">{{archivo.tamanio}}</td>
+                                    <td class="text-center">{{archivo.permisos}}</td>
+                                    <td class="text-center">{{archivo.fecha}}</td>
+                                </tr>
+                            </ng-template>
+                            <ng-template #templateEmptyTable>
+                            </ng-template>
+                        </tbody>
+                    </table>
+                    <div *ngIf="banderaBtnRegresar"
+                        class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-10 offset-sm-10 offset-md-10 offset-lg-10">
+                        <button type="button" class="btn btn-danger" (click)="eventoRegresar()">{{'btn.regresar' |
+                            translate}}</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br />
+</div>

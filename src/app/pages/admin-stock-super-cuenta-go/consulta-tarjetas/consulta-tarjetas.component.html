@@ -1,0 +1,98 @@
+<app-operativa-header tituloPantalla="{{'administracionStockSuperCuentaGo2' | translate}}"></app-operativa-header>
+
+<div id="Go" class="panel panel-default col-xs-12 col-sm-12 col-md-12 col-lg-12">
+
+    <div class="card">
+        <h5 class="card-header justify-content-center">
+            {{"administracionStockSuperCuentaGo.detalle.remesa" | translate}}: 
+            <strong>{{this.datRemesa.onlyRemesa}}</strong>
+        </h5>
+    </div>
+
+
+        <div class="card my-1" *ngIf="banderaHasRows">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                       <table class="table table-striped table-hover" aria-describedby="cancelarOperaciones">
+                            <thead>
+                                <tr>
+                                    
+                                    <th class="text-center"  scope="col"></th>
+                                    <th class="text-center"  scope="col">{{"admonSprCtaGo.numTarjeta" | translate}}</th>
+                                    <th class="text-center"  scope="col">{{"admonSprCtaGo.numCuenta" | translate}}</th>
+                                    <th class="text-center"  scope="col">{{"estatus" | translate}}</th>							
+                                    <th class="text-center"  scope="col">{{"admonSprCtaGo.appPaterno" | translate}}</th>
+                                    <th class="text-center"  scope="col">{{"admonSprCtaGo.appMaterno" | translate}}</th>
+                                    <th class="text-center"  scope="col">{{"admonSprCtaGo.nombre" | translate}}</th>	
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <ng-container *ngIf="banderaHasRows; then templateFillTable; else templateEmptyTable">
+                                </ng-container>
+                                <ng-template #templateFillTable>
+                                    <tr *ngFor="let registro2 of datWsTabla">
+                                        <td class="text-center">
+                                            <div *ngIf="registro2.estadoTarjeta==='RECIBIDA'">
+                                                <mat-radio-group name="chkTarjetag">
+                                                    <mat-radio-button name="chkTarjeta" 
+                                                    (click)="onEventClickRadioButton(registro2.enMTarjeta, registro2.numeroCuenta)"
+                                                    value={{registro2.tarjeta}}></mat-radio-button>
+                                                </mat-radio-group>
+                                            </div>
+                                        </td>
+                                        <td class="text-center">{{registro2.tarjeta}}</td>
+                                        <td class="text-center">{{registro2.numCuentaNew}}</td>
+                                        <td class="text-center">{{registro2.estadoTarjeta}}</td>
+                                        <td class="text-center">{{registro2.appPaterno}}</td>
+                                        <td class="text-center">{{registro2.appMaterno}}</td>
+                                        <td class="text-center">{{registro2.nombre}}</td>
+                                    </tr>
+                                    
+                                </ng-template>
+                                <ng-template #templateEmptyTable>
+                                    <tr>
+                                        <td class="text-center" colspan="12"> No se encontraron resultados </td>
+                                    </tr>
+                                </ng-template>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mt-1">
+                        <div class="d-flex justify-content-center" *ngIf="banderaHasRows">
+                            <pagination
+                                [boundaryLinks]="showBoundaryLinks"
+                                [directionLinks]="showDirectionLinks"
+                                [totalItems]="totalElements"
+                                [itemsPerPage]="rowsPorPaginaR"
+                                [maxSize]="rowsPorPaginaR"
+                                [(ngModel)]="page3"
+                                previousText="&lsaquo;" nextText="&rsaquo;"
+                                firstText="{{ 'paginador.inicio' | translate }}"
+                                lastText="{{ 'paginador.fin' | translate }}"
+                                (pageChanged)="onPageChanged($event)">
+                            </pagination>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-2">
+            <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-1 offset-sm-1 offset-md-1 offset-lg-1" *ngIf="banderaHasRows">
+                <button type="button" class="btn btn-danger" (click)="cancelar()">{{'btn.cancelar' | translate}}</button>
+            </div>
+            <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-8 offset-sm-8 offset-md-8 offset-lg-8" *ngIf="banderaHasRows">
+                <button type="button" class="btn btn-danger" (click)="exportar()">{{'btn.exportar' | translate}}</button>
+            </div>
+        </div>
+        <div class="row mt-2">
+            <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-1 offset-sm-1 offset-md-1 offset-lg-1">
+                <button type="button" class="btn btn-danger" (click)="regresar()">{{'btn.regresar' | translate}}</button>
+            </div>
+            <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-8 offset-sm-8 offset-md-8 offset-lg-8">
+            </div>
+        </div>
+</div>

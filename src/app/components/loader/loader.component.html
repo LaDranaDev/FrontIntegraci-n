@@ -1,0 +1,6 @@
+<div id="popup_overlay_loading_container" #popup_overlay [style.display]="show?'block':'none'">
+	<div id="popup_overlay_loading" #popup_overlay_loading [class.popup-overlay]="show"></div>
+	<ng-container *ngIf="show">
+	<div id="popup_overlay_loading_gif" class="popup-overlay-loading-gif"></div>
+	</ng-container>
+</div>

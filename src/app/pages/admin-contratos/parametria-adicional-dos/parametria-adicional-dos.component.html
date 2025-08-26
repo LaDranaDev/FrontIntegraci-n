@@ -1,0 +1,91 @@
+<app-operativa-header tituloPantalla="{{'menu.parametros.dos' | translate}}"></app-operativa-header>
+<div id="parametriaAdicionalDos" class="panel panel-default col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    <br>
+    <div class="card">
+        <h5 class="card-header justify-content-center">
+            {{'pantalla.datosContrato.title' | translate}}
+        </h5>
+        <app-busqueda-cliente [data]="datos"></app-busqueda-cliente>
+    </div>
+    <div class="card mt-3">
+        <h5 class="card-header justify-content-center">
+            {{'pantalla.parametriadicionaldos.consulta.datosparametria.title' | translate}}
+        </h5>
+        <div class="card-body">
+            <div class="row justify-content-center">
+                <div class="col-xs-5 col-sm-5 col-md-5">
+                    <div class="form-group row justify-content-center">
+                        <div class="col-sm-1">
+                            <input type="checkbox" name="activaSpeiMayorOchomilFueraHorario" id="activaSpeiMayorOchomilFueraHorario" value="A" [checked]="beanParametrosSPEI.chkSpeiFueraHorario === 'A' ? true : false" (change)="getTheCheckboxWhenIsChecked($event,'SPEIMAYOR')" [disabled]="banderaDisabledChkAtivaSpeiMayorOchomilFueraHorario"
+                            />
+                        </div>
+                        <label for="activaSpeiMayorOchomilFueraHorario" class="col-form-label col-sm-8 text-style">{{'pantalla.parametriadicionaldos.consulta.datosparametria.spei.activaSpeiMayorOchomilFueraHorario' | translate}}</label>
+                    </div>
+                </div>
+                <div class="col-xs-7 col-sm-7 col-md-7">
+                    <div class="form-group row mb-4">
+                        <label for="speiMaxAcumulado" class="col-form-label col-sm-6 text-style">{{'pantalla.parametriadicionaldos.consulta.datosparametria.spei.montoMaximoAcumulado' | translate}}:</label>
+                        <div class="col-xs-4 col-sm-4 col-md-4">
+                            <input type="text" customCurrency [maxL]="21" class="form-control" name="speiMaxAcumulado" id="speiMaxAcumulado" (keypress)="eventOnlyNumberAndPoint($event)"  (paste)="eventOnPageOnlyNumberAndPoint($event)" [(ngModel)]="beanParametrosSPEI.speiMaxAcumulado"
+                                [disabled]="banderaDisableItem" size="17" />
+                        </div>
+                    </div>
+                    <div class="form-group row mb-4">
+                        <label for="speiMaxPorOper" class="col-form-label col-sm-6 text-style">{{'pantalla.parametriadicionaldos.consulta.datosparametria.spei.montoMaximoPorOperacion' | translate}}:</label>
+                        <div class="col-xs-4 col-sm-4 col-md-4">
+                            <input type="text" customCurrency [maxL]="16" class="form-control" name="speiMaxPorOper" id="speiMaxPorOper" (keypress)="eventOnlyNumberAndPoint($event)" (paste)="eventOnPageOnlyNumberAndPoint($event)" [(ngModel)]="beanParametrosSPEI.speiMaxPorOper"
+                            [disabled]="banderaDisableItem" size="17" />
+                        </div>
+                    </div>
+                    <div class="form-group row mb-4">
+                        <label for="speiMontoAcumulado" class="col-form-label col-sm-6 text-style">{{'pantalla.parametriadicionaldos.consulta.datosparametria.spei.importeDisponibleDelAcumulado' | translate}}:</label>
+                        <div class="col-xs-4 col-sm-4 col-md-4">
+                            <input type="text" class="form-control" name="speiMontoAcumulado" id="speiMontoAcumulado" (keypress)="eventOnlyNumberAndPoint($event)" (paste)="eventOnPageOnlyNumberAndPoint($event)" [(ngModel)]="beanParametrosSPEI.speiMontoAcumulado" [disabled]="banderaDisableItem"
+                                size="17" maxlength="27" readonly="readonly" />
+                        </div>
+                    </div>
+                    <div class="form-group row mb-4">
+                        <label for="speiMontoAcumuladoAnt" class="col-form-label col-sm-6 text-style">{{'pantalla.parametriadicionaldos.consulta.datosparametria.spei.importeDisponibleDelAcumuladoAnt' | translate}}:</label>
+                        <div class="col-xs-4 col-sm-4 col-md-4">
+                            <input type="text" class="form-control" name="speiMontoAcumuladoAnt" id="speiMontoAcumuladoAnt" (keypress)="eventOnlyNumberAndPoint($event)" (paste)="eventOnPageOnlyNumberAndPoint($event)" [(ngModel)]="beanParametrosSPEI.speiMontoAcumuladoAnt" [disabled]="banderaDisableItem"
+                                size="17" maxlength="27" readonly="readonly" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card mt-3">
+        <h5 class="card-header justify-content-center">
+            {{'pantalla.parametriadicionaldos.consulta.datosparametria.title.chequera' | translate}}
+        </h5>
+        <div class="card-body">
+            <div class="row justify-content-center">
+                <div class="col-xs-5 col-sm-5 col-md-5">
+                    <div class="form-group row justify-content-center">
+                        <div class="col-sm-1">
+                            <input type="checkbox" name="activaRepChqSeg" id="activaRepChqSeg" value="A" [disabled]="banderaDisableChqSeg" [checked]="beanParametrosSPEI.chkRepChqSeg === 'A' ? true : false" (change)="getTheCheckboxWhenIsChecked($event,'GENREPCHQSEG')" />
+                        </div>
+                        <label for="activaRepChqSeg" class="col-form-label col-sm-8 text-style">{{'pantalla.parametriadicionaldos.consulta.datosparametria.spei.activaRepCqhSeg' | translate}}</label>
+                    </div>
+                    <div class="form-group row justify-content-center">
+                        <div class="col-sm-1">
+                            <input type="checkbox" name="activaEntRepNex" id="activaEntRepNex" value="A" [disabled]="banderaDisableChqSeg" [checked]="beanParametrosSPEI.chkEntRepNex === 'A' ? true : false" (change)="getTheCheckboxWhenIsChecked($event,'ENTREPNEX')" />
+                        </div>
+                        <label for="activaEntRepNex" class="col-form-label col-sm-8 text-style">{{'pantalla.parametriadicionaldos.consulta.datosparametria.spei.activaEntRepNex' | translate}}</label>
+                    </div>
+                </div>
+                <div class="col-xs-5 col-sm-5 col-md-5"></div>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-2">
+        <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">
+            <button type="button" class="btn btn-danger" (click)="limpiarValues()">{{'btn.limpiar' | translate}}</button>
+        </div>
+        <div class="col-xs-1 col-sm-1 offset-10 col-md-1 col-lg-1">
+            <button type="button" class="btn btn-danger" (click)="openModalGuardar()" [disabled]="banderaDisableSave">{{'btn.guardar' | translate}}</button>
+        </div>
+    </div>
+    <br />
+</div>

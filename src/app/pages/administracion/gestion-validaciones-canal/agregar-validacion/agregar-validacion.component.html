@@ -1,0 +1,153 @@
+<app-operativa-header
+  tituloPantalla="{{
+    isNew
+      ? ('menu.moduloAdministracion.gestionValidacionesCanal.agregarValidacion'
+        | translate)
+      : ('gestionValidaciones.general.modificarCampo.titulo' | translate)
+  }}"
+></app-operativa-header>
+<div
+  id="gestionValidacionesCanal"
+  class="panel panel-default col-xs-12 col-sm-12 col-md-12 col-lg-12"
+>
+  <br />
+  <div class="card">
+    <h5 class="card-header justify-content-center">
+      {{
+        isNew
+          ? ("pantallas.moduloAdministracion.gestionValidacionesCanal.title"
+            | translate)
+          : ("gestionValidaciones.general.modificarValidacion.subtitulo"
+            | translate)
+      }}
+    </h5>
+    <div class="card-body">
+      <form [formGroup]="formControlNuevaValidaciones">
+        <div class="row">
+          <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+            <div
+              class="form-group row justify-content-center align-items-center"
+            >
+              <label
+                for="clave"
+                class="col-xs-2 col-sm-2 col-md-2 col-lg-2 col-form-label"
+                >{{
+                  "pantallas.moduloAdministracion.gestionValidacionesCanal.clave"
+                    | translate
+                }}:
+              </label>
+              <div class="ccol-xs-6 col-sm-6 col-md-6 col-lg-69">
+                <input
+                  type="text"
+                  class="form-control"
+                  appInputMask="alfanumerico_space"
+                  name="clave"
+                  maxlength="20"
+                  formControlName="clave"
+                  id="clave"
+                  onDrop="return false"
+                  placeholder="{{
+                    'pantallas.moduloAdministracion.gestionValidacionesCanal.clave'
+                      | translate
+                  }}"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+            <div
+              class="form-group row justify-content-center align-items-center"
+            >
+              <label
+                for="descripcion"
+                class="col-xs-2 col-sm-2 col-md-2 col-lg-2 col-form-label"
+              >
+                {{
+                  "pantallas.moduloAdministracion.gestionValidacionesCanal.descripcion"
+                    | translate
+                }}:
+              </label>
+              <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                <input
+                  type="text"
+                  class="form-control"
+                  maxlength="50"
+                  appInputMask="alfanumerico_space"
+                  name="descripcion"
+                  formControlName="descripcion"
+                  aria-label="activo"
+                  placeholder="{{
+                    'pantallas.moduloAdministracion.gestionValidacionesCanal.descripcion'
+                      | translate
+                  }}"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+            <div
+              class="form-group row justify-content-center align-items-center"
+            >
+              <label
+                for="ce"
+                class="col-xs-2 col-sm-2 col-md-2 col-lg-2 col-form-label"
+              >
+                {{
+                  "pantallas.moduloAdministracion.gestionValidacionesCanal.CE"
+                    | translate
+                }}:
+              </label>
+              <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                <select
+                  class="form-control"
+                  id="ce"
+                  name="ce"
+                  formControlName="ce"
+                >
+                  <option value="">{{ "seleccione" | translate }}</option>
+                  <option [value]="item.idCatalogo" *ngFor="let item of ce">
+                    {{ item.descripcion }}
+                  </option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+      <div class="row">
+        <div
+          class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-1 offset-sm-1 offset-md-1 offset-lg-1"
+        >
+          <button
+            type="button"
+            class="btn btn-danger"
+            (click)="onClickLimpiar()"
+          >
+            {{ "btn.limpiar" | translate }}
+          </button>
+        </div>
+        <div
+          class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-8 offset-sm-8 offset-md-8 offset-lg-8"
+        >
+          <button type="button" class="btn btn-danger" (click)="guardar()">
+            {{ "btn.guardar" | translate }}
+          </button>
+        </div>
+      </div>
+      <div class="row">
+        <div
+          class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-1 offset-sm-1 offset-md-1 offset-lg-1 mt-3"
+        >
+          <button type="button" class="btn btn-danger" (click)="regresar()">
+            {{ "btn.regresar" | translate }}
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

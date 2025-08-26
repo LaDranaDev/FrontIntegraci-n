@@ -1,0 +1,223 @@
+<app-operativa-header
+  tituloPantalla="{{
+    'operativo.graficaConsolidadoHistoricoLayouts' | translate
+  }}"
+></app-operativa-header>
+<div
+  id="consultaValidacionesCanal"
+  class="panel panel-default col-xs-12 col-sm-12 col-md-12 col-lg-12"
+>
+  <br />
+  <div class="card" [hidden]="showGraph || showGraphDetail">
+    <h5 class="card-header justify-content-center">
+      {{ "pantalla.gestionValidacion.seccionBusqueda.title" | translate }}
+    </h5>
+    <div class="card-body">
+      <form>
+        <!-- Form search -->
+        <div class="row">
+          <div class="col-sm-12 col-md-6 text-center">
+            <div class="form-check form-check-inline">
+              <input
+                type="radio"
+                class="ml-5 form-check-input"
+                id="actualYear"
+                name="actualYear"
+                (click)="filterBy = 'most'"
+                [checked]="filterBy === 'most' ? true : false"
+              />
+              <label class="form-check-label" for="actualYear">{{
+                "operativo.layoutsUtilizados" | translate
+              }}</label>
+            </div>
+          </div>
+          <div class="col-sm-12 col-md-6">
+            <div class="form-check form-check-inline">
+              <input
+                type="radio"
+                class="ml-5 form-check-input"
+                name="pastYear"
+                id="pastYear"
+                (click)="filterBy = 'top'"
+                [checked]="filterBy === 'top' ? true : false"
+              />
+              <label class="form-check-label" for="pastYear">{{
+                "operativo.topLayoutsUtilizados" | translate
+              }}</label>
+            </div>
+          </div>
+        </div>
+      </form>
+
+      <!-- Buttons search, clear -->
+      <div class="row mt-5">
+        <div
+          class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-1 offset-sm-1 offset-md-1 offset-lg-1"
+        >
+          <button type="button" class="btn btn-danger" (click)="clean()">
+            {{ "btn.limpiar" | translate }}
+          </button>
+        </div>
+        <div
+          class="col-xs-2 col-sm-2 col-md-2 col-lg-2 offset-xs-8 offset-sm-8 offset-md-8 offset-lg-8"
+        >
+          <button type="button" class="btn btn-danger" (click)="search()">
+            {{ "btn.buscar" | translate }}
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Grap top or most used layouts -->
+  <div class="card mt-3" [hidden]="!showGraph || showGraphDetail">
+    <div class="card-body">
+      <div class="row">
+        <!-- Table -->
+        <div class="col-xs-12 col-sm-12 col-md-5 col-lg-5">
+          <table class="table table-striped table-hover">
+            <caption></caption>
+            <thead>
+              <tr>
+                <th scope="col" class="text-center">
+                  {{ "pantallas.monitorizacion.Fecha" | translate }} /
+                  {{
+                    "pantalla.moduloAdministracion.vizualizacionLayout"
+                      | translate
+                  }}
+                </th>
+                <th scope="col" class="text-center">
+                  {{ "operativo.archivo" | translate }}
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let layout of layouts">
+                <td
+                  class="text-center"
+                  [ngClass]="filterBy === 'top' ? 'tablePointer' : ''"
+                  (click)="filterBy === 'top' ? ceateChartDetail(layout) : false"
+                >
+                  {{ layout.nameLayout }}
+                </td>
+                <td class="text-center">{{ layout.numArchivos }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <!-- Graph -->
+        <div class="col-xs-12 col-sm-12 col-md-7 col-lg-7">
+          <div class="row">
+            <div
+              class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-center text-uppercase"
+            >
+              <h2>
+                {{
+                  filterBy !== "top"
+                    ? ("operativo.grafConsLay" | translate)
+                    : ("operativo.topLayoutsUtilizados" | translate)
+                }}
+              </h2>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+              <canvas class="canvas-size" id="chartConsolidadoLayout"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row mt-2">
+        <div
+          class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-1 offset-sm-1 offset-md-1 offset-lg-1"
+        >
+          <button type="button" class="btn btn-danger" (click)="back(false)">
+            {{ "btn.regresar" | translate }}
+          </button>
+        </div>
+        <div
+          class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-8 offset-sm-8 offset-md-8 offset-lg-8"
+        >
+          <button type="button" class="btn btn-danger" (click)="exportLayouts(filterBy === 'top' ? true : false)">
+            {{ "btn.exportar" | translate }}
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Grap detail -->
+  <div class="card mt-3" [hidden]="showGraph || !showGraphDetail">
+    <div class="card-body">
+      <div class="row">
+        <!-- Table -->
+        <div class="col-xs-12 col-sm-12 col-md-5 col-lg-5">
+          <table class="table table-striped table-hover">
+            <caption></caption>
+            <thead>
+              <tr>
+                <th scope="col" class="text-center">
+                  {{ "operativo.nombreCliente" | translate }}
+                </th>
+                <th scope="col" class="text-center">
+                  {{
+                    "pantalla.gestionComprobantes.comprobantesxProducto.producto"
+                      | translate
+                  }}
+                </th>
+                <th scope="col" class="text-center">
+                  {{
+                    "pantalla.sterling.historialAnualBuzon.total" | translate
+                  }}
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let detail of clientDetailLayout">
+                <td class="text-center">{{detail.nombreProducto}}</td>
+                <td class="text-center">{{detail.nombreCliente}}</td>
+                <td class="text-center">{{detail.total}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <!-- Graph -->
+        <div class="col-xs-12 col-sm-12 col-md-7 col-lg-7">
+          <div class="row">
+            <div
+              class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-center text-uppercase"
+            >
+              <h2>
+                {{
+                  "pantalla.moduloAdministracion.vizualizacionLayout"
+                    | translate
+                }}
+                {{ "nameLayout" }}
+              </h2>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+              <canvas
+                class="canvas-size"
+                id="chartConsolidadoLayoutDetail"
+              ></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row mt-2">
+        <div
+          class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-1 offset-sm-1 offset-md-1 offset-lg-1"
+        >
+          <button type="button" class="btn btn-danger" (click)="back(true)">
+            {{ "btn.regresar" | translate }}
+          </button>
+        </div>
+        <div
+          class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-8 offset-sm-8 offset-md-8 offset-lg-8"
+        >
+          <button type="button" class="btn btn-danger" (click)="exportDetailLayouts()">
+            {{ "btn.exportar" | translate }}
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

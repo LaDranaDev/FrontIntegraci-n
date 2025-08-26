@@ -1,0 +1,167 @@
+<div class="panel panel-default col">
+    <app-operativa-header [center]="true"
+        tituloPantalla="{{'adminContrato.cobroComision.title' | translate}}"></app-operativa-header>
+
+    <br>
+
+    <div class="card">
+        <h5 class="card-header justify-content-center mt-0"><label>{{'pantalla.datosContrato.title' |
+                translate}}</label>
+        </h5>
+        <app-busqueda-cliente (valueChange)="contrato($event)"></app-busqueda-cliente>
+    </div>
+
+    <div class="card">
+        <h5 class="card-header justify-content-center"><label for="">{{'adminContrato.cobroComision.configuracion' |
+                translate}}</label></h5>
+        <div class="card-body">
+            <div class="row">
+                <div class="col text-center">
+                    <input type="checkbox" name="voBoCliente98" id="voBoCliente98" class="m-2" [(ngModel)]="voBoCliente"
+                        [disabled]="banderaContrato">
+                    <label for="voBoCliente98">{{'pantallas.tipoDeCobro.VoBoCliente' | translate}}</label>
+                </div>
+            </div>
+            <br>
+
+            <div class="row justify-content-md-center">
+                <div class="col-3">
+                    <label>{{'pantalla.cobroComisiones.tipoCobro' | translate}}</label>
+                </div>
+                <div class="col-6">
+                </div>
+            </div>
+
+            <div class="row justify-content-md-center">
+                <div class="col-3">
+                    <label>
+                        <input type="radio" id="tipoCobro" value="1" [(ngModel)]="tipoCobro"
+                            [disabled]="banderaContrato" class="mr-1"  (click)="open(1)">>
+                        {{'pantalla.cobroComisiones.unaCta' | translate}}
+                    </label>
+                </div>
+                <div class="col-6">
+                    <div class="row" *ngIf="tipoCobro === '1'">
+                        <div class="col-8 d-flex justify-content-end">
+                            <label for="ctaRenta1">{{'pantalla.cobroComisiones.ctaRentaFija' | translate}}:</label>
+                        </div>
+                        <div class="col-4">
+                            <input type="text" id="ctaRenta1" name="ctaRenta1" class="form-control"
+                                [(ngModel)]="ctaRenta1">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row justify-content-md-center">
+                <div class="col-3">
+                    <label>
+                        <input type="radio" id="tipoCobro" value="2" [(ngModel)]="tipoCobro"
+                            [disabled]="banderaContrato" class="mr-1">
+                        {{'pantalla.cobroComisiones.ctaPagadora' | translate}}
+                    </label>
+                </div>
+                <div class="col-6">
+                    <ng-container *ngIf="tipoCobro === '2'">
+                        <div class="row">
+                            <div class="col-8 d-flex justify-content-end">
+                                <label>{{'pantalla.cobroComisiones.ctaRentaFija' | translate}}:</label>
+                            </div>
+                            <div class="col-4">
+                                <input type="text" id="ctaRenta2" class="form-control" [(ngModel)]="ctaRenta2">
+                            </div>
+                        </div>
+                        <div class="row" *ngFor="let contrato of contratosConfirming">
+                            <div class="col-8 d-flex justify-content-end">
+                                <label>Confirming {{contrato.numeroContratoConf}}</label>
+                            </div>
+                            <div class="col-4">
+                                <input type="text" name="numCtaComision" aria-label="numCtaComision"
+                                    [id]="contrato.numeroContratoConf" class="form-control"
+                                    [(ngModel)]="contrato.numCtaComision">
+                            </div>
+                        </div>
+                    </ng-container>
+                </div>
+            </div>
+
+            <div class="row justify-content-md-center">
+                <div class="col-3">
+                    <label>
+                        <input type="radio" id="tipoCobro" value="3" [(ngModel)]="tipoCobro"
+                            [disabled]="banderaContrato" class="mr-1">
+                        {{'pantalla.cobroComisiones.ctaProducto' | translate}}
+                    </label>
+                </div>
+                <div class="col-6">
+                    <ng-container *ngIf="tipoCobro === '3'">
+                        <div class="row">
+                            <div class="col-8 d-flex justify-content-end">
+                                <label for="ctaRenta2">{{'pantalla.cobroComisiones.ctaRentaFija' | translate}}:</label>
+                            </div>
+                            <div class="col-4">
+                                <input type="text" id="ctaRenta2" name="ctaRenta2" class="form-control"
+                                    [(ngModel)]="ctaRenta2">
+                            </div>
+                        </div>
+                        <div class="row" *ngFor="let producto of productos">
+                            <div class="col-8 d-flex justify-content-end">
+                                <label>{{producto.descProducto}}:</label>
+                            </div>
+                            <div class="col-4">
+                                <input type="text" aria-label="numCuentaComision" name="numCuentaComision"
+                                    [id]="producto.idProducto" class="form-control"
+                                    [(ngModel)]="producto.numCuentaComision">
+                            </div>
+                        </div>
+                    </ng-container>
+                </div>
+            </div>
+
+            <div class="row justify-content-md-center">
+                <div class="col-3">
+                    <button type="button" class="btn btn btn-outline-danger" (click)="open(4)">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-gear" viewBox="0 0 16 16">
+                            <path d="M8 4.754a3.246 3.246 0 1 0 0 6.492 3.246 3.246 0 0 0 0-6.492zM5.754 8a2.246 2.246 0 1 1 4.492 0 2.246 2.246 0 0 1-4.492 0z" />
+                            <path
+                                d="M9.796 1.343c-.527-1.79-3.065-1.79-3.592 0l-.094.319a.873.873 0 0 1-1.255.52l-.292-.16c-1.64-.892-3.433.902-2.54 2.541l.159.292a.873.873 0 0 1-.52 1.255l-.319.094c-1.79.527-1.79 3.065 0 3.592l.319.094a.873.873 0 0 1 .52 1.255l-.16.292c-.892 1.64.901 3.434 2.541 2.54l.292-.159a.873.873 0 0 1 1.255.52l.094.319c.527 1.79 3.065 1.79 3.592 0l.094-.319a.873.873 0 0 1 1.255-.52l.292.16c1.64.893 3.434-.902 2.54-2.541l-.159-.292a.873.873 0 0 1 .52-1.255l.319-.094c1.79-.527 1.79-3.065 0-3.592l-.319-.094a.873.873 0 0 1-.52-1.255l.16-.292c.893-1.64-.902-3.433-2.541-2.54l-.292.159a.873.873 0 0 1-1.255-.52l-.094-.319zm-2.633.283c.246-.835 1.428-.835 1.674 0l.094.319a1.873 1.873 0 0 0 2.693 1.115l.291-.16c.764-.415 1.6.42 1.184 1.185l-.159.292a1.873 1.873 0 0 0 1.116 2.692l.318.094c.835.246.835 1.428 0 1.674l-.319.094a1.873 1.873 0 0 0-1.115 2.693l.16.291c.415.764-.42 1.6-1.185 1.184l-.291-.159a1.873 1.873 0 0 0-2.693 1.116l-.094.318c-.246.835-1.428.835-1.674 0l-.094-.319a1.873 1.873 0 0 0-2.692-1.115l-.292.16c-.764.415-1.6-.42-1.184-1.185l.159-.291A1.873 1.873 0 0 0 1.945 8.93l-.319-.094c-.835-.246-.835-1.428 0-1.674l.319-.094A1.873 1.873 0 0 0 3.06 4.377l-.16-.292c-.415-.764.42-1.6 1.185-1.184l.292.159a1.873 1.873 0 0 0 2.692-1.115l.094-.319z" />
+                        </svg>
+                    </button>
+                </div>
+                <div class="col-6">
+                </div>
+            </div>
+
+            <div class="row mt-3">
+                <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-1 offset-sm-1 offset-md-1 offset-lg-1">
+                    <button type="button" class="btn btn-danger" (click)="limpiar()">{{'btn.limpiar' |
+                        translate}}</button>
+
+                </div>
+                <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-8 offset-sm-8 offset-md-8 offset-lg-8">
+                    <button type="button" class="btn btn-danger" (click)="guardar()"
+                        [disabled]="banderaContrato">{{'btn.guardar' | translate}}</button>
+                </div>
+            </div>
+            <div class="row mt-2">
+                <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-10 offset-sm-10 offset-md-10 offset-lg-10">
+                    <button type="button" class="btn btn-danger" (click)="exportar()"
+                        [disabled]="banderaContrato">{{'btn.exportar' | translate}}</button>
+                </div>
+            </div>
+
+            <div class="row justify-content-md-center">
+                <div class="col-3">
+                    <div *ngFor="let item of catalogoTipoCobro; let i = index">
+                        <input type="radio" [checked]="" id="opcionCobro211" name="opcionCobro211"
+                            aria-label="opcionCobro" [value]="item.id" [(ngModel)]="opcionCobro">
+                        <label for="opcionCobro211" class="pl-1">{{item.descripcion}}:</label>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+</div>

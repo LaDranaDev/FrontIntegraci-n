@@ -1,0 +1,57 @@
+<app-operativa-header tituloPantalla="{{'menu.adminContrato.adminNotificaciones' | translate}}"></app-operativa-header>
+<div id="altaContratos" class="panel panel-default col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    <br>
+    <h5 class="card-header justify-content-center">
+        {{'pantalla.datosContrato.title' | translate}}
+    </h5>
+    <app-busqueda-cliente [data]="datos" #limpiar></app-busqueda-cliente>
+
+<div class="card">
+        <h5 class="card-header justify-left">
+            {{'pantalla.destinatarios.titulo' | translate}}
+        </h5>
+    <div>
+        <form [formGroup]="matForm" >
+        <div class="padding-form-kindNoti-emailaccount col-xs-labels">
+            <label for="kindNot">{{'pantalla.configNotificaciones.tipo' | translate}}</label>
+            <input formControlName="kindNot" type="text" id="kindNot" name="kindNot" class="form-control" [disabled]="true">
+        </div>
+        <div class="col-xs-2">
+            <div>
+                <label for="">{{'pantalla.destinatarios.correo' | translate}}</label>
+            </div>
+            <div>
+                <label for="">{{'btn.seleccionar' | translate}}</label>
+            </div>
+        </div>
+        <div class="col-xs-2" *ngFor="let dest of responseDest">
+            <div class="selection" (click)="putValue(dest.mails)">
+                <label class="cursors" for="">{{dest.mails}}</label>
+            </div>
+            <div class="checkpadding">
+                <mat-checkbox class="padding-table" type="checkbox" formControlName="check"  (change)="checkEmail(dest, $event)"></mat-checkbox>
+            </div> 
+        </div>
+        <div class="padding-form-kindNoti-emailaccount col-xs-labels">
+            <label for="emailAccount">{{'pantalla.destinatarios.correo' | translate}}:</label>
+            <input formControlName="emailAccount" type="email" id="emailAccount" name="emailAccount" class="form-control inherit" maxlength="50" placeholder="{{'pantalla.destinatarios.correo' | translate}}" appInputMask="correo2">
+            
+        </div>
+    </form>
+    </div>
+    <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12 buttons-flex pl-4 pr-3" >
+               
+        <div class="buttons-left">
+            <button type="button" class="btn btn-danger float-left" value="Eliminar" (click)="openConfirmYN('Confirmar Operación', '¿Está seguro que desea realizar la operación?', 'eliminar')">{{'btn.eliminar' | translate}}</button>  
+            <button type="button" class="btn btn-danger float-left" value="Limpiar" (click)="clearForm();">{{'btn.limpiar' | translate}}</button>  
+            <button type="button" class="btn btn-danger float-left" value="Regresar" (click)="goBack()">{{'btn.regresar' | translate}}</button> 
+        </div>
+         <div class="buttons-right">
+            <button type="button" class="btn btn-danger float-right" value="Guardar" (click)="saveDest()">{{'btn.guardar' | translate}}</button>  
+            <button type="button" class="btn btn-danger float-right" value="Modificar" (click)="updateDest()">{{'btn.modificar' | translate}}</button> 
+        </div>
+        
+    </div>
+</div>
+   
+</div>

@@ -1,0 +1,96 @@
+<app-operativa-header tituloPantalla="{{'menu.adminContrato.administracionContratos' | translate}}"></app-operativa-header>
+<div id="consultaContratos" class="panel panel-default col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    <br>
+    <div class="card">
+        <h5 class="card-header">
+            {{'menu.adminContrato.administracionContratos' | translate}}
+        </h5>
+        <form [formGroup]="matForm" >
+        <div class="card-body col-xs-2">
+            <div class="col-xs-2-label">
+                <label for="numContrato">{{ 'numContrato' | translate }}:</label>
+                <input type="text" formControlName="numContrato" #numContrato name="numContrato" id="numContrato" class="form-control width-conv" maxlength="12" appInputMask="numerico">
+            </div>
+
+            <div class="col-xs-2-label">
+                <label for="codigoCliente">{{ 'menu.monitoreo.comprobantesFormatoCDMX.codigo' | translate }}:</label>
+                <input type="text" formControlName="codigoCliente" #codigoCliente name="codigoCliente" id="codigoCliente" class="form-control width-conv"  maxlength="8" appInputMask="numerico">
+            </div>
+
+            <div class="col-xs-2-label">
+                <label for="razonSocial">{{ 'razonSocial' | translate }}:</label>
+                <input type="text" formControlName="razonSocial" #razonSocial name="razonSocial" id="razonSocial" class="form-control width-conv removeTextUpper" maxlength="25" appInputMask="alfanumerico_space">
+            </div>
+
+            <div class="col-xs-2-label">
+                <label for="cuentaEje">{{ 'pantalla.datosContrato.cuentaEje' | translate }}</label>
+                <input type="text" formControlName="cuentaEje" #cuentaEje name="cuentaEje" id="cuentaEje" class="form-control width-conv" maxlength="20" appInputMask="numerico">
+            </div>
+        </div>
+        <div class="justify-center">
+        <h4>{{ 'pantalla.consultaContratos.fechaGeneracion' | translate }}</h4>
+        </div>
+            <div class="card-body col-xs-2 padding-margin">
+            <div class="row row-gap col-xs-2-label-date">
+                <label class="label-txt-align" for="inputUser">{{'pantallas.consultaContratos.fechaInicio' | translate}}</label>
+                <input matInput  class="form-control width-conv" [matDatepicker]="picker" formControlName="dateInit" readonly="readonly" onkeyup="return 0;" onkeypress="return 0;" onkeydown="return 0;" ngDefaultControl>
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker  color="warn" #picker></mat-datepicker>
+            </div>
+
+            <div class="row row-gap col-xs-2-label-date">
+                <label class="label-txt-align" for="inputUser2">{{'pantallas.consultaContratos.fechaFin' | translate}}</label>
+                <input matInput class="form-control width-conv" [matDatepicker]="picker2" formControlName="dateEnd" readonly="readonly" onkeyup="return 0;" onkeypress="return 0;" onkeydown="return 0;" ngDefaultControl>
+                <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                <mat-datepicker  color="warn" #picker2></mat-datepicker>
+            </div>
+
+        </div>
+        <div>
+            <button type="button" class="btn btn-danger float-left margin-buttons-left" (click)="btnLimpiar()">{{'btn.limpiar' | translate}}</button>
+            <button type="button" class="btn btn-danger float-custom" (click)="buscarContratosPorFecha()">{{'btn.buscar' | translate}}</button>
+        </div>
+    </form>
+    </div>
+    <div>
+        <br> <br>
+
+        <div class="card" *ngIf="dataSource">
+            <div class="margin-title">
+                <h4>{{'pantalla.consultarBuzon.resultadoBusqueda.title' | translate}}:</h4>
+            </div>
+            <table mat-table [dataSource]="dataSource" class="table table-striped table-hover">
+                <caption></caption>
+                <!-- Sel Column -->
+                <ng-container matColumnDef="numContrato">
+                    <th id="matCell" mat-header-cell *matHeaderCellDef>{{'pantallas.descargaArchivos.contrato' | translate}}</th>
+                    <td mat-cell *matCellDef="let element">
+                        <a class="estilo" (click)="getContract(element)"> {{element.numContrato}} </a>
+                         </td>
+                </ng-container>
+                <!-- Perfil Column -->
+                <ng-container matColumnDef="razonSocial">
+                    <th id="matCellPer" mat-header-cell *matHeaderCellDef>{{'razonSocial' | translate}}</th>
+                    <td mat-cell *matCellDef="let element"> {{element.razonSocial}} </td>
+                </ng-container>
+                <ng-container matColumnDef="bucCliente">
+                    <th id="matCellCode" mat-header-cell *matHeaderCellDef>{{'pantallas.monitorOperacionesOnline.codigoCliente' | translate}} </th>
+                    <td mat-cell *matCellDef="let element"> {{element.bucCliente}} </td>
+                </ng-container>
+                <ng-container matColumnDef="descEstatus">
+                    <th id="matCellStatus" mat-header-cell *matHeaderCellDef>{{'pantallas.gestionAlarma.seccionResultado.tabla.estatus' | translate}} </th>
+                    <td mat-cell *matCellDef="let element"> {{element.descEstatus}} </td>
+                </ng-container>
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+            <mat-paginator #paginator [pageSizeOptions]="[10]" showFirstLastButtons></mat-paginator>
+
+        </div>
+    </div>
+    <div  *ngIf="dataSource" class="mt-3">
+        <div class="justify-right">
+            <button type="button" class="txt-end btn btn-danger" (click)="openModal()">{{'btn.exportar' | translate}}</button>
+        </div>
+    </div>
+</div>

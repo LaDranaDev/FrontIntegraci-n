@@ -1,0 +1,58 @@
+<app-operativa-header tituloPantalla="{{'pantalla.cierre.productos.title' |
+translate}}"></app-operativa-header>
+<div id="cierreProductos" class="panel panel-default col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    <br>
+    <!-- --- Seccion de Busqueda --- -->
+    <div class="card mt-3">
+        <h5 class="card-header justify-content-center">{{'pantalla.cierre.productos.subtitle' |
+            translate}}</h5>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <table class="table table-striped table-hover" aria-describedby="cierreProd">
+                        <thead>
+                            <tr>
+                                <th scope="col" class="text-center">
+                                    {{'pantalla.cierre.productos.table.col.claveProducto' |
+                                    translate}}</th>
+                                <th scope="col" class="text-center">{{'pantalla.cierre.productos.table.col.descripcion'
+                                    |
+                                    translate}}</th>
+                                <th scope="col" class="text-center">
+                                    {{'pantalla.cierre.productos.table.col.claveProductoCliente' |
+                                    translate}}</th>
+                                <th scope="col" class="text-center">{{'pantalla.cierre.productos.table.col.horaCierre' |
+                                    translate}}</th>
+                                <th scope="col" class="text-center">{{'pantalla.cierre.productos.table.col.inactivar' |
+                                    translate}}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <ng-container *ngIf="banderaHasRows; then templateFillTable; else templateEmptyTableBack">
+                            </ng-container>
+                            <ng-template #templateFillTable>
+                                <tr *ngFor="let dato of tabla">
+                                    <td class="text-center">{{dato.claveProducto}}</td>
+                                    <td class="text-center">{{dato.descipcionProd}}</td>
+                                    <td class="text-center">{{dato.cveProdOper}}</td>
+                                    <td class="text-center">{{dato.hora + ':' + dato.minutos}}</td>
+                                    <td class="text-center">
+                                        <button class="link" *ngIf="dato.bandera === 'A'" name="link" id="link"
+                                            (click)="inactiveProducto(dato.cveProdOper)">{{'pantalla.cierre.productos.table.col.inactivar'
+                                            |
+                                            translate}}</button>
+                                    </td>
+                                </tr>
+                            </ng-template>
+                            <ng-template #templateEmptyTableBack>
+                                <tr>
+                                    <td class="text-center" colspan="12"> {{'noResult' | translate}}</td>
+                                </tr>
+                            </ng-template>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

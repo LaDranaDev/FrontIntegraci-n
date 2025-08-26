@@ -1,0 +1,16 @@
+
+<div class="modal-guardar-parametria-adicional">
+    <h2 class="titulo-confirm" mat-dialog-title>{{'modals.parametriadicional.confirmacion' | translate}}</h2>
+    <div class="col-3">
+        <img draggable="true" class="pull-left page-header-logo img " id="imgGuardarParam" src="../../assets/img/alerts/ayuda.gif" alt="logo-guardar-param">
+    </div>
+    <div class="col-9 leyenda-confirmacion" mat-dialog-content>{{'modals.parametriadicional.confirmacion.guardar.parametria.rastreo' | translate}}</div>
+    <div class="col-12 opciones-guardar" mat-dialog-actions>
+        <button mat-button class="btn btn-outline-danger float-right" (click)="guardarParametria('ok')">
+            {{'modals.parametriadicional.ok' | translate}}
+        </button>
+        <button mat-button class="btn btn-outline-danger float-right btn-guardar-todo" (click)="guardarParametria('guardarTodo')">
+            {{'modals.parametriadicional.guardar.todo' | translate}}
+        </button>
+    </div>
+</div>

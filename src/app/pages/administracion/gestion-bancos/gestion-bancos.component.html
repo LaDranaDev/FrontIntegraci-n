@@ -1,0 +1,136 @@
+<app-operativa-header tituloPantalla="{{'pantalla.gestionDeBancos.titulo'| translate}}"></app-operativa-header>
+<div id="consultaBanco" class="panel panel-default col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    <br>
+    <div class="card">
+        <h5 class="card-header justify-content-center">
+            {{'pantalla.sucursales.criterios.title'| translate}}
+        </h5>
+        <div class="card-body">
+            <form [formGroup]="gestionBancosForm">
+                <div class="row justify-content-center">
+                    <div class="col-xs-5 col-sm-5 col-md-5">
+                        <div class="form-group row">
+                            <label for="claveIdentificacion">{{'pantalla.moduloAdministracion.gestionBancos.Clavesola'| translate}}:</label>
+                            <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
+                                <input class="form-control"  type="text" id="claveIdentificacion" name="claveIdentificacion"formControlName="claveIdentificacion"[(ngModel)]="descBusqueda"
+                                (keypress)="eventOnKeyOnlyNumbers($event)"
+                                (ondragenter)="disableEvent($event)"
+                                (dragover)="disableEvent($event)"
+                                (ondrop)="disableEvent($event)"
+                                (paste)="eventoOnPasteBlock($event)"
+                                size="4" maxlength="4">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-xs-5 col-sm-5 col-md-5">
+                        <div class="form-group row">
+                            <label for="nombre">{{'pantalla.moduloAdministracion.gestionBancos.nombreBanco'| translate}}:</label>
+                            <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
+                                <input class="form-control"  type="text" name="nombre" id="nombre" formControlName="nombre"
+                                (keypress)="onlyAlphabeticAndNumbersAndSomeCaracEsp($event)"
+                                (ondragenter)="disableEvent($event)"
+                                (dragover)="disableEvent($event)"
+                                (ondrop)="disableEvent($event)"
+                                (paste)="eventoOnPasteBlock($event)"
+                                size="60" maxlength="60">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <div class="row mt-2">
+                <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-1 offset-sm-0 offset-md-1 offset-lg-1">
+                    <button type="button" class="btn btn-danger" (click)="eventClean()">{{'btn.limpiar' | translate}}</button>
+                </div>
+                <div class="col-xs-2 col-sm-2 col-md-1 col-lg-2 offset-xs-8 offset-sm-8 offset-md-8 offset-lg-8">
+                    <button type="button" class="btn btn-danger" (click)="eventoConsultar()">{{'btn.buscar' | translate}}</button>
+                    <br><br>
+                    <button type="button" class="btn btn-danger" (click)="addBanco()">{{'btn.agregarBanco' | translate}}</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="card my-1">
+            <h5 class="card-header justify-content-center">
+                {{'pantalla.consultarBuzon.resultadoBusqueda.title' | translate}}
+            </h5>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <table class="table table-striped table-hover" aria-describedby="listaConsultaBanco">
+                            <thead>
+                                <tr>
+                                    <th class="text-center" scope="col">{{'pantalla.moduloAdministracion.gestionBancos.Clavesola' | translate}}</th>
+                                    <th class="text-center" scope="col">{{'pantalla.moduloAdministracion.gestionBancos.nombreBanco' | translate}}</th>
+                                    <th class="text-center" scope="col">{{'pantalla.moduloAdministracion.gestionBancos.tipoOperacion' | translate}}</th>
+                                    <th class="text-center" scope="col">{{'pantalla.moduloAdministracion.gestionBancos.activo' | translate}}</th>
+                                    <th class="text-center" scope="col">{{'pantalla.moduloAdministracion.gestionBancos.codigoTransferencia' | translate}}</th>
+                                    <th class="text-center" scope="col">{{'pantalla.moduloAdministracion.gestionBancos.codigoBIC' | translate}}</th>
+                                    <th class="text-center" scope="col">{{'pantalla.moduloAdministracion.gestionBackend.modificar' | translate}}</th>
+                                </tr>
+                            </thead>
+                            <h1 class="spacio"></h1>
+                            <tbody>
+                                <ng-container *ngIf="banderaHasRows; then templateFillTable; else templateEmptyTable5">
+                                </ng-container>
+                                <ng-template #templateFillTable>
+                                    <tr *ngFor="let banco of tabla">
+                                        <td class="text-center">{{banco.claveIdentificacion}}</td>
+                                        <td class="text-center">{{banco.nombre}}</td>
+                                        <td class="text-center">
+                                            <label for="select"></label>
+                                            <select class="form-control"  id="select" disabled>
+                                                <option *ngIf="banco.tipoOperacion === 'A'"  value="">AMBOS</option>
+                                                <option *ngIf="banco.tipoOperacion === 'T'"  value="">TEF</option>
+                                                <option *ngIf="banco.tipoOperacion === 'S'"  value="">SPEI</option>
+                                                <option *ngIf="banco.tipoOperacion === 'N'"  value="">NINGUNO</option>
+                                            </select>
+                                        </td>
+                                        <td class="text-center">
+                                            <input type="checkbox" name="entregaBuzonCliente"  [checked]="banco.status === 1 ? true : false" disabled aria-label="entregaBuzonCliente">
+                                        <td class="text-center">{{banco.codTransfer}}</td>
+                                        <td class="text-center">{{banco.codBic}}</td>
+
+                                        <td class="text-center">
+                                        <button type="button" class="btn btn-outline-danger" (click)="editBanco(banco)" > {{'btn.modificar' | translate}}</button>
+                                        </td>
+                                    </tr>
+                                </ng-template>
+                                <ng-template #templateEmptyTable5>
+                                    <tr>
+                                        <td class="text-center" colspan="12"></td>
+                                    </tr>
+                                </ng-template>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mt-1">
+                        <div class="d-flex justify-content-center" *ngIf="banderaHasRows">
+
+                            <pagination
+                                [maxSize]="rowsPorPagina"
+                                [boundaryLinks]="showBoundaryLinks5"
+                                [directionLinks]="showDirectionLinks5"
+                                [totalItems]="totalElements"
+                                [itemsPerPage]="rowsPorPagina"
+                                [(ngModel)]="page"
+                                previousText="&lsaquo;" nextText="&rsaquo;"
+                                firstText="{{'paginador.inicio' | translate}}" lastText="{{'paginador.fin' | translate}}"
+                                (pageChanged)="onPageChanged($event)">
+                            </pagination>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-2">
+        <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-10 offset-sm-10 offset-md-10 offset-lg-10">
+            <button type="button" class="btn btn-danger" [disabled]="!banderaBtnExportar" (click)="onClickExportar()">{{'btn.exportar' | translate}}</button>
+        </div>
+        </div>
+    </div>
+</div>

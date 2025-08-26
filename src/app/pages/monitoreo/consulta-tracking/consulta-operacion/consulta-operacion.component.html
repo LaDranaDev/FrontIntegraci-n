@@ -1,0 +1,141 @@
+<app-operativa-header tituloPantalla="{{'CTNP' | translate}}" *ngIf="!banderaArchDuplicados"></app-operativa-header>
+<app-operativa-header tituloPantalla="{{'monitorArchivoOperaciones.nivelOperacion.titulo' | translate}}" *ngIf="banderaArchDuplicados"></app-operativa-header>
+
+<div id="trakingOperacion" class="panel panel-default col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    <br>
+    <!-- --- Tabla de totales Superior --- -->
+    <div class="card mt-3">
+        <div class="card-body">
+            <div class="rowTi">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <table class="table table-striped table-hover">
+                        <caption></caption>
+                    <thead>
+                        <tr>
+                        <th scope="col" class="text-center1">{{'nombreArchivo' | translate}}</th>
+                        <th scope="col" class="text-center1">{{'pantalla.monitoreo.monitorArchivoCurso.fechaRecepcion' | translate}}</th>
+                        <th scope="col" class="text-center1">{{'pantalla.monitoreo.monitorArchivoCurso.archivo.estatus' | translate}}</th>
+                        <th scope="col" class="text-center1">{{'NM' | translate}}</th>
+                        <th scope="col" class="text-center1">{{'pantalla.monitoreo.monitorArchivoCurso.monto' | translate}}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="text-center">{{datosSuperior?.nombreArchivo}}</td>
+                            <td class="text-center">{{datosSuperior?.fechaRecep}}</td>
+                            <td class="text-center">{{datosSuperior?.estatus}}</td>
+                            <td class="text-center">{{datosSuperior?.totalOperaciones}}</td>
+                            <td class="text-center">{{datosSuperior?.monto | currency }}</td>
+                        </tr>
+                        <ng-template #noHayInformación>
+                            <tr>
+                                <td class="text-center" colspan="12"> {{'administracion.productos.periodo.Nodata' | translate}}</td>
+                            </tr>
+                        </ng-template>
+                    </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- --- Se<c>cion de Busqueda --- -->
+    <div class="card">
+        <h5 class="card-header justify-content-center">{{'BNO' | translate}} </h5>
+        <div class="card-body">
+            <form [formGroup]="formSearchOperacion" class="dis">
+                <div class=" tam">
+                        <label for="estatus" class="col-form-label">{{'EM' | translate}}</label>
+                        <select id="estatus" formControlName="estatus" class="form-select form-select-sm form-control">
+                            <option value="">{{'seleccione' | translate}}</option>
+                            <option *ngFor="let item of selectEstatus" [value]="item.id">{{item.valor}}</option>
+                        </select>
+
+                </div>
+
+                <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 estilo">
+                    <button type="button" class="btn btn-outline-primary" (click)="buscarOperacion()">{{'btn.buscar' | translate}} </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- --- Tabla de estatus Izquierda --- -->
+
+
+        <div class="card mt-3">
+            <div class="card-body">
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                        <table class="table table-striped table-hover">
+                            <caption></caption>
+                            <thead>
+                                <tr>
+                                    <th scope="col" class="text-center">{{'idMovimiento' | translate}}</th>
+                                    <th scope="col" class="text-center">{{'EM' | translate}}</th>
+                                    <th scope="col" class="text-center">{{'pantalla.monitoreo.monitorArchivoCurso.producto' | translate}}</th>
+                                    <th scope="col" class="text-center">{{'pantalla.monitoreo.monitorArchivoCurso.monto' | translate}}</th>
+                                    <th scope="col" class="text-center">{{'consultaDocumentosCFDI.lblCuentaCargo1' | translate}}</th>
+                                    <th scope="col" class="text-center">{{'consultaDocumentosCFDI.lblCuentaAbono1' | translate}}</th>
+                                    <th scope="col" class="text-center">{{'RBE1' | translate}}</th>
+                                    <th scope="col" class="text-center">{{'FA1' | translate}}</th>
+                                    <th scope="col" class="text-center">{{'UBE1' | translate}}</th>
+                                    <th scope="col" class="text-center">{{'HUBE1' | translate}}</th>
+                                    <th scope="col" class="text-center">{{'HRBE1' | translate}}</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                <ng-container *ngIf="banderaHasRows; then templateFillTable; else templateEmptyTable3">
+                                </ng-container>
+                                <ng-template #templateFillTable>
+                                    <tr *ngFor="let dato of conten">
+                                        <td class="text-center"><a class="color" (click)="Historica(dato.idReg)"> {{dato?.idReg}}</a></td>
+                                        <td class="text-center">{{dato?.statusOpe}}</td>
+                                        <td class="text-center">{{dato?.producto}}</td>
+                                        <td class="text-center">{{dato?.importe | currency}}</td>
+                                        <td class="text-center">{{dato?.ctaCargo}}</td>
+                                        <td class="text-center">{{dato?.ctaAbono}}</td>
+                                        <td class="text-center">{{dato?.referenciaBE}}</td>
+                                        <td class="text-center">{{dato?.fechaAplic}}</td>
+                                        <td class="text-center">{{dato?.umbr}}</td>
+                                        <td class="text-center">{{dato?.fchEnvioBE}}</td>
+                                        <td class="text-center">{{dato?.fchRespuestaBE}}</td>
+                                    </tr>
+                                </ng-template>
+                                <ng-template #templateEmptyTable3>
+                                    <tr>
+                                        <td class="text-center" colspan="12"> {{'administracion.productos.periodo.Nodata' | translate}} </td>
+                                    </tr>
+                                </ng-template>
+                            </tbody>
+                        </table>
+                    </div>
+            </div>
+            <div class="rot">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mt-1">
+                    <div class="d-flex justify-content-center" *ngIf="banderaHasRows">
+                        <pagination [boundaryLinks]="showBoundaryLinksOperacion" [directionLinks]="showDirectionLinksOperacion"
+                            [totalItems]="totalElements" [itemsPerPage]="rowsPorPagina" [maxSize]="rowsPorPagina"
+                            [(ngModel)]="page" previousText="&lsaquo;" nextText="&rsaquo;" firstText="{{'paginador.inicio' | translate}}"
+                            lastText="{{'paginador.fin' | translate}}" (pageChanged)="onPageChanged($event)">
+                        </pagination>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="rof mt-2">
+            <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-1 offset-sm-1 offset-md-1 offset-lg-1">
+                <button type="button" class="btn btn-danger" (click)="regresar()">{{'btn.regresar' | translate}}</button>
+            </div>
+            <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-8 offset-sm-8 offset-md-8 offset-lg-8">
+                <button type="button" class="btn btn-danger" [disabled]="!banderaBtnExportar"  (click)="exportar4()">{{'btn.exportar' | translate}}</button>
+            </div>
+        </div>
+        <div class="rof mt-2">
+            <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-1 offset-sm-1 offset-md-1 offset-lg-1">
+                <button type="button" class="btn btn-danger" (click)="refrescar()">{{'menu.monitoreo.comprobantesFormatoCDMX.btn.refrescar' | translate}}</button>
+            </div>
+        </div>
+</div>

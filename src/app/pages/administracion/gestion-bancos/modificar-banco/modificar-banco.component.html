@@ -1,0 +1,121 @@
+<app-operativa-header tituloPantalla="{{'menu.moduloAdministracion.gestionBancos.modificacion' | translate}}"></app-operativa-header>
+<div id="modificarBanco" class="panel panel-default col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    <br>
+    <div class="card">
+        <h5 class="card-header justify-content-center">
+            {{'pantalla.moduloAdministracion.gestionBancos.datos' | translate}}
+        </h5>
+        <div class="card-body">
+            <form [formGroup]="altaBancoForm">
+                <div class="row">
+                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                        <div class="form-group row align-items-center">
+                            <label for="claveIdentificacionv" class="col-xs-3 col-sm-3 col-md-3 col-lg-3 col-form-label text-right">{{'pantalla.moduloAdministracion.gestionBancos.Clave' | translate}}:</label>
+                            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                <input type="text" class="form-control" id="claveIdentificacionv" name="c_claveIdentificacion" formControlName="claveIdentificacion"
+                                (keypress)="eventOnKeyOnlyNumbers($event)"
+                                (ondragenter)="disableEvent($event)"
+                                (dragover)="disableEvent($event)"
+                                (ondrop)="disableEvent($event)"
+                                (paste)="eventoOnPasteBlock($event)"
+                                size="4" maxlength="4">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                        <div class="form-group row align-items-center">
+                            <label for="nombrev" class="col-xs-3 col-sm-3 col-md-3 col-lg-3 col-form-label text-right">{{'pantalla.moduloAdministracion.gestionBancos.nombreBanco' | translate}}:</label>
+                            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                <input type="text" class="form-control removeTextTransform" id="nombrev" name="n_nombre" formControlName="nombre"
+                                (keypress)="onlyAlphabeticAndNumbersAndSomeCaracEsp($event)" 
+                                (ondragenter)="disableEvent($event)"
+                                (dragover)="disableEvent($event)"
+                                (ondrop)="disableEvent($event)"
+                                (paste)="eventoOnPasteBlock($event)"
+                                size="60" maxlength="60">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                        <div class="form-group row align-items-center">
+                            <label for="selectTipoOperacionv" class="col-xs-3 col-sm-3 col-md-3 col-lg-3 col-form-label text-right">{{'pantalla.moduloAdministracion.gestionBancos.tipoOperacion' | translate}}:</label>
+                            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                <select class="form-control" id="selectTipoOperacionv" name="n_tipoOperacion" formControlName="tipoOperacion"
+                                [ngClass]="{'is-invalid' : submittedAltaBanco && formControlBanco['nombre'].errors}">
+                                    <option value="">{{'pantalla.moduloAdministracion.gestionBancos.seleccione' | translate}}</option>
+                                    <option value="A"> AMBOfa-stack-1x </option>
+                                    <option value="T"> TEF </option>
+                                    <option value="S"> SPEI </option>
+                                    <option value="N"> NO IDENTIFICADO </option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                        <div class="form-group row align-items-center">
+                            <label for="codTransferv" class="col-xs-3 col-sm-3 col-md-3 col-lg-3 col-form-label text-right">{{'pantalla.moduloAdministracion.gestionBancos.codigoTransferencia' | translate}}:</label>
+                            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                <input type="text" class="form-control removeTextTransform" id="codTransferv" name="n_codTransfer" formControlName="codTransfer"
+                                (keypress)="eventParanumerosLetras($event)" 
+                                (ondragenter)="disableEvent($event)"
+                                (dragover)="disableEvent($event)"
+                                (ondrop)="disableEvent($event)"
+                                (paste)="eventoOnPasteBlock($event)"
+                                size="5" maxlength="5"> 
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                        <div class="form-group row align-items-center">
+                            <label for="codBicv" class="col-xs-3 col-sm-3 col-md-3 col-lg-3 col-form-label text-right">{{'pantalla.moduloAdministracion.gestionBancos.codigoBIC' | translate}}:</label>
+                            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                <input type="text" class="form-control removeTextTransform" id="codBicv" name="n_codBic" formControlName="codBic"
+                                (keypress)="eventParanumerosLetras($event)"
+                                (ondragenter)="disableEvent($event)"
+                                (dragover)="disableEvent($event)"
+                                (ondrop)="disableEvent($event)"
+                                (paste)="eventoOnPasteBlock($event)"
+                                size="12" maxlength="12">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                        <div class="form-group row align-items-center">
+                            <label for="statusv" class="col-xs-3 col-sm-3 col-md-3 col-lg-3 col-form-label text-right">{{'pantalla.moduloAdministracion.gestionBancos.activo' | translate}}:</label>
+                            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                <input type="checkbox" class="form-control-box" id="statusv" name="n_status"  formControlName="status">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <br>
+    <div class="row mb-2">
+        <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-1 offset-sm-1 offset-md-1 offset-lg-1">
+            <button type="button" class="btn btn-danger" (click)="regresarToConsult2()">{{'btn.cancelar' | translate}}</button>
+        </div>
+        <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-8 offset-sm-8 offset-md-8 offset-lg-8">
+            <button type="button" class="btn btn-danger" (click)="validaCadaCampoObligatorio2()">{{'btn.guardar' | translate}}</button>
+        </div>
+    </div>
+    <br>
+</div>
+
+
+

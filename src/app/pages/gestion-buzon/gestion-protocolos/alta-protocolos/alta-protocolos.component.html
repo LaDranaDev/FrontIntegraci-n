@@ -1,0 +1,56 @@
+<app-operativa-header tituloPantalla="{{'menu.gestionBuzon.gestionProtocolos.alta' | translate}}"></app-operativa-header>
+<div id="altaProtocolo" class="panel panel-default col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    <br>
+    <div class="card">
+        <h5 class="card-header justify-content-center">
+            {{'menu.gestionBuzon.gestionProtocolos.datos' | translate}}
+        </h5>
+        <div class="card-body">
+            <form [formGroup]="altaProtocoloForm">
+                <div class="row">
+                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                        <div class="form-group row align-items-center">
+                            <label for="nombre" class="col-xs-3 col-sm-3 col-md-3 col-lg-3 col-form-label text-right">{{'pantallas.usuarioOperantes.Nombre' | translate}}</label>
+                            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                <input type="text" class="form-control removeTextTransform" id="nombre" name="nombre" formControlName="nombre"
+                                (keypress)="onlyAlphabeticAndNumbersAndSomeCaracEsp($event)" 
+                                (ondragenter)="disableEvent($event)"
+                                (dragover)="disableEvent($event)"
+                                (ondrop)="disableEvent($event)"
+                                (paste)="eventoOnPasteBlock($event)"
+                                maxlength="20">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                        <div class="form-group row align-items-center">
+                            <label for="activo" class="col-xs-3 col-sm-3 col-md-3 col-lg-3 col-form-label text-right">{{'pantalla.moduloAdministracion.gestionBancos.activo' | translate}}:</label>
+                            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                <input type="checkbox" class="form-control-box" id="activo" name="activo"  formControlName="activo">
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+
+            </form>
+        </div>
+    </div>
+    <br>
+    <div class="row mb-2">
+        <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-1 offset-sm-1 offset-md-1 offset-lg-1">
+            <button type="button" class="btn btn-danger" (click)="regresarToConsult()">{{'btn.cancelarProtocolo' | translate}}</button>
+        </div>
+        <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-8 offset-sm-8 offset-md-8 offset-lg-8">
+            <button type="button" class="btn btn-danger" (click)="validaCadaCampoObligatorio()">{{'btn.guardarProtocolo' | translate}}</button>
+        </div>
+    </div>
+    <br>
+</div>
+
+
+

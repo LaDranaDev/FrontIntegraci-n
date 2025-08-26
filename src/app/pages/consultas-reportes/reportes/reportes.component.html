@@ -1,0 +1,168 @@
+<app-operativa-header tituloPantalla="{{ 'reportes.captacion.tituloPantalla' | translate }}"></app-operativa-header>
+
+<div id="reportes" class="panel panel-default col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    <br />
+    <!-- --- Seccion de Busqueda --- -->
+    <div id="searchResult" class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <form [formGroup]="formSearchReports">
+            <div class="card mt-3">
+                <h5 class="card-header justify-content-center">
+                    {{ "reportes.parametros.busqueda" | translate }}
+                </h5>
+                <br />
+                <div class="ml-5">
+                    <span class="col-form-label col-sm-2 col-md-2 pl-0">
+                        {{ "reportes.periodo.busqueda" | translate }}
+                    </span>
+                    <div class="row">
+                        <!-- Calendar from -->
+                        <div class="col-xs-5 col-sm-5 col-md-5">
+                            <div class="form-group row">
+                                <label for="from" class="col-form-label col-sm-2 col-md-2">
+                                    {{ "reportes.captacion.de" | translate }}:
+                                </label>
+                                <div class="col-sm-10 col-md-10 pl-1">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" id="from" name="from" bsDatepicker
+                                            #dpFechaFrom="bsDatepicker" [bsConfig]="datePickerConfig"
+                                            formControlName="from" readonly />
+                                        <div class="input-group-append">
+                                            <button class="btn btn-outline-danger" type="button" id="btnFromCalendar"
+                                                name="btnFromCalendar" (click)="dpFechaFrom.toggle()"
+                                                [disabled]="calendario" [attr.aria-expanded]="dpFechaFrom.isOpen">
+                                                <em class="fa fa-calendar"></em>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Calendar to -->
+                        <div class="col-xs-4 col-sm-4 col-md-4">
+                            <div class="form-group row">
+                                <label for="to" class="col-form-label col-sm-2 col-md-2">
+                                    {{ "reportes.captacion.hasta" | translate }}:
+                                </label>
+                                <div class="col-sm-10 col-md-10">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" id="to" name="to" bsDatepicker
+                                            #dpFechaHasta="bsDatepicker" [bsConfig]="datePickerConfig"
+                                            formControlName="to" readonly/>
+                                        <div class="input-group-append">
+                                            <button class="btn btn-outline-danger" type="button" id="btnToCalendar"
+                                                name="btnToCalendar" (click)="dpFechaHasta.toggle()"
+                                                [disabled]="calendario" [attr.aria-expanded]="dpFechaHasta.isOpen">
+                                                <em class="fa fa-calendar"></em>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-9 col-sm-9 col-md-9">
+                            <div class="form-group row">
+                                <label for="nombreReporte" class="col-form-label col-sm-2 col-md-2">
+                                    {{ "reportes.captacion.nombreReporte" | translate }}:
+                                </label>
+                                <div class="col-sm-10 col-md-10">
+                                    <input type="text" id="nombreReporte" formControlName="nombreReporte"
+                                        name="nombreReporte" class="form-control none-transform" [maxlength]="70" (keypress)="validaKey($event)"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt-3 mb-3">
+                        <div class="col-md-5 offset-1">
+                            <button type="button" class="btn btn-danger" (click)="clearForm()">
+                                {{ "btn.limpiar" | translate }}
+                            </button>
+                        </div>
+                        <div class="col-md-1 offset-4">
+                            <button type="button" class="btn btn-danger" (click)="searchFiles($event)">
+                                {{ "btn.buscar" | translate }}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <!-- Search result -->
+    <div class="card mt-3" *ngIf="reports.length > 0">
+        <h5 class="card-header justify-content-center">
+            {{ "reportes.resultados" | translate }}
+        </h5>
+        <br />
+        <!-- Tabla correos -->
+        <div class="row mx-2">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <table class="table table-striped table-hover" aria-describedby="reports">
+                    <thead>
+                        <tr>
+                            <th class="text-center" scope="col">
+                                <label for="checkAll">
+                                    {{"reportes.captacion.exptodos" | translate}}
+                                </label>
+                                <br>
+                                <input type="checkbox" name="checkAll" id="checkAll" (change)="setAllCheckBoxes($event)" />
+                            </th>
+                            <th class="text-center" scope="col" translate>
+                                reportes.captacion.nombreReporte
+                            </th>
+                            <th class="text-center" scope="col" translate>
+                                pantallas.monitorizacion.Fecha
+                            </th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <ng-container *ngIf="reports.length > 0; then templateFillTable; else templateEmptyTable3">
+                        </ng-container>
+                        <ng-template #templateFillTable>
+                            <tr *ngFor="let report of reports; index as i">
+                                <td class="text-center">
+                                    <label for="activeCheckTable{{i}}"></label>
+                                    <input id="activeCheckTable{{i}}" type="checkbox" name="activeCheckTable"
+                                        [checked]="report.selected" (change)="isSelected(report)" />
+                                </td>
+                                <td>{{ report.nombre }}</td>
+                                <td>{{ report.fechaCreacion | date: 'dd/MM/yyyy HH:mm:ss' }}</td>
+                            </tr>
+                        </ng-template>
+                        <ng-template #templateEmptyTable3>
+                            <tr>
+                                <td class="text-center" colspan="12">
+                                    {{ "pantalla.moduloAdministracion.gestionBancos.resultadoBusqueda" | translate }}
+                                </td>
+                            </tr>
+                        </ng-template>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="row" *ngIf="reports.length > 0">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mt-1">
+                <div class="d-flex justify-content-center" *ngIf="reports.length > 0">
+                    <pagination [boundaryLinks]="true" [directionLinks]="true"
+                        [totalItems]="totalElements" [itemsPerPage]="PAGE_SIZE" [maxSize]="PAGE_SIZE"
+                        [(ngModel)]="page" previousText="&lsaquo;" nextText="&rsaquo;"
+                        firstText="{{'paginador.inicio' | translate}}" lastText="{{'paginador.fin' | translate}}"
+                        (pageChanged)="onPageChanged($event)">
+                    </pagination>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-3 mb-3">
+            <div class="col-md-1 offset-10">
+                <button type="button" class="btn btn-danger" (click)="exportReports()">
+                    {{ "btn.exportar" | translate }}
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

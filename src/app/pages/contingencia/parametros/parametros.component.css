@@ -1,0 +1,32 @@
+.magin{
+    margin: 10px;
+}
+@media(max-width:1500px){
+    .magin{
+        margin: 5%;
+    }
+}
+
+.t1{
+    width: 5%;
+}
+
+.t2{
+    width: 42%;
+}
+
+@media only screen and (min-width: 1801px) {
+    .scroll {
+        height: 750px;
+        overflow-y: scroll;
+        width: 100%;
+      }
+  }
+  
+  @media only screen and (max-width: 1800px) {
+    .scroll {
+        height: 500px;
+        overflow-y: scroll;
+        width: 100%;
+      }
+  }

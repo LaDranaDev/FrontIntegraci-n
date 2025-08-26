@@ -1,0 +1,13 @@
+.espacio{
+    height: 600px;
+}
+
+footer {
+    background-color: #484848;
+    color: white;
+    height:25px;
+    width: 100%;
+    position: fixed;
+    bottom: 0;
+    z-index: 999;
+  }

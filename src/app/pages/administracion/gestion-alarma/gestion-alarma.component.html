@@ -1,0 +1,251 @@
+<app-operativa-header tituloPantalla="{{'pantalla.gestionAlarma.title' | translate}}"></app-operativa-header>
+<div id="gestionAlarma" class="panel panel-default col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    <br>
+    <div class="card">
+        <h5 class="card-header justify-content-center">
+            {{'pantalla.gestionAlarma.seccionBusqueda.title' | translate}}
+        </h5>
+        <div class="card-body">
+            <form [formGroup]="formControlAlarmas">
+                <div class="row">
+                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                        <div class="form-group row justify-content-center align-items-center">
+                            <label for="selectTipoNotificacion"
+                                class="col-xs-6 col-sm-10 col-md-6 col-lg-4 col-form-label">{{'pantalla.gestionAlarma.seccionBusqueda.tipoNotificacion'
+                                | translate}}</label>
+                            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                <select class="form-control" id="selectTipoNotificacion" name="v_tipoNotificacion"
+                                    formControlName="tipoNotificacion">
+                                    <option value="">{{'btn.seleccionar' | translate}}...</option>
+                                    <option value="A"> {{'gestionAlarm.sl.alarma' | translate}} </option>
+                                    <option value="N"> {{ 'gestionAlarm.sl.notificacion' | translate}} </option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                        <div class="form-group row justify-content-center align-items-center">
+                            <label for="selectStatus"
+                                class="col-xs-6 col-sm-10 col-md-6 col-lg-4 col-form-label">{{'pantalla.gestionAlarma.seccionBusqueda.estatus'
+                                | translate}}</label>
+                            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                <select class="form-control" id="selectStatus" name="v_estatus"
+                                    formControlName="estatus">
+                                    <option value="">{{'btn.seleccionar' | translate}}...</option>
+                                    <option value="Atendida"> {{'gestionAlarm.atendida' | translate}} </option>
+                                    <option value="Pendiente"> {{'gestionAlarm.pendiente' | translate}} </option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                        <div class="form-group row justify-content-center align-items-center">
+                            <label for="inputFechaAtendida"
+                                class="col-xs-6 col-sm-10 col-md-6 col-lg-4 col-form-label">{{'pantalla.gestionAlarma.seccionBusqueda.fechaAtendida'
+                                | translate}}</label>
+                            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" id="inputFechaAtendida"
+                                        name="v_fechaAtendida" readonly required bsDatepicker
+                                        #dpFechaAten="bsDatepicker" [bsConfig]="datePickerConfig"
+                                        formControlName="fechaAtendida"
+                                        [ngClass]="{ 'is-invalid': submittedSearchAlarmas && formControlGestionAlarma['fechaAtendida'].errors}">
+                                    <div class="input-group-append">
+                                        <button class="btn btn-outline-danger" type="button" id="btnFechaAtendida"
+                                            name="btnFechaAtendida" (click)="dpFechaAten.toggle()"
+                                            [attr.aria-expanded]="dpFechaAten.isOpen">
+                                            <em class="fa fa-calendar"></em>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                        <div class="form-group row justify-content-center align-items-center">
+                            <label for="inputFechaGeneracion"
+                                class="col-xs-6 col-sm-10 col-md-6 col-lg-4 col-form-label">{{'pantalla.gestionAlarma.seccionBusqueda.fechaGeneracion'
+                                | translate}}</label>
+                            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" id="inputFechaGeneracion"
+                                        name="inputFechaGeneracion" readonly required bsDatepicker
+                                        #dpFechaGen="bsDatepicker" [bsConfig]="datePickerConfig"
+                                        formControlName="fechaGenerada"
+                                        [ngClass]="{ 'is-invalid': submittedSearchAlarmas && formControlGestionAlarma['fechaGenerada'].errors}">
+                                    <div class="input-group-append">
+                                        <button class="btn btn-outline-danger" type="button" id="btnFechaGenerada"
+                                            name="btnFechaGenerada" (click)="dpFechaGen.toggle()"
+                                            [attr.aria-expanded]="dpFechaGen.isOpen">
+                                            <em class="fa fa-calendar"></em>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <div class="row">
+                <div class="col-xs-12 col-sm-1 col-md-1 col-lg-1 offset-sm-1 offset-md-1 offset-lg-1 mt-1">
+                    <button type="button" class="btn btn-danger" (click)="onClickLimpiar()">{{'btn.limpiar' |
+                        translate}}</button>
+                </div>
+                <div class="col-xs-12 col-sm-1 col-md-1 col-lg-1 offset-sm-6 offset-md-8 offset-lg-8 mt-1">
+                    <button type="button" class="btn btn-danger" (click)="onClickConsultar()">{{'btn.buscar' |
+                        translate}}</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <ng-container *ngIf="banderaAlarmasHasRows; then templateFillTable; else templateEmptyTable">
+    </ng-container>
+    <ng-template #templateFillTable>
+        <div class="card mt-2">
+            <h5 class="card-header justify-content-center">
+                {{'pantalla.gestionAlarma.seccionResultado.title' | translate}}
+            </h5>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 table-responsive">
+                        <table class="table table-striped table-hover" aria-describedby="ListadoGestionAlarmas">
+                            <thead>
+                                <tr>
+                                    <th scope="col" class="text-center">
+                                        {{'pantalla.gestionAlarma.seccionResultado.tabla.tipoNotificacion' |
+                                        translate}}</th>
+                                    <th scope="col" class="text-center">
+                                        {{'pantalla.gestionAlarma.seccionResultado.tabla.descripcion' | translate}}
+                                    </th>
+                                    <th scope="col" class="text-center">
+                                        {{'pantalla.gestionAlarma.seccionResultado.tabla.usuario' | translate}}</th>
+                                    <th scope="col" class="text-center">
+                                        {{'pantalla.gestionAlarma.seccionResultado.tabla.fechaGeneracion' | translate}}
+                                    </th>
+                                    <th scope="col" class="text-center">
+                                        {{'pantalla.gestionAlarma.seccionResultado.tabla.fechaAtendida' | translate}}
+                                    </th>
+                                    <th scope="col" class="text-center">
+                                        {{'pantalla.gestionAlarma.seccionResultado.tabla.estatus' | translate}}</th>
+                                    <th scope="col" class="text-center">
+                                        {{'pantalla.gestionAlarma.seccionResultado.tabla.seleccionar' | translate}}
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let gestionAlarma of listadoAlarmasAtendidasFiltro">
+                                    <td class="text-center">{{gestionAlarma.tipoCatalogo === 'A' ? 'Alarma' :
+                                        'Notificacion'}}</td>
+                                    <td class="text-center">{{gestionAlarma.mensaje}}</td>
+                                    <td class="text-center">{{gestionAlarma.usuario === null ? '' :
+                                        gestionAlarma.usuario}}</td>
+                                    <td class="text-center">{{gestionAlarma.fechagGeneracion | date: "dd/MM/yyyy
+                                        HH:mm:ss"}}</td>
+                                    <td class="text-center">{{gestionAlarma.fechaAnterior | date: "dd/MM/yyyy
+                                        HH:mm:ss"}}</td>
+                                    <td class="text-center">{{gestionAlarma.estatus}}</td>
+                                    <td class="text-center">
+                                        <input type="checkbox" name="chkAtender" aria-label="chkAtender"
+                                            value={{gestionAlarma.id}}
+                                            [checked]="gestionAlarma.estatus === 'Atendida' ? true : false"
+                                            [disabled]="gestionAlarma.estatus === 'Atendida' ? true : false">
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mt-1">
+                        <div class="d-flex justify-content-center" *ngIf="banderaAlarmasHasRows">
+                            <pagination [maxSize]="rowsPorPagina" [boundaryLinks]="showBoundaryLinks"
+                                [directionLinks]="showDirectionLinks" [totalItems]="totalElements"
+                                [itemsPerPage]="rowsPorPagina" [(ngModel)]="page" previousText="&lsaquo;"
+                                nextText="&rsaquo;" firstText="{{'paginador.inicio' | translate}}" lastText="{{'paginador.fin' | translate}}"
+                                (pageChanged)="onPageChanged($event)">
+                            </pagination>
+                        </div>
+                    </div>
+                </div>
+                <div class="row justify-content-between">
+                    <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">
+                        <button type="button" class="btn btn-danger" (click)="onClickAtender()">{{'btn.atender' |
+                            translate}}</button>
+                    </div>
+                    <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">
+                        <button type="button" class="btn btn-danger" (click)="openModalExportacion()"
+                            [disabled]="banderaHabilitarExport">{{'btn.exportar' | translate}}</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </ng-template>
+    <ng-template #templateEmptyTable>
+    </ng-template>
+
+    <ng-container *ngIf="banderaAlarmasHistoryHasRows; then templateFillTableHistory; else templateEmptyTableHistory">
+    </ng-container>
+    <ng-template #templateFillTableHistory>
+        <div class="card mt-2">
+            <h5 class="card-header justify-content-center">
+                {{'pantalla.gestionAlarma.seccionBusquedaHistorial.title' | translate}}
+            </h5>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 table-responsive">
+                        <table class="table table-striped table-hover" aria-describedby="ListadoGestionAlarmasGA">
+                            <thead>
+                                <tr>
+                                    <th scope="col" class="text-center">
+                                        {{'pantalla.gestionAlarma.seccionResultadoHistory.tabla.tipoNotificacion' |
+                                        translate}}
+                                    </th>
+                                    <th scope="col" class="text-center">
+                                        {{'pantalla.gestionAlarma.seccionResultadoHistory.tabla.descripcion' |
+                                        translate}}
+                                    </th>
+                                    <th scope="col" class="text-center">
+                                        {{'pantalla.gestionAlarma.seccionResultadoHistory.tabla.usuario' | translate}}
+                                    </th>
+                                    <th scope="col" class="text-center">
+                                        {{'pantalla.gestionAlarma.seccionResultadoHistory.tabla.fechaGeneracion' |
+                                        translate}}
+                                    </th>
+                                    <th scope="col" class="text-center">
+                                        {{'pantalla.gestionAlarma.seccionResultadoHistory.tabla.fechaAtendida' |
+                                        translate}}
+                                    </th>
+                                    <th scope="col" class="text-center">
+                                        {{'pantalla.gestionAlarma.seccionResultadoHistory.tabla.estatus' | translate}}
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let gestionAlarmaHisotry of listadoAlarmasHistorico">
+                                    <td class="text-center">{{gestionAlarmaHisotry.tipoCatalogo === 'A' ? 'Alarma' :
+                                        'Notificacion'}}</td>
+                                    <td class="text-center">{{gestionAlarmaHisotry.mensaje}}</td>
+                                    <td class="text-center">{{gestionAlarmaHisotry.usuario === null ? '' :
+                                        gestionAlarmaHisotry.usuario}}</td>
+                                    <td class="text-center">{{gestionAlarmaHisotry.fechagGeneracion | date: "dd/MM/yyyy
+                                        HH:mm:ss"}}</td>
+                                    <td class="text-center">{{gestionAlarmaHisotry.fechaAnterior | date: "dd/MM/yyyy
+                                        HH:mm:ss"}}</td>
+                                    <td class="text-center">{{gestionAlarmaHisotry.estatus}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="row justify-content-end">
+                    <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">
+                        <button type="button" class="btn btn-danger" (click)="openModalExportacionHistory()"
+                            [disabled]="banderaHabilitarExportHistory">{{'btn.exportar' | translate}}</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </ng-template>
+    <ng-template #templateEmptyTableHistory>
+    </ng-template>
+</div>

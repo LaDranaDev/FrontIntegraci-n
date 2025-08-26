@@ -1,0 +1,9 @@
+.example-container {
+    display: flex;
+    width:200%;
+    flex-direction: column;
+  }
+  
+  .example-container > * {
+    width: 100%;
+  }

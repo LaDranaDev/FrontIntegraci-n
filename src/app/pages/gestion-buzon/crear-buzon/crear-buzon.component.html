@@ -1,0 +1,117 @@
+<app-operativa-header tituloPantalla="{{'menu.buzon.creacion' | translate}}"></app-operativa-header>
+<div id="creacionBuzon" class="panel panel-default col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    <br>
+    <div class="card">
+        <h5 class="card-header justify-content-center">
+        </h5>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-xs-6 col-sm-6 col-md-6">
+                    <div class="form-group row">
+                        <label for="codCliente"
+                            class="col-form-label col-sm-3">{{'pantalla.buzon.datosContrato.codCliente' |
+                            translate}}:</label>
+                        <div class="col-sm-4">
+                            <input type="text" id="codCliente" name="codigoCliente" class="form-control"
+                                placeholder="{{'pantalla.datosContrato.codCliente' | translate}}"
+                                (keydown.Tab)="consultaDatosContratoCliente()"
+                                (keypress)="eventOnlyNumbersAndAlphabetic($event)" (paste)="eventOnPage($event)"
+                                tabindex="1" [(ngModel)]="datosContrato.bucCliente">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-6 col-sm-6 col-md-6">
+                    <div class="form-group row">
+                        <label for="estatusContrato"
+                            class="col-form-label col-sm-3">{{'pantalla.buzon.datosContrato.estatusContrato' |
+                            translate}}:</label>
+                        <div class="col-sm-4">
+                            <input type="text" id="estatusContrato" name="estatusContrato" class="form-control"
+                                placeholder="{{'pantalla.datosContrato.estatusContrato' | translate}}" tabindex="1"
+                                [(ngModel)]="datosContrato.descEstatus" disabled>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group row">
+                        <label for="razonSocial"
+                            class="col-form-label col-sm-3">{{'pantalla.buzon.datosContrato.razonSocial'
+                            |
+                            translate}}:</label>
+                        <div class="col-sm-9">
+                            <input type="text" id="razonSocial" name="razonSocial"
+                                placeholder="{{'pantalla.datosContrato.razonSocial' | translate}}" class="form-control"
+                                [(ngModel)]="datosContrato.razonSocial" disabled>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-6" hidden>
+                    <div class="form-group row">
+                        <label for="idContrato"
+                            class="col-form-label col-sm-3">{{'pantalla.buzon.datosContrato.idContrato' |
+                            translate}}:</label>
+                        <div class="col-sm-4">
+                            <input type="text" id="idContrato" name="idContrato" class="form-control"
+                                [(ngModel)]="datosContrato.idContrato">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-6 col-sm-6 col-md-6">
+                    <div class="form-group row">
+                        <label for="cuentaEje"
+                            class="col-form-label col-sm-3">{{'pantalla.buzon.datosContrato.cuentaEje' |
+                            translate}}:</label>
+                        <div class="col-sm-4">
+                            <input type="text" id="cuentaEje" name="cuentaEje" class="form-control"
+                                placeholder="{{'pantalla.datosContrato.cuentaEje' | translate}}"
+                                [(ngModel)]="datosContrato.cuentaEje" disabled>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-6 col-sm-6 col-md-6">
+                    <div class="form-group row">
+                        <label for="numContrato"
+                            class="col-form-label col-sm-3">{{'numContrato' | translate}}:</label>
+                        <div class="col-sm-4">
+                            <input type="text" class="form-control" name="numContrato"
+                                placeholder="{{'pantalla.datosContrato.numContrato' | translate}}" id="numContrato"
+                                [(ngModel)]="datosContrato.numContrato" disabled>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <ng-container *ngIf="banderaShowPanelCertificado; then templateShowPanel; else templateHidePanel">
+    </ng-container>
+    <ng-template #templateShowPanel>
+        <div class="card mt-1">
+            <h5 class="card-header justify-content-center">
+                {{'pantalla.crearBuzon.certificado' | translate}}
+            </h5>
+            <div class="card-body">
+                <div class="col-xs-4 col-sm-4 col-md-4">
+                    <div class="align-items-center">
+                        <div class="justify-content-center">
+                            <input #btnCargarArchivo type="file"  value="{{'btn.archivo' | translate}}" class="form-control text-center" name="file" id="file"
+                                [disabled]="banderaBtnCargarArchivo" (change)="readArchivo($event)" aria-label="file">
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <div class="text-left">
+                    <button type="button" class="btn btn-danger mt-1" [disabled]="banderaBtnGenerarBuzon"
+                        (click)="createOrUpdateBuzon()">{{'btn.generarBuzon' | translate}}</button>
+                </div>
+            </div>
+        </div>
+    </ng-template>
+    <ng-template #templateHidePanel>
+    </ng-template>
+
+    <br />
+</div>

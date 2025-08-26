@@ -1,0 +1,101 @@
+<app-operativa-header tituloPantalla="{{'GCO'| translate}}"></app-operativa-header>
+
+<div id="configurarConexionContrato" class="panel panel-default col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    <br>
+    <div class="card">
+        <h5 class="card-header justify-content-center">
+            {{'pantalla.gestionValidacion.seccionBusqueda.title'| translate}}
+        </h5>
+        <div class="card-body">
+            <form [formGroup]="modificargestionConexionContratoForm">
+                <div class="row justify-content-center">
+                    <div class="col-xs-6 col-sm-6 col-md-6">
+                        <div class="form-group row">
+                            <label for="numeroContrato" class="col-xs-2 col-sm-2 col-md-2 col-lg-2 offset-xs-1 offset-sm-1 offset-md-1 offset-lg-1 col-form-label text-right mt-1">{{'pantalla.gestionBuzon.numeroContrato'| translate}}:</label>
+                            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                <input class="form-control"  type="text" id="numeroContrato" name="numeroContrato" formControlName="numeroContrato"
+                               > 
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-6 col-sm-6 col-md-6">
+                        <div class="form-group row">
+                            <label for="codigoCliente" class="col-xs-2 col-sm-2 col-md-2 col-lg-2 offset-xs-1 offset-sm-1 offset-md-1 offset-lg-1 col-form-label text-right mt-1">{{'pantalla.gestionBuzon.codigoCliente'| translate}}:</label>
+                            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                <input class="form-control"  type="text" id="codigoCliente" name="codigoCliente" formControlName="codigoCliente"> 
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <div class="row mt-2">
+                <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-1 offset-sm-1 offset-md-1 offset-lg-1">
+                    <button type="button" class="btn btn-danger" (click)="regresar()">{{'btn.regresar' |
+                        translate}}</button>
+                </div>
+                <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-8 offset-sm-8 offset-md-8 offset-lg-8">
+                    <button type="button" class="btn btn-danger" (click)="agregar()" >{{'btn.agregar' |
+                        translate}}</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card my-1" *ngIf="totalElements > 0">
+        <h5 class="card-header justify-content-center">
+            {{nombreProto}}
+        </h5>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                   <table class="table table-striped table-hover" aria-describedby="listaConsultaPais">
+                        <thead>
+                            <tr>
+                                <th class="text-center" scope="col">{{'pantalla.gestionParametrosCanal.activo'| translate}}</th>
+                                <th class="text-center" scope="col">{{'pantalla.moduloAdministracion.consultaValidacionesCanal.tipo'| translate}}</th>
+                                <th class="text-center" scope="col">{{'directorio'| translate}}</th>
+                                <th class="text-center" scope="col">{{'PA'| translate}}</th>
+                                <th class="text-center" scope="col">{{'PR'| translate}}</th>
+                                <th class="text-center" scope="col">{{'SR'| translate}}</th>
+                                <th class="text-center" scope="col">{{'UIR'| translate}}</th>
+                                <th class="text-center" scope="col">{{'btn.modificar'| translate}}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <ng-container *ngIf="banderaHasRows; then templateFillTable; else templateEmptyTable">
+                            </ng-container>
+                            <ng-template #templateFillTable>
+                                <tr *ngFor="let dato of tabla; let i = index;">
+                                    <td class="text-center envioCleinte">
+                                        <input type="checkbox" name="activo" aria-label="activo" (click)="check(dato, $event)"   [checked]="dato.estatus === 'A' ? true : false" >
+                                    </td>
+                                    <td class="text-center">{{dato.tipoProceso  === 'P' ? 'PUT' : 'GET'}}</td>
+                                    <td class="text-center">{{dato.directorio}}</td>
+                                    <td class="text-center">{{dato.patron}}</td>  
+                                    <td class="text-center" *ngIf="i%2 === 0"></td>
+                                    <td class="text-center" *ngIf="i%2 === 1">{{dato.puerto}}</td>
+                                    <td class="text-center" *ngIf="i%2 === 0"></td>
+                                    <td class="text-center" *ngIf="i%2 === 1">{{dato.servidor}}</td>
+                                    <td class="text-center" *ngIf="i%2 === 0"></td>
+                                    <td class="text-center" *ngIf="i%2 === 1">{{dato.userId}}</td>
+                                    <td class="text-center" *ngIf="i%2 === 0"></td>
+                                    <td class="text-center" *ngIf="i%2 === 1">
+                                        <button type="button" class="btn btn-outline-primary" (click)="modificarParametros(dato, tabla[i-1].idPtclPath , tabla[i].idPtclPath)"> {{'btn.modificar' | translate}}</button>
+                                    </td>
+                                </tr>
+                                
+                                
+                            </ng-template>
+                            <ng-template #templateEmptyTable>
+                                <tr>
+                                    <td class="text-center" colspan="12"> {{'noResult'| translate}} </td>
+                                </tr>
+                            </ng-template>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

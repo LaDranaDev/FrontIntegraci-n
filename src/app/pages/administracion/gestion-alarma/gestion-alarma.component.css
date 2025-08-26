@@ -1,0 +1,23 @@
+.imgCsv{
+    border-radius: 8px;
+    background: url(../../../../assets/img/csv.svg) no-repeat;
+    width: 70px;
+    height: 70px;
+    cursor: pointer;
+}
+
+.imgPdf{
+    border-radius: 8px;
+    background: url(../../../../assets/img/pdf.svg) no-repeat;
+    width: 70px;
+    height: 70px;
+    cursor: pointer;
+}
+
+.imgExcel{
+    border-radius: 8px;
+    background: url(../../../../assets/img/excel.svg) no-repeat;
+    width: 70px;
+    height: 70px;
+    cursor: pointer;
+}

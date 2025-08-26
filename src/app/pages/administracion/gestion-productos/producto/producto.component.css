@@ -1,0 +1,27 @@
+.col-12{
+    margin: 5px 0 !important;
+}
+
+.col-form-label{
+    display: inline-block !important; 
+    margin-right: 10px;
+    width: 120px !important;
+}
+
+.form-control{
+    display: inline-block !important;
+    width: 220px !important;
+}
+
+.form-control-box{
+    width: 40px !important;
+}
+
+.items{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    text-align: center;
+}
+.removeTextTransform{
+    text-transform: none;
+}

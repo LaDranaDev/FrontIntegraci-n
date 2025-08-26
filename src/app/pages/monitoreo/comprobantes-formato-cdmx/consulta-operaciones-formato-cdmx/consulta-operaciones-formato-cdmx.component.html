@@ -1,0 +1,118 @@
+<app-operativa-header tituloPantalla="{{'menu.monitoreo.comprobantesFormatoCDMX.operaciones' | translate}}"></app-operativa-header>
+<div id="consultaOperaciones" class="panel panel-default col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    <div class="card-body">
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+               <table class="table table-striped table-hover" aria-describedby="listaConsultaComprobantes">
+                    <thead>
+                        <tr>
+                            <th class="text-center" scope="col">{{'menu.monitoreo.comprobantesFormatoCDMX.operaciones.comprobante' | translate}}</th>
+                            <th class="text-center" scope="col">{{'menu.monitoreo.comprobantesFormatoCDMX.cod' | translate}}</th>
+                            <th class="text-center" scope="col">{{'pantallas.monitorOperacionesOnline.idMovimiento' | translate}}:</th>
+                            <th class="text-center" scope="col">{{'cuentaCargo' | translate}}:</th>
+                            <th class="text-center" scope="col">{{'menu.monitoreo.comprobantesFormatoCDMX.operaciones.abono' | translate}}:</th>
+                            <th class="text-center" scope="col">{{'pantalla.monitoreo.monitorArchivoCurso.producto' | translate}}:</th>
+                            <th class="text-center" scope="col">{{'pantallas.monitorOperacionesOnline.archivo' | translate}}:</th>
+                            <th class="text-center" scope="col">{{'pantalla.monitoreo.monitorArchivoCurso.canal' | translate}}</th>
+                            <th class="text-center" scope="col">{{'referencia' | translate}}</th>
+                            <th class="text-center" scope="col">{{'pantallas.consultacfdi.complemento.table.estatus' | translate}}</th>
+                            <th class="text-center" scope="col">{{'importe' | translate}}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <ng-container *ngIf="banderaHasRows; then templateFillTable; else templateEmpTable">
+                        </ng-container>
+                        <ng-template #templateFillTable>
+                            <tr *ngFor="let operacion of listaOperaciones">
+                                <td class="text-center">
+                                <ng-container *ngIf="operacion.idEstatus === '4' ">
+                                    <input
+                                    type="checkbox"
+                                    class="checkBox-control"
+                                    name="selCheck{{operacion.idOperacion}}"
+                                    id="selCheck{{operacion.idOperacion}}"
+                                    aria-label="activo"
+                                    [value]="operacion.idOperacion"
+                                    (change)="selProd($event)"
+                                    [checked]="operacion.idOperacion === payloadComprobante.idReg" />
+                                </ng-container>
+
+                                </td>
+                                <td class="text-center"><a class="color" (click)="detalleOperacion(operacion)">{{operacion.codCli}}</a></td>
+                                <td class="text-center">{{operacion.idOperacion}}</td>
+                                <td class="text-center">{{operacion.ctaCargo}}</td>
+                                <td class="text-center">{{operacion.ctaAbono}}</td>
+                                <td class="text-center">{{operacion.producto}}</td>
+                                <td class="text-center">{{operacion.nomArch}}</td>
+                                <td class="text-center">{{operacion.canal}}</td>
+                                <td class="text-center">{{operacion.referencia}}</td>
+                                <td class="text-center">{{operacion.estatus}}</td>
+                                <td class="text-center">{{operacion.importe}}</td>
+                            </tr>
+                        </ng-template>
+                        <ng-template #templateEmpTable>
+                            <tr>
+                                <td class="text-center" colspan="11"> {{'pantalla.consultarBuzon.resultadoBusqueda.title' | translate}} </td>
+                            </tr>
+                        </ng-template>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mt-1">
+                <div class="d-flex justify-content-center" *ngIf="banderaHasRows">
+                    <pagination
+                        [maxSize]="10"
+                        [boundaryLinks]="showBoundaryLinks3"
+                        [directionLinks]="showDirectionLinks3"
+                        [totalItems]="totalElements"
+                        [itemsPerPage]="rowsPorPagina"
+                        [(ngModel)]="page"
+                        previousText="&lsaquo;" nextText="&rsaquo;"
+                        (pageChanged)="onPageChanged($event)"
+                        firstText="{{'paginador.inicio' | translate}}" lastText="{{'paginador.fin' | translate}}">
+                    </pagination>
+                </div>
+            </div>
+        </div>
+        <h5 class="card-header justify-content-center">{{tipoValor}}</h5>
+
+        <div class="row mt-2">
+            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                {{'menu.monitoreo.comprobantesFormatoCDMX.operaciones.total' | translate}}: {{totalOperaciones}}
+                {{totalElements}}
+            </div>
+            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                {{'menu.monitoreo.comprobantesFormatoCDMX.operaciones.importe' | translate}}: {{importeGlobal}}
+            </div>
+        </div>
+
+        <div class="row mt-2">
+            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                {{'menu.monitoreo.comprobantesFormatoCDMX.operaciones.total.archivo' | translate}}: {{totalArchivos}}
+            </div>
+        </div>
+
+
+        <div class="row mt-2">
+            <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">
+                <button type="button" class="btn btn-danger" (click)="generarComprobante()"> {{'menu.monitoreo.comprobantesFormatoCDMX.operaciones.comprobante' | translate}}</button>
+            </div>
+            <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-10 offset-sm-10 offset-md-10 offset-lg-10">
+                <button type="button" class="btn btn-danger" (click)="onExportar()"> {{'btn.exportar' | translate}}</button>
+            </div>
+        </div>
+        <div class="row mt-2">
+            <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">
+                <button type="button" class="btn btn-danger" (click)="regresarInicio()">{{'btn.regresar' | translate}}</button>
+            </div>
+        </div>
+        <div class="row mt-2">
+            <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">
+                <button type="button" class="btn btn-danger" (click)="eventoConsultar()">{{'menu.monitoreo.comprobantesFormatoCDMX.btn.refrescar' | translate}}</button>
+            </div>
+        </div>
+
+    </div>
+</div>

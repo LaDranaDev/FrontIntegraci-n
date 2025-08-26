@@ -1,0 +1,204 @@
+<div class="modal-header">
+    <h5 class="modal-title">{{'modals.clientes.editClienteTitle' | translate}}</h5>
+    <button
+      type="button"
+      class="btn-close"
+      aria-label="Close"
+      (click)="modalRef.close()"
+    ></button>
+  </div>
+      
+  <div class="modal-body">
+    <form #editForm="ngForm" (ngSubmit)="onEditClient(editForm)">
+         
+          <label for="dscClte" class="col-form-label">{{'pantallas.clientes.Descripcion' | translate}}</label> 
+          <textarea ngModel id="dscClte" name="dscClte" class="form-control" placeholder="Descripcion" [(ngModel)]="descripcion"></textarea>
+          <hr>
+          <br>
+        <hr>
+  
+        <br>
+        <h5 class="modal-title">{{'modals.clientes.addClienteTransformacionTitle' | translate}}</h5>
+        <br>
+        <table class="table align-middle mb-0 bg-white">
+          <caption>Tabla transformaciones cliente</caption>
+          <thead class="bg-light">
+              <tr>
+                  <th scope="col">ID</th>
+                  <th scope="col">Formato Origen</th>
+                  <th scope="col">Formato Destino</th>
+                  <th scope="col">Sentido</th>
+                  <th scope="col">Canal</th>
+                  <th scope="col">Activo</th>
+                  <th scope="col">Acciones</th>
+                  <th scope="col"></th>
+              </tr>
+          </thead>
+          <tbody>
+              <tr *ngFor="let cteTrfm of clteTrnArray; let i = index">
+              <ng-container *ngIf="enableEditIndex !== i">
+                  <td>
+                      <label class="col-form-label">{{cteTrfm.ID_CLTE_TRFM_PK}}</label>
+                  </td>
+                  <td>
+                      <label for="idlytin" class="col-form-label"></label>
+                      <select title="" class="form-control select" [(ngModel)]="cteTrfm.ID_LAYT_IN" id="idlytin" name="{{cteTrfm.ID_LAYT_IN}}" disabled='true'>
+                        <option value="{{cteTrfm.ID_LAYT_IN}}">{{cteTrfm.DESC_MAPA_IN}}</option>
+                        </select>
+                  </td>
+                  <td>
+                    <label for="idlytout" class="col-form-label"></label>
+                      <select title="" class="form-control select" [(ngModel)]="cteTrfm.ID_LAYT_OUT" name="{{cteTrfm.ID_LAYT_OUT}}" id="idlytout" disabled='true'>
+                        <option value="{{cteTrfm.ID_LAYT_OUT}}">{{cteTrfm.DESC_MAPA_OUT}}</option>
+                        </select>
+                  </td>
+                  <td>
+                    <label for="{{cteTrfm.SENTIDO}}" class="col-form-label"></label>
+                      <select title="" class="form-control select" [(ngModel)]="cteTrfm.SENTIDO" id="{{cteTrfm.SENTIDO}}" name="{{cteTrfm.SENTIDO}}" disabled='true'>
+                        <option *ngIf="cteTrfm.SENTIDO==='E'; else salida" value="{{cteTrfm.SENTIDO}}">Entrada</option>
+                        <ng-template #salida><option value="{{cteTrfm.SENTIDO}}">Salida</option></ng-template>
+                        </select>
+                  </td>
+                  <td>
+                    <label for="{{cteTrfm.ID_CANAL}}" class="col-form-label"></label>
+                      <select title="" class="form-control select" [(ngModel)]="cteTrfm.ID_CANAL"id="{{cteTrfm.ID_CANAL}}" name="{{cteTrfm.ID_CANAL}}" disabled='true'>
+                        <option value="{{cteTrfm.ID_CANAL}}">{{cteTrfm.CANAL}}</option>
+                        </select>
+                  </td>
+                  <td>
+                    <label for="{{cteTrfm.FLAG}}" class="col-form-label"></label>
+                      <select title="" class="form-control select" [(ngModel)]="cteTrfm.FLAG" id="{{cteTrfm.FLAG}}" name="{{cteTrfm.FLAG}}" disabled='true'>
+                        <option *ngIf="cteTrfm.FLAG===true; else inactivo" value="{{cteTrfm.FLAG}}">Activo</option>
+                        <ng-template #inactivo><option value="{{cteTrfm.FLAG}}">Inactivo</option></ng-template>
+                        </select>
+                  </td>
+                  <td>
+                      <button class="btn btn-secondary"  type="button" (click)="onDeleteClientTransformation(cteTrfm.ID_CLTE_TRFM_PK)">
+                        <em class="fas fa-trash-alt fa-lg"></em>
+                      </button>
+                      
+                  </td>
+                  <td>
+                    <div *ngIf="enableEditIndex !== i">
+                      <button type="button" class="btn btn-secondary"  (click)="switchEditMode(i)" >
+                        <em class="fas fa-pen fa-lg"></em>
+                        </button></div>
+                  </td>
+              </ng-container>
+              <ng-container *ngIf="enableEditIndex === i">
+                <td>
+  
+                </td>
+                  <td>
+                    <label for="editAttributeCode" class="col-form-label"></label>
+                      <select id="editAttributeCode" class="form-control select" [(ngModel)]="cteTrfm.ID_LAYT_IN" (change)="llenarComboFDEditar(cteTrfm.ID_LAYT_IN)" name="editAttributeCode" >
+                        <option value=0 selected="true" [disabled]="true">Seleccione..</option>
+                          <option *ngFor="let project of selectFO" [title]="project.DESC" [value]="project.ID_LAYOUT">{{project.ALIAS_LAYOUT}}</option>
+                        </select>
+                  </td>
+                  <td>
+                    <label for="editAttributeName" class="col-form-label"></label>
+                      <select title="" id="editAttributeName" class="form-control select" [(ngModel)]="cteTrfm.ID_LAYT_OUT" name="editAttributeName">
+                        <option value="{{cteTrfm.ID_LAYT_OUT}}" [disabled]="true">{{cteTrfm.DESC_MAPA_OUT}} (ACTUAL)</option>
+                        <option *ngFor="let project1 of selectFDE" [title]="project1.DESC" [value]="project1.ID_LAYOUT">{{project1.ALIAS_LAYOUT}}</option>
+                        </select>
+                  </td>
+                  <td>
+                    <label for="editAttributePrice" class="col-form-label"></label>
+                      <select title="" [formControl]="validarANumerico" id="editAttributePrice" class="form-control select" [(ngModel)]="cteTrfm.SENTIDO" name="editAttributePrice">
+                        <option value="I" selected="true" >Seleccione..</option>
+                          <option value="E">Entrada</option>
+                          <option value="S">Salida</option>
+                        </select>
+                  </td>
+                  <td>
+                    <label for="editAttributeCode2" class="col-form-label"></label>
+                      <select title="" [formControl]="validarNumerico" id="editAttributeCode2" class="form-control select" [(ngModel)]="cteTrfm.ID_CANAL" name="editAttributeCode2">
+                        <option value="0" selected="true" [disabled]="true">Seleccione..</option>
+                        <option *ngFor="let project of selectCA" [title]="project.DESC_CANAL" [value]="project.ID_CANAL">{{project.NOMB_CANAL}}</option>
+                          
+                        </select>
+                  </td>
+                  <td>
+                    <div class="form-check d-flex align-items-center justify-content-center">
+                      <label for="editAttributeActivo" class="col-form-label"></label>
+                      <input class="form-check-input" type="checkbox" value="" id="editAttributeActivo" [(ngModel)]="cteTrfm.FLAG" name="editAttributeActivo"/>
+            
+                    </div>
+                  </td>
+                  <td>
+                    <button class="btn btn-secondary fa-lg"  type="button" (click)="onEditClientTransformation(cteTrfm.ID_CLTE_TRFM_PK,cteTrfm.ID_LAYT_IN,cteTrfm.ID_LAYT_OUT,i)">
+                      <em class="fas fa-save fa-lg"></em>
+                    </button>
+                  </td>
+                  <td>
+  
+                  </td>
+              </ng-container>
+              </tr>
+      
+              <tr>
+                <ng-container *ngIf="isEditing !== true">
+                <td>
+                </td>
+                  <td>
+                    <label for="newAttributeCode" class="col-form-label"></label>
+                      <select title="" [formControl]="validarNumerico" id="newAttributeCode" class="form-control select" [(ngModel)]="newCteTransf.ID_LYT_IN" (change)="llenarComboFD(newCteTransf.ID_LYT_IN)" name="newAttributeCode">
+                        <option value="0" >Seleccione..</option>
+                        <option *ngFor="let sFO of selectFOA" [title]="sFO.DESC" [value]="sFO.ID_LAYOUT">{{sFO.ALIAS_LAYOUT}}</option>
+                        </select>
+                  </td>
+                  <td>
+                    <label for="newAttributeName" class="col-form-label"></label>
+                      <select title="" [formControl]="validarSelect" id="newAttributeName" class="form-control select" [(ngModel)]="newCteTransf.ID_LYT_OUT" name="newAttributeName">
+                        <option value="0" selected="true" >Seleccione..</option>
+                        <option *ngFor="let sFD of selectFD" [title]="sFD.DESC" [value]="sFD.ID_LAYOUT">{{sFD.ALIAS_LAYOUT}}</option>
+                        </select>
+                  </td>
+                  <td>
+                    <label for="newAttributePrice" class="col-form-label"></label>
+                      <select title="" [formControl]="validarNumerico" id="newAttributePrice" class="form-control select" [(ngModel)]="newCteTransf.VAL_SENT" name="newAttributePrice">
+                        <option value="N" selected="true" >Seleccione..</option>
+                        <option value="E">Entrada</option>
+                        <option value="S">Salida</option>
+                        </select>
+                  </td>
+                  <td>
+                    <label for="newAttributeCode2" class="col-form-label"></label>
+                      <select title="" [formControl]="validarNumerico" id="newAttributeCode2" class="form-control select" [(ngModel)]="newCteTransf.ID_CANAL" name="newAttributeCode2">
+                        <option value="0" selected="true" >Seleccione..</option>
+                        <option *ngFor="let sCA of selectCAAdd" [title]="sCA.DESC_CANAL" [value]="sCA.ID_CANAL">{{sCA.NOMB_CANAL}}</option>
+                        </select>
+                  </td>
+                  <td>
+                    <div class="form-check d-flex align-items-center justify-content-center">
+                      <label for="newAttributeActivo" class="col-form-label"></label>
+                      <input class="form-check-input" type="checkbox" value="" id="newAttributeActivo" [(ngModel)]="newCteTransf.activo" name="newAttributeActivo" />
+                    </div>
+                  </td>
+                  <td>
+                      <button class="btn btn-primary" type="button" (click)="onAddClientTransformation()">
+                        <em class="fas fa-plus-square fa-lg"></em>
+                      </button>
+                  </td>
+                  <td>
+  
+                  </td>
+                </ng-container>
+              </tr>
+          </tbody>
+      </table>
+        
+        <br>
+        <div class="modal-footer">
+          
+          <button type="button" class="btn btn-secondary" (click)="modalRef.close()">
+            {{'modals.confirmar.btnCancelar' | translate}}
+          </button>
+          <button type="submit" id="add-client-form" class="btn btn-danger" >
+            {{'modals.confirmar.btnEdit' | translate}}
+          </button>
+        </div>
+    </form>
+  </div>
+  

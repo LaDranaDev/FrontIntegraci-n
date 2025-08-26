@@ -1,0 +1,21 @@
+.link {
+      border: none;
+      padding: 0 !important;
+      /*optional*/
+      font-family: arial, sans-serif;
+      font-size: 11px;
+      /*input has OS specific font-family*/
+      color: blue;
+      text-decoration: underline;
+      cursor: pointer;
+}
+.inpu {
+      display: flex;
+      margin: 5px;
+      margin-left: 50px;
+      margin-right: 50px;
+}
+
+input[type="text"] {
+      text-transform: none;
+}

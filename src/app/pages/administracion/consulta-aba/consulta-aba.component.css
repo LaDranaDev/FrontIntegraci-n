@@ -1,0 +1,7 @@
+.removeTextTransform {
+    text-transform: none;
+}
+
+.word-break{
+    word-wrap: normal;
+}

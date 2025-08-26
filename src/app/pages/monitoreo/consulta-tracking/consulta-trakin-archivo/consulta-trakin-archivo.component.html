@@ -1,0 +1,176 @@
+<app-operativa-header tituloPantalla="{{'TNA' | translate}}"></app-operativa-header>
+
+<div id="trakingArchivo" class="panel panel-default col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    <br />
+    <h5>{{'C' | translate}}:{{cliente}} </h5>
+    <h5>{{'Fec' | translate}}: {{date}}</h5>
+    <br />
+    <!-- --- Tabla de totales Superior --- -->
+    <div class="card mt-3">
+        <div class="card-body">
+            <div class="rowTi">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <table class="table table-striped table-hover">
+                        <caption></caption>
+                    <thead>
+                        <tr>
+                        <th scope="col" class="text-center3">{{'T.TA' | translate}}</th>
+                        <th scope="col" class="text-center3">{{'T.OR' | translate}}</th>
+                        <th scope="col" class="text-center3">{{'T.M' | translate}}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="text-center3">{{title?.totArchRecib}}</td>
+                            <td class="text-center3">{{title?.totOpeRecib}}</td>
+                            <td class="text-center3">{{title?.totMontoRecib | currency }}</td>
+                        </tr>
+                    </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- --- Tabla de estatus Izquierda --- -->
+    <div class="divide">
+        <div class="row">
+            <table class="table table-striped table-hover">
+                <caption></caption>
+                <thead>
+                    <tr>
+                    <th scope="col" class="text-center">{{'EA' | translate}}</th>
+                    <th scope="col" class="text-center">{{'TT' | translate}}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let dato of content">
+                        <td class="text-center">{{dato.estatus}}</td>
+                        <td class="text-center"><a class="color" (click)="tablaArchivoData(dato)">{{dato.total}}</a></td>
+                    </tr>
+                    <ng-template #noHayInformación>
+                        <tr>
+                            <td class="text-center" colspan="12"> {{'noResult'| translate}} </td>
+                        </tr>
+                    </ng-template>
+                </tbody>
+            </table>
+        </div>
+        <div  class="row2">
+            <div  width="200px" height="200px">
+                <canvas  id="MyChart2">{{ chart2 }}</canvas>
+            </div>
+        </div>
+    </div>
+    <!-- --- Seccion de Busqueda --- -->
+    <div class="card">
+        <h5 class="card-header justify-content-center"> {{'BNA'| translate}} </h5>
+        <div class="card-body">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <form [formGroup]="formSearch" class="dis">
+                    <div class="col-xs-2 col-sm-2 col-md-1 col-lg-2 offset-1">
+                        <label for="nomArchivo" class="col-form-label">{{'nombreArchivo'| translate}}</label>
+                    </div>
+                    <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 estilo">
+                        <input type="text" class="form-control estilo" id="nomArchivo" formControlName="nomArchivo"
+                        appInputMask="nomArchivoTrakin" size="60" maxlength="60">
+                    </div>
+
+                    <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 estilo">
+                        <button type="button" class="btn btn-outline-primary" (click)="buscarArchivo()">{{'btn.buscar' | translate}}</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- --- Tabla de estatus Izquierda --- -->
+
+
+        <div class="card mt-3"  *ngIf="banderaHasRows">
+            <div class="card-body">
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                        <table class="table table-striped table-hover">
+                            <caption></caption>
+                            <thead>
+                                <tr>
+                                    <th scope="col"  rowspan="4" class="text-center">{{'nombreArchivo' | translate}}</th>
+                                    <th scope="col" class="text-center">{{'FechaR' | translate}}</th>
+                                    <th scope="col" class="text-center">{{'canal' | translate}}</th>
+                                    <th scope="col" class="text-center">{{'consultaDocumentosCFDI.lblEstatus' | translate}}</th>
+                                    <th scope="col" rowspan="3"class="text-center">{{'pantallas.monitorOperacionesOnline.producto' | translate}}</th>
+                                    <th scope="col" rowspan="1" class="text-center">{{'pantalla.monitoreo.monitorArchivoCurso.numeroOperaciones' | translate}}</th>
+                                    <th scope="col" class="text-center">{{'pantalla.monitoreo.monitorArchivoCurso.monto' | translate}}</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                <ng-container *ngIf="banderaHasRows; then templateFillTable; else templateEmptyTable5">
+                                </ng-container>
+                                <ng-template #templateFillTable>
+                                    <ng-container class="table" *ngFor="let dato of datos">
+                                        <tr >                                 
+                                            <td class="text-center">
+                                                <a class="color" (click)="archivo(dato.archivos)">{{dato.archivos.nombreArchivo}}</a>
+                                            </td>
+                                            <td class="text-center">{{dato.archivos.fechaRecep}}</td>
+                                            <td class="text-center">{{dato.archivos.canal}}</td>
+                                            <td class="text-center">{{dato.archivos.estatus}}</td>
+                                            <td class="tipo produc">{{dato.archivos.producto}}</td>
+                                            <td class="tipo operaciones">{{dato.archivos.totalOperaciones}}</td>
+                                            <td class="tipo">{{dato.archivos.monto | currency}}</td>
+                                        </tr>
+                                        <tr *ngFor="let dato2 of dato.lstArchivos">                                 
+                                            <td class="text-center"></td>
+                                            <td class="text-center">{{dato2.fechaRecep}}</td>
+                                            <td class="text-center">{{dato2.canal}}</td>
+                                            <td class="text-center">{{dato2.estatus}}</td>
+                                            <td class="tipo produc">{{dato2.producto}}</td>
+                                            <td class="tipo operaciones">{{dato2.totalOperaciones}}</td>
+                                            <td class="tipo">{{dato2.monto | currency}}</td>
+                                        </tr>
+                                    </ng-container>
+
+                                </ng-template>
+                                <ng-template #templateEmptyTable5>
+                                    <tr>
+                                        <td class="text-center" colspan="12">{{'administracion.productos.periodo.Nodata' | translate}}</td>
+                                    </tr>
+                                </ng-template>
+                            </tbody>
+                        </table>
+                    </div>
+            </div>
+            <div class="rot">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mt-1">
+                    <div class="d-flex justify-content-center" *ngIf="banderaHasRows">
+                        <pagination [boundaryLinks]="showBoundaryLinksArchivo" 
+                            [directionLinks]="showDirectionLinksArchivo"
+                            [totalItems]="totalElements" 
+                            [itemsPerPage]="rowsPorPagina" 
+                            [maxSize]="rowsPorPagina"
+                            [(ngModel)]="page" previousText="&lsaquo;" nextText="&rsaquo;" 
+                            firstText="{{'paginador.inicio' | translate}}"
+                            lastText="{{'paginador.fin' | translate}}" 
+                            (pageChanged)="onPageChanged($event)">
+                        </pagination>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="rof mt-2">
+            <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-1 offset-sm-1 offset-md-1 offset-lg-1">
+                <button type="button" class="btn btn-danger" (click)="regresar()">{{'btn.regresar' | translate}}</button>
+            </div>
+            <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-8 offset-sm-8 offset-md-8 offset-lg-8">
+                <button type="button" class="btn btn-danger"  [disabled]="!banderaBtnExportar" (click)="exportar2()">{{'btn.exportar' | translate}}</button>
+            </div>
+        </div>
+        <div class="rof mt-2">
+            <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-1 offset-sm-1 offset-md-1 offset-lg-1">
+                <button type="button" class="btn btn-danger" (click)="refrescar()">{{'menu.monitoreo.comprobantesFormatoCDMX.btn.refrescar' | translate}}</button>
+            </div>
+        </div>
+</div>

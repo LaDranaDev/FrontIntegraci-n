@@ -1,0 +1,160 @@
+<app-operativa-header tituloPantalla="{{
+    'pantalla.historicoClientes.tituloPantalla' | translate
+  }}"></app-operativa-header>
+<div id="gestionAlarma" class="panel panel-default col-xs-12 col-sm-12 col-md-12 col-lg-12">
+      <br />
+      <div class="card mt-3" *ngIf="!showGraph">
+            <h5 class="card-header justify-content-">
+                  {{ "pantalla.monitoreo.monitorArchivoCurso.busqueda" | translate }}
+            </h5>
+            <div class="card-body">
+                  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                        <form [formGroup]="historicoClienteForm" class="row">
+                              <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 offset-1">
+                                    <div class="input-group mb-3">
+                                          <label for="codigoCliente" class="col-form-label text-right mt-1 mr-2">{{
+                                                "pantalla.controlVolumenOperativo.graficaArchivoCliente.codigoCliente"
+                                                | translate
+                                                }}</label>
+                                          <input class="form-control display" id="codigoCliente" formControlName="codigoCliente" appInputMask="numerico" />
+                                    </div>
+                              </div>
+                              <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 offset-1"></div>
+
+                              <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-1">
+                                    <label for="fechaInicio" class="col-form-label labelDate">{{
+                                          "pantalla.controlVolumenOperativo.graficaArchivoCliente.periodo"
+                                          | translate
+                                          }}:</label>
+                              </div>
+                              <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                                    <div class="form-group row">
+                                          <label for="fechaInicio" class="col-form-label col-md-auto labelDate">{{
+                                                "pantalla.controlVolumenOperativo.graficaArchivoCliente.fechaInicio"
+                                                | translate
+                                                }}</label>
+                                          <div class="col-sm-7">
+                                                <div class="input-group">
+                                                      <input type="text" class="form-control" id="fechaInicio" name="fechaInicio" readonly required bsDatepicker #dpFechaInicio="bsDatepicker"
+                                                            [bsConfig]="datePickerConfig" formControlName="fechaInicio" />
+                                                      <div class="input-group-append">
+                                                            <button class="btn btn-outline-danger" type="button" id="btnFechaInicio" name="btnFechaInicio" (click)="dpFechaInicio.toggle()"
+                                                                  [attr.aria-expanded]="dpFechaInicio.isOpen">
+                                                                  <em class="fa fa-calendar"></em>
+                                                            </button>
+                                                      </div>
+                                                </div>
+                                          </div>
+                                    </div>
+                              </div>
+                              <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                                    <div class="form-group row">
+                                          <label for="fechaFin" class="col-form-label col-md-auto labelDate">{{
+                                                "pantalla.controlVolumenOperativo.graficaArchivoCliente.fechaFin"
+                                                | translate
+                                                }}</label>
+                                          <div class="col-sm-7">
+                                                <div class="input-group">
+                                                      <input type="text" class="form-control" id="fechaFin" name="fechaFin" readonly required bsDatepicker #dpFechaFin="bsDatepicker"
+                                                            [bsConfig]="datePickerConfig" formControlName="fechaFin" />
+                                                      <div class="input-group-append">
+                                                            <button class="btn btn-outline-danger" type="button" id="btnFechaFin" name="btnFechaFin" (click)="dpFechaFin.toggle()"
+                                                                  [attr.aria-expanded]="dpFechaFin.isOpen">
+                                                                  <em class="fa fa-calendar"></em>
+                                                            </button>
+                                                      </div>
+                                                </div>
+                                          </div>
+                                    </div>
+                              </div>
+                        </form>
+
+                        <div class="row mt-2">
+                              <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-1 offset-sm-1 offset-md-1 offset-lg-1">
+                                    <button type="button" class="btn btn-danger" (click)="onClickClean()">
+                                          {{ "btn.limpiar" | translate }}
+                                    </button>
+                              </div>
+                              <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-8 offset-sm-8 offset-md-8 offset-lg-8">
+                                    <button type="button" class="btn btn-danger" (click)="eventoConsultar()">
+                                          {{ "btn.buscar" | translate }}
+                                    </button>
+                              </div>
+                        </div>
+                  </div>
+            </div>
+      </div>
+
+      <div class="card mt-3" [hidden]="!showGraph">
+            <div class="card-body">
+                  <div class="row">
+                        <!-- Table -->
+                        <div class="col-xs-12 col-sm-12 col-md-5 col-lg-5">
+                              <table class="table table-striped table-hover">
+                                    <caption></caption>
+                                    <thead>
+                                          <tr>
+                                                <th scope="col" class="text-center">
+                                                      {{ "operativo.nombreCliente" | translate }}
+                                                </th>
+                                                <th scope="col" class="text-center">
+                                                      {{
+                                                      "pantalla.gestionComprobantes.comprobantesxProducto.producto"
+                                                      | translate
+                                                      }}
+                                                </th>
+                                                <th scope="col" class="text-center">
+                                                      {{
+                                                      "pantalla.sterling.historialAnualBuzon.total" | translate
+                                                      }}
+                                                </th>
+                                          </tr>
+                                    </thead>
+                                    <tbody>
+                                          <tr *ngFor="let detail of result">
+                                                <td class="text-center">{{detail.fecha}}</td>
+                                                <td class="text-center">{{detail.layout}}</td>
+                                                <td class="text-center">{{detail.total}}</td>
+                                          </tr>
+                                    </tbody>
+                              </table>
+                        </div>
+                        <!-- Graph -->
+                        <div class="col-xs-12 col-sm-12 col-md-7 col-lg-7">
+                              <div class="row">
+                                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-center text-uppercase">
+                                          <h2>
+                                                {{
+                                                nombreGrafica
+                                                }}
+                                          </h2>
+                                    </div>
+                                    <canvas id="chartHistoricoCli"></canvas>
+
+                                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 data">
+                                          <div class="centrar">
+                                                <ng-container *ngFor="let data of result">
+                                                      <div class="box red" [ngClass]="data.color"></div>
+                                                      <div class="resize">{{data.layout}}</div>
+                                                </ng-container>
+                                          </div>
+                                    </div>
+
+                              </div>
+                        </div>
+                  </div>
+                  <div class="row mt-2">
+                        <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-1 offset-sm-1 offset-md-1 offset-lg-1">
+                              <button type="button" class="btn btn-danger" (click)="back()">
+                                    {{ "btn.regresar" | translate }}
+                              </button>
+                        </div>
+                        <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-8 offset-sm-8 offset-md-8 offset-lg-8">
+                              <button type="button" class="btn btn-danger" (click)="exportDetailLayouts()">
+                                    {{ "btn.exportar" | translate }}
+                              </button>
+                        </div>
+                  </div>
+            </div>
+      </div>
+</div>

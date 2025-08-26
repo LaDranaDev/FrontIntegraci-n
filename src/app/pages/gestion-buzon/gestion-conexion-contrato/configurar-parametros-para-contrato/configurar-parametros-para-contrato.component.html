@@ -1,0 +1,390 @@
+<app-operativa-header tituloPantalla="{{'PDC' | translate}}: {{datos.numeroContrato}}"></app-operativa-header>
+
+<div id="modificarConexionContrato" class="panel panel-default col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    <br>
+    <form [formGroup]="parametrosContratoConfigForm">
+        <div class="card">
+        <h5 class="card-header justify-content-center">
+            {{'GPC.lista' | translate}}
+        </h5>
+        <div class="card-body">
+                <div class="row" >
+                    <div class="col-xs-6 col-sm-4 ">
+                        <div class="form-group row">
+                            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                <label for="protocolo"></label>
+
+
+                                <select class="form-control" name="protocolo" id="protocolo"  formControlName="protocolo" (change)="valueChange($event)" *ngIf="configurar === null">
+                                    <option value="">{{'seleccione' | translate}}</option>
+                                    <option *ngFor="let catalogo of protocolo" [value]="catalogo['idProtocolo']" [selected]="catalogo.idProtocolo === productoSeleccionado2">{{catalogo['nombre']}}</option>
+                                </select>
+                                <label for="protocolo2"></label>
+                                <select  [attr.disabled]="true" class="form-control" name="protocolo" id="protocolo2"  formControlName="protocolo" *ngIf="configurar !== null">
+                                    <option value=""> {{'seleccione' | translate}}</option>
+                                    <option *ngFor="let catalogo of protocolo" [value]="catalogo['idProtocolo']" [selected]="catalogo.idProtocolo === productoSeleccionado2">{{catalogo['nombre']}}</option>
+                                </select>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        </div>
+        </div>
+
+
+        <div *ngIf="productoSeleccionado === '5'">
+            <div class="dos">
+                <div class="dividir">
+                    <div class="card">
+                        <h5 class="card-header justify-content-center">
+                           {{'GPC.put' | translate}}  
+                        </h5>
+                        <div class="card-body">
+                            <div class="form-group row2">
+                                <label class="col-md-6 tex col-xs-6 col-xs-4 col-sm-4"> {{'GPC.nombre' | translate}}:</label>
+                                <label class="col-md-6 tex col-xs-6 col-xs-4 col-sm-4">{{'GPC.valor' | translate}}:</label>
+                            </div>
+                            <div class="form-group row2">
+                                <label for="uri" class="col-md-6  col-xs-6 col-xs-4 col-sm-4">{{'uri' | translate}}:</label>
+                                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                        <input class="form-control"  type="text" id="uri" name="uri" 
+                                        formControlName="uri" placeholder="{{'uri' | translate}}" maxlength="200"
+                                        size="200" maxlength="200" [class.border-primary]="true"  appInputMask="CaracteresEspecialesGestionConexionVarios"> 
+                                    
+                                </div>
+                        
+                            </div>
+    
+                            <div class="form-group row2">
+                                <label for="ruta" class="col-md-6  col-xs-6 col-xs-4 col-sm-4">{{'ruta' | translate}}</label>
+                                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                        <input class="form-control"  type="text" id="ruta" name="ruta" 
+                                        formControlName="ruta" placeholder="{{'ruta' | translate}}" maxlength="200"
+                                        size="200" maxlength="200" [class.border-primary]="true"  appInputMask="CaracteresEspecialesGestionConexionVarios"> 
+                                </div>
+                            </div>
+    
+                            <div class="form-group row2">
+                                <label for="patron" class="col-md-6  col-xs-6 col-xs-4 col-sm-4">{{'PA' | translate}}:</label>
+                                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                    <input class="form-control"  type="text" name="patron" id="patron"
+                                     formControlName="patron" placeholder="{{'PA' | translate}}"
+                                     size="200" maxlength="50" [class.border-primary]="true"  appInputMask="CaracteresEspecialesGestionConexionVarios"> 
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+               
+                <div class="dividir">
+                    <div class="card">
+                        <h5 class="card-header justify-content-center">
+                           {{'GPC.get' | translate}}
+                        </h5>
+                        <div class="card-body">
+                            <div class="form-group row2">
+                                <label class="col-md-6 tex col-xs-6 col-xs-4 col-sm-4">{{'GPC.nombre' | translate}}:</label>
+                                <label class="col-md-6 tex col-xs-6 col-xs-4 col-sm-4">{{'GPC.valor' | translate}}:</label>
+                            </div>
+                            <div class="form-group row2">
+                                <label for="uriG" class="col-md-6  col-xs-6 col-xs-4 col-sm-4">{{'uri' | translate}}:</label>
+                                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                        <input class="form-control" id="uriG" type="text" name="uriG" 
+                                        formControlName="uriG" placeholder="{{'uri' | translate}}"
+                                        size="200" maxlength="200" [class.border-primary]="true"  appInputMask="CaracteresEspecialesGestionConexionVarios"> 
+                                    
+                                </div>
+                        
+                            </div>
+    
+                            <div class="form-group row2">
+                                <label for="rutaG" class="col-md-6  col-xs-6 col-xs-4 col-sm-4">{{'ruta' | translate}}:</label>
+                                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                        <input class="form-control" id="rutaG" type="text" name="rutaG" 
+                                        formControlName="rutaG" placeholder="{{'ruta' | translate}}" 
+                                        size="200" maxlength="200" [class.border-primary]="true"  appInputMask="CaracteresEspecialesGestionConexionVarios"> 
+                                </div>
+                            </div>
+    
+                            <div class="form-group row2">
+                                <label for="patronG" class="col-md-6  col-xs-6 col-xs-4 col-sm-4">{{'PA' | translate}}:</label>
+                                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                    <input class="form-control"  id="patronG" type="text" name="patronG" 
+                                    formControlName="patronG" placeholder="{{'PA' | translate}}"
+                                    size="50" maxlength="50" [class.border-primary]="true"  appInputMask="CaracteresEspecialesGestionConexionVarios"> 
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div *ngIf="productoSeleccionado === '2' || productoSeleccionado === '1'">
+            <div class="dos">
+                <div class="dividir">
+                    <div class="card">
+                        <h5 class="card-header justify-content-center">
+                           {{'GPC.put' | translate}}
+                        </h5>
+                        <div class="card-body">
+                            <div class="form-group row2">
+                                <label class="col-md-6 tex col-xs-6 col-xs-4 col-sm-4">{{'GPC.nombre' | translate}}:</label>
+                                <label class="col-md-6 tex col-xs-6 col-xs-4 col-sm-4">{{'GPC.valor' | translate}}:</label>
+                            </div>
+                            <div class="form-group row2">
+                                <label for="directorio" class="col-md-6  col-xs-6 col-xs-4 col-sm-4">{{'directorio' | translate}}:</label>
+                                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                        <input class="form-control"  type="text" id="directorio"
+                                        name="directorio" formControlName="directorio" placeholder="{{'directorio' | translate}}"
+                                        size="50" maxlength="50" [class.border-primary]="true" appInputMask="CaracteresEspecialesGestionConexionDirectorio"> 
+                                </div>
+                            </div>
+    
+                            <div class="form-group row2">
+                                <label for="patron" class="col-md-6  col-xs-6 col-xs-4 col-sm-4">{{'PA' | translate}}:</label>
+                                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                    <input class="form-control"  type="text" name="patron" id="patron"  
+                                    formControlName="patron" placeholder="{{'PA' | translate}}"
+                                    size="50" maxlength="50"  appInputMask="CaracteresEspecialesGestionConexionVarios"> 
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+               
+                <div class="dividir">
+                    <div class="card">
+                        <h5 class="card-header justify-content-center">
+                           {{'GPC.get' | translate}}
+                        </h5>
+                        <div class="card-body">
+                            <div class="form-group row2">
+                                <label class="col-md-6 tex col-xs-6 col-xs-4 col-sm-4">{{'GPC.nombre' | translate}}:</label>
+                                <label class="col-md-6 tex col-xs-6 col-xs-4 col-sm-4">{{'GPC.valor' | translate}}:</label>
+                            </div>
+                            <div class="form-group row2">
+                                <label for="directorioG" class="col-md-6  col-xs-6 col-xs-4 col-sm-4">{{'directorio' | translate}}:</label>
+                                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                        <input class="form-control"  type="text" id="directorioG"
+                                        name="directorioG" formControlName="directorioG" placeholder="{{'directorio' | translate}}"
+                                        size="50" maxlength="50"  [class.border-primary]="true" appInputMask="CaracteresEspecialesGestionConexionDirectorio"> 
+                                </div>
+                            </div>
+                            <div class="form-group row2">
+                                <label for="patronG" class="col-md-6  col-xs-6 col-xs-4 col-sm-4">{{'PA' | translate}}:</label>
+                                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                    <input class="form-control"  id="patronG" type="text"
+                                    name="patronG" formControlName="patronG" placeholder="{{'PA' | translate}}"
+                                    size="50" maxlength="50"  appInputMask="CaracteresEspecialesGestionConexionVarios"> 
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div *ngIf="productoSeleccionado === '5'">
+            <div class="card2">
+                <div class="card-body">
+                    <div class="form-group row2">
+                        <label class="col-md-6 tex col-xs-6 col-xs-4 col-sm-4">{{'GPC.nombre' | translate}}:</label>
+                        <label class="col-md-6 tex col-xs-6 col-xs-4 col-sm-4">{{'GPC.valor' | translate}}:</label>
+                    </div>
+                    
+                    <div class="form-group row2">
+                        <label for="uriConsulta" class="col-md-6  col-xs-6 col-xs-4 col-sm-4">{{'UC' | translate}}:</label>
+                                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                        <input class="form-control" id="uriConsulta" type="text" name="uriConsulta" formControlName="uriConsulta" placeholder="{{'UC' | translate}}"
+                                        size="200" maxlength="200" [class.border-primary]="true"  appInputMask="CaracteresEspecialesGestionConexionVarios" > 
+                                </div>
+                    </div>
+
+                    <div class="form-group row2">
+                        <label for="ip" class="col-md-6  col-xs-6 col-xs-4 col-sm-4"> {{'IP' | translate}}:</label>
+                            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                    <input class="form-control"  type="text" name="ip" id="ip" formControlName="ip" placeholder="{{'IP' | translate}}r"size="15" maxlength="15" [class.border-primary]="true"  appInputMask="CaracteresEspecialesGestionConexionVarios"> 
+                            </div>
+                    </div>
+
+                    <div class="form-group row2">
+                        <label for="puerto" class="col-md-6  col-xs-6 col-xs-4 col-sm-4">{{'puerto' | translate}}:</label>
+                        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                <input class="form-control" id="puerto" type="text" name="puerto"  [class.border-primary]="true"  formControlName="puerto" placeholder="{{'puerto' | translate}}" size="5" maxlength="5"  appInputMask="numerico" > 
+                            </div>
+                    </div>
+
+                    <div class="form-group row2">
+                        <label for="certificado" class="col-md-6  col-xs-6 col-xs-4 col-sm-4">{{'certificado' | translate}}:</label>
+                        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                <input class="form-control" id="certificado" type="text" name="certificado"  [class.border-primary]="true" formControlName="certificado" placeholder="{{'certificado' | translate}}" size="200" maxlength="200"  appInputMask="CaracteresEspecialesGestionConexionVarios"> 
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div *ngIf="productoSeleccionado === '1' || productoSeleccionado === '2'">
+            <div class="card2 ">
+                <div class=" card-body">
+                    <div class="form-group row2 ">
+                        <label class="col-md-6 tex col-xs-6 col-xs-4 col-sm-4">{{'GPC.nombre' | translate}}:</label>
+                        <label class="col-md-6 tex col-xs-6 col-xs-4 col-sm-4">{{'GPC.valor' | translate}}:</label>
+                    </div>
+                </div>
+
+                    <div class="form-group row2"  *ngIf="productoSeleccionado === '1' || productoSeleccionado === '2'">
+                            <label for="puerto" class="col-md-6">{{'PR' | translate}}:</label>
+                            <div class="col-md-6">
+                                    <input class="form-control" id="puerto" [class.border-primary]="true"  type="text" size="5" maxlength="5" name="puerto" formControlName="puerto" placeholder="{{'PR' | translate}}"  appInputMask="numerico"> 
+                            </div>
+                    </div>
+                    <div class="form-group row2"  *ngIf="productoSeleccionado === '1' || productoSeleccionado === '2'">
+                        <label for="servidor" class="col-md-6">{{'SR' | translate}}:</label>
+                        <div class="col-md-6">
+                                <input class="form-control"  type="text" [class.border-primary]="true" name="servidor" id="servidor" size="15" maxlength="15" formControlName="servidor" placeholder="{{'SR' | translate}}" appInputMask="CaracteresEspecialesGestionConexionVarios" > 
+                        </div>
+                    </div>
+                    <div class="form-group row2" *ngIf="productoSeleccionado === '1' || productoSeleccionado === '2'">     
+                        <label for="userId" class="col-md-6">{{'UIR'| translate}}:</label>
+                        <div class="col-md-6">
+                                <input class="form-control" id="userId" [class.border-primary]="true" type="text" name="userId" size="50" maxlength="50" formControlName="userId" placeholder="{{'UIR'| translate}}" appInputMask="CaracteresEspecialesGestionConexionUser" > 
+                        </div>
+                    </div>
+                    <div class="form-group row2" *ngIf="productoSeleccionado === '1'">
+                        <label for="profile" class="col-md-6"> {{'PI'| translate}}:</label>
+                        <div class="col-md-6">
+                                <input class="form-control" id="profile" type="text" name="profile" size="50" maxlength="50" formControlName="profile" placeholder="{{'PI'| translate}}" appInputMask="CaracteresEspecialesGestionConexionVarios"> 
+                        </div>
+                    </div>      
+                    <div class="form-group row2" *ngIf="productoSeleccionado === '1'">
+                        <label for="host" class="col-md-6">{{'KHK'| translate}}:</label>
+                        <div class="col-md-6">
+                                <input class="form-control" id="host" type="text" size="2000" maxlength="2000" name="host" formControlName="host" placeholder="{{'KHK'| translate}} " appInputMask="CaracteresEspecialesGestionConexionVarios"> 
+                        </div>
+                    </div>
+                    <div class="form-group row2" *ngIf="productoSeleccionado === '1'">
+                        <label for="user" class="col-md-6  col-xs-6 col-xs-6 col-sm-6">{{'UIK'| translate}}:</label>
+                        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                <input class="form-control" id="user" type="text" size="50" maxlength="50" name="user" formControlName="user" placeholder="{{'UIK'| translate}}" appInputMask="CaracteresEspecialesGestionConexionVarios"> 
+                        </div>
+                    </div>
+                    <div class="form-group row2"  *ngIf="productoSeleccionado === '2'">
+                        <label class="col-md-6  col-xs-6 col-xs-6 col-sm-6" for="hostOS" >{{'HO'| translate}}:</label>
+                        <div class="col-md-6  col-xs-6 col-xs-6 col-sm-6">
+                            <select class="form-control " id="hostOS" type="text"  [class.border-primary]="true" name="hostOS" formControlName="hostOS">
+                                <option value=""> {{'seleccione'| translate}} </option>
+                                <option *ngFor="let os of lsOS" [value]="os.type" >{{os.descripcionCatalogo}}</option>
+                            </select> 
+                        </div>
+                    </div>
+                    <div class="form-group row2"  *ngIf="productoSeleccionado === '2'">
+                        <label for="nodoLocal" class="col-md-6  col-xs-6 col-xs-6 col-sm-6">Nodo Local:</label>
+                        <div class="col-md-6  col-xs-6 col-xs-6 col-sm-6">
+                            <select  class="form-control" id="nodoLocal" type="text"  [class.border-primary]="true" name="nodoLocal" formControlName="nodoLocal">
+                                <option value=""> {{'seleccione'| translate}} </option>
+                                <option value="SNTDR_CD_GRP_OUT">SNTDR_CD_GRP_OUT (Con Secure+)</option>
+                                <option value="SNTDR_CD_GRP_OUT_NS">SNTDR_CD_GRP_OUT_NS (Sin Secure+)</option>
+                            </select> 
+                        </div>
+                    </div>
+                    <div class="form-group row2"  *ngIf="productoSeleccionado === '2'">
+                        <label for="nodoRemoto" class="col-md-6  col-xs-6 col-xs-6 col-sm-6"> {{'NR'| translate}} :</label>
+                        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                <input class="form-control" id="nodoRemoto" type="text" name="nodoRemoto" formControlName="nodoRemoto" placeholder="{{'NR'| translate}}" size="50" maxlength="50" appInputMask="CaracteresEspecialesGestionConexionVarios"> 
+                        </div>
+                    </div>
+                    <div class="form-group row2 "  *ngIf="productoSeleccionado === '2'">
+                        <label for="usuarioLocal" class="col-md-6  col-xs-6 col-xs-6 col-sm-6">{{'UL'| translate}}:</label>
+                        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                <input class="form-control" id="usuarioLocal" type="text" name="usuarioLocal" formControlName="usuarioLocal" placeholder="{{'UL'| translate}}" size="50" maxlength="50" appInputMask="CaracteresEspecialesGestionConexionVarios"> 
+                        </div>
+                    </div>
+                    <div class="form-group row2"  *ngIf="productoSeleccionado === '2'">
+                        <label for="passRemoto" class="col-md-6  col-xs-6 col-xs-6 col-sm-6">{{'PWD'| translate}}:</label>
+                        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                <input class="form-control" id="passRemoto" type="text" name="passRemoto" formControlName="passRemoto" placeholder="{{'PWD'| translate}}" size="50" maxlength="50" appInputMask="CaracteresEspecialesGestionConexionVarios"> 
+                        </div>
+                    </div>
+                    <div class="form-group row2"  *ngIf="productoSeleccionado === '2'">
+                        <label for="oscurecerPassword" class="col-xs-6 col-sm-6 col-md-6 col-lg-6">{{'OPWD'| translate}}:</label>
+                        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                <select  class="form-control" id="oscurecerPassword" type="text" name="oscurecerPassword" formControlName="oscurecerPassword" placeholder=" Oscurecer Password">
+                                    <option value=""> {{'seleccione'| translate}}</option>
+                                    <option value="Yes">{{'si'| translate}}</option>
+                                    <option value="No">No</option>
+                                </select> 
+                            </div>
+                    </div>
+                    <div class="form-group row2"  *ngIf="productoSeleccionado === '2'">
+                        <label for="modoBinario" class="ccol-md-6  col-xs-6 col-xs-6 col-sm-6">{{'MB'| translate}}:</label>
+                        <div class="col-md-6  col-xs-6 col-xs-6 col-sm-6">
+                                <select  class="form-control" id="modoBinario" type="text" name="modoBinario" formControlName="modoBinario" placeholder="Modo Binario">
+                                    <option value=""> {{'seleccione'| translate}}</option>
+                                    <option value="Yes">{{'si'| translate}}</option>
+                                    <option value="No">No</option>
+                                    <option value="Vn">Vn</option>
+                                </select> 
+                        </div>
+                    </div>
+                    <div class="form-group row2"  *ngIf="productoSeleccionado === '2'">
+                        <label for="formato" class="col-md-6  col-xs-6 col-xs-6 col-sm-6">{{'FR'| translate}}:</label>
+                        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                <input class="form-control" id="formato" type="text" name="formato" formControlName="formato" placeholder="{{'FR'| translate}}" size="4" maxlength="4" appInputMask="CaracteresEspecialesGestionConexionVarios"> 
+                        </div>
+                    </div>
+                    <div class="form-group row2 "  *ngIf="productoSeleccionado === '2'">
+                        <label for="Longitud" class="col-md-6  col-xs-6 col-xs-6 col-sm-6"> {{'LR'| translate}}:</label>
+                        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                <input class="form-control" id="Longitud" type="text" name="Longitud" formControlName="Longitud" placeholder="{{'LR'| translate}}" size="4" maxlength="4" appInputMask="CaracteresEspecialesGestionConexionVarios"> 
+                        </div>
+                    </div>
+                    <div class="form-group row2"  *ngIf="productoSeleccionado === '2'">
+                        <label for="modo" class="col-md-6  col-xs-6 col-xs-6 col-sm-6">{{'MD'| translate}}:</label>
+                        <div class="col-md-6  col-xs-6 col-xs-6 col-sm-6">
+                                <select  class="form-control"id="modo" type="text" name="modo" formControlName="modo" placeholder="Modo DISP">
+                                    <option value=""> {{'seleccione'| translate}} </option>
+                                    <option value="New">New</option>
+                                    <option value="rpl">rpl</option>
+                                </select> 
+                        </div>
+                    </div>
+                    <div class="form-group row2"  *ngIf="productoSeleccionado === '2'">
+                            <label for="sys" class="col-md-6  col-xs-6 col-xs-6 col-sm-6">{{'PS'| translate}}:</label>
+                            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                    <input class="form-control" id="sys" type="text" name="sys" formControlName="sys" placeholder="{{'PS'| translate}}" size="50" maxlength="50" appInputMask="CaracteresEspecialesGestionConexionVarios"> 
+                            </div>
+                    </div>
+                    <div class="form-group row2"  *ngIf="productoSeleccionado === '2'">
+                        <label for="disposición" class="col-md-6  col-xs-6 col-xs-6 col-sm-6">{{'DR'| translate}}:</label>
+                        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                <input class="form-control" id="disposición" type="text" name="disposición" formControlName="disposición" placeholder="{{'DR'| translate}}" size="50" maxlength="50" appInputMask="CaracteresEspecialesGestionConexionVarios"> 
+                        </div>
+                    </div>
+
+            </div>
+        </div>
+        
+        
+        <div class="row mt-2">
+            <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-1 offset-sm-1 offset-md-1 offset-lg-1">
+                <button type="button" class="btn btn-danger" (click)="cancelar()">{{'btn.cancelar' | translate}}</button>
+            </div>
+            <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-8 offset-sm-8 offset-md-8 offset-lg-8" *ngIf="configurar === null ">
+                <button type="button" class="btn btn-danger" (click)="guardar(productoSeleccionado)">{{'btn.guardar' | translate}}</button>
+            </div>
+            <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-8 offset-sm-8 offset-md-8 offset-lg-8"  *ngIf="configurar !== null ">
+                <button type="button" class="btn btn-danger" (click)="actualizar(productoSeleccionado)">{{'btn.guardar' | translate}}</button>
+            </div>
+        </div>
+        
+        <div class="row mt-2">
+            <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-1 offset-sm-1 offset-md-1 offset-lg-1">
+                <button type="button" class="btn btn-danger" (click)="limpiar()">{{'btn.limpiar' | translate}}</button>
+            </div>
+        </div>
+    </form>
+</div>

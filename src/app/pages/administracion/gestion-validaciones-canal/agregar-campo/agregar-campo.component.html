@@ -1,0 +1,250 @@
+<app-operativa-header
+  tituloPantalla="{{
+    isNew
+      ? ('menu.moduloAdministracion.gestionValidacionesCanal.agregarValidacion'
+        | translate)
+      : ('gestionValidaciones.general.modificarCampo.titulo' | translate)
+  }}"
+></app-operativa-header>
+<div class="panel panel-default col-xs-12 col-sm-12 col-md-12 col-lg-12">
+  <br />
+  <div class="card">
+    <h5 class="card-header justify-content-center">
+      {{
+        isNew
+          ? ("pantallas.moduloAdministracion.gestionValidacionesCanal.titleCampo"
+            | translate)
+          : ("gestionValidaciones.general.modificarCampo.subtitulo" | translate)
+      }}
+    </h5>
+    <div class="card-body">
+      <form [formGroup]="formNewField">
+        <div class="row">
+          <!-- Clave -->
+          <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+            <div
+              class="form-group row justify-content-center align-items-center"
+            >
+              <label for="clave" class="col-md-3 col-form-label"
+                >{{
+                  "pantallas.moduloAdministracion.gestionValidacionesCanal.clave"
+                    | translate
+                }}:</label
+              >
+              <div class="col-md-9">
+                <input
+                  maxlength="20"
+                  type="text"
+                  (paste)="eventoPaste($event)"
+                  onDrop="return false"
+                  class="form-control"
+                  name="clave"
+                  id="clave"
+                  aria-label="activo"
+                  appInputMask="alfanumerico_space"
+                  formControlName="clave"
+                />
+              </div>
+            </div>
+          </div>
+          <!-- Tipo -->
+          <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+            <div
+              class="form-group row justify-content-center align-items-center"
+            >
+              <label for="selectType" class="col-md-3 col-form-label"
+                >{{
+                  "pantalla.moduloAdministracion.consultaValidacionesCanal.tipo"
+                    | translate
+                }}:</label
+              >
+              <div class="col-md-9">
+                <select
+                  class="form-select form-select-sm form-control"
+                  id="selectType"
+                  aria-label="estatus"
+                  formControlName="tipo"
+                  (change)="getValueType()"
+                >
+                  <option value="">{{'pantalla.moduloAdministracion.gestionBancos.seleccione' | translate}}</option>
+                  <option *ngFor="let tp of type" [value]="tp.value">
+                    {{ tp.name }}
+                  </option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <!-- Validación -->
+          <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+            <div
+              class="form-group row justify-content-center align-items-center"
+            >
+              <label for="selectValidation" class="col-md-3 col-form-label"
+                >{{
+                  "pantalla.moduloAdministracion.consultaValidacionesCanal.validacion"
+                    | translate
+                }}:</label
+              >
+              <div class="col-md-9">
+                <select
+                  class="form-select form-select-sm form-control"
+                  id="selectValidation"
+                  aria-label="selectValidation"
+                  formControlName="idValidacion"
+                >
+                  <option value="">{{'pantalla.moduloAdministracion.gestionBancos.seleccione' | translate}}</option>
+                  <option
+                    *ngFor="let val of validations"
+                    [value]="val.idCatalogo"
+                  >
+                    {{ val.descripcion }}
+                  </option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row justify-content-md-start">
+          <!-- Descripción -->
+          <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+            <div
+              class="form-group row justify-content-center align-items-center"
+            >
+              <label for="description" class="col-md-3 col-form-label"
+                >{{
+                  "pantallas.moduloAdministracion.gestionValidacionesCanal.descripcion"
+                    | translate
+                }}:</label
+              >
+              <div class="col-md-9">
+                <input
+                  maxlength="50"
+                  type="text"
+                  class="form-control"
+                  name="description"
+                  id="descripcion"
+                  aria-label="activo"
+                  appInputMask="alfanumerico_space"
+                  formControlName="descripcion"
+                />
+              </div>
+            </div>
+          </div>
+          <!-- Posición inicial -->
+          <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+            <div
+              class="form-group row justify-content-center align-items-center"
+            >
+              <label for="startPosition" class="col-md-3 col-form-label"
+                >{{
+                  !showDefinitionField
+                    ? ("pantalla.moduloAdministracion.consultaValidacionesCanal.posicionInicio"
+                      | translate)
+                    : ("pantalla.moduloAdministracion.consultaValidacionesCanal.definicion"
+                      | translate)
+                }}:</label
+              >
+              <div class="col-md-9">
+                <input
+                  maxlength="30"
+                  type="text"
+                  (paste)="eventoPaste($event)"
+                  onDrop="return false"
+                  class="form-control"
+                  name="startPosition"
+                  id="startPosition"
+                  aria-label="activo"
+                  formControlName="posInicial"
+                  appInputMask="numerico"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row justify-content-md-start" *ngIf="!showDefinitionField">
+          <!-- Número -->
+          <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+            <div
+              class="form-group row justify-content-center align-items-center"
+            >
+              <label for="description" class="col-md-3 col-form-label"
+                >{{
+                  "pantalla.moduloAdministracion.consultaValidacionesCanal.numero"
+                    | translate
+                }}:</label
+              >
+              <div class="col-md-9">
+                <input
+                  maxlength="10"
+                  type="text"
+                  class="form-control"
+                  name="description"
+                  id="descripcion"
+                  aria-label="activo"
+                  formControlName="numero"
+                  appInputMask="numerico"
+                />
+              </div>
+            </div>
+          </div>
+          <!-- Posición final -->
+          <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+            <div
+              class="form-group row justify-content-center align-items-center"
+            >
+              <label for="endPosition" class="col-md-3 col-form-label"
+                >{{
+                  "pantalla.moduloAdministracion.consultaValidacionesCanal.posicionFinal"
+                    | translate
+                }}:</label
+              >
+              <div class="col-md-9">
+                <input
+                  maxlength="30"
+                  type="text"
+                  class="form-control"
+                  name="endPosition"
+                  id="endPosition"
+                  aria-label="activo"
+                  formControlName="posFinal"
+                  appInputMask="numerico"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+      <div class="row">
+        <div
+          class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-1 offset-sm-1 offset-md-1 offset-lg-1"
+        >
+          <button type="button" class="btn btn-danger" (click)="resetFrom()">
+            {{ "btn.limpiar" | translate }}
+          </button>
+        </div>
+        <div
+          class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-8 offset-sm-8 offset-md-8 offset-lg-8"
+        >
+          <button
+            type="button"
+            class="btn btn-danger"
+            (click)="saveEditCampoValidacion()"
+          >
+            {{ "btn.guardar" | translate }}
+          </button>
+        </div>
+      </div>
+      <br />
+      <div class="row">
+        <div
+          class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-1 offset-sm-1 offset-md-1 offset-lg-1 mt-3"
+        >
+          <button type="button" class="btn btn-danger" (click)="back()">
+            {{ "btn.regresar" | translate }}
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

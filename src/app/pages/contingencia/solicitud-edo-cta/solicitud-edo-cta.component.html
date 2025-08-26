@@ -1,0 +1,266 @@
+<app-operativa-header  tituloPantalla="{{'menu.contigencia.solicitudEdoCuentaContingencia' | translate}}"></app-operativa-header>
+<div id="envioArchivos" class="panel panel-default col-xs-12 col-sm-12 col-md-12 col-lg-12">
+      <br>
+      <div class="card">
+            <h5 class="card-header justify-content-center">
+                  {{'pantalla.datosContrato.title' | translate}}
+            </h5>
+            <div class="card-body">
+                  <div class="row">
+                        <div class="col-xs-6 col-sm-6 col-md-6">
+                              <div class="form-group row">
+                                    <label for="codCliente"
+                                          class="col-form-label col-sm-3">{{'pantalla.sol.edocuenta.datosContrato.codCliente'
+                                          |
+                                          translate}}:</label>
+                                    <div class="col-sm-4">
+                                          <input type="text" id="codCliente" name="codigoCliente" class="form-control"
+                                                placeholder="{{'pantalla.sol.edocuenta.datosContrato.codCliente' | translate}}"
+                                                (keydown.Tab)="findContratoByBuc()" appInputMask="numerico"
+                                                maxlength="8" size="12" (paste)="pasteOnlyNumeros($event)" tabindex="1"
+                                                [(ngModel)]="datosContrato.bucCliente">
+                                    </div>
+                              </div>
+                        </div>
+                        <div class="col-xs-6 col-sm-6 col-md-6">
+                              <div class="form-group row">
+                                    <label for="estatusContrato"
+                                          class="col-form-label col-sm-3">{{'pantalla.sol.edocuenta.datosContrato.estatusContrato'
+                                          |
+                                          translate}}:</label>
+                                    <div class="col-sm-4">
+                                          <input type="text" id="estatusContrato" name="estatusContrato"
+                                                class="form-control"
+                                                placeholder="{{'pantalla.sol.edocuenta.datosContrato.estatusContrato' | translate}}"
+                                                tabindex="1" [(ngModel)]="datosContrato.descEstatus" disabled>
+                                    </div>
+                              </div>
+                        </div>
+                  </div>
+                  <div class="row">
+                        <div class="col-sm-6 col-md-6">
+                              <div class="form-group row">
+                                    <label for="razonSocial"
+                                          class="col-form-label col-sm-3">{{'pantalla.sol.edocuenta.datosContrato.razonSocial'
+                                          |
+                                          translate}}:</label>
+                                    <div class="col-sm-9">
+                                          <input type="text" id="razonSocial" name="razonSocial"
+                                                placeholder="{{'pantalla.sol.edocuenta.datosContrato.razonSocial' | translate}}"
+                                                class="form-control" [(ngModel)]="datosContrato.razonSocial" disabled>
+                                    </div>
+                              </div>
+                        </div>
+                        <div class="col-sm-6 col-md-6" hidden>
+                              <div class="form-group row">
+                                    <label for="idContrato"
+                                          class="col-form-label col-sm-3">{{'pantalla.sol.edocuenta.datosContrato.idContrato'
+                                          |
+                                          translate}}:</label>
+                                    <div class="col-sm-4">
+                                          <input type="text" id="idContrato" name="idContrato" class="form-control"
+                                                [(ngModel)]="datosContrato.idContrato">
+                                    </div>
+                              </div>
+                        </div>
+                  </div>
+                  <div class="row">
+                        <div class="col-xs-6 col-sm-6 col-md-6">
+                              <div class="form-group row">
+                                    <label for="cuentaEje"
+                                          class="col-form-label col-sm-3">{{'pantalla.sol.edocuenta.datosContrato.cuentaEje'
+                                          |
+                                          translate}}:</label>
+                                    <div class="col-sm-4">
+                                          <input type="text" id="cuentaEje" name="cuentaEje" class="form-control"
+                                                placeholder="{{'pantalla.sol.edocuenta.datosContrato.cuentaEje' | translate}}"
+                                                [(ngModel)]="datosContrato.cuentaEje" disabled>
+                                    </div>
+                              </div>
+                        </div>
+                        <div class="col-xs-6 col-sm-6 col-md-6">
+                              <div class="form-group row">
+                                    <label for="numContrato" class="col-form-label col-sm-3">{{'numContrato' |
+                                          translate}}:</label>
+                                    <div class="col-sm-4">
+                                          <input type="text" class="form-control" name="numContrato"
+                                                placeholder="{{'numContrato' | translate}}"
+                                                id="numContrato" [(ngModel)]="datosContrato.numContrato" disabled>
+                                    </div>
+                              </div>
+                        </div>
+                  </div>
+            </div>
+      </div>
+      <div class="card mt-1">
+            <h5 class="card-header justify-content-center">
+                  {{'pantalla.envio.archivos.seccion.archivo' | translate}}
+            </h5>
+            <div class="card-body  flexbox-align">
+                  <form [formGroup]="edoCtaForm" class="formClass">
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 ">
+                              <div class="input-group separate width50">
+                                    <label for="fecha" class="col-form-label">{{
+                                          'pantalla.solicitudEdoCtaContingencia.fecha'
+                                          | translate
+                                          }}</label>
+                                    <input type="text" class="form-control" id="fecha" name="fecha" readonly required
+                                          bsDatepicker #dpFechaAten="bsDatepicker" [bsConfig]="datePickerConfig"
+                                          formControlName="fecha" [attr.disabled]="disabledInputDate"
+                                          (onHidden)="getFrecuency()" />
+                                    <div class="input-group-append">
+                                          <button class="btn btn-outline-danger" type="button" id="btnfecha"
+                                                name="btnfecha" (click)="dpFechaAten.toggle()"
+                                                [disabled]="disabledInputDate"
+                                                [attr.aria-expanded]="dpFechaAten.isOpen">
+                                                <em class="fa fa-calendar"></em>
+                                          </button>
+                                    </div>
+                              </div>
+                              <div class="input-group justify-content-center">
+                                    <label for="frecuencia" class="col-form-label">
+                                          {{'pantalla.solicitudEdoCtaContingencia.frecuencia' | translate}}
+                                    </label>
+                              </div>
+                              <div class="card-header">
+                                    <ng-container *ngIf="showFrecuency">
+                                          <div class="input-group justify-content-center">
+                                                <ng-container *ngFor="let item of resFrecuency.catalogos">
+                                                      <input class="radioCenter" type="radio" name="radioFrec"
+                                                            id="{{item.idCatalogo}}"
+                                                            [value]="item.descripcionCatalogo"
+                                                            (click)="selRadioFrec($event, item.idCatalogo)">
+                                                      <label class="col-form-label separar-check marginRight "
+                                                            for="{{item.idCatalogo}}">{{item.descripcionCatalogo}}
+                                                      </label>
+                                                </ng-container>
+                                          </div>
+                                    </ng-container>
+                              </div>
+
+                              <div class="input-group separate">
+                                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                          <input class="radioCenter" type="radio" name="radioTipoArchivo"
+                                                id="recibirArchConsolidadoCta" value="recibirArchConsolidadoCta"
+                                                 formControlName="radioTipoArchivo">
+                                          <label class="col-form-label separar-check" for="recibirArchConsolidadoCta">
+                                                {{'pantalla.solicitudEdoCtaContingencia.recibirArchConsolidadoCta' |
+                                                translate}}
+                                          </label>
+                                    </div>
+
+                                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                          <input class="radioCenter" type="radio" name="radioTipoArchivo"
+                                                id="recibirArchPorCta" value="recibirArchPorCta"
+                                                 formControlName="radioTipoArchivo">
+                                          <label class="col-form-label separar-check " for="recibirArchPorCta">
+                                                {{'pantalla.solicitudEdoCtaContingencia.recibirArchPorCta' | translate}}
+                                          </label>
+                                    </div>
+
+                              </div>
+                              <div class="input-group separate ">
+                                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 alignCheckbox"
+                                          *ngIf="this.edoCtaForm.controls['radioFrecuencia'].value === 'CONSOLIDADO POR DÍA' 
+                                          && this.edoCtaForm.controls['radioTipoArchivo'].value === 'recibirArchConsolidadoCta'">
+
+                                          <input class="radioCenter offset-2" type="checkbox" name="checkDivisa"
+                                                id="checkDivisa" formControlName="checkDivisa" (change)="onChangeCheckBox($event, 'checkDivisa')">
+                                          <label class="col-form-label separar-check"
+                                                for="checkDivisa">{{'pantalla.edoCuentaIntradia.separacion'|
+                                                translate}}</label>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 alignCheckbox">
+                                          <input class="radioCenter offset-2" type="checkbox" name="checkCtaDescubierto"
+                                                id="checkCtaDescubierto" formControlName="checkCtaDescubierto" (change)="onChangeCheckBox($event, 'ctaDescubierto')">
+                                          <label class="col-form-label separar-check" for="checkCtaDescubierto">
+                                                {{'pantalla.solicitudEdoCtaContingencia.CtaDescubierto' | translate}}
+                                          </label>
+                                    </div>
+
+                                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 alignCheckbox">
+                                          <input class="radioCenter offset-2" type="checkbox" name="checkConvenio"
+                                                id="checkConvenio" formControlName="checkConvenio"  (change)="onChangeCheckBox($event, 'checkConvenio')">
+                                          <label class="col-form-label separar-check " for="checkConvenio">
+                                                {{'pantalla.solicitudEdoCtaContingencia.ConvenioVirtual' | translate}}
+                                          </label>
+                                    </div>
+
+                              </div>
+
+                              <div class="input-group">
+                                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 deletePadding">
+                                          <label class="col-form-label separar-check combo" for="canal">
+                                                {{'pantalla.solicitudEdoCtaContingencia.canal' | translate}} </label>
+                                          <select class="radioCenter w-75" id="canal" name="canal" formControlName="canal">
+                                                <option default></option>
+
+                                                <option *ngFor="let item of channelList" [value]="item.idCanal">
+                                                      {{item.nombre}}</option>
+                                          </select>
+                                    </div>
+
+                                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 deletePadding">
+                                          <label class="col-form-label separar-check combo" for="formato">
+                                                {{'pantalla.solicitudEdoCtaContingencia.formato' | translate}} </label>
+                                          <select class="radioCenter w-75" id="formato" name="formato"
+                                                formControlName="formato">
+                                                <option default></option>
+                                                <option *ngFor="let item of formatList" [value]="item.idParametro">
+                                                      {{item.descripcion}}</option>
+                                          </select>
+                                    </div>
+
+                              </div>
+                        </div>
+
+                  </form>
+
+            </div>
+
+            <div class="row mt-5 mb-5">
+                  <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-1 offset-sm-1 offset-md-1 offset-lg-1">
+                        <button type="button" class="btn btn-danger" (click)="onClickClean()">
+                              {{ "btn.limpiar" | translate }}
+                        </button>
+                  </div>
+                  <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-8 offset-sm-8 offset-md-8 offset-lg-8">
+                        <button type="button" class="btn btn-danger" (click)="eventoConsultar()">
+                              {{ "btn.enviar" | translate }}
+                        </button>
+                  </div>
+            </div>
+      </div>
+      <ng-container *ngIf="showCta">
+            <div class="card mt-1">
+                  <h5 class="card-header justify-content-center"> </h5>
+                  <div class="card-body  flexbox-align">
+                        <table class="table table-striped table-hover" aria-describedby="description">
+                              <thead>
+                                    <tr>
+                                          <th class="text-center" scope="col">
+                                                {{'pantalla.solicitudEdoCtaContingencia.cuenta' | translate}}</th>
+                                    </tr>
+                              </thead>
+                              <tbody>
+                                    <tr *ngFor="let cta of returnedArray">
+                                          <td class="text-left">{{cta.numCuenta }}</td>
+                                    </tr>
+                              </tbody>
+                        </table>
+
+                  </div>
+                  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mt-1">
+                        <div class="d-flex justify-content-center">
+                              <pagination [boundaryLinks]="true" [directionLinks]="true" [totalItems]="ctaList.length"
+                                    [itemsPerPage]="rowsPorPagina" [maxSize]="rowsPorPagina" [(ngModel)]="page"
+                                    previousText="&lsaquo;" nextText="&rsaquo;" firstText="Inicio" lastText="Fin"
+                                    (pageChanged)="onPageChanged($event)">
+                              </pagination>
+
+                        </div>
+                  </div>
+            </div>
+      </ng-container>
+
+</div>

@@ -1,0 +1,94 @@
+<app-operativa-header tituloPantalla="{{'AC.titulo' | translate}}"></app-operativa-header>
+<div id="conexionContrato" class="panel panel-default col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    <br>
+    <div class="card">
+        <h5 class="card-header justify-content-center">
+            {{'AC.sub' | translate}}
+        </h5>
+        <div class="card-body">
+            <div class="row justify-content-center">
+                <div class="col-xs-6 col-sm-6 col-md-6">
+                    <div class="form-group row">
+                        <label for="cc"
+                            class="col-xs-3 col-sm-3 col-md-3 col-lg-3 col-xs-2 col-sm-2 col-md-2 col-lg-2 offset-xs-1 offset-sm-1 offset-md-1 offset-lg-1 col-form-label text-right mt-1">{{'codigoCliente'|
+                            translate}}:</label>
+                        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                            <input class="form-control removeTextTransform" type="text" id="cc" name="cc" [(ngModel)]="data.codigoCliente" [maxlength]="8"
+                            (keydown.Tab)="consultaDatosCliente()" tabindex="1"
+                            (keypress)="eventOnlyNumbers($event)" (paste)="onPaste($event)">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-6 col-sm-6 col-md-6">
+                    <div class="form-group row">
+                        <label for="numContrato"
+                            class="col-xs-3 col-sm-3 col-md-3 col-lg-3 col-xs-2 col-sm-2 col-md-2 col-lg-2 offset-xs-1 offset-sm-1 offset-md-1 offset-lg-1 col-form-label text-right mt-1">{{'numContrato'|
+                            translate}}:</label>
+                        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                            <input class="form-control removeTextTransform" type="text" name="numContrato" id="numContrato"[(ngModel)]="data.numContrato" disabled>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-2">
+        <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-1 offset-sm-1 offset-md-1 offset-lg-1">
+            <button type="button" class="btn btn-danger" (click)="limpiar()">
+              {{ 'btn.limpiar' | translate }}
+            </button>
+          </div>
+          <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-8 offset-sm-8 offset-md-8 offset-lg-8">
+            <button type="button" class="btn btn-danger" (click)="buscar()" >{{'btn.buscar' | translate}}</button>
+        </div>
+    </div>
+
+    <div *ngIf="abreTabla === true">
+        <div class="card my-1">
+            <h5 class="card-header justify-content-center">{{'pantalla.moduloAdministracion.resultadoBusqueda.title' | translate}}</h5>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 table-responsive">
+                       <table class="table table-striped table-hover" aria-describedby="listaConsultaMonitor">
+                        <caption></caption>
+                            <thead>
+                                <tr>
+                                    <th class="text-center" scope="col">{{'codigoCliente' | translate}}</th>
+                                    <th class="text-center" scope="col">{{'estatus' | translate}}</th>
+                                    <th class="text-center" scope="col">{{'administracion.certificados.tabla.obtenercertificado' | translate}}</th>
+                                    
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <ng-container *ngIf="banderaHasRows; then templateFillTable; else templateEmptyTableMONI">
+                                </ng-container>
+                                <ng-template #templateFillTable>
+                                    <tr *ngFor="let tab of datosTabla">
+                                        <td class="text-center">{{data.codigoCliente}}</td>
+                                        <td class="text-center">
+                                            <div *ngIf="tab.estatusCertificado === 'V'">{{'vigente' | translate}}</div>
+                                            <div *ngIf="tab.estatusCertificado === 'R'">{{'revocado' | translate}}</div>
+                                            <div *ngIf="tab.estatusCertificado === 'C'">{{'caducado' | translate}}</div>
+                                        </td>
+                                        <td class="text-center">
+                                            <a class="aa" (click)="descarga(tab)">
+                                                {{'btn.descargar' | translate}}
+                                            </a>
+                                        </td>
+                                    </tr>
+                                </ng-template>
+                                <ng-template #templateEmptyTableMONI>
+                                    <tr>
+                                        <td class="text-center" colspan="12"> {{'noResult' | translate}} </td>
+                                    </tr>
+                                </ng-template>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+    </div>
+</div>
+

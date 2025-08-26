@@ -1,0 +1,12 @@
+
+.input-group-text{
+    background-color: transparent !important; 
+    border: none !important;
+}
+
+.col-xs-2, .col-xs-3{
+    display: inline-block !important;
+}
+.removeTextTransform {
+    text-transform: none;
+}

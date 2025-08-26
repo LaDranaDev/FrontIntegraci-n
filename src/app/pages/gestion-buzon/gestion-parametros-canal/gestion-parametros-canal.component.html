@@ -1,0 +1,44 @@
+<app-operativa-header tituloPantalla="{{'menu.gestionBuzon.gestionParametrosCanal' | translate}}"></app-operativa-header>
+<div id="gestionParametrosCanal" class="panel panel-default col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    <br>
+    <div class="card">
+        <h5 class="card-header justify-content-center">
+            {{'pantalla.gestionParametrosCanal.titulo' | translate}}
+        </h5>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                   <table class="table table-striped table-hover" aria-describedby="gestionParametrosCanal">
+                        <thead>
+                            <tr>
+                                <th class="text-center" scope="col">{{'pantalla.gestionParametrosCanal.identificador' | translate}}</th>
+                                <th class="text-center" scope="col">{{'pantalla.gestionParametrosCanal.nombre' | translate}}</th>
+                                <th class="text-center" scope="col">{{'pantalla.gestionParametrosCanal.descCanal' | translate}}</th>
+                                <th class="text-center" scope="col">{{'pantalla.gestionParametrosCanal.parametro' | translate}}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <ng-container *ngIf="items; then templateFillTable; else templateEmptyTable">
+                            </ng-container>
+                            <ng-template #templateFillTable>
+                                <tr *ngFor="let item of items">
+                                    <td class="text-center">{{item.idChannel}}</td>
+                                    <td class="text-center">{{item.name}}</td>
+                                    <td class="text-center">{{item.description}}</td>
+                                    <td class="text-center">
+                                        <button type="button" class="btn btn-outline-danger" (click)="openChannel(item)"> {{'pantalla.gestionParametrosCanal.configurar' | translate}}</button>
+                                    </td>
+                                </tr>
+                            </ng-template>
+                            <ng-template #templateEmptyTable>
+                                <tr>
+                                    <td class="text-center" colspan="6"> No se encontraron resultados </td>
+                                </tr>
+                            </ng-template>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

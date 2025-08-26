@@ -1,0 +1,22 @@
+.removeTextTransform{
+    text-transform: none;
+}
+
+.col-label{
+    display: inline-block;
+    width: 115px;
+}
+
+.col-input{
+    display: inline-block;
+    width: 160px;
+}
+.col-12{
+    margin: 6px 15px;
+}
+.estilo{
+    display: inline-block;
+}
+.margin{
+    margin-top: 10px ;
+}

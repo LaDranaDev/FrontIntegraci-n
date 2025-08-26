@@ -1,0 +1,171 @@
+<div id="monitorizacion" class="panel panel-default col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    <app-operativa-header tituloPantalla="{{'pantallas.monitorizacion' | translate}}"></app-operativa-header>
+    
+    <h5 class="card-header justify-content-center"><label></label></h5>
+    <div class="card">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-4">
+                <div class="row">
+                    <div class="col-md-7 mt-2 mb-3">
+                            <label for="NombreArchivo" class="form-label">{{'pantallas.monitorizacion.NombreArchivo' | translate}}</label>
+                            <input type="text" name="NombreArchivo" id="NombreArchivo" class="form-control" [(ngModel)]="NombreArchivo"> 
+                    </div>
+
+                    <!-- Sentido -->
+                    <div class="col-md-7 mt-2 mb-3">
+                        <label for="Sentido" class="form-label">{{'pantallas.monitorizacion.Sentido' | translate}}</label>
+                        <select class="form-control" id="Sentido" name="Sentido" [(ngModel)]="Sentido">
+                            <option value="" selected="true" disabled="disabled">Seleccione..</option>
+                            <option value="E">Entrada</option>
+                            <option value="S">Salida</option>
+                        </select> 
+                    </div>
+
+                    <!-- Entrada -->
+                    <div class="col-md-7 mt-2 mb-3">
+                        <label for="Formatodeentrada" class="form-label">{{'pantallas.monitorizacion.Formatodeentrada' | translate}}</label>
+
+                        <select title="" id="Formatodeentrada" class="form-control" [(ngModel)]="Formatodeentrada" name="Formatodeentrada">
+                            <option value="" selected="true" disabled="disabled">Seleccione..</option>
+                            <option *ngFor="let project of selectFO" [title]="project.DESC" [value]="project.ALIAS_LAYOUT">{{project.ALIAS_LAYOUT}}</option>
+                        </select>
+                    </div>
+
+                    <!-- Salida -->
+                    <div class="col-md-7 mt-2 mb-3">
+                        <label for="Formatodesalida" class="form-label">{{'pantallas.monitorizacion.Formatodesalida' | translate}}</label>
+                        
+                        <select class="form-control" id="Formatodesalida" name="Formatodesalida" [(ngModel)]="Formatodesalida">
+                            <option value="" selected="true" disabled="disabled">Seleccione..</option>
+                            <option *ngFor="let project of selectFS" [title]="project.DESC" [value]="project.ALIAS_LAYOUT">{{project.ALIAS_LAYOUT}}</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- rigth -->
+            <div class="col-md-4 offset-md-2">
+                <div class="row">
+                    <div class="col-md-7 mt-2 mb-3">
+                        <label for="NombreCanal" class="col-form-label col-sm-3">{{'pantallas.monitorizacion.Canal' | translate}}</label>
+        
+                        <select class="form-control col-sm-2" id="NombreCanal" name="NombreCanal" [(ngModel)]="NombreCanal">
+                            <option value="" selected="true" disabled="disabled">Seleccione..</option>
+                            <option *ngFor="let project of selectCanal" [title]="project.ID_CANAL" [value]="project.NOMB_CANAL">{{project.NOMB_CANAL}}</option>
+                        </select>
+                    </div>  
+
+                    <!-- Cliente -->
+                    <div class="col-md-7 mt-2 mb-3">
+                        <label for="NombreCliente" class="col-form-label">{{'pantallas.monitorizacion.Cliente' | translate}}</label>
+                        
+                        <select class="form-control" onfocus='this.size=5;' onblur='this.size=1;' onchange='this.size=1; this.blur();' id="NombreCliente" name="NombreCliente" [(ngModel)]="NombreCliente">
+                            <option value="" selected="true" disabled="disabled">Seleccione..</option>
+                            <option *ngFor="let project of selectCl" [title]="project.ID_CLTE_PK" [value]="project.TXT_NMBR_CLTE">{{project.TXT_NMBR_CLTE}}</option>
+                        </select> 
+                    </div>
+                    
+                    <!-- Estado -->
+                    <div class="col-md-7 mt-2 mb-3">
+                        <label for="Estado" class="form-label">{{'pantallas.monitorizacion.Estado' | translate}}</label>
+
+                        <select class="form-control" id="Estado" name="Estado" [(ngModel)]="Estado">
+                            <option value="" selected="true" disabled="disabled">Seleccione..</option>
+                            <option *ngFor="let project of selectEstado" [title]="project.ID_ESTADO" [value]="project.NOMB_ESTADO">{{project.ID_ESTADO}} - {{project.NOMB_ESTADO}}</option>
+                        </select> 
+                    </div>
+
+                    <!-- Botones -->
+                     <div class="col-md-7 mt-2 mb-3">
+                        <br>
+                            <button type="button" class="btn btn-outline-danger col-md-4 mr-3" (click)="obtenerArchivoDiarioSearch()">{{'btn.buscar' | translate}} <em class="fas fa-search">(click)="obtenerArchivoDiarioSearch()"</em></button>
+                            <button type="button" class="btn btn-outline-danger col-md-4" (click)="limpiar()">{{'pantallas.usuarioOperantes.bntLimpiar' | translate}} <em class="fas fa-eraser">(click)="limpiar()"</em></button>
+                     </div>
+                </div>
+            </div>
+
+
+          </div>
+        </div>
+    </div>
+    <div class="card" *ngIf="archivodiariodata !== null && mostrarTablaCliente">
+        <table mat-table [dataSource]="archivodiariodata" class="mat-elevation-z8 demo-table">
+            <caption>Tabla de monitorizacion</caption>
+            <!-- Position Column -->
+            <ng-container matColumnDef="ID_ARCH_PK">
+                <th id="matCellSel" mat-header-cell mat-sort-header *matHeaderCellDef>{{'pantallas.monitorizacion.Fichero' | translate}}</th>
+                <td mat-cell *matCellDef="let archivodiariodata"> {{archivodiariodata.ID_ARCH_PK}} </td> 
+            </ng-container>
+            <!-- Name Column -->
+            <ng-container matColumnDef="SENTIDO">
+                <th id="matCellCod" mat-header-cell mat-sort-header *matHeaderCellDef>{{'pantallas.monitorizacion.Sentido' | translate}} </th>
+                <td mat-cell *matCellDef="let archivodiariodata"> {{archivodiariodata.SENTIDO}} </td>
+            </ng-container>
+            <!-- Weight Column -->
+            <ng-container matColumnDef="CLIENTE">
+                <th id="matCellNom" mat-header-cell mat-sort-header *matHeaderCellDef>{{'pantallas.monitorizacion.Cliente' | translate}}</th>
+                <td mat-cell *matCellDef="let archivodiariodata"> {{archivodiariodata.CLIENTE}} </td>
+            </ng-container>
+            <!-- Symbol Column -->
+            <ng-container matColumnDef="TXT_NMBR_ARCH">
+                <th id="matCellBlo" mat-header-cell mat-sort-header *matHeaderCellDef>{{'pantallas.monitorizacion.NombreArchivo' | translate}}</th>
+                <td mat-cell *matCellDef="let archivodiariodata"> {{archivodiariodata.TXT_NMBR_ARCH}} </td> 
+            </ng-container>
+            <!-- Symbol Column -->
+            <ng-container matColumnDef="DESC_MAPA_IN">
+                <th id="matCellBlo" mat-header-cell mat-sort-header *matHeaderCellDef>{{'pantallas.monitorizacion.Formatodeentrada' | translate}}</th>
+                <td mat-cell *matCellDef="let archivodiariodata"> {{archivodiariodata.DESC_MAPA_IN}} </td> 
+            </ng-container>
+            <ng-container matColumnDef="DESC_MAPA_OUT">
+                <th id="matCellBlo" mat-header-cell mat-sort-header *matHeaderCellDef>{{'pantallas.monitorizacion.Formatodesalida' | translate}}</th>
+                <td mat-cell *matCellDef="let archivodiariodata"> {{archivodiariodata.DESC_MAPA_OUT}} </td> 
+            </ng-container>
+            <ng-container matColumnDef="CANAL">
+                <th id="matCellBlo" mat-header-cell mat-sort-header *matHeaderCellDef>{{'pantallas.monitorizacion.Canal' | translate}}</th>
+                <td mat-cell *matCellDef="let archivodiariodata"> {{archivodiariodata.CANAL}} </td> 
+            </ng-container>
+            <ng-container matColumnDef="ESTADO">
+                <th id="matCellBlo" mat-header-cell mat-sort-header *matHeaderCellDef>{{'pantallas.monitorizacion.Estado' | translate}}</th>
+                <td mat-cell *matCellDef="let archivodiariodata"> {{archivodiariodata.ESTADO}} </td> 
+            </ng-container>
+            <ng-container matColumnDef="FCH_FECH_REG">
+                <th id="matCellBlo" mat-header-cell mat-sort-header *matHeaderCellDef>{{'pantallas.monitorizacion.Fecha' | translate}}</th>
+                <td mat-cell *matCellDef="let archivodiariodata"> {{archivodiariodata.FCH_FECH_REG | date: 'medium'}} </td> 
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+        <mat-paginator #paginator [pageSizeOptions]="[5, 10, 15]" showFirstLastButtons></mat-paginator>
+        <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12" *ngIf="archivodiariodata !== null">
+        </div>
+    </div>
+    
+    <div class="card" *ngIf="dataSourceRoles !== null && mostrarTablaRoles">
+        <table mat-table [dataSource]="dataSourceRoles" class="mat-elevation-z8 demo-table">
+            <caption>Roles de perfilamiento</caption>
+            <ng-container matColumnDef="sel">
+                <th id="matCellRSel" mat-header-cell *matHeaderCellDef>{{'pantallas.clientes.sel' | translate}}</th>
+                <td mat-cell *matCellDef="let element">
+                    <mat-radio-button class="padding-top" [value]="element.seleccion" name="radioButon"></mat-radio-button>
+                </td>
+            </ng-container>
+          
+            <ng-container matColumnDef="perfil">
+                <th id="matCellPer" mat-header-cell *matHeaderCellDef>{{'pantallas.clientes.perfil' | translate}} </th>
+                <td mat-cell *matCellDef="let element"> {{element.perfil}} </td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="displayedColumnsRoles"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumnsRoles;"></tr>
+        </table>
+        <br>
+        <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12" *ngIf="archivodiariodata !== null">
+            <button type="button" class="btn btn-outline-danger float-left">{{'btn.guardar' | translate}}</button>
+            
+        </div>
+        <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12" *ngIf="archivodiariodata !== null">
+            <button type="button" class="btn btn-outline-danger float-left">{{'btn.regresar' | translate}}</button>
+        </div>
+    </div>
+    <br>
+</div>

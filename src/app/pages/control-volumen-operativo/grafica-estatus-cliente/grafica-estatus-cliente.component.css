@@ -1,0 +1,82 @@
+.input-group-text {
+    background-color: transparent !important;
+    border: none !important;
+}
+
+.form-check {
+    padding: 10px !important;
+}
+
+.periodo-name {
+    margin-top: 8px !important;
+}
+
+.form-check-input {
+    margin-left: 4px !important;
+}
+
+.labelDate {
+    margin: 0 8px;
+}
+
+.inputDate {
+    width: 48% !important;
+    display: inline-block !important;
+}
+
+
+.col-xs-7,
+.col-sm-7,
+.col-md-7,
+.col-lg-7,
+.col-xs-5,
+.col-sm-5,
+.col-md-5,
+.col-lg-5 {
+    display: inline-flex !important;
+
+}
+
+h2 {
+    font-weight: 600;
+}
+
+fieldset {
+    border: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+.divide2 {
+    display: flex
+}
+
+.rowTable {
+    width: 30%;
+    margin: 5px;
+}
+
+.row2 {
+    width: 70%;
+    margin: 5px;
+}
+
+.rowTi {
+    width: 100%;
+    margin: 5px;
+}
+
+.link {
+    background: none !important;
+    border: none;
+    padding: 0 !important;
+    /*optional*/
+    font-family: arial, sans-serif;
+    font-size: 11px;
+    /*input has OS specific font-family*/
+    color: blue;
+    text-decoration: underline;
+}
+.centrar-content{
+    align-self: center;
+}

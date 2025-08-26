@@ -1,0 +1,152 @@
+input[type="checkbox"] {
+    appearance: none;
+    width: 2em;
+    height: 2em;
+    vertical-align: top;
+    background-color: #E6E4E4;
+    position: relative;
+    border: 1px solid rgba(0, 0, 0, 0.25);
+    border-radius: 0.25em;
+    cursor: pointer;
+}
+
+.mitad {
+    width: 50%;
+    display: flex;
+}
+
+.dis {
+    display: contents;
+    width: 100%;
+    text-align: right;
+}
+
+.rowIzq {
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+}
+
+input[type="checkbox"]:after {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    font-family: FontAwesome, sans-serif;
+    font-weight: 600;
+    content: "\f00c";
+    color: #fff;
+    font-size: 15px;
+    display: none
+}
+
+input[type="checkbox"]:checked,
+input[type="checkbox"]:checked:hover {
+    background-color: #FE2E2E;
+}
+
+input[type="checkbox"]:checked::after {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+input[type="checkbox"]:hover {
+    background-color: #ddd;
+}
+
+input[type="checkbox"]:disabled {
+    background: #b9aaaa;
+    pointer-events: none;
+}
+
+input[type="checkbox"]:disabled:hover {
+    background: #b9aaaa;
+}
+
+
+.row {
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+}
+.row10 {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+
+.row2 {
+    display: flex;
+    align-content: flex-start;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    flex-wrap: nowrap;
+}
+
+.estilo {
+    margin-left: 15px;
+}
+
+.with80 {
+    width: 80px;
+    height: 30px;
+}
+
+.link {
+    background: none !important;
+    border: none;
+    padding: 0 !important;
+    /*optional*/
+    font-family: arial, sans-serif;
+    font-size: 11px;
+    /*input has OS specific font-family*/
+    color: blue;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.removeTextTransform {
+    text-transform: none;
+}
+
+
+.textAlignLeft {
+    padding: 2px;
+    padding-top: 4%;
+    text-align: left;
+    font-size: inherit;
+}
+
+.textAlignRigth {
+    padding: 2px;
+    padding-top: 4%;
+    text-align: right;
+    font-size: inherit;
+}
+
+.divAlingRigth {
+    justify-content: flex-end;
+}
+.card1{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    flex-wrap: nowrap;
+    width: 100%;
+}
+.card-body1{
+    width: 100%;
+}
+.rowt{
+    display: flex;
+    /* align-content: center; */
+    /* justify-content: flex-start; */
+    align-items: center;
+    margin-top: 7px;
+    /* flex-direction: row;*/
+}

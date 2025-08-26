@@ -1,0 +1,95 @@
+<app-operativa-header tituloPantalla="{{'menu.altaContratos' | translate}}"></app-operativa-header>
+<div id="altaContratos" class="panel panel-default col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    <br>
+    <h5 class="card-header justify-content-center">
+        {{'pantalla.datosContrato.title' | translate}}
+    </h5>
+    <div class="card">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-xs-6 col-sm-6 col-md-6">
+                    <div class="form-group row">
+                        <label for="codCliente" class="col-form-label col-sm-3">{{'pantalla.datosContrato.codCliente' | translate}}:</label>
+                        <div class="col-sm-4">
+                            <input type="text" id="codCliente" name="codCliente" class="form-control input"
+                                placeholder="{{'pantalla.datosContrato.codCliente' | translate}}"
+                                [appInputDisabled]="datospersonales.descEstatus"
+                                maxlength="8" size="12" (keypress)="validateOnlyNumeros($event)"
+                                (blur)="validateTamanoBuc($event)" (paste)="pasteOnlyNumeros($event)"
+                                (keydown.Tab)="getContratoByBuc()" [(ngModel)]="datospersonales.bucCliente"
+                                [disabled]="bandDisableAll">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-6 col-sm-6 col-md-6">
+                    <div class="form-group row">
+                        <label for="estatus" class="col-form-label col-sm-3">{{'pantalla.datosContrato.estatusContrato' | translate}}:</label>
+                        <div class="col-sm-4">
+                            <select class="form-control input" id="estatus" name="estatus" disabled>
+                                <option *ngFor="let estatus of lstEstatusContrato"
+                                    [value]="estatus.idCat" [selected]="idEstatusDef === estatus.idCat">
+                                    {{ estatus.descripcionCatalogo }}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group row">
+                        <label for="razonSocial" class="col-form-label col-sm-3">{{'pantalla.datosContrato.razonSocial' | translate}}:</label>
+                        <div class="col-sm-9">
+                            <input type="text" id="razonSocial" name="razonSocial" class="form-control input"
+                                placeholder="{{'pantalla.datosContrato.razonSocial' | translate}}"
+                                maxlength="50" size="72" [(ngModel)]="datospersonales.razonSocial" [disabled]="bandDisableAll">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-6" hidden>
+                    <div class="form-group row">
+                        <label for="idContrato" class="col-form-label col-sm-3">{{'pantalla.datosContrato.idContrato' | translate}}:</label>
+                        <div class="col-sm-4">
+                            <input type="text" id="idContrato" name="idContrato" class="form-control"
+                                [(ngModel)]="datospersonales.idContrato">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-6 col-sm-6 col-md-6">
+                    <div class="form-group row">
+                        <label for="cuentaEje" class="col-form-label col-sm-3">{{'pantalla.datosContrato.cuentaEje' | translate}}:</label>
+                        <div class="col-sm-4">
+                            <input type="text" id="cuentaEje" name="cuentaEje" class="form-control input"
+                                placeholder="{{'pantalla.datosContrato.cuentaEje' | translate}}"
+                                maxlength="11" size="20" (keypress)="validateOnlyNumeros($event)"
+                                (keydown.Tab)="getContratoByCuentaEje()" (paste)="pasteOnlyNumeros($event)"
+                                [(ngModel)]="datospersonales.cuentaEje"
+                                [disabled]="bandDisableAll">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-6 col-sm-6 col-md-6">
+                    <div class="form-group row">
+                        <label for="numContrato" class="col-form-label col-sm-3">{{'pantalla.datosContrato.numContrato' | translate}}:</label>
+                        <div class="col-sm-4">
+                            <input type="text" class="form-control input" name="numContrato" id="numContrato"
+                                placeholder="{{'pantalla.datosContrato.numContrato' | translate}}"
+                                maxlength="12" size="20" (keypress)="validateOnlyNumeros($event)" tabindex="1"
+                                (keydown.Tab)="getContratoByNumContrato()" (paste)="pasteOnlyNumeros($event)"
+                                [(ngModel)]="datospersonales.numContrato"
+                                [disabled]="bandDisableAll">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-3">
+        <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-1 offset-sm-1 offset-md-1 offset-lg-1">
+            <button type="button" class="btn btn-danger" (click)="limpiarContrato()">{{'btn.limpiar' |
+                translate}}</button>
+        </div>
+    </div>
+</div>

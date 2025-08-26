@@ -1,0 +1,217 @@
+<app-operativa-header tituloPantalla="{{'menu.consultaTipoCambio' | translate}}"></app-operativa-header>
+
+<div id="consultaBanco" class="panel panel-default col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    <br>
+    <div class="card">
+        <h5 class="card-header justify-content-center">
+            {{'menu.consultaTipoCambio' | translate}}
+        </h5>
+
+        <div class="card-body">
+            <form [formGroup]="gestioncambioForm">
+                <div class="row">
+
+                    <div class="col-xs-6 col-sm-6 col-md-6">
+
+                    </div>
+
+                    <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                        <label>{{'menu.consultaTipoCambio.divisas' | translate}}</label>
+                    </div>
+
+                    <br>
+
+                    <div class="col-xs-6 col-sm-6 col-md-6">
+                        <div class="form-group rowTP">
+                            <label for="valorOrigen" class="col-xs-3 col-sm-3 col-md-3  col-form-label">{{'menu.consultaTipoCambio.montoOrigen'| translate}}:</label>
+                            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                <input class="form-control"  type="number" id="valorOrigen" name="valorOrigen" formControlName="valorOrigen">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+                        <div class="form-group row">
+                            <label for="divOrigen"></label>
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                <select class="form-control" id="divOrigen" name="divOrigen" formControlName="divOrigen">
+                                    <option value="">{{'seleccione' | translate}}</option>
+                                    <option value="MXP"> {{'pantalla.tipoCambio.mxp' | translate}} </option>
+                                    <option value="USD"> {{'pantalla.tipoCambio.usd' | translate}} </option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-xs-6 col-sm-6 col-md-6">
+                        <div class="form-group rowTP">
+                            <label for="valorDestino" class="col-xs-3 col-sm-3 col-md-3 col-lg-3 col-form-label ">{{'menu.consultaTipoCambio.montoDestino'| translate}}:</label>
+                            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                <input class="form-control"  type="text" id="valorDestino" formControlName="tDestino" name="valorDestino" readonly>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+                        <div class="form-group row">
+                            <label for="divDestino"></label>
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                <select class="form-control" id="divDestino" name="divDestino" formControlName="divDestino">
+                                    <option value="">{{'seleccione' | translate}}</option>
+                                    <option value="USD"> {{'pantalla.tipoCambio.usd' | translate}} </option>
+                                    <option value="EUR"> {{'pantalla.tipoCambio.eur' | translate}} </option>
+                                    <option value="CAD"> {{'pantalla.tipoCambio.cad' | translate}} </option>
+                                    <option value="CHF"> {{'pantalla.tipoCambio.chf' | translate}} </option>
+                                    <option value="GBP"> {{'pantalla.tipoCambio.gbp' | translate}} </option>
+                                    <option value="JPY"> {{'pantalla.tipoCambio.jpy' | translate}} </option>
+                                    <option value="SEK"> {{'pantalla.tipoCambio.sek' | translate}} </option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </form>
+
+            <div class="estilo" *ngIf="valorCambio === true">	
+                <label class="estilo2">{{cambioResultado.valorDivOrigen}} {{ ' ' }}</label>
+                <label *ngIf="data.divisaDeEnvio === 'USD'">
+                    {{ valDivisaDestino}}  {{'pantalla.tipoCambio.usd' | translate}}
+                </label>
+                <label *ngIf="data.divisaDeEnvio === 'EUR'">
+                    {{ valDivisaDestino}}  {{'pantalla.tipoCambio.eur' | translate}}
+                </label>
+                <label *ngIf="data.divisaDeEnvio === 'CAD'">
+                    {{ valDivisaDestino}}  {{'pantalla.tipoCambio.cad' | translate}}
+                </label>
+                <label *ngIf="data.divisaDeEnvio === 'CHF'">
+                    {{ valDivisaDestino}}  {{'pantalla.tipoCambio.chf' | translate}}
+                </label>
+                <label *ngIf="data.divisaDeEnvio === 'GBP'">
+                    {{ valDivisaDestino}}  {{'pantalla.tipoCambio.gbp' | translate}}
+                </label>
+                <label *ngIf="data.divisaDeEnvio === 'JPY'">
+                    {{ valDivisaDestino}}  {{'pantalla.tipoCambio.jpy' | translate}}
+                </label>
+                <label *ngIf="data.divisaDeEnvio === 'SEK'">
+                    {{ valDivisaDestino}}  {{'pantalla.tipoCambio.sek' | translate}} 
+                </label>
+            </div>
+
+            <div class="estilo" *ngIf="valorCambio === true">
+                <label *ngIf="data.divisaDeEnvio === 'USD'">
+                    1 {{'pantalla.tipoCambio.usd' | translate}} es igual a {{ ' ' }}
+                </label>
+                <label *ngIf="data.divisaDeEnvio === 'EUR'">
+                    1 {{'pantalla.tipoCambio.eur' | translate}} es igual a {{ ' ' }}
+                </label>
+                <label *ngIf="data.divisaDeEnvio === 'CAD'">
+                    1 {{'pantalla.tipoCambio.cad' | translate}} es igual a {{ ' ' }}
+                </label>
+                <label *ngIf="data.divisaDeEnvio === 'CHF'">
+                    1 {{'pantalla.tipoCambio.chf' | translate}} es igual a {{ ' ' }}
+                </label>
+                <label *ngIf="data.divisaDeEnvio === 'GBP'">
+                    1 {{'pantalla.tipoCambio.gbp' | translate}} es igual a {{ ' ' }}
+                </label>
+                <label *ngIf="data.divisaDeEnvio === 'JPY'">
+                    1 {{'pantalla.tipoCambio.jpy' | translate}} es igual a {{ ' ' }}
+                </label>
+                <label *ngIf="data.divisaDeEnvio === 'SEK'">
+                    1 {{'pantalla.tipoCambio.sek' | translate}} es igual a {{ ' ' }}
+                </label>
+
+                <label  class="estilo3" *ngIf="gestioncambioForm.value.divOrigen === 'MXP'">
+                    {{ cambioResultado.tipoCambio}} {{'pantalla.tipoCambio.mxp' | translate}}
+                </label>
+                <label  class="estilo3" *ngIf="gestioncambioForm.value.divOrigen === 'USD'">
+                    {{ cambioResultado.tipoCambio}} {{'pantalla.tipoCambio.usd' | translate}}
+                </label>
+            </div>
+
+
+            <div class="row mt-2">
+                <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-1 offset-sm-1 offset-md-1 offset-lg-1">
+                    <button type="button" class="btn btn-danger" (click)="eventCleanTipo()">{{'btn.limpiar' | translate}}</button>
+                </div>
+                <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-8 offset-sm-8 offset-md-8 offset-lg-8">
+                    <button type="button" class="btn btn-danger" (click)="eventoConsultarTipo()">{{'btn.buscar' | translate}}</button>
+                </div>
+            </div>
+            <br>
+
+        </div>
+    </div>
+
+    <div class="card my-1" *ngIf="banderaHasRows">
+        <h5 class="card-header justify-content-center">
+            {{'pantalla.consultarBuzon.resultadoBusqueda.title' | translate}}
+        </h5>
+
+        <div class="card-body" *ngIf="cambioResultado">
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <label>{{cambioResultado.valorDivOrigen}} {{cambioResultado.valorDivDestino}} {{cambioResultado.divDestino}}</label><br>
+                    <label>1 {{cambioResultado.divDestino}} es igual a {{cambioResultado.tipoCambio}} {{cambioResultado.divOrigen}}</label>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="card-body">
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                   <table class="table table-striped table-hover" aria-describedby="listaConsultaBanco">
+                        <tbody>
+                            <ng-container *ngIf="banderaHasRows; then templateFillTable; else templateEmptyTable3">
+                            </ng-container>
+                            <ng-template #templateFillTable>
+                                <tr *ngFor="let cambio of tabla">
+                                    <td class="text-center">{{cambio.valorOrigen}}</td>
+                                    <td class="text-center">{{cambio.divDestino}}</td>
+                                    <td class="text-center">
+                                        <label for="select"></label>
+                                        <select class="form-control"  id="select" disabled>
+                                            <option *ngIf="cambio.divOrigen === 'USD'"  value="">{{'pantalla.tipoCambio.usd' | translate}}</option>
+                                            <option *ngIf="cambio.divOrigen === 'EUR'"  value="">{{'pantalla.tipoCambio.eur' | translate}}</option>
+                                            <option *ngIf="cambio.divOrigen === 'CAD'"  value="">{{'pantalla.tipoCambio.cad' | translate}}</option>
+                                            <option *ngIf="cambio.divOrigen === 'CHF'"  value="">{{'pantalla.tipoCambio.chf' | translate}}</option>
+                                            <option *ngIf="cambio.divOrigen === 'GBP'"  value="">{{'pantalla.tipoCambio.gbp' | translate}}</option>
+                                            <option *ngIf="cambio.divOrigen === 'JPY'"  value="">{{'pantalla.tipoCambio.jpy' | translate}}</option>
+                                            <option *ngIf="cambio.divOrigen === 'SEK'"  value="">{{'pantalla.tipoCambio.sek' | translate}}</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                            </ng-template>
+                            <ng-template #templateEmptyTable3>
+                                <tr>
+                                </tr>
+                            </ng-template>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mt-1">
+                    <div class="d-flex justify-content-center" *ngIf="banderaHasRows">
+
+                        <pagination
+                            [maxSize]="10"
+                            [boundaryLinks]="showBoundaryLinks6"
+                            [directionLinks]="showDirectionLinks6"
+                            [totalItems]="totalElements"
+                            [itemsPerPage]="rowsPorPagina"
+                            [(ngModel)]="page"
+                            previousText="&lsaquo;" nextText="&rsaquo;"
+                            firstText="{{'paginador.inicio' | translate}}" lastText="{{'paginador.fin' | translate}}"
+                            (pageChanged)="onPageChanged($event)">
+                        </pagination>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

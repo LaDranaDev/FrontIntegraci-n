@@ -1,0 +1,168 @@
+<app-operativa-header tituloPantalla="{{
+    'menu.controlVolumenOperativo.graficaCliente' | translate
+  }}"></app-operativa-header>
+<div id="graficaCliente" class="panel panel-default col-xs-12 col-sm-12 col-md-12 col-lg-12">
+  <br />
+  <div class="card" *ngIf="tabla.length <= 0">
+    <h5 class="card-header justify-content-center">
+      {{ "pantallas.monitorOperacionesOnline.busquedad" | translate }}
+    </h5>
+    <div class="card-body">
+      <form [formGroup]="gestionGraficasForm">
+        <div class="row">
+          <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
+            <div class="form-group row justify-content-center align-items-center">
+              <label for="codigoCliente" class="col-md-3 col-form-label">{{
+                "pantallas.monitorOperacionesOnline.codigoCliente"
+                | translate
+                }}</label>
+              <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                <input class="form-control" type="text" id="codigoCliente" name="codigoCliente"
+                  formControlName="codigoCliente" (keypress)="eventOnKeyOnlyNumbers($event)"
+                  (ondragenter)="disableEvent($event)" (dragover)="disableEvent($event)" (ondrop)="disableEvent($event)"
+                  size="8" maxlength="8" />
+              </div>
+            </div>
+          </div>
+          <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 align-items-center">
+            <div class="form-check justify-content-center">
+              <input type="radio" class="ml-5 form-check-input" id="Operaciones" name="Operaciones" (click)="model.option = radioItems[0]"
+              [checked]="radioItems[0] === model.option" />&nbsp;&nbsp;
+              <label class="form-check-label" for="Operaciones">{{
+                "pantalla.controlVolumenOperativo.graficaArchivoCliente.operaciones"
+                | translate
+              }}</label>
+            </div>
+          </div>
+          <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 align-items-center">
+            <div class="form-check">
+              <input type="radio" class="ml-5 form-check-input" name="Monto" id="Monto" (click)="model.option = radioItems[1]"
+                [checked]="radioItems[1] === model.option" />&nbsp;&nbsp;
+              <label class="form-check-label" for="Monto">{{
+                "pantalla.controlVolumenOperativo.graficaArchivoCliente.monto"
+                | translate
+                }}</label>
+            </div>
+          </div>
+        </div>
+
+        <div class="row mt-3">
+          <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-1">
+            <label for="fechainicio" class="col-form-label labelDate">{{
+              "pantalla.controlVolumenOperativo.graficaArchivoCliente.periodo"
+              | translate
+              }}:</label>
+          </div>
+          <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">
+            <label for="fechaInicio" class="col-form-label labelDate">{{
+              "pantalla.controlVolumenOperativo.graficaArchivoCliente.fechaInicio"
+              | translate
+              }}</label>
+          </div>
+          <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+            <div class="input-group">
+              <input type="text" class="form-control" id="fechaInicio" name="fechaInicio" readonly required bsDatepicker
+                #dpFechaIni="bsDatepicker" [bsConfig]="datePickerConfig" formControlName="fechaInicio" />
+              <div class="input-group-append">
+                <button class="btn btn-outline-danger" type="button" id="btnFechaInicio" name="btnFechaInicio"
+                  (click)="dpFechaIni.toggle()" [attr.aria-expanded]="dpFechaIni.isOpen">
+                  <em class="fa fa-calendar"></em>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">
+            <label for="fechaFin" class="col-form-label labelDate">{{
+              "fechaFinal" | translate
+              }}</label>
+          </div>
+          <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+            <div class="input-group">
+              <input type="text" class="form-control" id="fechaFin" name="fechaFin" readonly required bsDatepicker
+                #dpFechaFin="bsDatepicker" [bsConfig]="datePickerConfig" formControlName="fechaFin" />
+              <div class="input-group-append">
+                <button class="btn btn-outline-danger" type="button" id="btnFechaFin" name="btnFechaFin"
+                  (click)="dpFechaFin.toggle()" [attr.aria-expanded]="dpFechaFin.isOpen">
+                  <em class="fa fa-calendar"></em>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+      <div class="row mt-2">
+        <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-1 offset-sm-1 offset-md-1 offset-lg-1">
+          <button type="button" class="btn btn-danger" (click)="eventClean()">
+            {{ "btn.limpiar" | translate }}
+          </button>
+        </div>
+        <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-8 offset-sm-8 offset-md-8 offset-lg-8">
+          <button type="button" class="btn btn-danger" (click)="validaCadaCampoObligatorio()">
+            {{ "btn.buscar" | translate }}
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container mt-3" [hidden]="tabla.length <= 0">
+    <div class="row">
+      <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+        <table class="table table-striped table-hover" *ngIf="this.tabla.length > 0">
+          <caption></caption>
+          <thead>
+            <tr>
+              <th scope="col" class="text-center">
+                {{ "operativo.nombreProducto" | translate }}
+              </th>
+              <th scope="col" class="text-center">
+                {{
+                tituloCol
+                }}
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let dato of tabla">
+              <td class="text-center">{{ dato.nombreBUC }}</td>
+              <td class="text-center">{{ dato.total }}</td>
+            </tr>
+            <ng-template #noHayInformación>
+              <tr>
+                <td class="text-center" colspan="6">
+                  {{
+                  "pantalla.mensaje.generico.nohaydatos"
+                  | translate
+                  }}
+                </td>
+              </tr>
+            </ng-template>
+          </tbody>
+        </table>
+      </div>
+      <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+        <div class="col-md-12">
+          <div class="chart-container" width="300px" height="300px">
+            <canvas class="canvas-size" id="chartClient"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+    <br /><br />
+    <div class="row">
+      <div class="col-md-8 offset-1">
+        <button type="button" class="btn btn-danger" (click)="eventClean()">
+          {{ "btn.regresar" | translate }}
+        </button>
+      </div>
+      <div class="col-md-2 d-flex justify-content-end">
+        <button type="button" class="btn btn-danger" (click)="exportaExcel()">
+          {{ "btn.exportar" | translate }}
+        </button>
+      </div>
+    </div>
+
+
+  </div>
+</div>

@@ -1,0 +1,53 @@
+.flexbox-align {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+}
+
+.separate {
+      justify-content: center;
+      margin-bottom: 2em;
+}
+
+.justificar {
+      position: relative;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: stretch;
+}
+
+.separar-check {
+      padding-left: 2px;
+      vertical-align: middle;
+}
+
+.radioCenter {
+      vertical-align: middle;
+}
+
+.formClass {
+      width: 50%;
+      text-align: -webkit-center;
+      margin: 0px;
+}
+
+.width50 {
+      width: 50%;
+}
+
+.alignCheckbox {
+      text-align: -webkit-left;
+      width: 50%;
+}
+
+.marginRight {
+      margin-right: 10px;
+}
+
+.deletePadding{
+      padding: 0px;
+}
+
+.combo {
+      width: 49px !important;
+}

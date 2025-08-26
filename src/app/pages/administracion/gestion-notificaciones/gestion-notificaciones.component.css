@@ -1,0 +1,14 @@
+.linkLabel {
+    color: red;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.sizeCheck{
+    width: 2em;
+    height: 2em;
+}
+
+.labelAreaFiel{
+    margin-top: 2em;
+}

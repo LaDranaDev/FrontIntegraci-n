@@ -1,0 +1,273 @@
+<app-operativa-header tituloPantalla="{{'menu.monitoreo.comprobantesFormatoCDMX.detalle' | translate}}"></app-operativa-header>
+<div id="detalleOperacion" class="panel panel-default col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    <div class="card-body">
+        <h5 class="card-header justify-content-center">
+            {{'menu.monitoreo.comprobantesFormatoCDMX.datos' | translate}}
+        </h5>
+        
+        <div class="row mt-2">
+            <div class="col-xs-8 col-sm-8 col-md-8">
+                <div class="form-group row">
+                    <label for="producto"class="col-form-label col-sm-3">{{'pantalla.monitoreo.monitorArchivoCurso.producto'| translate}}</label>
+                    <div class="col-sm-9">
+                        <input class="form-control removeTextTransform"  type="text" id="producto" name="producto" value="{{comprobante?.producto}}" readonly>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-8 col-sm-8 col-md-8">
+                <div class="form-group row">
+                    <label for="codigoCliente"class="col-form-label col-sm-3">{{'pantalla.moduloAdministracion.gestionBackend.codigoCliente'| translate}}</label>
+                    <div class="col-sm-4">
+                        <input class="form-control removeTextTransform"  type="text" id="codigoCliente" name="codigoCliente" value="{{comprobante?.bucEmpleado}}" readonly>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-4 col-sm-4 col-md-4">
+                <div class="form-group row">
+                    <label for="estatus"class="col-form-label col-sm-3">{{'pantalla.moduloAdministracion.gestionBackend.estatus'| translate}}</label>
+                    <div class="col-sm-9">
+                        <input class="form-control removeTextTransform"  type="text" id="estatus" name="estatus" value="{{comprobante?.estatus}}" readonly>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-8 col-sm-8 col-md-8">
+                <div class="form-group row">
+                    <label *ngIf="comprobante?.idProducto === '22'" for="fechaAplicacion"class="col-form-label col-sm-3">{{'menu.monitoreo.comprobantesFormatoCDMX.aplicacion'| translate}}</label>
+                    <label *ngIf="comprobante?.idProducto !== '22'" for="fechaAplicacion"class="col-form-label col-sm-3">{{'menu.monitoreo.comprobantesFormatoCDMX.fechahora'| translate}}</label>
+                    <div class="col-sm-4">
+                        <input class="form-control removeTextTransform"  type="text" id="fechaAplicacion" name="fechaAplicacion" value="{{comprobante?.fechaVenc}}" readonly>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-8 col-sm-8 col-md-8">
+                <div class="form-group row">
+                    <label for="nombreArchivo"class="col-form-label col-sm-3">{{'menu.monitoreo.comprobantesFormatoCDMX.archivo'| translate}}</label>
+                    <div class="col-sm-9">
+                        <input class="form-control removeTextTransform"  type="text" id="nombreArchivo" name="nombreArchivo" value="{{comprobante?.nomArch}}" readonly>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row" *ngIf="comprobante?.idProducto === '21'">
+            <div class="col-xs-8 col-sm-8 col-md-8">
+                <div class="form-group row">
+                    <label for="numoperacion"class="col-form-label col-sm-3">{{'menu.monitoreo.comprobantesFormatoCDMX.numoperacion'| translate}}</label>
+                    <div class="col-sm-4">
+                        <input class="form-control removeTextTransform"  type="text" id="numoperacion" name="numoperacion" value="{{comprobante?.referencia}}" readonly>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row" *ngIf="comprobante?.idProducto === '22'">
+            <div class="col-xs-8 col-sm-8 col-md-8">
+                <div class="form-group row">
+                    <label for="conceptoPago"class="col-form-label col-sm-3">{{'menu.monitoreo.comprobantesFormatoCDMX.conceptoPago'| translate}}</label>
+                    <div class="col-sm-4">
+                        <input class="form-control removeTextTransform"  type="text" id="conceptoPago" name="conceptoPago" value="{{comprobante?.referencia}}" readonly>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-8 col-sm-8 col-md-8">
+                <div class="form-group row">
+                    <label for="lineaCaptura"class="col-form-label col-sm-3">{{'menu.monitoreo.comprobantesFormatoCDMX.linea'| translate}}</label>
+                    <div class="col-sm-4">
+                        <input class="form-control removeTextTransform"  type="text" id="lineaCaptura" name="lineaCaptura" value="{{comprobante?.lineaCaptura}}" readonly>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-4 col-sm-4 col-md-4">
+                <div class="form-group row">
+                    <label for="concepto"class="col-form-label col-sm-3">{{'menu.monitoreo.comprobantesFormatoCDMX.concepto'| translate}}</label>
+                    <div class="col-sm-9">
+                        <input class="form-control removeTextTransform"  type="text" id="concepto" name="concepto" value="{{conceptoValor}}" readonly>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row" *ngIf="comprobante?.idProducto === '22'">
+            <div class="col-xs-8 col-sm-8 col-md-8">
+                <div class="form-group row">
+                    <label for="folioOperacion"class="col-form-label col-sm-3">{{'menu.monitoreo.comprobantesFormatoCDMX.folio'| translate}}</label>
+                    <div class="col-sm-4">
+                        <input class="form-control removeTextTransform"  type="text" id="folioOperacion" name="folioOperacion" value="{{comprobante?.folioSua}}" readonly>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <h5 class="card-header justify-content-center">
+            {{'menu.monitoreo.comprobantesFormatoCDMX.detalle.ordenante' | translate}}
+        </h5>
+        <div class="row mt-2">
+            <div class="col-xs-8 col-sm-8 col-md-8">
+                <div class="form-group row">
+                    <label for="nombre"class="col-form-label col-sm-3">{{'pantallas.usuarioOperantes.Nombre'| translate}}</label>
+                    <div class="col-sm-9">
+                        <input class="form-control removeTextTransform"  type="text" id="nombre" name="nombre" value="{{comprobante?.nombreOrd}}" readonly>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-8 col-sm-8 col-md-8">
+                <div class="form-group row">
+                    <label for="cuenta"class="col-form-label col-sm-3">{{'pantallas.regeneraReporteCobranza.cuenta'| translate}}</label>
+                    <div class="col-sm-4">
+                        <input class="form-control removeTextTransform"  type="text" id="cuenta" name="cuenta" value="{{comprobante?.ctaCargo}}" readonly>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <h5 class="card-header justify-content-center">
+            {{'menu.monitoreo.comprobantesFormatoCDMX.detalle.receptor' | translate}}
+        </h5>
+        <div class="row mt-2" *ngIf="comprobante?.idProducto === '21'">
+            <div class="col-xs-8 col-sm-8 col-md-8">
+                <div class="form-group row">
+                    <label for="llavePago"class="col-form-label col-sm-3">{{'menu.monitoreo.comprobantesFormatoCDMX.detalle.llavePago'| translate}}</label>
+                    <div class="col-sm-9">
+                        <input class="form-control removeTextTransform"  type="text" id="llavePago" name="llavePago" value="{{comprobante?.llavePago}}" readonly>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row" *ngIf="comprobante?.idProducto === '21'">
+            <div class="col-xs-8 col-sm-8 col-md-8">
+                <div class="form-group row">
+                    <label for="plaza"class="col-form-label col-sm-3">{{'menu.monitoreo.comprobantesFormatoCDMX.detalle.plaza'| translate}}</label>
+                    <div class="col-sm-9">
+                        <input class="form-control removeTextTransform"  type="text" id="plaza" name="plaza" value="{{comprobante?.plaza}}" readonly>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row" *ngIf="comprobante?.idProducto === '21'">
+            <div class="col-xs-8 col-sm-8 col-md-8">
+                <div class="form-group row">
+                    <label for="sucursal"class="col-form-label col-sm-3">{{'menu.monitoreo.comprobantesFormatoCDMX.detalle.sucursal'| translate}}</label>
+                    <div class="col-sm-9">
+                        <input class="form-control removeTextTransform"  type="text" id="sucursal" name="sucursal" value="{{comprobante?.sucursal}}" readonly>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-2" *ngIf="comprobante?.idProducto === '22'">
+            <div class="col-xs-8 col-sm-8 col-md-8">
+                <div class="form-group row">
+                    <label for="numeroConvenio"class="col-form-label col-sm-3">{{'menu.monitoreo.comprobantesFormatoCDMX.detalle.convenio'| translate}}</label>
+                    <div class="col-sm-9">
+                        <input class="form-control removeTextTransform"  type="text" id="numeroConvenio" name="numeroConvenio" value="{{comprobante?.numConvenio}}" readonly>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row" *ngIf="comprobante?.idProducto === '22'">
+            <div class="col-xs-8 col-sm-8 col-md-8">
+                <div class="form-group row">
+                    <label for="numeroConvenio2"class="col-form-label col-sm-3">{{'menu.monitoreo.comprobantesFormatoCDMX.detalle.convenioNombre'| translate}}</label>
+                    <div class="col-sm-9">
+                        <input class="form-control removeTextTransform"  type="text" id="numeroConvenio2" name="numeroConvenio2" value="{{comprobante?.nombreConvenio}}" readonly>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row" *ngIf="comprobante?.idProducto === '22'">
+            <div class="col-xs-8 col-sm-8 col-md-8">
+                <div class="form-group row">
+                    <label for="cuenta"class="col-form-label col-sm-3">{{'menu.monitoreo.comprobantesFormatoCDMX.detalle.cuenta'| translate}}</label>
+                    <div class="col-sm-9">
+                        <input class="form-control removeTextTransform"  type="text" id="cuenta" name="cuenta" value="{{comprobante?.numTarjeta}}" readonly>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-2" *ngIf="comprobante?.idProducto === '23'">
+            <div class="col-xs-8 col-sm-8 col-md-8">
+                <div class="form-group row">
+                    <label for="folioSua"class="col-form-label col-sm-3">{{'menu.monitoreo.comprobantesFormatoCDMX.detalle.folioSua'| translate}}</label>
+                    <div class="col-sm-9">
+                        <input class="form-control removeTextTransform"  type="text" id="folioSua" name="folioSua" value="{{comprobante?.folioSua}}" readonly>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row" *ngIf="comprobante?.idProducto === '23'">
+            <div class="col-xs-8 col-sm-8 col-md-8">
+                <div class="form-group row">
+                    <label for="registroPat"class="col-form-label col-sm-3">{{'menu.monitoreo.comprobantesFormatoCDMX.detalle.registroPat'| translate}}</label>
+                    <div class="col-sm-9">
+                        <input class="form-control removeTextTransform"  type="text" id="registroPat" name="registroPat" value="{{comprobante?.registroPat}}" readonly>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row" *ngIf="comprobante?.idProducto === '23'">
+            <div class="col-xs-8 col-sm-8 col-md-8">
+                <div class="form-group row">
+                    <label for="periodoPago"class="col-form-label col-sm-3">{{'menu.monitoreo.comprobantesFormatoCDMX.detalle.periodoPago'| translate}}</label>
+                    <div class="col-sm-9">
+                        <input class="form-control removeTextTransform"  type="text" id="periodoPago" name="periodoPago" value="{{comprobante?.periodoPago}}" readonly>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+        <div class="row">
+            <div class="col-xs-8 col-sm-8 col-md-8">
+                <div class="form-group row">
+                    <label for="divisa"class="col-form-label col-sm-3">{{'pantallas.monitorOpedivisaracionesOnline.'| translate}}</label>
+                    <div class="col-sm-4">
+                        <input class="form-control removeTextTransform"  type="text" id="divisa" name="divisa" value="{{comprobante?.divisa}}" readonly>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-8 col-sm-8 col-md-8">
+                <div class="form-group row">
+                    <label for="importe"class="col-form-label col-sm-3">{{'pantallas.monitorOperacionesOnline.importe'| translate}}</label>
+                    <div class="col-sm-4">
+                        <input class="form-control removeTextTransform"  type="text" id="importe" name="importe" value="{{comprobante?.importe}}" readonly>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <h5 class="card-header justify-content-center">
+            {{'menu.monitoreo.comprobantesFormatoCDMX.detalle.comentario' | translate}}
+        </h5>
+        <div class="row mt-2">
+            <div class="col-xs-12 col-sm-12 col-md-12">
+                <div class="form-group row">
+                    <label for="comentario"></label>
+                    <div class="col-sm-12">
+                        <input class="form-control removeTextTransform"  type="text" id="comentario" name="comentario" value="{{comprobante?.mensaje}}" readonly>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row mt-2">
+            <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">
+                <button type="button" (click)="regresar()" class="btn btn-danger">{{'btn.regresar' | translate}}</button>
+            </div>
+            <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 offset-xs-9 offset-sm-9 offset-md-7 offset-lg-9">
+                <button type="button" (click)="verHistorial()" class="btn btn-danger"> {{'menu.monitoreo.comprobantesFormatoCDMX.btn.historial' | translate}}</button>
+            </div>
+        </div>
+        <div class="row mt-2">
+            <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">
+                <button type="button" (click)="consultar()" class="btn btn-danger">{{'menu.monitoreo.comprobantesFormatoCDMX.btn.refrescar' | translate}}</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+

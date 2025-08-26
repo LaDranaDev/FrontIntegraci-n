@@ -1,0 +1,96 @@
+<app-operativa-header tituloPantalla="{{'menu.parametrosDB' | translate}}"></app-operativa-header>
+<div id="editar-parametro" class="panel panel-default col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    <br>
+    <div class="card">
+        <h5 class="card-header justify-content-center">
+            <ng-container *ngIf="banderaDisabledInputNombre; then templateTitleUpdate; else templateTitleCreate">
+            </ng-container>
+            <ng-template #templateTitleUpdate>
+                <h5>
+                {{'pantalla.parametros.modificacion.title' | translate}}</h5>
+            </ng-template>
+            <ng-template #templateTitleCreate>
+                <h5> {{'pantalla.parametros.alta.title' | translate}}</h5>
+            </ng-template>
+        </h5>
+        <div class="card-body">
+            <form [formGroup]="formAltaEdicionParametro">
+                <div class="form-group row mb-2">
+                    <label for="inputNameParametro"
+                        class="col-xs-2 col-sm-2 col-md-2 col-lg-2 col-form-label text-right">{{'pantalla.parametros.tabla.columna.parametro'
+                        | translate}}:</label>
+                    <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+                        <input type="text" class="form-control" id="inputNameParametro"
+                            [disabled]="activa"
+                            formControlName="parametro" name="v_nombreParametro" [(ngModel)]="altaParametro.nombre"
+                            [readonly]="banderaDisabledInputNombre"
+                            (keypress)="eveValidateAlphaAndNumAndGuionAndPoint($event)"
+                            (ondragenter)="disableEvent($event)"
+                            (dragover)="disableEvent($event)" 
+                            (ondrop)="disableEvent($event)"
+                            maxlength="20" />
+                    </div>
+
+                </div>
+                <div class="form-group row mb-2">
+                    <label for="inputValorParametro"
+                        class="col-xs-2 col-sm-2 col-md-2 col-lg-2 col-form-label text-right">{{'pantalla.parametros.tabla.columna.valor'
+                        | translate}}:</label>
+                    <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+                        <input type="text" class="form-control" id="inputValorParametro"
+                            formControlName="valor" name="v_valorParametro" [(ngModel)]="altaParametro.valor"
+                            (keypress)="vali($event)"
+                            (ondragenter)="disableEvent($event)" 
+                            (dragover)="disableEvent($event)" 
+                            (ondrop)="disableEvent($event)"
+                            size="90" maxlength="90">
+                    </div>
+                </div>
+                <div class="form-group row mb-2">
+                    <label for="inputDescripcionParametro"
+                        class="col-xs-2 col-sm-2 col-md-2 col-lg-2 col-form-label text-right">{{'pantalla.parametros.tabla.columna.descripcion'
+                        | translate}}:</label>
+                    <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+                        <input type="text" class="form-control " id="inputDescripcionParametro"
+                            formControlName="descripcion" name="v_descripcionParametro"
+                            [(ngModel)]="altaParametro.descripcion"
+                            (keypress)="vali($event)"
+                            (ondragenter)="disableEvent($event)" 
+                            (dragover)="disableEvent($event)" 
+                            (ondrop)="disableEvent($event)"
+                            size="90" maxlength="90">
+                    </div>
+                </div>
+            </form>
+            <div class="row mb-2 mt-5">
+                <ng-container *ngIf="banderaDisabledInputNombre; then templateBtnEditar; else templateBtnAgregar">
+                </ng-container>
+                <ng-template #templateBtnEditar>
+                    <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-1 offset-sm-1 offset-md-1 offset-lg-1">
+                        <button type="button" class="btn btn-danger"
+                            (click)="guardarActualizarParametro()">{{'btn.guardar' | translate}}</button>
+                    </div>
+                </ng-template>
+                <ng-template #templateBtnAgregar>
+                    <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-1 offset-sm-1 offset-md-1 offset-lg-1">
+                        <button type="button" class="btn btn-danger"
+                            (click)="guardarActualizarParametro()">{{'btn.guardar' | translate}}</button>
+                    </div>
+                </ng-template>
+
+                <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-8 offset-sm-8 offset-md-8 offset-lg-8">
+                    <button type="button" class="btn btn-danger" (click)="regresarToConsult()">{{'btn.cancelar' |
+                        translate}}</button>
+                </div>
+            </div>
+            <div class="row">
+                <div *ngIf="!banderaDisabledInputNombre"
+                    class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-1 offset-sm-1 offset-md-1 offset-lg-1">
+                    <button type="button" class="btn btn-danger" (click)="cleanForm()">{{'btn.limpiar' |
+                        translate}}</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

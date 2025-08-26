@@ -1,0 +1,272 @@
+<app-operativa-header [tituloPantalla]="title"></app-operativa-header>
+
+<div id="gestionLayouts" *ngIf="!showConfigProds" class="panel panel-default col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    <br />
+    <div class="card mt-3" *ngIf="verAgregar === true">
+        <h5 class="card-header justify-content-center">
+            {{ "adminlayouts.admin.lay" | translate }}
+        </h5>
+        <div class="card-body">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <form [formGroup]="formSaveLayout" class="row">
+                    <div class="col-5">
+                        <!-- Name Layout -->
+                        <div class="form-group row">
+                            <label for="nameLayout" class="col-md-4 col-form-label">
+                                {{ "adminlayouts.nombre.layout" | translate }}:
+                            </label>
+                            <div class="col-md-8">
+                                <input class="form-control" id="nameLayout" maxlength="50"
+                                    appInputMask="alfanumerico_space" formControlName="name" />
+                            </div>
+                        </div>
+
+                        <!-- Origin -->
+                        <div class="form-group row">
+                            <label for="originInput" class="col-md-4 col-form-label">
+                                {{ "adminlayouts.origen" | translate }}:
+                            </label>
+                            <div class="col-md-8">
+                                <select class="form-control" id="originInput" formControlName="origin">
+                                    <option value="">{{ "seleccione" | translate }}</option>
+                                    <option *ngFor="let item of origen" [value]="item.value">
+                                        {{item.descripcion}}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Active -->
+                        <div class="form-group row">
+                            <label for="activeCheckBox" class="col-md-4 col-form-label">
+                                {{ "adminlayouts.activo" | translate }}:
+                            </label>
+                            <div class="col-md-1 align-self-center">
+                                <input type="checkbox" id="activeCheckBox" formControlName="active" />
+                            </div>
+                        </div>
+
+                        <!-- Extension -->
+                        <div class="form-group row">
+                            <label for="extencionInput" class="col-md-4 col-form-label">
+                                {{ "adminlayouts.extension" | translate }}:
+                            </label>
+                            <div class="col-md-8">
+                                <input maxlength="10" class="form-control" id="extencionInput"
+                                    formControlName="extension" appInputMask="alfanumerico_observ_bajo2" />
+                            </div>
+                        </div>
+
+                        <!-- Format -->
+                        <div class="form-group row">
+                            <label for="formatInput" class="col-md-4 col-form-label">
+                                {{ "adminlayouts.formato" | translate }}:
+                            </label>
+                            <div class="col-md-8">
+                                <input maxlength="40" appInputMask="alfanumerico_observ_bajo2" class="form-control" id="formatInput"
+                                    formControlName="format" />
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <div class="row" *ngIf="verAgregar === true">
+                    <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 offset-10">
+                        <button type="button" class="btn btn-danger"
+                            (click)="validationsSaveLayout(this.layoutsSelected.length > 0 ? true : false)">
+                            {{ "btn.guardarAlta" | translate }}
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Admin -->
+    <div class="card mt-3">
+        <h5 class="card-header justify-content-center">
+            {{ "adminlayouts.admin" | translate }}
+        </h5>
+        <div class="card-body">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <form class="row">
+                    <div class="col-5">
+                        <!-- Name Layout -->
+                        <form [formGroup]="formSearchLayout" class="row">
+                            <div class="form-group row">
+                                <label for="nameLayoutFind" class="col-md-6 col-form-label">
+                                    {{ "adminlayouts.nombre.layout" | translate }}:
+                                </label>
+                                <div class="col-md-6">
+                                    <input maxlength="50" appInputMask="alfanumerico_space" class="form-control"
+                                        id="nameLayoutFind" formControlName="nameSearch" />
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </form>
+                <div class="row">
+                    <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-1">
+                        <button type="button" class="btn btn-danger" (click)="limpiar()">
+                            {{ "btn.limpiar" | translate }}
+                        </button>
+                    </div>
+                    <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-8">
+                        <button type="button" class="btn btn-danger" (click)="searchLayouts($event)">
+                            {{ "btn.buscar" | translate }}
+                        </button>
+                    </div>
+                </div>
+                <div class="row mt-3" *ngIf="verEliminar === true">
+                    <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-1">
+                        <button type="button" class="btn btn-danger" (click)="confirmEreaseLayout()">
+                            {{ "btn.baja" | translate }}
+                        </button>
+                    </div>
+                    <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-8" *ngIf="verEditar === true">
+                        <button type="button" class="btn btn-danger" (click)="modifyLayout()">
+                            {{ "btn.modificar" | translate }}
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Table -->
+    <div class="card my-1" *ngIf="banderaHasRows">
+        <h5 class="card-header justify-content-center">
+            {{ "adminlayouts.table.resultTitle" | translate }}
+        </h5>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <table class="table table-striped table-hover" aria-describedby="layoutInfo">
+                        <thead>
+                            <tr>
+                                <th class="text-center" scope="col" translate>
+                                    {{ "adminlayouts.nombre.layout" | translate }}
+                                </th>
+                                <th class="text-center" scope="col" translate>
+                                    {{ "adminlayouts.origen" | translate }}
+                                </th>
+                                <th class="text-center" scope="col" translate>
+                                    {{ "adminlayouts.activo" | translate }}
+                                </th>
+                                <th class="text-center" scope="col" translate>
+                                    {{ "adminlayouts.formato" | translate }}
+                                </th>
+                                <th class="text-center" scope="col" translate>
+                                    {{ "adminlayouts.extension" | translate }}
+                                </th>
+                                <th class="text-center" scope="col" translate>
+                                    {{ "adminlayouts.select" | translate }}
+                                </th>
+                                <th class="text-center" scope="col" translate>
+                                    {{ "adminlayouts.config.producto" | translate }}
+                                </th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <tr *ngFor="let layout of layouts">
+                                <td>{{ layout.nombre }}</td>
+
+                                <td>
+                                    <div *ngIf="layout.origen === 'H2H '">H2H</div>
+                                    <div *ngIf="layout.origen === 'CLT '">Cliente</div>
+                                    <div *ngIf="layout.origen === 'ECT '">Estados de Cuenta</div>
+                                </td>
+
+                                <td class="text-center">
+                                    <label for="checkActive"></label>
+                                    <input type="checkbox" id="checkActive" name="checkActive" disabled
+                                        [checked]="layout.activo === 'A'" />
+                                </td>
+                                <td>{{ layout.formArchSalida }}</td>
+                                <td>{{ layout.extension }}</td>
+                                <td class="text-center">
+                                    <label for="checkSelect"></label>
+                                    <input type="checkbox" id="checkSelect" name="checkSelect"
+                                        (change)="eventItemSelected($event, +layout.id)"
+                                        [checked]="this.layoutsSelected.includes(+layout.id)" />
+                                </td>
+                                <td class="linkLabel" (click)="configProds(layout)">
+                                    {{ "adminlayouts.config.producto" | translate }}
+                                </td>
+                            </tr>
+                            <ng-template>
+                                <tr>
+                                    <td class="text-center" colspan="12">
+                                        {{ 'pantalla.moduloAdministracion.gestionBancos.resultadoBusqueda' | translate
+                                        }}
+                                    </td>
+                                </tr>
+                            </ng-template>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <!-- Paginador table -->
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mt-1">
+                    <div class="d-flex justify-content-center">
+                        <pagination [boundaryLinks]="showBoundaryLinks" [directionLinks]="showDirectionLinks"
+                            [totalItems]="totalElements" [itemsPerPage]="rowsPerPage" [maxSize]="rowsPerPage"
+                            [(ngModel)]="page" previousText="&lsaquo;" nextText="&rsaquo;"
+                            firstText="{{ 'paginador.inicio' | translate }}"
+                            lastText="{{ 'paginador.fin' | translate }}" (pageChanged)="onPageChanged($event)">
+                        </pagination>
+                    </div>
+                </div>
+
+                <ng-container>
+                    <div class="col-md-5 offset-10">
+                        <button type="button" class="btn btn-danger" (click)="export()">
+                            {{ "btn.exportar" | translate }}
+                        </button>
+                    </div>
+                </ng-container>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="configProds" *ngIf="showConfigProds" class="panel panel-default col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    <div class="card my-1">
+        <h5 class="card-header justify-content-center">
+            {{ "administracion.config.prod.productos" | translate }}
+        </h5>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <table class="table table-striped table-hover" aria-describedby="receiverInfo">
+                        <tbody>                            
+                            <tr *ngFor="let producto of origins">
+                                <td>{{ producto.descProd }}</td>
+                                <td>
+                                    <label for="checkActiveProd"></label>
+                                    <input id="checkActiveProd" type="checkbox" 
+                                    (change)="eventProductSelected($event, producto)"
+                                    [checked]="producto.config"/>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-3">
+        <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-1">
+            <button type="button" class="btn btn-danger" (click)="back()">
+                {{ "btn.regresar" | translate }}
+            </button>
+        </div>
+        <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-8" >
+            <button *ngIf="verConfProd===true" type="button" class="btn btn-danger" (click)="saveConfigProds()">
+                {{ "btn.guardar" | translate }}
+            </button>
+        </div>
+    </div>
+</div>

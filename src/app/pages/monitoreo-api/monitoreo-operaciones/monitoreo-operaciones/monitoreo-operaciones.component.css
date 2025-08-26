@@ -1,0 +1,61 @@
+.derecha{
+    display: flex;
+    text-align: right;
+}
+
+input[type="text"] {
+    text-transform: none;
+}
+
+.dividir{
+    width: 50%;
+}
+
+.dos{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    /* grid-column: revert; */
+    justify-content: center;
+
+}
+
+.row2 {
+    /*display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: center;*/
+
+    display: flex;
+    /* flex-direction: row; */
+    justify-content: space-evenly;
+    align-content: flex-end;
+    align-items: center;
+}
+
+.tex{
+    color: black;
+    font-style: bold;
+    font-size: 14px;
+}
+
+.rojo{
+    color: rgb(252, 7, 7)
+}
+
+.espacio{
+    height: 26px;
+}
+
+.espacio2{
+    height: 20px;
+}
+.espacio3{
+    height: 20px;
+}
+.clas{    /* display: flex; */
+    justify-content: space-between;
+    margin-right: 10%;
+    display: flex;
+    margin-left: 10%;
+}

@@ -1,0 +1,301 @@
+<app-operativa-header tituloPantalla="{{'administracion.productos.titleAlta' | translate}}"
+    *ngIf="origen === 'alta'"></app-operativa-header>
+<app-operativa-header tituloPantalla="{{'administracion.productos.titleMod' | translate}}"
+    *ngIf="origen === 'modif'"></app-operativa-header>
+<app-operativa-header tituloPantalla="{{'administracion.productos.titleDetalle' | translate}}"
+    *ngIf="origen === 'detalle'"></app-operativa-header>
+
+<div id="producto" class="panel panel-default col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    <br>
+    <!-- --- Seccion Modificación de producto --- -->
+    <div class="card mt-3">
+        <h5 class="card-header justify-content-center">
+           {{'administracion.productos.datosProducto' | translate}}
+        </h5>
+        <div class="card-body">
+            <!-- Formulario si es alta -->
+            <form class="row" [formGroup]="formProducto" *ngIf="origen === 'alta'">
+                <div class="col-12">
+                    <label for="cveProd" class="col-form-label">{{'administracion.productos.clave' | translate}}:</label>
+                    <input (paste)="(false)" type="text" class="form-control removeTextTransform" id="cveProd" formControlName="cveProd"
+                        maxlength="2" (keypress)="onlyAlphabeticAndNumbers($event)">
+                </div>
+                <div class="col-12">
+                    <label for="descProd" class="col-form-label">{{'pantalla.catalogoDin.descripcionsinpuntos' | translate}}:</label>
+                    <input appInputMask="alfanumerico" (paste)="(false)" type="text" class="form-control removeTextTransform" id="descProd"
+                        formControlName="descProd" maxlength="40" appInputMask="alfanumerico_space">
+                </div>
+                <div class="col-12">
+                    <label for="idBack" class="col-form-label">{{'administracion.productos.detalle.backend' | translate}}:</label>
+                    <select class="form-control display" id="idBack" formControlName="idBack">
+                        <option>{{'seleccione' | translate}}</option>
+                        <option *ngFor="let dato of listaCatalogoBackend" [value]="dato.idBack">{{dato.nombre}}</option>
+                    </select>
+                </div>
+                <div class="col-12">
+                    <label for="umbral" class="col-form-label">{{'administracion.productos.umbral' | translate}}:</label>
+                    <input (paste)="(false)" type="numer" class="form-control" id="umbral" formControlName="umbral"
+                        maxlength="4" (keypress)="onlyNumbers($event)">
+                </div>
+                <div class="col-12">
+                    <label for="claveProdClie" class="col-form-label">{{'administracion.productos.codigoOperacion' | translate}}:</label>
+                    <input (paste)="(false)" type="text" class="form-control " id="claveProdClie"
+                        formControlName="claveProdClie" maxlength="2" (keypress)="onlyNumbers($event)">
+                </div>
+                <div class="col-12">
+                    <label for="codiOperCarg" class="col-form-label">{{'administracion.productos.detalle.codigoOpeCargo' | translate}}:</label>
+                    <input (paste)="(false)" type="text" class="form-control" id="codiOperCarg"
+                        formControlName="codiOperCarg" maxlength="4" (keypress)="onlyNumbers($event)">
+                </div>
+                <div class="col-12">
+                    <label for="codiOperAbon" class="col-form-label">{{'administracion.productos.detalle.codigoOpeAbono' | translate}}:</label>
+                    <input (paste)="(false)" type="text" class="form-control" id="codiOperAbon"
+                        formControlName="codiOperAbon" maxlength="4" (keypress)="onlyNumbers($event)">
+                </div>
+                <div class="col-12">
+                    <label for="claconComision" class="col-form-label">{{'administracion.productos.detalle.claconComision' | translate}}:</label>
+                    <input appInputMask="alfanumerico" (paste)="(false)" type="text" class="form-control"
+                        id="claconComision" formControlName="claconComision" maxlength="4"
+                        (keypress)="onlyAlphabeticAndNumbers($event)">
+                </div>
+                <div class="col-12">
+                    <label for="diasFecApli" class="col-form-label">{{'administracion.productos.detalle.diasFechaAplicacion' | translate}}:</label>
+                    <input (paste)="(false)" type="text" class="form-control" id="diasFecApli"
+                        formControlName="diasFecApli" maxlength="2" (keypress)="onlyNumbers($event)">
+                </div>
+                <div class="col-12">
+                    <label for="diasTecTran" class="col-form-label">{{'administracion.productos.detalle.diasFechaTransferencia' | translate}}:</label>
+                    <input (paste)="(false)" type="text" class="form-control" id="diasTecTran"
+                        formControlName="diasTecTran" maxlength="2" (keypress)="onlyNumbers($event)">
+                </div>
+                <div class="col-12">
+                    <label for="diasFecOper" class="col-form-label">{{'administracion.productos.detalle.diasFechaOperacion' | translate}}:</label>
+                    <input (paste)="(false)" type="text" class="form-control" id="diasFecOper"
+                        formControlName="diasFecOper" maxlength="2" (keypress)="onlyNumbers($event)">
+                </div>
+                <div class="col-12">
+                    <label for="bandActivo" class="col-form-label">{{'administracion.productos.detalle.banderaActivo' | translate}}:</label>
+                    <input type="checkbox" class="form-control-box" id="bandActivo" formControlName="bandActivo">
+                </div>
+                <div class="col-12">
+                    <label for="bandReintentos" class="col-form-label">{{'pantalla.moduloAdministracion.mensajeError.banderaReintentos' | translate}}:</label>
+                    <input type="checkbox" class="form-control-box" id="bandReintentos"
+                        formControlName="bandReintentos">
+                </div>
+                <div class="col-12">
+                    <label for="bandTipoCargo" class="col-form-label">{{'administracion.productos.detalle.banderaTipoCargo' | translate}}:</label>
+                    <input type="checkbox" class="form-control-box" id="bandTipoCargo" formControlName="bandTipoCargo">
+                </div>
+                <div class="col-12">
+                    <label for="bandVigencia" class="col-form-label">{{'administracion.productos.detalle.banderaVigencia' | translate}}:</label>
+                    <input type="checkbox" class="form-control-box" id="bandVigencia" formControlName="bandVigencia">
+
+                </div>
+                <div class="col-12">
+                    <label for="bandEmail" class="col-form-label">{{'administracion.productos.detalle.banderaMail' | translate}}:</label>
+                    <input type="checkbox" class="form-control-box" id="bandEmail" formControlName="bandEmail">
+                </div>
+            </form>
+            <!-- Formulario si es modificacacion -->
+            <form class="row" [formGroup]="formProducto" *ngIf="origen === 'modif'">
+                <div class="col-12">
+                    <label for="cveProd" class="col-form-label">{{'administracion.productos.clave' | translate}}:</label>
+                    <input (paste)="(false)" type="text" class="form-control removeTextTransform" id="cveProd" formControlName="cveProd"
+                        maxlength="2" [(ngModel)]="cveProd" (keypress)="onlyAlphabeticAndNumbers($event)">
+                </div>
+                <div class="col-12">
+                    <label for="descProd" class="col-form-label">{{'pantalla.catalogoDin.descripcionsinpuntos' | translate}}:</label>
+                    <input appInputMask="alfanumerico" (paste)="(false)" type="text" class="form-control removeTextTransform" id="descProd"
+                        formControlName="descProd" maxlength="40" [(ngModel)]="descProd" appInputMask="alfanumerico_space">
+                </div>
+                <div class="col-12">
+                    <label for="idBack" class="col-form-label">{{'administracion.productos.detalle.backend' | translate}}:</label>
+                    <select class="form-control display" id="idBack" formControlName="idBack"
+                        [(ngModel)]="idBack">
+                        <option>Seleccione...</option>
+                        <option *ngFor="let dato of listaCatalogoBackend" [value]="dato.idBack">{{dato.nombre}}</option>
+                    </select>
+                </div>
+                <div class="col-12">
+                    <label for="umbral" class="col-form-label">{{'administracion.productos.umbral' | translate}}:</label>
+                    <input (paste)="(false)" type="numer" class="form-control" id="umbral" formControlName="umbral"
+                        maxlength="4" (keypress)="onlyNumbers($event)" [(ngModel)]="umbral">
+                </div>
+                <div class="col-12">
+                    <label for="claveProdClie" class="col-form-label">{{'administracion.productos.codigoOperacion' | translate}}:</label>
+                    <input (paste)="(false)" type="text" class="form-control" id="claveProdClie"
+                        formControlName="claveProdClie" maxlength="2" (keypress)="onlyNumbers($event)"
+                        [(ngModel)]="idProduct">
+                </div>
+                <div class="col-12">
+                    <label for="codiOperCarg" class="col-form-label">{{'administracion.productos.detalle.codigoOpeCargo' | translate}}:</label>
+                    <input (paste)="(false)" type="text" class="form-control" id="codiOperCarg"
+                        formControlName="codiOperCarg" maxlength="4" (keypress)="onlyNumbers($event)"
+                        [(ngModel)]="codiOperCarg">
+                </div>
+                <div class="col-12">
+                    <label for="codiOperAbon" class="col-form-label">{{'administracion.productos.detalle.codigoOpeAbono' | translate}}:</label>
+                    <input (paste)="(false)" type="text" class="form-control" id="codiOperAbon"
+                        formControlName="codiOperAbon" maxlength="4" (keypress)="onlyNumbers($event)"
+                        [(ngModel)]="codiOperAbon">
+                </div>
+                <div class="col-12">
+                    <label for="claconComision" class="col-form-label">{{'administracion.productos.detalle.claconComision' | translate}}:</label>
+                    <input appInputMask="alfanumerico" (paste)="(false)" type="text" class="form-control removeTextTransform"
+                        id="claconComision" formControlName="claconComision" maxlength="4"
+                        [(ngModel)]="claconComision" (keypress)="onlyAlphabeticAndNumbers($event)">
+                </div>
+                <div class="col-12">
+                    <label for="diasFecApli" class="col-form-label">{{'administracion.productos.detalle.diasFechaAplicacion' | translate}}:</label>
+                    <input (paste)="(false)" type="text" class="form-control" id="diasFecApli"
+                        formControlName="diasFecApli" maxlength="2" (keypress)="onlyNumbers($event)"
+                        [(ngModel)]="diasFecApli">
+                </div>
+                <div class="col-12">
+                    <label for="diasTecTran" class="col-form-label">{{'administracion.productos.detalle.diasFechaTransferencia' | translate}}:</label>
+                    <input (paste)="(false)" type="text" class="form-control" id="diasTecTran"
+                        formControlName="diasTecTran" maxlength="2" (keypress)="onlyNumbers($event)"
+                        [(ngModel)]="diasTecTran">
+                </div>
+                <div class="col-12">
+                    <label for="diasFecOper" class="col-form-label">{{'administracion.productos.detalle.diasFechaOperacion' | translate}}:</label>
+                    <input (paste)="(false)" type="text" class="form-control" id="diasFecOper"
+                        formControlName="diasFecOper" maxlength="2" (keypress)="onlyNumbers($event)"
+                        [(ngModel)]="diasFecOper">
+                </div>
+                <div class="col-12">
+                    <label for="bandActivo" class="col-form-label">{{'administracion.productos.detalle.banderaActivo' | translate}}:</label>
+                    <input type="checkbox" class="form-control-box" id="bandActivo"
+                        [checked]="bandAct === 'A' ? true : false"
+                        (change)="onChangeEv(bandAct, 'bandActivo')">
+                </div>
+                <div class="col-12">
+                    <label for="bandReintentos" class="col-form-label">{{'pantalla.moduloAdministracion.mensajeError.banderaReintentos' | translate}}:</label>
+                    <input type="checkbox" class="form-control-box" id="bandReintentos"
+                        [checked]="bandReint === 'A' ? true : false"
+                        (change)="onChangeEv(bandReint, 'bandReintentos')">
+                </div>
+                <div class="col-12">
+                    <label for="bandTipoCargo" class="col-form-label">{{'administracion.productos.detalle.banderaTipoCargo' | translate}}:</label>
+                    <input type="checkbox" class="form-control-box" id="bandTipoCargo"
+                        [checked]="bandTipoCar === 'A' ? true : false"
+                        (change)="onChangeEv(bandTipoCar, 'bandTipoCargo')">
+                </div>
+                <div class="col-12">
+                    <label for="bandVigencia" class="col-form-label">{{'administracion.productos.detalle.banderaVigencia' | translate}}:</label>
+                    <input type="checkbox" class="form-control-box" id="bandVigencia"
+                        [checked]="bandVig === 'A' ? true : false"
+                        (change)="onChangeEv(bandVig, 'bandVigencia')">
+
+                </div>
+                <div class="col-12">
+                    <label for="bandEmail" class="col-form-label">{{'administracion.productos.detalle.banderaMail' | translate}}:</label>
+                    <input type="checkbox" class="form-control-box" id="bandEmail"
+                        [checked]="bandEmail === 'A' ? true : false"
+                        (change)="onChangeEv(bandEmail, 'bandEmail')">
+                </div>
+            </form>
+            <!-- Formulario si es detalle -->
+            <form class="row" [formGroup]="formProducto" *ngIf="origen === 'detalle'">
+                <div class="col-12">
+                    <label for="cveProd" class="col-form-label">{{'administracion.productos.clave' | translate}}:</label>
+                    <input type="text" class="form-control" id="cveProd" formControlName="cveProd" maxlength="2"
+                        [(ngModel)]="cveProd" readonly>
+                </div>
+                <div class="col-12">
+                    <label for="descProd" class="col-form-label">{{'pantalla.catalogoDin.descripcionsinpuntos' | translate}}:</label>
+                    <input appInputMask="alfanumerico" type="text" class="form-control" id="descProd"
+                        formControlName="descProd" maxlength="40" [(ngModel)]="descProd" readonly>
+                </div>
+                <div class="col-12">
+                    <label for="idBack" class="col-form-label">{{'administracion.productos.detalle.backend' | translate}}:</label>
+                    <select class="form-control display" id="idBack" formControlName="idBack"
+                        [(ngModel)]="idBack" readonly>
+                        <option disabled>Seleccione...</option>
+                        <option *ngFor="let dato of listaCatalogoBackend" [value]="dato.idBack" disabled>{{dato.nombre}}
+                        </option>
+                    </select>
+                </div>
+                <div class="col-12">
+                    <label for="umbral" class="col-form-label">{{'administracion.productos.umbral' | translate}}:</label>
+                    <input type="numer" class="form-control" id="umbral" formControlName="umbral" maxlength="4"
+                        [(ngModel)]="umbral" readonly>
+                </div>
+                <div class="col-12">
+                    <label for="claveProdClie" class="col-form-label">{{'administracion.productos.codigoOperacion' | translate}}:</label>
+                    <input type="text" class="form-control" id="claveProdClie" formControlName="claveProdClie"
+                        maxlength="2" [(ngModel)]="idProduct" readonly>
+                </div>
+                <div class="col-12">
+                    <label for="codiOperCarg" class="col-form-label">{{'administracion.productos.detalle.codigoOpeCargo' | translate}}:</label>
+                    <input type="text" class="form-control" id="codiOperCarg" formControlName="codiOperCarg"
+                        maxlength="4" [(ngModel)]="codiOperCarg" readonly>
+                </div>
+                <div class="col-12">
+                    <label for="codiOperAbon" class="col-form-label">{{'administracion.productos.detalle.codigoOpeAbono' | translate}}:</label>
+                    <input type="text" class="form-control" id="codiOperAbon" formControlName="codiOperAbon"
+                        maxlength="4" [(ngModel)]="codiOperAbon" readonly>
+                </div>
+                <div class="col-12">
+                    <label for="claconComision" class="col-form-label">{{'administracion.productos.detalle.claconComision' | translate}}:</label>
+                    <input appInputMask="alfanumerico" type="text" class="form-control" id="claconComision"
+                        formControlName="claconComision" maxlength="4" [(ngModel)]="claconComision" readonly>
+                </div>
+                <div class="col-12">
+                    <label for="diasFecApli" class="col-form-label">{{'administracion.productos.detalle.diasFechaAplicacion' | translate}}:</label>
+                    <input type="text" class="form-control" id="diasFecApli" formControlName="diasFecApli" maxlength="2"
+                        [(ngModel)]="diasFecApli" readonly>
+                </div>
+                <div class="col-12">
+                    <label for="diasTecTran" class="col-form-label">{{'administracion.productos.detalle.diasFechaTransferencia' | translate}}:</label>
+                    <input type="text" class="form-control" id="diasTecTran" formControlName="diasTecTran" maxlength="2"
+                        [(ngModel)]="diasTecTran" readonly>
+                </div>
+                <div class="col-12">
+                    <label for="diasFecOper" class="col-form-label">{{'administracion.productos.detalle.diasFechaOperacion' | translate}}:</label>
+                    <input type="text" class="form-control" id="diasFecOper" formControlName="diasFecOper" maxlength="2"
+                        [(ngModel)]="diasFecOper" readonly>
+                </div>
+                <div class="col-12">
+                    <label for="bandActivo" class="col-form-label">{{'administracion.productos.detalle.banderaActivo' | translate}}:</label>
+                    <input type="checkbox" class="form-control-box" id="bandActivo"
+                        [checked]="bandAct === 'A' ? true : false" disabled>
+                </div>
+                <div class="col-12">
+                    <label for="bandReintentos" class="col-form-label">{{'pantalla.moduloAdministracion.mensajeError.banderaReintentos' | translate}}:</label>
+                    <input type="checkbox" class="form-control-box" id="bandReintentos"
+                        [checked]="bandReint === 'A' ? true : false" disabled>
+                </div>
+                <div class="col-12">
+                    <label for="bandTipoCargo" class="col-form-label">{{'administracion.productos.detalle.banderaTipoCargo' | translate}}:</label>
+                    <input type="checkbox" class="form-control-box" id="bandTipoCargo"
+                        [checked]="bandTipoCar === 'A' ? true : false" disabled>
+                </div>
+                <div class="col-12">
+                    <label for="bandVigencia" class="col-form-label">{{'administracion.productos.detalle.banderaVigencia' | translate}}:</label>
+                    <input type="checkbox" class="form-control-box" id="bandVigencia"
+                        [checked]="bandVig === 'A' ? true : false" disabled>
+
+                </div>
+                <div class="col-12">
+                    <label for="bandEmail" class="col-form-label">{{'administracion.productos.detalle.banderaMail' | translate}}:</label>
+                    <input type="checkbox" class="form-control-box" id="bandEmail"
+                        [checked]="bandEmail === 'A' ? true : false" disabled>
+                </div>
+            </form>
+            <div class="items">
+                <div *ngIf="origen !== 'detalle' ">
+                    <button type="button" class="btn btn-danger" (click)="regresarToConsult()">{{'btn.cancelar' | translate}}</button>
+                </div>
+                <div *ngIf="origen !== 'detalle' ">
+                    <button type="button" class="btn btn-danger" (click)="alta(origen)">{{'btn.guardar'
+                        | translate}}</button>
+                </div>
+                <div *ngIf="origen === 'detalle' ">
+                    <button type="button" class="btn btn-danger" (click)="regresarToConsult()">{{'btn.regresar' |
+                        translate}}</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

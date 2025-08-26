@@ -1,0 +1,27 @@
+.modal-guardar-parametria-adicional-dos {
+    display: block;
+    margin: 2em 2em 2em 2em;
+}
+
+.titulo-confirm {
+    color: lightseagreen;
+    text-align: center;
+}
+
+.leyenda-confirmacion {
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    font-size: 12px;
+}
+
+.opciones-guardar {
+    display: flex;
+    justify-content: center;
+}
+
+.btn {
+    font-size: 12px;
+}
+
+.btn-guardar-todo {
+    margin-left: 20px;
+}

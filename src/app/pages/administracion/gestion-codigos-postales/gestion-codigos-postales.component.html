@@ -1,0 +1,113 @@
+<app-operativa-header tituloPantalla="{{'menu.moduloAdministracion.codPos' | translate}}"></app-operativa-header>
+<div id="consultaPais" class="panel panel-default col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    <br>
+    <div class="card">
+        <h5 class="card-header justify-content-center">
+            {{'pantalla.moduloAdministracion.CP.title' | translate}}
+        </h5>
+        <div class="card-body">
+            <form [formGroup]="codigoPostalForm">
+                <div class="row justify-content-center">
+                    <div class="col-xs-6 col-sm-6 col-md-6">
+                        <div class="form-group row">
+                            <label for="codigoPostal" class="col-xs-2 col-sm-2 col-md-2 col-lg-2 offset-xs-1 offset-sm-1 offset-md-1 offset-lg-1 col-form-label text-right mt-1">{{'pantalla.moduloAdministracion.codigoPostal'| translate}}:</label>
+                            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                <input class="form-control"  type="text" id="codigoPostal" name="codigoPostal" formControlName="codigoPostal" placeholder="{{'pantalla.moduloAdministracion.codigoPostal'| translate}}" size="5"
+                                maxlength="5" appInputMask="numerico">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-6 col-sm-6 col-md-6">
+                        <div class="form-group row">
+                            <label for="sucursal" class="col-xs-2 col-sm-2 col-md-2 col-lg-2 offset-xs-1 offset-sm-1 offset-md-1 offset-lg-1 col-form-label text-right mt-1">{{'pantalla.moduloAdministracion.sucursal'| translate}}:</label>
+                            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                <input class="form-control"  type="text" name="sucursal" id="sucursal" formControlName="sucursal" placeholder="{{'pantalla.moduloAdministracion.sucursal'| translate}}" size="4"
+                                maxlength="4" appInputMask="numerico">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <div class="row mt-2">
+                <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-1 offset-sm-1 offset-md-1 offset-lg-1">
+                    <button type="button" class="btn btn-danger" (click)="limpiarCP()">{{'btn.limpiarPaises' |
+                        translate}}</button>
+                </div>
+                <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-8 offset-sm-8 offset-md-8 offset-lg-8">
+                    <button type="button" class="btn btn-danger" (click)="consultarCP()">{{'btn.buscar' |
+                        translate}}</button>
+                </div>
+            </div>
+            <div class="row mt-2">
+                <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-1 offset-sm-1 offset-md-1 offset-lg-1">
+                    <button type="button" class="btn btn-danger" (click)="agregar()">{{'btn.agregar' |
+                        translate}}</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card my-1">
+        <h5 class="card-header justify-content-center">
+            {{'pantalla.moduloAdministracion.resultadoBusqueda.title' | translate}}
+        </h5>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                   <table class="table table-striped table-hover" aria-describedby="listaConsultaPais">
+                        <thead>
+                            <tr>
+                                <th class="text-center" scope="col">{{'pantalla.moduloAdministracion.codigoPostal'| translate}}</th>
+                                <th class="text-center" scope="col">{{'pantalla.moduloAdministracion.sucursal'| translate}}</th>
+                                <th class="text-center" scope="col">{{'pantalla.moduloAdministracion.calculoAutomatico'| translate}}</th>
+                                <th class="text-center" scope="col">{{'btn.modificar'| translate}}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <ng-container *ngIf="banderaHasRows; then templateFillTable; else templateEmptyTable2">
+                            </ng-container>
+                            <ng-template #templateFillTable>
+                                <tr *ngFor="let cp of tablaCP">
+                                    <td class="text-center">{{cp.cp}}</td>
+                                    <td class="text-center">{{cp.direccion}}</td>
+                                    <td class="text-center">
+                                        <input type="checkbox"  [checked]="cp.calculo === 'A' ? true : false" (change)="cambio($event, cp.cp)" aria-label="activo" >
+                                    </td>
+                                    <td  class="text-center">
+                                        <button type="button" class="btn btn-outline-danger" (click)="editarCP(cp)"  >{{'btn.modificar'| translate}}</button>
+                                    </td>
+                                </tr>
+                            </ng-template>
+                            <ng-template #templateEmptyTable2>
+                                <tr>
+                                    <td class="text-center" colspan="6"> {{'noResult' | translate }} </td>
+                                </tr>
+                            </ng-template>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mt-1">
+                    <div class="d-flex justify-content-center" *ngIf="banderaHasRows">
+                        <pagination
+                            [boundaryLinks]="showBoundaryLinksCP"
+                            [directionLinks]="showDirectionLinksCP"
+                            [totalItems]="totalElements"
+                            [itemsPerPage]="rowsPorPagina"
+                            [maxSize]="rowsPorPagina"
+                            [(ngModel)]="page"
+                            previousText="&lsaquo;" nextText="&rsaquo;"
+                            firstText="{{'paginador.inicio' | translate}}" lastText="{{'paginador.fin' | translate}}"
+                            (pageChanged)="onPageChanged($event)">
+                        </pagination>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-2">
+        <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-10 offset-sm-10 offset-md-10 offset-lg-10">
+            <button type="button" class="btn btn-danger" [disabled]="!banderaBtnExportar" (click)="openModal()">{{'btn.exportar' | translate}}</button>
+        </div>
+    </div>
+</div>

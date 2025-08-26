@@ -1,0 +1,296 @@
+<app-operativa-header tituloPantalla="{{'pantallas.regeneraReporteCobranza' | translate}}"></app-operativa-header>
+
+<div id="monitorOperaciones" class=" panel panel-default col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    <br>
+    <div class="card">
+        <h5 class="card-header justify-content-center"></h5>
+        <app-busqueda-cliente [data]="datos" #limpiar></app-busqueda-cliente>
+    </div>
+    <div class="card">
+        <h5 class="card-header text-center">{{'pantallas.regeneraReporteCobranza.contenido' | translate}}</h5>
+        <div class="card-body">
+            <div class="card-body col-xs-2">
+                <div class="row justify-content-center">
+
+                    <!-- Select account text fielf -->
+                    <div class="col-2">
+                        <div class="row">
+                            <label class="col-form-label col-sm-8 text-style" for="cuenta">{{
+                                "pantallas.regeneraReporteCobranza.cuenta" | translate }}</label>
+                        </div>
+                        <div class="align-items-center">
+                            <div class="col-sm-12">
+                                <label for="idContratoCuenta" [hidden]=""></label>
+                                <select class="form-control" size="10" name="idContratoCuenta" multiple
+                                    id="idContratoCuenta" formControlName="idContratoCuenta" readonly [disabled]="true">
+                                    <option [value]="cuenta.idContratoCuenta" *ngFor="let cuenta of listCuentas">
+                                        {{ cuenta.numCuenta }}
+                                    </option>
+                                </select>
+                                <div class="col-form-label text-style d-flex justify-content-center">
+                                    <button
+                                    class="btn" 
+                                    [disabled]="!canMoveToPreviousPage" 
+                                    (click)="moveToFirstPage()" 
+                                    >
+                                    </button>
+                                    <button
+                                    class="btn" 
+                                    [disabled]="!canMoveToPreviousPage" 
+                                    (click)="moveToPreviousPage()" 
+                                    >
+                                    <em class="fa fa-angle-left"></em>
+                                    </button>
+                                    <button class="btn" disabled >
+                                      <div class="with-pagination">
+                                        {{ pageIndex }} / {{ pageCount }}
+                                      </div>
+                                    </button>
+                                    <button
+                                    class="btn" 
+                                    [disabled]="!canMoveToNextPage" 
+                                    (click)="moveToNextPage()" 
+                                    >
+                                    <em class="fa fa-angle-right"></em>
+                                    </button>
+                                    <button
+                                    class="btn" 
+                                    [disabled]="!canMoveToNextPage" 
+                                    (click)="moveToLastPage()" 
+                                    >
+                                    <em class="fa fa-angle-double-right"></em>
+                                    </button>
+                                  </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- list clacons -->
+
+                    <div class="col-5">
+
+                        <div class="form-group row ">
+                            <label class="col-form-label col-sm-8 text-style"
+                                for="selectHorasToAddAndRemoveC2">{{'pantallas.reportesCobranzaIntradia.seleccionarClacones'
+                                | translate}}</label>
+                        </div>
+                        <div class="form-group row align-items-center">
+                            <div class="col-sm-5">
+                                <select class="form-control" size="10" name="selectHorasToAddAndRemoveC2"
+                                    id="selectHorasToAddAndRemoveC2" multiple
+                                    [(ngModel)]="listCuentasSelectedIzquierda">
+                                    <option *ngIf="listCuentasFirstSelect.length > 1" value="-1"> {{'Todos'| translate}}
+                                    </option>
+                                    <option *ngFor="let hora2 of listCuentasFirstSelect" [value]="hora2">
+                                        {{hora2['descripcionCatalogo']}}</option>
+                                </select>
+                            </div>
+                            <div class="col-sm-1">
+                                <span class="badge badge-secondary text-desing-badge mb-1"
+                                    (click)="addNewCuenta1()">{{'pantalla.parametriadicional.consulta.datosparametria.sendToAnother'
+                                    | translate}}</span>
+                                <span class="badge badge-secondary text-desing-badge"
+                                    (click)="removeCuenta1()">{{'pantalla.parametriadicional.consulta.datosparametria.returnToAnother'
+                                    | translate}}</span>
+                            </div>
+                            <div class="col-sm-5">
+                                <select class="form-control" size="10" name="selectHorasDestinyToAddContr2"
+                                    id="selectHorasDestinyToAddContr2" [(ngModel)]="listCuentasSelectedDerecha" multiple
+                                    aria-label="selectHorasDestinyToAddContr">
+                                    <option *ngIf="listCuentasSecondSelect.length > 1" value="-1"> {{'Todos'|
+                                        translate}} </option>
+
+                                    <option *ngFor="let hora2 of listCuentasSecondSelect" [value]="hora2">
+                                        {{hora2['descripcionCatalogo']}}</option>
+                                </select>
+                            </div>
+                        </div>
+
+
+                    </div>
+
+                    <!-- Canal entrega -->
+                    <div class="col-md-3">
+                        <form [formGroup]="formRepCta">
+                            <div class="mb-3">
+                                <label class="col-form-label col-sm-8 text-style" for="canalEntrega">{{
+                                    "pantallas.regeneraReporteCobranza.canalEntrega" | translate}}</label>
+                                <select class="form-control" formControlName="optCanal" name="canalEntrega"
+                                    id="canalEntrega">
+                                    <option value="">{{'seleccione' | translate}}</option>
+                                    <option *ngFor="let canalE of listCanales" [value]="canalE.idCanal" se>
+                                        {{ canalE.nombre }}
+                                    </option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label class="col-form-label  text-style" for="exampleFormControlSelect1">{{
+                                    "pantallas.regeneraReporteCobranza.tipoFormato"
+                                    | translate
+                                    }}
+                                    Consolidados</label>
+                                <select class="form-control" id="exampleFormControlSelect1"
+                                    formControlName="optFormato">
+                                    <option value="">{{'seleccione' | translate}}</option>
+                                    <option *ngFor="let formats of listFormats" [value]="formats.idCatalogo">
+                                        {{ formats.descripcionCatalogo }}
+                                    </option>
+                                </select>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+                <form [formGroup]="formRepCta">
+                    <div class="row justify-content-center">
+                        <div class="col-sm-3">
+                            <div class="form-group mt-3">
+                                <label class="form-check-label label-marging">
+                                    {{
+                                    "pantallas.regeneraReporteCobranza.clacones" | translate
+                                    }}
+                                </label>
+                            </div>
+                            <div class="form-check mt-3">
+                                <input class="form-check-input" id="claconesCargo" formControlName="optClaCarg"
+                                    type="checkbox" />
+                                <label class="form-check-label label-marging" for="claconesCargo"
+                                    id="claconesCargoLabel" name="claconesCargo">
+                                    {{
+                                    "pantallas.reportesCobranzaIntradia.todosClaconesCargo"
+                                    | translate
+                                    }}
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" id="claconesAbono" formControlName="optClaAbono"
+                                    type="checkbox" />
+                                <label class="form-check-label label-marging" id="claconesAbonoLabel"
+                                    for="claconesAbono">
+                                    {{
+                                    "pantallas.reportesCobranzaIntradia.todosClaconesAbono"
+                                    | translate
+                                    }}
+                                </label>
+                            </div>
+                            <div class="form-group mt-3">
+                                <label class="form-check-label mt-1" for="archivosTitle">
+                                    {{
+                                    "pantallas.regeneraReporteCobranza.ctaArchivos"
+                                    | translate
+                                    }}
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1"
+                                    value="A" formControlName="cantFilesRadioConsolid"
+                                    [checked]="this.formRepCta.controls['cantFilesRadioConsolid'].value === 'A'" />
+                                <label class="form-check-label pl-1" for="exampleRadios1">
+                                    {{
+                                    "pantallas.reportesCobranzaIntradia.recibirArchivoConsolidado"
+                                    | translate
+                                    }}
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2"
+                                    value="C" formControlName="cantFilesRadioConsolid"
+                                    [checked]="this.formRepCta.controls['cantFilesRadioConsolid'].value === 'C'" />
+                                <label class="form-check-label pl-1" for="exampleRadios2">
+                                    {{
+                                    "pantallas.reportesCobranzaIntradia.recibirArchivoPorCuenta"
+                                    | translate
+                                    }}
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" id="signosNegativos" type="checkbox"
+                                    formControlName="chkSigN" />
+                                <label class="form-check-label label-marging" for="signosNegativos"
+                                    id="signosNegativosLabe">
+                                    {{
+                                    "pantallas.reportesCobranzaIntradia.mostrarSignosNegativos"
+                                    | translate
+                                    }}
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-3">
+                            <div class="form-check mt-3">
+                                <label class="form-check-label label-marging">
+                                    {{ "pantallas.regeneraReporteCobranza.tipCont" | translate }}
+                                </label>
+                            </div>
+                            <div class="form-check mt-4">
+                                <input class="form-check-input" type="radio" name="radioContentType"
+                                    id="radioContentType1" value="P" formControlName="optTipoContenido"
+                                    [checked]="this.formRepCta.controls['optTipoContenido'].value=== 'P'" />
+                                <label class="form-check-label pl-1" for="radioContentType1">
+                                    {{ "pantallas.regeneraReporteCobranza.parcial" | translate }}
+                                </label>
+                            </div>
+                            <div class="form-check mt-4">
+                                <input class="form-check-input" type="radio" name="radioContentType"
+                                    id="radioContentType2" value="A" formControlName="optTipoContenido"
+                                    [checked]="this.formRepCta.controls['optTipoContenido'].value=== 'A'" />
+                                <label class="form-check-label pl-1" for="radioContentType2">
+                                    {{ "pantallas.regeneraReporteCobranza.acumulativo" | translate }}
+                                </label>
+                            </div>
+
+                            <div class="form-check mt-4">
+                                <input class="form-check-input" id="mostrarCuentaClabe" formControlName="chkCta"
+                                    type="checkbox" />
+                                <label class="form-check-label label-marging" for="mostrarCuentaClabe"
+                                    id="mostrarCuentaClabeLabel">
+                                    {{
+                                    "pantallas.regeneraReporteCobranza.virtualMov" | translate
+                                    }}
+                                </label>
+                            </div>
+                            <div class="form-check mt-4">
+                                <input class="form-check-input" id="anulacionesCheck" type="checkbox"
+                                    formControlName="anulaciones" />
+                                <label for="anulacionesCheck" id="anulacionesCheck"
+                                    class="form-check-label label-marging">
+                                    {{ "pantallas.regeneraReporteCobranza.incAnulaciones" | translate }}
+                                </label>
+                            </div>
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12 mb-3 mt-3">
+            <input #btnCargarArchivo type="file" class="form-control-plaintext" name="file" id="file"
+                (change)="readArchivo($event)" aria-label="file" *ngIf="showFileButton" accept=".xlsx, .xls" />
+        </div>
+        <div class="col-6 mb-5">
+            <button type="button" class="btn btn-danger mt-3 mr-5" (click)="chargeAccounts()">
+                {{ "pantallas.reportesCobranzaIntradia.cargarCuentas" | translate }}
+            </button>
+            <button type="button" class="btn btn-danger mt-3 ml-5" *ngIf="showFileButton"
+                (click)="showFileButton = false">
+                {{ "btn.cancelar" | translate }}
+            </button>
+            <br />
+            <button type="button" class="btn btn-danger mt-3" (click)="downloadAccounts()">
+                {{ "pantallas.reportesCobranzaIntradia.descargaFormato" | translate }}
+            </button>
+        </div>
+        <div class="col-6 text-right">
+            <button (click)="saveConfig()" type="button" class="btn btn-danger mt-3">
+                {{ "btn.guardarBanco" | translate }}
+            </button>
+            <br />
+            <button type="button" class="btn btn-danger mt-3" (click)="exportReport()">
+                {{ "btn.exportar" | translate }}
+            </button>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,203 @@
+<app-operativa-header tituloPantalla="{{'CO' | translate}}"></app-operativa-header>
+
+<div class="panel panel-default col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    <div class="card mt-3">
+        <h5 class="card-header justify-left">
+            {{'pantalla.datosContrato.title' | translate}}
+        </h5>
+        <div class="padding-card-less">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-xs-6 col-sm-6 col-md-6">
+                            <div class="form-group row">
+                                <label for="codCliente" class="col-form-label col-sm-3">{{'codigoCliente' | translate}}:</label>
+                                <div class="col-sm-4">
+                                    <input type="text" id="codCliente" name="codCliente" class="form-control" placeholder="{{'pantalla.altaContratos.datosContrato.codCliente' | translate}}" [appInputDisabled]="datospersonales.descEstatus" maxlength="8" size="12" (keypress)="validateOnlyNumeros($event)"
+                                        (blur)="validateTamanoBuc($event)" (paste)="pasteOnlyNumeros($event)" (keydown.Tab)="getContratoByBuc()" [(ngModel)]="datospersonales.bucCliente" [disabled]="bandDisableAll">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-6 col-sm-6 col-md-6">
+                            <div class="form-group row">
+                                <label for="estatusContrato" class="col-form-label col-sm-3">{{'estatusContrato' | translate}}:</label>
+                                <div class="col-sm-4">
+                                    <input type="text" id="estatusContrato" name="estatusContrato" class="form-control" placeholder="{{'pantalla.envio.archivos.datosContrato.estatusContrato' | translate}}" tabindex="1" [(ngModel)]="datospersonales.descEstatus" disabled>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6 col-md-6">
+                            <div class="form-group row">
+                                <label for="razonSocial" class="col-form-label col-sm-3">{{'razonSocial' | translate}}:</label>
+                                <div class="col-sm-9">
+                                    <input type="text" id="razonSocial" name="razonSocial" class="form-control" placeholder="{{'pantalla.altaContratos.datosContrato.razonSocial' | translate}}" maxlength="50" size="72" [(ngModel)]="datospersonales.razonSocial" disabled>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-6 col-sm-6 col-md-6">
+                            <div class="form-group row">
+                                <label for="cuentaEje" class="col-form-label col-sm-3">{{'pantalla.datosContrato.cuentaEje' | translate}}</label>
+                                <div class="col-sm-4">
+                                    <input type="text" id="cuentaEje" name="cuentaEje" class="form-control" [(ngModel)]="datospersonales.cuentaEje" placeholder="{{'pantalla.altaContratos.datosContrato.cuentaEje' | translate}}" maxlength="11" size="20" disabled>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-6 col-sm-6 col-md-6">
+                            <div class="form-group row">
+                                <label for="numContrato" class="col-form-label col-sm-3">{{'numContrato' | translate}}:</label>
+                                <div class="col-sm-4">
+                                    <input type="text" class="form-control" name="numContrato" id="numContrato" [(ngModel)]="datospersonales.numContrato" placeholder="{{'numContrato' | translate}}" maxlength="12" size="20" disabled>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card mt-4">
+        <h5 class="card-header justify-left">
+            {{ "parametroBusqueda.title" | translate }}
+        </h5>
+        <div class="card-body padding-card-less">
+            <br />
+
+            <form [formGroup]="formOpeSearch">
+                <div class="row">
+                    <div class="col-xs-5 col-sm-5 col-md-5 offset-md-1">
+                        <div class="form-group row">
+                            <label for="nameFile" class="col-form-label col-md-3">{{
+                                "pantalla.moduloAdministracion.gestionBackend.nombreArchivo"
+                                | translate
+                                }}:</label>
+                            <div class="col-md-9">
+                                <input class="form-control" type="text" id="nameFile" name="nameFile" formControlName="nomArchivo" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-3 col-sm-3 col-md-3 offset-md-1">
+                        <div class="form-group row">
+                            <label for="estatusF" class="col-form-label col-md-4">{{
+                                "pantalla.moduloAdministracion.gestionBackend.estatus"
+                                | translate
+                                }}:</label>
+                            <div class="col-md-8">
+                                <select class="form-control" type="text" name="estatusF" id="estatusF" formControlName="estatus">
+                                    <option *ngFor="let st of statusList" [value]="st.id">{{st.valor}}</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+            <!-- Action buttons -->
+            <div class="row">
+                <div class="col-md-6">
+                    <button type="button" class="btn btn-danger" (click)="clean()">{{'btn.limpiar' | translate}}</button>
+                </div>
+                <div class="col-md-6 t-end">
+                    <button type="button" class="btn btn-danger" (click)="searchOpe()">{{'btn.consultar' |
+                        translate}}</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card mt-4" *ngIf="filesByClient.length > 0">
+        <div class="card-body padding-card-less">
+            <br />
+            <!-- Table -->
+            <table class="table table-striped table-hover" aria-describedby="listConsultCatalogoDinamicoInformacion">
+                <thead>
+                    <tr>
+                        <th class="text-center" scope="col">
+                            {{'btn.seleccionar' | translate}} <input type="checkbox" id="chklist" aria-label="chklist" (change)="selectAllOpe($event)"></th>
+                        <th class="text-center" scope="col">
+                            {{'pantalla.adminContrato.codigoCliente' | translate}}</th>
+                        <th class="text-center" scope="col">
+                            {{'idMovimiento' | translate}}</th>
+                        <th class="text-center" scope="col">
+                            {{'pantallas.tipoDeCobro.cuentaCargo' | translate}}</th>
+                        <th class="text-center" scope="col">
+                            {{'planCalidad.cambioEst.cuentaAbono' | translate}}</th>
+                        <th class="text-center" scope="col">
+                            {{'pantalla.moduloAdministracion.gestionBackend.producto' | translate}}</th>
+                        <th class="text-center" scope="col">
+                            {{'pantalla.moduloAdministracion.gestionBackend.nombreArchivo' | translate}}</th>
+                        <th class="text-center" scope="col">
+                            {{'pantallas.monitorizacion.Canal' | translate}}</th>
+                        <th class="text-center" scope="col">
+                            {{'pantalla.moduloAdministracion.gestionBackend.estatus' | translate}}</th>
+                        <th class="text-center" scope="col">
+                            {{'importe' | translate}}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <ng-container *ngIf="true; then templateFillTable; else templateEmptyTable">
+                    </ng-container>
+                    <ng-template #templateFillTable>
+                        <tr *ngFor="let file of returnedArray; let i = index">
+                            <td class="text-center">
+                                <label for="chktmp"></label>
+                                <input type="checkbox" name="opeChk" id="chktmp" aria-label="chktmp" (change)="addDeleteOpeArr($event, file, i)">
+                            </td>
+                            <td class="text-center">
+                                {{file.buc}}
+                            </td>
+                            <td class="text-center">
+                                {{file.movimiento}}
+                            </td>
+                            <td class="text-center">
+                                {{file.ctaCargo}}
+                            </td>
+                            <td class="text-center">
+                                {{file.ctaAbono}}
+                            </td>
+                            <td class="text-center">
+                                {{file.producto}}
+                            </td>
+                            <td class="text-center">
+                                {{file.nomArchivo}}
+                            </td>
+                            <td class="text-center">
+                                {{file.canal}}
+                            </td>
+                            <td class="text-center">
+                                {{file.estatus}}
+                            </td>
+                            <td class="text-center">
+                                {{file.importe | currency}}
+                            </td>
+                        </tr>
+                    </ng-template>
+                    <ng-template #templateEmptyTable>
+                    </ng-template>
+                </tbody>
+            </table>
+            <div *ngIf="filesByClient.length > 0">
+                <div class="row">
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mt-1">
+                        <div class="d-flex justify-content-center">
+                            <pagination [boundaryLinks]="true" [directionLinks]="true" [totalItems]="totalElements" [itemsPerPage]="rowsPorPagina" [maxSize]="rowsPorPagina" previousText="&lsaquo;" nextText="&rsaquo;" firstText="{{'paginador.inicio' | translate}}" lastText="{{'paginador.fin' | translate}}"
+                                (pageChanged)="onPageChanged($event)">
+                            </pagination>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Action buttons -->
+            <div class="row">
+                <div class="col-md-6 t-end offset-md-6">
+                    <button type="button" class="btn btn-danger" (click)="sendOperToCancel()">{{'btn.enviar' |
+                        translate}}</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

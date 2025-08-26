@@ -1,0 +1,8 @@
+<h1 mat-dialog-title>Confirmación</h1>
+<div mat-dialog-content>
+    <p>{{mensaje}}</p>
+</div>
+<div mat-dialog-actions>
+    <button mat-button class="btn btn-outline-danger m-1" (click)="confirmado()" cdkFocusInitial>Ok</button>
+    <button mat-button class="btn btn-outline-danger m-1" (click)="cerrarDialogo()">Cancelar</button>
+</div>

@@ -1,0 +1,158 @@
+<app-operativa-header tituloPantalla="{{'MO' | translate}} "></app-operativa-header>
+<form [formGroup]="datosForm" id="Adu">
+    <div class="card">
+        <h5 class="card-header justify-content-center">
+            {{'MO.DG' | translate}}:
+        </h5>
+        <div class="inpu">
+            <label for="productoAduA" class="col-form-label col-xs-2 col-sm-2 col-md-1">{{'MO.P' | translate}}: </label>
+            <input type="text" class="form-control" id="productoAduA" name="producto" formControlName="producto" >
+        </div>
+        <div class="inpu">
+            <div class="dos">
+                <label for="codCliAduA" class="col-form-label col-xs-2 col-sm-2 col-md-2">Código de Cliente{{'MO.CC' | translate}}: </label>
+                <input type="text" class="form-control" id="codCliAduA" name="codCli" formControlName="codCli">
+            </div>
+            <div class="dos">
+                <label for="estatusAduA" class="col-form-label col-xs-2 col-sm-2 col-md-2">{{'MO.E' | translate}}: </label>
+                <input type="text" class="form-control" id="estatusAduA" name="estatus" formControlName="estatus" >
+            </div>
+        </div>
+        <div class="inpu">
+            <div class="dos">
+                <label for="fechaAplicAduA" class="col-form-label col-xs-2 col-sm-2 col-md-2">{{'MO.FA' | translate}}: </label>
+                <input type="text" class="form-control" id="fechaAplicAduA" name="fechaAplic" formControlName="fechaAplic" >
+            </div>
+            <div class="dos">
+            </div>
+        </div>
+        <div class="inpu">
+            <label for="nomArchA" class="col-form-label col-xs-2 col-sm-2 col-md-1">{{'MO.NA' | translate}}: </label>
+            <input type="text" class="form-control" id="nomArchA" name="nomArch" formControlName="nomArch">
+        </div>
+        <div class="inpu">
+            <div class="dos">
+                <label for="lineaCapturaA" class="col-form-label col-xs-2 col-sm-2 col-md-2">{{'lineaCaptura' | translate}}: </label>
+                <input type="text" class="form-control" id="lineaCapturaA" name="lineaCaptura" formControlName="lineaCaptura">
+            </div>
+            <div class="dos">
+            </div>
+        </div>
+        <div class="inpu">
+            <div class="dos">
+                <label for="idOperacionA" class="col-form-label col-xs-2 col-sm-2 col-md-2">{{'MO.NOP' | translate}}: </label>
+                <input type="text" class="form-control" id="idOperacionA" name="idOperacion" formControlName="idOperacion">
+            </div>
+            <div class="dos">
+                <label for="transSatA" class="col-form-label col-xs-2 col-sm-2 col-md-2">{{'MO.NSAT' | translate}}: </label>
+                <input type="text" class="form-control" id="transSatA" name="transSat" formControlName="transSat" >
+            </div>
+        </div>
+    </div>
+    <div class="card">
+        <h5 class="card-header justify-content-center">
+            {{'MO.DO' | translate}}:
+        </h5>
+        <div class="inpu">
+            <label for="nombreOrdA" class="col-form-label col-xs-2 col-sm-2 col-md-1">{{'MO.N' | translate}}: </label>
+            <input type="text" class="form-control" id="nombreOrdA" name="nombreOrd" formControlName="nombreOrd" >
+        </div>
+        <div class="inpu">
+            <div class="dos">
+                <label for="ctaCargoA" class="col-form-label col-xs-2 col-sm-2 col-md-2">{{'MO.C' | translate}}: </label>
+                <input type="text" class="form-control" id="ctaCargoA" name="ctaCargo" formControlName="ctaCargo" >
+            </div>
+            <div class="dos">
+            </div>
+        </div>
+    </div>
+    <div class="card">
+        <h5 class="card-header justify-content-center">
+            {{'MO.DR' | translate}}:
+        </h5>
+        <div class="inpu">
+            <div class="dos">
+                <label for="patenteA" class="col-form-label col-xs-2 col-sm-2 col-md-2">{{'MO.PAT' | translate}}: </label>
+                <input type="text" class="form-control" id="patenteA" name="patente" formControlName="patente">
+            </div>
+            <div class="dos">
+            </div>
+        </div>
+        <div class="inpu">
+            <div class="dos">
+                <label for="pedimentoA" class="col-form-label col-xs-2 col-sm-2 col-md-2">{{'MO.PE' | translate}}: </label>
+                <input type="text" class="form-control" id="pedimentoA" name="pedimento" formControlName="pedimento" >
+            </div>
+            <div class="dos">
+            </div>
+        </div>
+        <div class="inpu">
+            <div class="dos">
+                <label for="aduanaA" class="col-form-label col-xs-2 col-sm-2 col-md-2">{{'MO.A' | translate}}: </label>
+                <input type="text" class="form-control" id="aduanaA" name="aduana" formControlName="aduana">
+            </div>
+            <div class="dos">
+            </div>
+        </div>
+        <div class="inpu">
+            <div class="dos">
+                <label for="divisaA" class="col-form-label col-xs-2 col-sm-2 col-md-2">{{'MO.D' | translate}}: </label>
+                <input type="text" class="form-control" id="divisaA" name="divisa" formControlName="divisa">
+            </div>
+            <div class="dos">
+            </div>
+        </div>
+        <div class="inpu">
+            <div class="dos">
+                <label for="importeA" class="col-form-label col-xs-2 col-sm-2 col-md-2">{{'MO.I' | translate}}: </label>
+                <input type="text" class="form-control" id="importeA" name="importe" formControlName="importe">
+            </div>
+            <div class="dos">
+            </div>
+        </div>
+    </div>
+    <div class="card">
+        <h5 class="card-header justify-content-center">
+            {{'MO.CO' | translate}}:
+        </h5>
+        <div class="inpu">
+                <label for="mensajeAduA"></label>
+                <input type="text" class="form-control" id="mensajeAduA" name="mensaje" formControlName="mensaje" placeholder="">
+        </div>
+    </div>
+    <div class="card" *ngIf="rechazo === true">
+        <h5 class="card-header justify-content-center">
+            {{'R' | translate}}:
+        </h5>
+        <div class="inpu">
+            <label for="razonRechazo6" class="col-form-label col-xs-4 col-sm-4 col-md-2">{{'R.R' | translate}}: </label>
+            <input type="text" class="form-control" id="razonRechazo6" name="razonRechazo" formControlName="razonRechazo" maxlength="200">
+        </div>
+
+        <div class="row mt-2">
+            <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-1 offset-sm-1 offset-md-1 offset-lg-1">
+                <button type="button" class="btn btn-danger" (click)="procesarAdu()">{{'btn.aceptar' | translate}}</button>
+            </div>
+            <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-8 offset-sm-8 offset-md-8 offset-lg-8">
+                <button type="button" class="btn btn-danger" (click)="cancel6()">{{'btn.cancelar' | translate}}</button>
+            </div>
+            <br><br>
+        </div>
+    </div>
+    <div class="row mt-2">
+        <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-1 offset-sm-1 offset-md-1 offset-lg-1">
+            <button type="button" class="btn btn-danger" (click)="regresarAdu()">{{'MO.Regr' | translate}}</button>
+        </div>
+        <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-8 offset-sm-8 offset-md-8 offset-lg-8">
+            <button type="button" class="btn btn-danger" (click)="procesarAdu()">{{'MO.Proc' | translate}}</button>
+        </div>
+    </div>
+    <div class="row mt-2">
+        <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-1 offset-sm-1 offset-md-1 offset-lg-1">
+            <button type="button" class="btn btn-danger" (click)="refrescarAdu()">{{'MO.Refr' | translate}}</button>
+        </div>
+        <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-8 offset-sm-8 offset-md-8 offset-lg-8">
+            <button type="button" class="btn btn-danger" (click)="rechazarAdu()">{{'MO.Rech' | translate}}</button>
+        </div>
+    </div>
+</form>

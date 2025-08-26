@@ -1,0 +1,240 @@
+<app-operativa-header
+    tituloPantalla="{{'pantalla.autorizacionEnrolamiento.titulo' | translate}}"></app-operativa-header>
+<div id="autorizacionEnrolamiento" class="panel panel-default col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    <br>
+    <div class="card">
+        <h5 class="card-header justify-content-center">
+            {{'pantalla.autorizacionEnrolamiento.subtitulo' | translate}}
+        </h5>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-xs-6 col-sm-6 col-md-6">
+                    <div class="form-group row">
+                        <label for="codCliente"
+                            class="col-form-label col-sm-3">{{'pantalla.autorizacionEnrolamiento.codCliente' |
+                            translate}}:</label>
+                        <div class="col-sm-4">
+                            <input type="text" id="codCliente" name="codCliente" class="form-control"
+                                placeholder="{{'pantalla.autorizacionEnrolamiento.codCliente' | translate}}"
+                                (keydown.Tab)="validateBuc()" (keypress)="validateOnlyNumeros($event)" maxlength="8"
+                                size="12" (paste)="pasteOnlyNumeros($event)" tabindex="1"
+                                [(ngModel)]="datos.bucCliente">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-6 col-sm-6 col-md-6">
+                    <div class="form-group row">
+                        <label for="numContrato"
+                            class="col-form-label col-sm-3">{{'pantalla.autorizacionEnrolamiento.numContrato' |
+                            translate}}:</label>
+                        <div class="col-sm-4">
+                            <input type="text" class="form-control" name="numContrato"
+                                placeholder="{{'pantalla.autorizacionEnrolamiento.numContrato' | translate}}"
+                                id="numContrato" [(ngModel)]="datos.numContrato" disabled>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group row">
+                        <label for="razonSocial"
+                            class="col-form-label col-sm-3">{{'pantalla.autorizacionEnrolamiento.razonSocial'
+                            |
+                            translate}}:</label>
+                        <div class="col-sm-9">
+                            <input type="text" id="razonSocial" name="razonSocial"
+                                placeholder="{{'pantalla.autorizacionEnrolamiento.razonSocial' | translate}}"
+                                class="form-control" [(ngModel)]="datos.razonSocial" disabled>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <form [formGroup]="fechasForm">
+                <div class="row">
+                    <div class="col-xs-6 col-sm-6 col-md-6">
+                        <div class="form-group row">
+                            <label for="fecRegistro"
+                                class="col-form-label col-sm-3">{{'pantalla.autorizacionEnrolamiento.fecRegistro' |
+                                translate}}:</label>
+                            <div class="col-md-4 inputDate">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" id="fecRegistro" name="fecRegistro"
+                                        bsDatepicker #dpFechaReg="bsDatepicker" [bsConfig]="datePickerConfig"
+                                        formControlName="fecRegistro" readonly />
+                                    <div class="input-group-append">
+                                        <button class="btn btn-outline-danger" type="button" id="btnFecRegistro"
+                                            name="btnFecRegistro" (click)="dpFechaReg.toggle()"
+                                            [attr.aria-expanded]="dpFechaReg.isOpen">
+                                            <em class="fa fa-calendar"></em>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-6 col-sm-6 col-md-6">
+                        <div class="form-group row">
+                            <label for="fecAutorizacion"
+                                class="col-form-label col-sm-3">{{'pantalla.autorizacionEnrolamiento.fecAutorizacion' |
+                                translate}}:</label>
+                            <div class="col-md-4 inputDate">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" id="fecAutorizacion" name="fecAutorizacion"
+                                        bsDatepicker #dpFechaAuto="bsDatepicker" [bsConfig]="datePickerConfig"
+                                        formControlName="fecAutorizacion" readonly />
+                                    <div class="input-group-append">
+                                        <button class="btn btn-outline-danger" type="button" id="btnFecAutorizacion"
+                                            name="btnFecAutorizacion" (click)="dpFechaAuto.toggle()"
+                                            [attr.aria-expanded]="dpFechaAuto.isOpen">
+                                            <em class="fa fa-calendar"></em>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <div class="row">
+                <div class="col-xs-6 col-sm-6 col-md-6">
+                    <div class="form-group row">
+                        <label for="estatus"
+                            class="col-form-label col-sm-3">{{'pantalla.autorizacionEnrolamiento.estatus' |
+                            translate}}:</label>
+                        <div class="col-sm-4">
+                            <select class="form-control" id="estatus" name="estatus" [(ngModel)]="estatus">
+                                <option value="P" [selected]="estatusEnrol === 'P'">
+                                    {{'pantalla.autorizacionEnrolamiento.estPendiente' |
+                                    translate}}</option>
+                                <option value="A" [selected]="estatusEnrol === 'A'">
+                                    {{'pantalla.autorizacionEnrolamiento.estAutorizar' |
+                                    translate}}</option>
+                                <option value="R" [selected]="estatusEnrol === 'R'">
+                                    {{'pantalla.autorizacionEnrolamiento.estRechazar' |
+                                    translate}}</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br />
+            <div class="row mt-3">
+                <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-1 offset-sm-1 offset-md-1 offset-lg-1">
+                    <button type="button" (click)="clearScreen()" class="btn btn-danger">{{'btn.limpiar' |
+                        translate}}</button>
+
+                </div>
+                <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-8 offset-sm-8 offset-md-8 offset-lg-8">
+                    <button type="button" (click)="findSolicitudes()" class="btn btn-danger">{{'btn.consultar' |
+                        translate}}</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card my-1" *ngIf="banderaShowListaSol">
+        <h5 class="card-header justify-content-center">
+            {{'pantalla.autorizacionEnrolamiento.busqueda.titulo' | translate}}
+        </h5>
+        <div class="card-body">
+            <div class="row table-responsive">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <table class="table table-striped table-hover" aria-describedby="listaSolicitudes">
+                        <thead>
+                            <tr>
+                                <th class="text-center" scope="col">
+                                    {{'pantalla.autorizacionEnrolamiento.numContrato'| translate}}</th>
+                                <th class="text-center" scope="col">
+                                    {{'pantalla.autorizacionEnrolamiento.codCliente' | translate}}</th>
+                                <th class="text-center" scope="col">
+                                    {{'pantalla.autorizacionEnrolamiento.razonSocial'| translate}}</th>
+                                <th class="text-center" scope="col">
+                                    {{'pantalla.autorizacionEnrolamiento.busqueda.col.clientId'| translate}}</th>
+                                <th class="text-center" scope="col">
+                                    {{'pantalla.autorizacionEnrolamiento.estatus'| translate}}</th>
+                                <th class="text-center" scope="col">
+                                    {{'pantalla.autorizacionEnrolamiento.busqueda.col.seleccionar'| translate}}</th>
+                                <th class="text-center" scope="col">
+                                    {{'pantalla.autorizacionEnrolamiento.busqueda.col.mtvoRechazo'| translate}}</th>
+                                <th class="text-center" scope="col">
+                                    {{'pantalla.autorizacionEnrolamiento.fecRegistro'| translate}}</th>
+                                <th class="text-center" scope="col">
+                                    {{'pantalla.autorizacionEnrolamiento.fecAutorizacion'| translate}}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <ng-container *ngIf="banderaHasRows; then templateFillTable; else templateEmptyTable">
+                            </ng-container>
+                            <ng-template #templateFillTable>
+                                <tr *ngFor="let solicitud of solicitudes">
+                                    <td class="text-center">{{solicitud.numContrato}}</td>
+                                    <td class="text-center">{{solicitud.buc}}</td>
+                                    <td class="text-center">{{solicitud.razonSocial}}</td>
+                                    <td class="text-center">{{solicitud.clienteId}}</td>
+                                    <td class="text-center">{{solicitud.estatus}}</td>
+                                    <td *ngIf="solicitud.estatus === 'PENDIENTE' " class="text-center">
+                                        <label for="chkPendiente"></label>
+                                        <input type="checkbox" name="chkPendiente" aria-label="chkPendiente"
+                                            (change)="onChecked($event, solicitud)">
+                                    </td>
+                                    <td *ngIf="solicitud.estatus === 'AUTORIZADO' " class="text-center">
+                                        <label for="chkAutorizado"></label>
+                                        <input type="checkbox" name="chkAutorizado" aria-label="chkAutorizado"
+                                            (change)="onChecked($event, solicitud)">
+                                    </td>
+                                    <td *ngIf="solicitud.estatus !== 'PENDIENTE' && solicitud.estatus !== 'AUTORIZADO'"
+                                        class="text-center"></td>
+                                    <td class="text-center">{{solicitud.motivoRechazo}}</td>
+                                    <td class="text-center">{{solicitud.fechaInicio}}</td>
+                                    <td class="text-center">{{solicitud.fechaFin}}</td>
+                                </tr>
+                            </ng-template>
+                            <ng-template #templateEmptyTable>
+                                <tr>
+                                    <td class="text-center" colspan="12"> {{'noResult' | translate}}</td>
+                                </tr>
+                            </ng-template>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mt-1">
+                    <div class="d-flex justify-content-center" *ngIf="banderaHasRows">
+                        <pagination
+                                [maxSize]="rowsPorPagina"
+                                [boundaryLinks]="showBoundaryLinks"
+                                [directionLinks]="showDirectionLinks"
+                                [totalItems]="totalElements"
+                                [itemsPerPage]="rowsPorPagina"
+                                [(ngModel)]="page"
+                                previousText="&lsaquo;" nextText="&rsaquo;"
+                                firstText="{{'paginador.inicio' | translate}}" lastText="{{'paginador.fin' | translate}}"
+                                (pageChanged)="onPagChanged($event)">
+                            </pagination>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-3" *ngIf="banderaHasRows">
+            <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-1 offset-sm-1 offset-md-1 offset-lg-1">
+                <button type="button" (click)="refuseSolicitud()" class="btn btn-danger">{{'btn.rechazar' |
+                    translate}}</button>
+
+            </div>
+            <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-8 offset-sm-8 offset-md-8 offset-lg-8">
+                <button type="button" (click)="approveSolicitud()" class="btn btn-danger">{{'btn.autorizar' |
+                    translate}}</button>
+            </div>
+        </div>
+        <div class="row mt-2" *ngIf="banderaHasRows">
+            <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-10 offset-sm-10 offset-md-10 offset-lg-10">
+                <button type="button" class="btn btn-danger" (click)="exportSolicitudes()">{{'btn.exportar' |
+                    translate}}</button>
+            </div>
+        </div>
+        <br />
+    </div>
+</div>

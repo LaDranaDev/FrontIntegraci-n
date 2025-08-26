@@ -1,0 +1,159 @@
+<div class="inline-block">
+    <nav class="navbar navbar-expand-sm navbar-expand-md navbar-expand-lg navbar-expand-xl navbar-default" id="main_navbar">
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+
+                <li class="nav-item dropdown">
+                    <a class="dropdown-item" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						{{'menu.adminContrato' | translate}}
+					</a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li (click)="pintarMenu('/adminContratos/altaContratos')"><a routerLink="/adminContratos/altaContratos">
+                            {{'menu.adminContrato.altaContratos' | translate}}
+                        </a></li>
+                        <li (click)="pintarMenu('/reportes/reporteProveedores')"><a routerLink="/reportes/reporteProveedores">
+							{{'menu.adminContrato.consultaContratosUsuario' | translate}}
+                        </a></li>
+                        <li (click)="pintarMenu('/adminContratos/cuentasbeneficiariasContratos')"><a routerLink="/adminContratos/cuentasbeneficiariasContratos">
+                            {{'menu.adminContrato.cuentasBeneficiarias' | translate}}
+                        </a></li>
+                        <li (click)="pintarMenu('/adminContratos/regeneraRepCobranza')"><a routerLink="/adminContratos/regeneraRepCobranza">
+							{{'menu.adminContrato.regeneraReporteCobranza' | translate}}
+                        </a></li>
+                        <li (click)="pintarMenu('/adminContratos/usuarioOperante')"><a routerLink="/adminContratos/usuarioOperante">
+                            {{'menu.adminContrato.usuarioOperante' | translate}}
+                        </a></li>
+                        <div class="dropdown-divider"></div>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="dropdown-item" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						{{'menu.contigencia' | translate}}
+					</a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li (click)="pintarMenu('/cargaOperativa/busquedaAvanzada')"><a routerLink="/cargaOperativa/busquedaAvanzada">
+								{{'menu.contigencia.envioArchivos' | translate}}
+                            </a></li>
+                        <div class="dropdown-divider"></div>
+                        <li (click)="pintarMenu('/depuracion/consultaVigenciaBuzones')">
+                            <a routerLink="/depuracion/consultaVigenciaBuzones">
+                                {{'menu.contingencia.buzonesvigencia' | translate}}
+                            </a>
+                        </li>
+                    </ul>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li (click)="pintarMenu('/cargaOperativa/busquedaAvanzada')"><a routerLink="/cargaOperativa/busquedaAvanzada">
+								{{'menu.contigencia.solicitudEstadosCuenta' | translate}}
+                            </a></li>
+                        <li (click)="pintarMenu('/cargaOperativa/busquedaAvanzada')"><a routerLink="/cargaOperativa/busquedaAvanzada">
+								{{'menu.contigencia.solicitudCambioEstatus' | translate}}
+                            </a></li>
+                        <div class="dropdown-divider"></div>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="dropdown-item" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						{{'menu.monitoreo' | translate}}
+					</a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li (click)="pintarMenu('monitoreo/monitorOperacionesOnline')"><a routerLink="/monitoreo/monitorOperacionesOnline">
+								{{'menu.monitoreo.monitorOperacionOnline' | translate}}
+                            </a></li>
+                        <div class="dropdown-divider"></div>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="dropdown-item" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						{{'menu.adminCliente' | translate}}
+					</a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li (click)="pintarMenu('/depuracion/consultaDescargaArchivos')">
+                            <a routerLink="/depuracion/consultaDescargaArchivos">
+                                {{'menu.adminCliente.descargaArchivos' | translate}}
+                            </a>
+                        </li>
+                        <div class="dropdown-divider"></div>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="dropdown-item" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        {{'menu.catalogos' | translate}}
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li (click)="pintarMenu('/catalogo-dinamico/consultaCatalogoDinamico')">
+                            <a routerLink="/catalogo-dinamico/consultaCatalogoDinamico">
+                                {{'menu.catalogoDin.consultar' | translate}}
+                            </a>
+                        </li>
+                        <li (click)="pintarMenu('/recarga-sfg/recargarCatalogoSFG')">
+                            <a routerLink="/recarga-sfg/recargarCatalogoSFG">
+                                {{'menu.recargaSFG' | translate}}
+                            </a>
+                        </li>
+                        <div class="dropdown-divider"></div>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="dropdown-item" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						{{'menu.parametrias' | translate}}
+					</a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li (click)="pintarMenu('/parametria-adicional/consultaParametriaAdicional')">
+                            <a routerLink="/parametria-adicional/consultaParametriaAdicional">
+                                {{'menu.parametriadicional' | translate}}
+                            </a>
+                        </li>
+                        <li (click)="pintarMenu('/parametros/consultaParametros')">
+                            <a routerLink="/parametros/consultaParametros">
+							    {{'menu.parametros' | translate}}
+                            </a>
+                        </li>
+                        <div class="dropdown-divider"></div>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="dropdown-item" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						{{'menu.gestiones' | translate}}
+					</a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li (click)="pintarMenu('/gestionAlarma/consultaGestionAlarmas')">
+                            <a routerLink="/gestionAlarma/consultaGestionAlarmas">
+                                {{'menu.gestionAlarma.consultaGestion' | translate}}
+                            </a>
+                        </li>
+                        <li (click)="pintarMenu('/gestion-comprobantes/consultaGestionComprobantes')">
+                            <a routerLink="/gestion-comprobantes/consultaGestionComprobantes">
+                                {{'menu.gestionComprobantes' | translate}}
+                            </a>
+                        </li>
+                        <li (click)="pintarMenu('/moduloAdministracion/gestionBancos')">
+                            <a routerLink="/moduloAdministracion/gestionBancos">
+                                {{'menu.moduloAdministracion.gestionBancos' | translate}}
+                            </a>
+                        </li>
+                        <div class="dropdown-divider"></div>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="dropdown-item" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						{{'menu.buzon' | translate}}
+					</a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li (click)="pintarMenu('/buzon/consultarBuzon')">
+                            <a routerLink="/buzon/consultarBuzon">
+                                {{'menu.buzon.consulta' | translate}}
+                            </a>
+                        </li>
+                        <li (click)="pintarMenu('/buzon/crearBuzon/')">
+                            <a routerLink="/buzon/crearBuzon">
+                                {{'menu.buzon.creacion' | translate}}
+                            </a>
+                        </li>
+                        <div class="dropdown-divider"></div>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</div>

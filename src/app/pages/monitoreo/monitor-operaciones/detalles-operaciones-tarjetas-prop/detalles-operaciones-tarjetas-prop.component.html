@@ -1,0 +1,74 @@
+<app-operativa-header tituloPantalla="{{'MO' | translate}} "></app-operativa-header>
+<form [formGroup]="datosForm">
+    <div class="card">
+        <h5 class="card-header justify-content-center">
+            {{'MO.DG' | translate}}
+        </h5>
+
+        <div class="inpu">
+            <label for="nomArch" class="col-form-label col-xs-2 col-sm-2 col-md-1">{{'MO.NA' | translate}}: </label>
+            <input type="text" class="form-control" id="nomArch" name="nomArch" formControlName="nomArch">
+        </div>
+        <div class="inpu">
+            <div class="dos">
+                <label for="fechaCaptura" class="col-form-label col-xs-2 col-sm-2 col-md-2">{{'MO.PR' | translate}}: </label>
+                <input type="text" class="form-control" id="fechaCaptura" name="fechaCaptura" formControlName="fechaCaptura">
+            </div>
+            <div class="dos">
+                <label for="numTarjeta" class="col-form-label col-xs-2 col-sm-2 col-md-2">{{'numTarjeta' | translate}}: </label>
+                <input type="text" class="form-control" id="numTarjeta" name="numTarjeta" formControlName="numTarjeta">
+            </div>
+        </div>
+        <div class="inpu">
+            <div class="dos">
+                <label for="ctaCargo" class="col-form-label col-xs-2 col-sm-2 col-md-2">{{'MO.C' | translate}}: </label>
+                <input type="text" class="form-control" id="ctaCargo" name="ctaCargo" formControlName="ctaCargo" >
+            </div>
+            <div class="dos">
+                <label for="numTarjetaAct" class="col-form-label col-xs-2 col-sm-2 col-md-2">{{'MO.NTA' | translate}}: </label>
+                <input type="text" class="form-control" id="numTarjetaAct" name="numTarjetaAct" formControlName="numTarjetaAct">
+            </div>
+        </div>
+        <div class="inpu">
+            <label for="estatus" class="col-form-label col-xs-2 col-sm-2 col-md-1">{{'MO.E' | translate}}: </label>
+            <input type="text" class="form-control" id="estatus" name="estatus" formControlName="estatus">
+        </div>
+
+       
+    </div>
+    <div class="card">
+        <h5 class="card-header justify-content-center">
+            {{'MO.CO' | translate}}:
+        </h5>
+        <div class="inpu">
+                <label for="mensajeT"></label>
+                <input type="text" class="form-control" id="mensajeT" name="mensaje" formControlName="mensaje">
+        </div>
+    </div>
+    <div class="row mt-2">
+        <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-1 offset-sm-1 offset-md-1 offset-lg-1">
+            <button type="button" class="btn btn-danger" (click)="regresarT()">{{'MO.Regr' | translate}}</button>
+        </div>
+        <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-8 offset-sm-8 offset-md-8 offset-lg-8">
+            <button type="button" class="btn btn-danger" (click)="historialT()"> {{'MO.H' | translate}}</button>
+        </div>
+    </div>
+    <div class="row mt-2" *ngIf="idEstatus === '7'">
+        <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-1 offset-sm-1 offset-md-1 offset-lg-1">
+            <button type="button" class="btn btn-danger" (click)="reintentarT()">{{'MO.Rei' | translate}}</button>
+        </div>
+        <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-8 offset-sm-8 offset-md-8 offset-lg-8">
+            <button type="button" class="btn btn-danger" (click)="rechazarT()">{{'MO.Rech' | translate}}</button>
+        </div>
+    </div>
+    <div class="row mt-2">
+        <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-1 offset-sm-1 offset-md-1 offset-lg-1">
+            <button type="button" class="btn btn-danger" (click)="refrescarT()">{{'MO.Refr' | translate}}</button>
+        </div>
+    </div>
+    <div class="row mt-2" *ngIf="idEstatus === '13'">
+        <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-1 offset-sm-1 offset-md-1 offset-lg-1">
+            <button type="button" class="btn btn-danger" (click)="procesarT()">{{'O.Proc' | translate}}</button>
+        </div>
+    </div>
+</form> 

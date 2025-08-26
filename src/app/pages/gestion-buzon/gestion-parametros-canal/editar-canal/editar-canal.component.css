@@ -1,0 +1,8 @@
+.td-value {
+    word-wrap: break-all;
+    word-break: break-all;
+}
+
+overflow-auto {
+    overflow: auto;
+}

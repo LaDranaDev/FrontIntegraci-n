@@ -1,0 +1,21 @@
+// Your custom variables
+// Font Awesome
+@import "~@fortawesome/fontawesome-free/scss/fontawesome.scss";
+@import "~@fortawesome/fontawesome-free/scss/solid.scss";
+@import "~@fortawesome/fontawesome-free/scss/regular.scss";
+@import "~@fortawesome/fontawesome-free/scss/brands.scss";
+
+// MDB SCSS
+@import "~mdb-angular-ui-kit/assets/scss/mdb.scss";
+
+mat-datepicker{
+    z-index: 2;
+}
+
+.form-check .form-check-input{
+    float: none !important;
+}
+
+.removeTextUpper{
+    text-transform: none;
+}

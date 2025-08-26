@@ -1,0 +1,363 @@
+<app-operativa-header tituloPantalla="{{ title | translate }}"></app-operativa-header>
+<div id="consultaValidacionesCanal" class="panel panel-default col-xs-12 col-sm-12 col-md-12 col-lg-12">
+  <br />
+  <div class="card" *ngIf="!isModifyDeleteDest">
+    <form [formGroup]="searchForm" [hidden]="isEditAdd">
+      <h5 class="card-header justify-content-center">
+        {{ "pantalla.gestionValidacion.seccionBusqueda.title" | translate }}
+      </h5>
+      <div class="card-body">
+        <div class="row">
+          <!-- Name field -->
+          <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+            <div class="form-group row justify-content-center align-items-center">
+              <label for="nameField"  class="col-xs-2 col-sm-2 col-md-2 col-lg-2 col-form-label">{{
+                "administracion.protocolos.nombre" | translate
+                }}:
+              </label>
+              <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                <input class="form-control" id="nameField" name="nameField" maxlength="30"
+                (keypress)="validaKeyNotify($event, 'nombreNoti')" formControlName="name" />
+              </div>
+            </div>
+          </div>
+
+          <!-- template field -->
+          <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+            <div class="form-group row justify-content-center align-items-center">
+              <label for="templateKey" class="col-xs-3 col-sm-3 col-md-3 col-lg-3 col-form-label">{{
+                "administracion.notificaciones.clavesTemplate" | translate }}:
+              </label>
+              <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                <input class="form-control" id="templateKey" maxlength="30" name="templateKey"
+                  (keypress)="validaKeyNotify($event, 'templateKey')" formControlName="templateKey" />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Buttons search, clear -->
+        <div class="row mt-5">
+          <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-1 offset-sm-1 offset-md-1 offset-lg-1">
+            <button type="button" class="btn btn-danger" (click)="cleanForm()">
+              {{ "btn.limpiar" | translate }}
+            </button>
+          </div>
+          <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 offset-xs-8 offset-sm-8 offset-md-8 offset-lg-8">
+            <button type="button" class="btn btn-danger" (click)="searchByFilter()">
+              {{ "btn.buscar" | translate }}
+            </button>
+            <br />
+            <button type="button" class="btn btn-danger mt-2" (click)="editAddNotification()">
+              {{ "administracion.notificaciones.agregarNotificacion" | translate }}
+            </button>
+          </div>
+        </div>
+      </div>
+    </form>
+
+    <!-- Form add Edit -->
+    <form [formGroup]="editAddForm" [hidden]="!isEditAdd">
+      <h5 class="card-header justify-content-center">
+        {{ "administracion.notificaciones.detalle.datosNotificacion" | translate }}
+      </h5>
+      <div class="row mt-5 ml-3">
+        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+          <!-- Name -->
+          <div class="form-group row">
+            <label for="nameFieldForm" class="col-xs-4 col-sm-4 col-md-4 col-lg-4 col-form-label text-dark">{{
+              "administracion.protocolos.nombre" | translate }}:
+            </label>
+            <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+              <input class="form-control" id="nameFieldForm" name="nameFieldForm" maxlength="30"
+              (keypress)="validaKeyNotify($event, 'nombreNoti')" formControlName="nombreNotificacion" />
+            </div>
+          </div>
+
+          <!-- Template key -->
+          <div class="form-group row">
+            <label for="templateKeyEditAdd" class="col-xs-4 col-sm-4 col-md-4 col-lg-4 col-form-label text-dark">{{
+              "administracion.notificaciones.clavesTemplate"
+              | translate
+              }}:
+            </label>
+            <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+              <input class="form-control" id="templateKeyEditAdd" name="templateKeyEditAdd" maxlength="30"
+                (keypress)="validaKeyNotify($event, 'templateKeyEditAdd')" formControlName="claveTemplate" />
+            </div>
+          </div>
+
+          <!-- Reason -->
+          <div class="form-group row">
+            <label for="reason" class="col-xs-4 col-sm-4 col-md-4 col-lg-4 col-form-label text-dark">{{
+              "administracion.notificaciones.asunto" | translate }}:
+            </label>
+            <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+              <input class="form-control" id="reason" name="reason" maxlength="100" (keypress)="validaMsjAsunto($event)"
+                formControlName="asunto" />
+            </div>
+          </div>
+
+          <!-- Message -->
+          <div class="form-group row">
+            <label for="message" class="col-xs-4 col-sm-4 col-md-4 col-lg-4 col-form-label text-dark labelAreaFiel">{{
+              "administracion.notificaciones.mensaje" | translate }}:
+            </label>
+            <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+              <textarea class="form-control" id="message" name="message" formControlName="mensaje"
+                (keypress)="validaMsjAsunto($event)" onkeyup="configuraMaxLength(event, this, 1000)" rows="3"></textarea>
+            </div>
+          </div>
+
+          <!-- Notification Type -->
+          <div class="form-group row">
+            <label for="notificationType" class="col-xs-4 col-sm-4 col-md-4 col-lg-4 col-form-label text-dark">{{
+              "administracion.notificaciones.tipoNotificacion"
+              | translate
+              }}:
+            </label>
+            <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+              <select class="form-select form-select-sm form-control" id="notificationType" name="notificationType"
+                formControlName="tipoNotificacion">
+                <option value="">{{'pantalla.moduloAdministracion.gestionBancos.seleccione' | translate}}</option>
+                <option *ngFor="let optNoti of catTypeNoti" [value]="optNoti.value">
+                  {{ optNoti.label }}
+                </option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Destination Type -->
+          <div class="form-group row">
+            <label for="destinationType" class="col-xs-4 col-sm-4 col-md-4 col-lg-4 col-form-label text-dark">{{
+              "administracion.notificaciones.tipoDestinatario"
+              | translate
+              }}:
+            </label>
+            <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+              <select class="form-select form-select-sm form-control" id="destinationType" name="destinationType"
+                formControlName="tipoDestino">
+                <option value="">{{'pantalla.moduloAdministracion.gestionBancos.seleccione' | translate}}</option>
+                <option *ngFor="let optDets of catTypeDest" [value]="optDets.value">
+                  {{ optDets.label }}
+                </option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Active check -->
+          <div class="form-group row">
+            <label for="active" class="col-xs-4 col-sm-4 col-md-4 col-lg-4 col-form-label text-dark">{{
+              "administracion.notificaciones.activo" | translate }}:
+            </label>
+            <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+              <input class="sizeCheck" id="active" type="checkbox" name="active" [checked]=""
+                formControlName="activo" />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Buttons save, back -->
+      <div class="row mt-5">
+        <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-1 offset-sm-1 offset-md-1 offset-lg-1">
+          <button type="button" class="btn btn-danger" (click)="cancelAddEdit()">
+            {{ "btn.cancelar" | translate }}
+          </button>
+        </div>
+        <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 offset-xs-8 offset-sm-8 offset-md-8 offset-lg-8">
+          <button type="button" class="btn btn-danger" (click)="saveEditNotification()">
+            {{ "btn.guardar" | translate }}
+          </button>
+          <br />
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <!-- Table -->
+  <ng-container *ngIf="!isEditAdd && !isModifyDeleteDest">
+    <div class="card mt-2">
+      <h5 class="card-header justify-content-center">
+        {{
+        "pantalla.moduloAdministracion.resultadoBusqueda.title" | translate
+        }}
+      </h5>
+      <div class="card-body">
+        <div class="row">
+          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <table class="table table-striped table-hover" aria-describedby="listConsultCanal">
+              <thead>
+                <tr>
+                  <th class="text-center" scope="col" translate>
+                    {{ "administracion.notificaciones.nombreNoti" | translate }}
+                  </th>
+                  <th class="text-center" scope="col" translate>
+                    {{ "administracion.notificaciones.clavesTemplate" | translate }}
+                  </th>
+                  <th class="text-center" scope="col" translate>
+                    {{ "administracion.notificaciones.asunto" | translate }}
+                  </th>
+                  <th class="text-center" scope="col" translate>
+                    {{ "administracion.notificaciones.mensaje" | translate }}
+                  </th>
+                  <th class="text-center" scope="col" translate>
+                    {{ "administracion.notificaciones.destinatarios" | translate}}
+                  </th>
+                  <th class="text-center" scope="col" translate>
+                    {{ "administracion.notificaciones.activo" | translate }}
+                  </th>
+                  <th class="text-center" scope="col" translate>
+                    {{ "administracion.notificaciones.tipoNotificacion" | translate }}
+                  </th>
+                  <th class="text-center" scope="col" translate>
+                    {{ "administracion.notificaciones.tipoDestinatario" | translate}}
+                  </th>
+                  <th class="text-center" scope="col" translate>
+                    {{ "administracion.notificaciones.modificar" | translate }}
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <ng-container #templateFillTable>
+                  <tr *ngFor="let notification of tabla">
+                    <td>{{ notification.nombreNoti }}</td>
+                    <td>{{ notification.clveTmpl }}</td>
+                    <td>{{ notification.asunto }}</td>
+                    <td>{{ notification.mensaje }}</td>
+                    <td class="text-center linkLabel" (click)="modifyDeleteDest(notification)">
+                      {{
+                      "administracion.notificaciones.detalle"
+                      | translate
+                      }}
+                    </td>
+                    <td class="text-center">
+                      <label for="activeCheckTable"></label>
+                      <input id="activeCheckTable" name="activeCheckTable" disabled
+                        [checked]="notification.bandActivo === 1 ? true: false" type="checkbox" />
+                    </td>
+                    <td>
+                      {{
+                      labelNotificationDestinationType(
+                      notification.tipoNoti
+                      )
+                      }}
+                    </td>
+                    <td>
+                      {{
+                      labelNotificationDestinationType(
+                      null,
+                      notification.tipoDest
+                      )
+                      }}
+                    </td>
+                    <td class="text-center linkLabel" (click)="editAddNotification(notification)">
+                      {{ "btn.modificar" | translate }}
+                    </td>
+                  </tr>
+                </ng-container>
+                <ng-container #templateEmptyTable *ngIf="tabla.length === 0">
+                  <tr>
+                    <td class="text-center" colspan="12">
+                      {{'noResult' | translate }}
+                    </td>
+                  </tr>
+                </ng-container>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mt-1">
+            <div class="d-flex justify-content-center" *ngIf="banderaHasRows">
+                <pagination
+                    [maxSize]="10"
+                    [boundaryLinks]="showBoundaryLinks5"
+                    [directionLinks]="showDirectionLinks5"
+                    [totalItems]="totalElements"
+                    [itemsPerPage]="rowsPorPagina"
+                    [(ngModel)]="page"
+                    previousText="&lsaquo;" nextText="&rsaquo;"
+                    firstText="{{'paginador.inicio' | translate}}" lastText="{{'paginador.fin' | translate}}"
+                    (pageChanged)="onPageChanged($event)">
+                </pagination>
+            </div>
+        </div>
+      </div>
+      
+    </div>
+    <div class="row mt-2">
+      <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-10 offset-sm-10 offset-md-10 offset-lg-10">
+        <button type="button" class="btn btn-danger mb-5" (click)="exportReport()">
+          {{ "btn.exportar" | translate }}
+        </button>
+      </div>
+    </div>
+  </ng-container>
+
+  <!-- Tabla emails -->
+  <ng-container *ngIf="isModifyDeleteDest">
+    <div class="card mt-2">
+      <h5 class="card-header justify-content-center">
+        {{ "administracion.destinatarios.listaDestinatarios" | translate }}
+      </h5>
+      <div class="card-body">
+        <div class="row">
+          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <table class="table table-striped table-hover" aria-describedby="listConsultCanal">
+              <thead>
+                <tr>
+                  <th class="text-center" scope="col" translate>
+                    {{ "administracion.notificaciones.tabla.email" }}
+                  </th>
+                  <th class="text-center" scope="col" translate>
+                    {{ "btn.eliminar" }}
+                  </th>
+                  <th class="text-center" scope="col" translate>
+                    {{ "btn.modificar" }}
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <ng-container #templateFillTable>
+                  <tr *ngFor="let receibers of receiversNotifySelected">
+                    <td>{{ receibers.email }}</td>
+                    <td class="text-center linkLabel" (click)="deleteReceiver(receibers)">
+                      {{ "btn.eliminar" | translate }}
+                    </td>
+                    <td class="text-center linkLabel" (click)="openModifyModalAddEmail(receibers)">
+                      {{ "btn.modificar" | translate }}
+                    </td>
+                  </tr>
+                </ng-container>
+                <ng-container *ngIf="receiversNotifySelected.length <= 0">
+                  <tr>
+                    <td class="text-center" colspan="12">
+                      {{'noResult' | translate }}
+                    </td>
+                  </tr>
+                </ng-container>
+              </tbody>
+            </table>
+          </div>
+          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mt-1">
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row mt-5">
+      <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-1 offset-sm-1 offset-md-1 offset-lg-1">
+        <button type="button" class="btn btn-danger" (click)="cancelADestModifyAdd(1)">
+          {{ "btn.regresar" | translate }}
+        </button>
+      </div>
+      <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 offset-xs-8 offset-sm-8 offset-md-8 offset-lg-8">
+        <button type="button" class="btn btn-danger mb-5" (click)="openModifyModalAddEmail()">
+          {{ "administracion.destinatarios.agregarDestinatario" | translate }}
+        </button>
+        <br />
+      </div>
+    </div>
+  </ng-container>
+</div>

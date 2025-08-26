@@ -1,0 +1,222 @@
+<div id="admi" class="panel panel-default col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    <app-operativa-header tituloPantalla="{{'monitorArchivoOperaciones.duplicado.titulo' | translate}}"></app-operativa-header>
+
+    <br>
+    <h5 class="card-header justify-content-center" *ngIf="dataTable.length === 0">{{'pantalla.moduloAdministracion.CP.title' | translate}} </h5>
+    <div class="card" *ngIf="dataTable.length === 0">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                    <div class="form-group row justify-content-center align-items-center">
+                        <label for="codigoCliente" class="col-xs-6 col-sm-10 col-md-6 col-lg-4 col-form-label">{{'comun.codCliente' | translate}}:</label>
+                        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                            <input type="text" id="codigoCliente" name="codigoCliente" class="form-control" tabindex="1" placeholder="{{'comun.codCliente' | translate}}"
+                                (keypress)="eventOnlyNumbers($event)" (paste)="onPaste($event)" size="8" maxlength="8" [(ngModel)]="datos.codigoCliente">
+                            <!-- (keydown.Tab)="buscarBuc()" (keypress)="eventOnKeyOnlyNumbers($event)" -->
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                    <div class="form-group row justify-content-center align-items-center">
+                        <label for="numContrato" class="col-xs-6 col-sm-10 col-md-6 col-lg-4 col-form-label">{{'comun.numCntr' | translate}}:</label>
+                        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                            <input class="form-control" type="text" name="numContrato" id="numContrato" placeholder="{{'comun.numCntr' | translate}}" [(ngModel)]="datos.numContrato" tabindex="1"
+                                size="12" maxlength="12" (keypress)="eventOnlyNumbers($event)">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                    <div class="form-group row justify-content-center align-items-center">
+                        <label for="producto" class="col-xs-6 col-sm-10 col-md-6 col-lg-4 col-form-label">{{'monitorArchivoOperaciones.duplicado.producto' | translate}}:</label>
+                        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                            <select class="form-control" id="producto" name="producto" [(ngModel)]="datos.producto">
+                                <option value="0">{{'Todos' | translate}}</option>
+                                <option *ngFor="let list of listSelect" [title]="list.value" [value]="list.key">{{list.value}}</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <div class="form-group row justify-content-center align-items-center">
+                        <label for="nomArchivo" class="col-xs-2 col-sm-2 col-md-2 col-lg-2 col-form-label">{{'monitorArchivoOperaciones.duplicado.nombrearchivo' | translate}}:</label>
+                        <div class="col-xs-8 col-sm-8 col-md-8 col-lg-9">
+                            <input class="form-control " type="text" name="nomArchivo" appInputMask="archivoMonitor" id="nomArchivo" placeholder="{{'monitorArchivoOperaciones.duplicado.nombrearchivo' | translate}}"
+                                [(ngModel)]="datos.nombreArchivo" (input)="limpiarEspacios($event)" tabindex="1" maxlength="255">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                    <div class="form-group row justify-content-center align-items-center">
+                        <label for="fechaInicio" class="col-xs-6 col-sm-10 col-md-6 col-lg-4 col-form-label">{{'administracion.buzon.operacion.fecha.inicial' | translate}}:</label>
+                        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="fechaInicio" [(ngModel)]="datos.fechaInicial" name="fechaInicio" readonly required bsDatepicker
+                                    #dpFechaInicio="bsDatepicker" [bsConfig]="datePickerConfig" [minDate]="getMinDate()">
+                                <div class="input-group-append">
+                                    <button class="btn btn-outline-danger" type="button" id="btnfechaIni" name="btnfechaIni" (click)="dpFechaInicio.toggle()"
+                                        [attr.aria-expanded]="dpFechaInicio.isOpen">
+                                        <em class="fa fa-calendar"></em>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                    <div class="form-group row justify-content-center align-items-center">
+                        <label for="fechaFin" class="col-xs-6 col-sm-10 col-md-6 col-lg-4 col-form-label">{{'administracion.buzon.operacion.fecha.final' | translate}}:</label>
+                        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="fechaFin" name="fechaFin" readonly required bsDatepicker #dpFechaFin="bsDatepicker" [bsConfig]="datePickerConfig"
+                                    [(ngModel)]="datos.fechaFinal" [minDate]="getMinDate()">
+                                <div class="input-group-append">
+                                    <button class="btn btn-outline-danger" type="button" id="btnFechaFin" name="btnFechaFin" (click)="dpFechaFin.toggle()" [attr.aria-expanded]="dpFechaFin.isOpen">
+                                        <em class="fa fa-calendar"></em>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <br>
+            <br>
+            <div class="row">
+                <div class="col-xs-12 col-sm-1 col-md-1 col-lg-1 offset-sm-1 offset-md-1 offset-lg-1 mt-1">
+                    <button type="button" class="btn btn-danger" (click)="cleand()">{{'btn.limpiar' | translate}}</button>
+                </div>
+                <div class="col-xs-12 col-sm-1 col-md-1 col-lg-1 offset-sm-6 offset-md-8 offset-lg-8 mt-1">
+                    <button type="button" class="btn btn-danger" (click)="consultar()">{{'btn.consultarConexion' | translate}}</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <br>
+    <h5 class="card-header justify-content-center" *ngIf="dataTable.length > 0">{{'monitorArchivoOperaciones.duplicado.subtitulo' | translate}} </h5>
+    <div class="card" *ngIf="dataTable.length > 0">
+        <div class="card-body">
+            <div class="row table-responsive">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <table class="table table-striped table-hover" aria-describedby="listaSolicitudes">
+                        <thead>
+                            <tr>
+                                <th class="text-center" scope="col">
+                                    {{'monitorArchivoOperaciones.duplicado.nombrearchivoproc'| translate}}</th>
+                                <th class="text-center" scope="col">
+                                    {{'monitorArchivoOperaciones.duplicado.estatusfinal' | translate}}</th>
+                                <th class="text-center" scope="col">
+                                    {{'monitorArchivoOperaciones.duplicado.bucDupl' | translate}}</th>
+                                <th class="text-center" scope="col">
+                                    {{'monitorArchivoOperaciones.duplicado.nombrearchivo' | translate}}</th>
+                                <th class="text-center" scope="col">
+                                    {{'monitorArchivoOperaciones.duplicado.fecharecepcion' | translate}}</th>
+                                <th class="text-center" scope="col">
+                                    {{'monitorArchivoOperaciones.duplicado.canal' | translate}}</th>
+                                <th class="text-center" scope="col">
+                                    {{'monitorArchivoOperaciones.duplicado.estatus' | translate}}</th>
+                                <th class="text-center" scope="col">
+                                    {{'monitorArchivoOperaciones.duplicado.buc' | translate}}</th>
+                                <th class="text-center" scope="col">
+                                    {{'monitorArchivoOperaciones.duplicado.producto' | translate}}</th>
+                                <th class="text-center" scope="col">
+                                    {{'monitorArchivoOperaciones.duplicado.numeropeaciones' | translate}}</th>
+                                <th class="text-center" scope="col">
+                                    {{'monitorArchivoOperaciones.duplicado.monto' | translate}}</th>
+                                <th class="text-center" scope="col">
+                                    {{'monitorArchivoOperaciones.duplicado.procesar' | translate}}</th>
+                                <th class="text-center" scope="col">
+                                    {{'monitorArchivoOperaciones.duplicado.rechazar' | translate}}</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <ng-container *ngIf="showDataTable.length > 0; then templateFillTable; else templateEmptyTable">
+                            </ng-container>
+                            <ng-template #templateFillTable>
+                                <tr *ngFor="let data of showDataTable">
+                                    <td class="text-center">{{data.nombreArchivoProcesado}}</td>
+                                    <td class="text-center">{{data.estatusFinal}}</td>
+                                    <td class="text-center">{{data.bucDuplicado}}</td>
+                                    <td class="text-center" [ngClass]="data.nombreArchivoProcesado && data.nombreArchivoProcesado !== '' ? 'link' : ''"  (click)="getDetail(data)">{{data.nombreArchivo}}</td>
+                                    <td class="text-center">{{data.fechaRecep}}</td>
+                                    <td class="text-center">{{data.canal}}</td>
+                                    <td class="text-center">{{data.estatus}}</td>
+                                    <td class="text-center">{{data.buc}}</td>
+                                    <td class="text-center">{{data.producto}}</td>
+                                    <td class="text-center">{{data.totalOperaciones}}</td>
+                                    <td class="text-center">{{data.monto}}</td>
+                                    <td class="text-center link" *ngIf="data.nombreArchivoProcesado !== '' && data.nombreArchivoProcesado" (click)="procesar(true,data.nombreArchivoProcesado,data.idArchivo)">{{'monitorArchivoOperaciones.duplicado.procesar' | translate}}</td>
+                                    <td class="text-center link" *ngIf="data.nombreArchivoProcesado !== '' && data.nombreArchivoProcesado" (click)="activarRechazo(data.idArchivo,data.nombreArchivoProcesado)">{{'monitorArchivoOperaciones.duplicado.rechazar' | translate}}</td>
+                                </tr>
+                            </ng-template>
+                            <ng-template #templateEmptyTable>
+                                <tr>
+                                    <td class="text-center" colspan="12"> {{'noResult' | translate}}</td>
+                                </tr>
+                            </ng-template>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+                <div class="card" *ngIf="rechazo === true">
+                    <h5 class="card-header justify-content-center">
+                        {{'R' | translate}}:
+                    </h5>
+                    <div class="inpu">
+                            <label for="motivoRechazo" class="col-form-label col-xs-4 col-sm-4 col-md-2">{{'R.R' | translate}}: </label>
+                            <input type="text" id="motivoRechazo" name="motivoRechazo" [(ngModel)]="motivoRechazo" class="form-control" maxlength="200">
+                    </div>
+
+                    <div class="row mt-2">
+                        <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-1 offset-sm-1 offset-md-1 offset-lg-1">
+                            <button type="button" class="btn btn-danger" (click)="procesar(false)">{{'btn.aceptar' | translate}}</button>
+                        </div>
+                        <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-8 offset-sm-8 offset-md-8 offset-lg-8">
+                             <button type="button" class="btn btn-danger" (click)="cancelar()">{{'btn.cancelar' | translate}}</button>
+                        </div>
+                        <br><br>
+                    </div>
+                </div>
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mt-1">
+                    <div class="text-left">
+                        {{'TA' | translate}}: {{dataTable.length / 2}}
+                    </div>
+                    <div class="d-flex justify-content-center" *ngIf="dataTable.length > 0">
+                        <pagination [maxSize]="rowsPorPagina" [boundaryLinks]="true" [directionLinks]="true" [totalItems]="totalElements" [itemsPerPage]="rowsPorPagina" [(ngModel)]="page"
+                            previousText="&lsaquo;" nextText="&rsaquo;" firstText="{{'paginador.inicio' | translate}}" lastText="{{'paginador.fin' | translate}}" (pageChanged)="onPagChanged($event)">
+                        </pagination>
+
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-1 offset-sm-1 offset-md-1 offset-lg-1">
+                    <button type="button" class="btn btn-danger" (click)="cleand()">
+                        {{'btn.regresar' | translate}}
+                    </button>
+                </div>
+                <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-8 offset-sm-8 offset-md-8 offset-lg-8">
+                    <button type="button" class="btn btn-danger" (click)="exportar()">{{'btn.exportar' | translate}}</button>
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-1 offset-sm-1 offset-md-1 offset-lg-1">
+                    <button type="button" class="btn btn-danger" (click)="consultar()">{{'menu.monitoreo.comprobantesFormatoCDMX.btn.refrescar' | translate}}</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

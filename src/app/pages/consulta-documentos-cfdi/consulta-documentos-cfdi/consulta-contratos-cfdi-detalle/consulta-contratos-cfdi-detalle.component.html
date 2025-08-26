@@ -1,0 +1,367 @@
+<div id="cfdi" class="panel panel-default col-xs-12 col-sm-12 col-md-12 col-lg-12">
+  <app-operativa-header tituloPantalla="{{
+      'menu.consultaDocumentosCFDI.consultaDocumentosCFDI.detalle' | translate
+    }}"></app-operativa-header>
+  <h5 class="card-header justify-content-center">
+    {{
+    "menu.consultaDocumentosCFDI.consultaDocumentosCFDI.detalle.contrato"
+    | translate
+    }}
+  </h5>
+  <form>
+    <div class="card-body">
+      <div class="row">
+        <div class="col-md-4">
+          <!-- numDocumento -->
+          <div class="col-xs-12 col-sm-12 col-md-12">
+            <div class="form-group row">
+              <label for="numDocumento" class="col-form-label col-sm-6">{{
+                "consultaDocumentosCFDI.lblNoDocumento" | translate
+                }}:</label>
+              <div class="col-sm-6">
+                <input disabled class="form-control" type="text" id="numDocumento" name="numDocumento"
+                  [value]="documentodetalle.numDocumentoCfdi" />
+              </div>
+            </div>
+          </div>
+
+          <!-- lblNoDocumentoCliente -->
+          <div class="col-xs-12 col-sm-12 col-md-12">
+            <div class="form-group row">
+              <label for="codigoCliente" class="col-form-label col-sm-6">{{
+                "consultaDocumentosCFDI.lblNoDocumentoCliente" | translate
+                }}:</label>
+              <div class="col-sm-6">
+                <input disabled class="form-control" type="text" id="codigoCliente" name="codigoCliente"
+                  [value]="documentodetalle.numDocumentoClienteCfdi" />
+              </div>
+            </div>
+          </div>
+
+          <!-- lblNombreProveedor -->
+          <div class="col-xs-12 col-sm-12 col-md-12">
+            <div class="form-group row">
+              <label for="nomProveedor" class="col-form-label col-sm-6">{{
+                "consultaDocumentosCFDI.lblNombreProveedor" | translate
+                }}:</label>
+              <div class="col-sm-6">
+                <input disabled class="form-control" type="text" id="nomProveedor" name="nomProveedor"
+                  [value]="documentodetalle.nomProveedorCfdi" />
+              </div>
+            </div>
+          </div>
+
+          <!-- lblImporteDocumento -->
+          <div class="col-xs-12 col-sm-12 col-md-12">
+            <div class="form-group row">
+              <label for="importe" class="col-form-label col-sm-6">{{
+                "consultaDocumentosCFDI.lblImporteDocumento" | translate
+                }}:</label>
+              <div class="col-sm-6">
+                <input disabled class="form-control" type="text" id="importe" name="importe"
+                  [value]="documentodetalle.importeDocumentoCfdi" />
+              </div>
+            </div>
+          </div>
+
+          <!-- lblEstatus -->
+          <div class="col-xs-12 col-sm-12 col-md-12">
+            <div class="form-group row">
+              <label for="estatus" class="col-form-label col-sm-6">{{ "consultaDocumentosCFDI.lblEstatus" | translate
+                }}:</label>
+              <div class="col-sm-6">
+                <input disabled class="form-control" type="text" id="estatus" name="estatus"
+                  [value]="documentodetalle.estatusCfdi" />
+              </div>
+            </div>
+          </div>
+
+          <!-- lblDivisa -->
+          <div class="col-xs-12 col-sm-12 col-md-12">
+            <div class="form-group row">
+              <label for="divisa" class="col-form-label col-sm-6">{{ "consultaDocumentosCFDI.lblDivisa" | translate
+                }}:</label>
+              <div class="col-sm-6">
+                <input disabled class="form-control" type="text" id="divisa" name="divisa"
+                  [value]="documentodetalle.divisaRemesaCfdi" />
+              </div>
+            </div>
+          </div>
+
+          <!-- lblMotivoRechazo -->
+          <div class="col-xs-12 col-sm-12 col-md-12">
+            <div class="form-group row">
+              <label for="motivoRecazo" class="col-form-label col-sm-6">{{
+                "consultaDocumentosCFDI.lblMotivoRechazo" | translate
+                }}:</label>
+              <div class="col-sm-6">
+                <input disabled class="form-control" type="text" id="motivoRecazo" name="motivoRecazo"
+                  [value]="documentodetalle.motivoRechazoCfdi" />
+              </div>
+            </div>
+          </div>
+
+          <!-- lblNumReferencia -->
+          <div class="col-xs-12 col-sm-12 col-md-12">
+            <div class="form-group row">
+              <label for="numReferencia" class="col-form-label col-sm-6">{{
+                "consultaDocumentosCFDI.lblNumReferencia" | translate
+                }}:</label>
+              <div class="col-sm-6">
+                <input disabled class="form-control" type="text" id="numReferencia" name="numReferencia"
+                  [value]="documentodetalle.numReferenciaPagoCfdi" />
+              </div>
+            </div>
+          </div>
+
+          <!-- lblReferencia -->
+          <div class="col-xs-12 col-sm-12 col-md-12">
+            <div class="form-group row">
+              <label for="referencia" class="col-form-label col-sm-6">{{
+                "consultaDocumentosCFDI.lblReferencia" | translate
+                }}:</label>
+              <div class="col-sm-6">
+                <input disabled class="form-control" type="text" id="referencia" name="referencia"
+                  [value]="documentodetalle.referenciaCfdi" />
+              </div>
+            </div>
+          </div>
+
+          <!-- lblIdentificadorFiscal -->
+          <div class="col-xs-12 col-sm-12 col-md-12">
+            <div class="form-group row">
+              <label for="identificadorFiscal" class="col-form-label col-sm-6">{{
+                "consultaDocumentosCFDI.lblIdentificadorFiscal" | translate
+                }}:</label>
+              <div class="col-sm-6">
+                <input disabled class="form-control" type="text" id="identificadorFiscal" name="identificadorFiscal"
+                  [value]="documentodetalle.identificadorFiscalCfdi" />
+              </div>
+            </div>
+          </div>
+
+          <!-- lblCancelada -->
+          <div class="col-xs-12 col-sm-12 col-md-12">
+            <div class="form-group row">
+              <label for="cancelada" class="col-form-label col-sm-6">{{ "consultaDocumentosCFDI.lblCancelada" |
+                translate }}:</label>
+              <div class="col-sm-6">
+                <input disabled class="form-control" type="text" id="cancelada" name="cancelada"
+                  [value]="documentodetalle.canceladaCfdi" />
+              </div>
+            </div>
+          </div>
+
+          <!-- lblClaveRastreo -->
+          <div class="col-xs-12 col-sm-12 col-md-12">
+            <div class="form-group row">
+              <label for="claveRastreo" class="col-form-label col-sm-6">{{
+                "consultaDocumentosCFDI.lblClaveRastreo" | translate
+                }}:</label>
+              <div class="col-sm-6">
+                <input disabled class="form-control" type="text" id="claveRastreo" name="claveRastreo"
+                  [value]="documentodetalle.claveRastreoCfdi" />
+              </div>
+            </div>
+          </div>
+
+          <!-- lblCodigoProveedor -->
+          <div class="col-xs-12 col-sm-12 col-md-12">
+            <div class="form-group row">
+              <label for="codigoProvedor" class="col-form-label col-sm-6">{{
+                "consultaDocumentosCFDI.lblCodigoProveedor" | translate
+                }}:</label>
+              <div class="col-sm-6">
+                <input disabled class="form-control" type="text" id="codigoProvedor" name="codigoProvedor"
+                  [value]="documentodetalle.codProveedorCfdi" />
+              </div>
+            </div>
+          </div>
+
+          <!-- lblNumProveedorCliente -->
+          <div class="col-xs-12 col-sm-12 col-md-12">
+            <div class="form-group row">
+              <label for="numProvedor" class="col-form-label col-sm-6">{{
+                "consultaDocumentosCFDI.lblNumProveedorCliente" | translate
+                }}:</label>
+              <div class="col-sm-6">
+                <input disabled class="form-control" type="text" id="numProvedor" name="numProvedor"
+                  [value]="documentodetalle.numProveedorClienteCfdi" />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <!-- lblSituacionCobro -->
+          <div class="col-xs-12 col-sm-12 col-md-12">
+            <div class="form-group row">
+              <label for="situacionCobro" class="col-form-label col-sm-6">{{
+                "consultaDocumentosCFDI.lblSituacionCobro" | translate
+                }}:</label>
+              <div class="col-sm-6">
+                <input disabled class="form-control" type="text" id="situacionCobro" name="situacionCobro"
+                  [value]="documentodetalle.situacionCobroCfdi === 'NC' ? 'NO COBRADA' : documentodetalle.situacionCobroCfdi === 'C' ? 'COBRADA': documentodetalle.situacionCobroCfdi" />
+              </div>
+            </div>
+          </div>
+
+          <!-- lblCanal -->
+          <div class="col-xs-12 col-sm-12 col-md-12">
+            <div class="form-group row">
+              <label for="canal" class="col-form-label col-sm-6">{{ "consultaDocumentosCFDI.lblCanal" | translate
+                }}:</label>
+              <div class="col-sm-6">
+                <input disabled class="form-control" type="text" id="canal" name="canal"
+                  [value]="documentodetalle.canalCfdi ? documentodetalle.canalCfdi : '' " />
+              </div>
+            </div>
+          </div>
+
+          <!-- lblFormaPago -->
+          <div class="col-xs-12 col-sm-12 col-md-12">
+            <div class="form-group row">
+              <label for="formaPago" class="col-form-label col-sm-6">{{ "consultaDocumentosCFDI.lblFormaPago" |
+                translate }}:</label>
+              <div class="col-sm-6">
+                <input disabled class="form-control" type="text" id="formaPago" name="formaPago"
+                  [value]="documentodetalle.formaPagoCfdi ? documentodetalle.formaPagoCfdi : ''" />
+              </div>
+            </div>
+          </div>
+
+          <!-- lblIva -->
+          <div class="col-xs-12 col-sm-12 col-md-12">
+            <div class="form-group row">
+              <label for="iva" class="col-form-label col-sm-6">{{ "consultaDocumentosCFDI.lblIva" | translate
+                }}:</label>
+              <div class="col-sm-6">
+                <input disabled class="form-control" type="text" id="iva" name="iva" [value]="documentodetalle.ivaCfdi" />
+              </div>
+            </div>
+          </div>
+
+          <!-- lblReferenciaInterbancaria -->
+          <div class="col-xs-12 col-sm-12 col-md-12">
+            <div class="form-group row">
+              <label for="referenciaBancaria" class="col-form-label col-sm-6">{{
+                "consultaDocumentosCFDI.lblReferenciaInterbancaria"
+                | translate
+                }}:</label>
+              <div class="col-sm-6">
+                <input disabled class="form-control" type="text" id="referenciaBancaria" name="referenciaBancaria"
+                  [value]="documentodetalle.refInterbancariaCfdi" />
+              </div>
+            </div>
+          </div>
+
+          <!-- lblSituacionPago -->
+          <div class="col-xs-12 col-sm-12 col-md-12">
+            <div class="form-group row">
+              <label for="situacionPago" class="col-form-label col-sm-6">{{
+                "consultaDocumentosCFDI.lblSituacionPago" | translate
+                }}:</label>
+              <div class="col-sm-6">
+                <input disabled class="form-control" type="text" id="situacionPago" name="situacionPago"
+                  [value]="documentodetalle.situacionPagoCfdi" />
+              </div>
+            </div>
+          </div>
+
+          <!-- lblFechaCancelacion -->
+          <div class="col-xs-12 col-sm-12 col-md-12">
+            <div class="form-group row">
+              <label for="fechaCancelacion" class="col-form-label col-sm-6">{{
+                "consultaDocumentosCFDI.lblFechaCancelacion" | translate
+                }}:</label>
+              <div class="col-sm-6">
+                <input disabled class="form-control" type="text" id="fechaCancelacion" name="fechaCancelacion"
+                  [value]="documentodetalle.fechaCancelacionCfdi" />
+              </div>
+            </div>
+          </div>
+
+          <!-- lblFechaCobro -->
+          <div class="col-xs-12 col-sm-12 col-md-12">
+            <div class="form-group row">
+              <label for="fechaCobro" class="col-form-label col-sm-6">{{
+                "consultaDocumentosCFDI.lblFechaCobro" | translate
+                }}:</label>
+              <div class="col-sm-6">
+                <input disabled class="form-control" type="text" id="fechaCobro" name="fechaCobro"
+                  [value]="documentodetalle.fechaCobroCfdi" />
+              </div>
+            </div>
+          </div>
+
+          <!-- lblFechaEmision -->
+          <div class="col-xs-12 col-sm-12 col-md-12">
+            <div class="form-group row">
+              <label for="fechaEmision" class="col-form-label col-sm-6">{{
+                "consultaDocumentosCFDI.lblFechaEmision" | translate
+                }}:</label>
+              <div class="col-sm-6">
+                <input disabled class="form-control" type="text" id="fechaEmision" name="fechaEmision"
+                  [value]="documentodetalle.fechaEmisionCfdi" />
+              </div>
+            </div>
+          </div>
+
+          <!-- lblFechaVencimiento -->
+          <div class="col-xs-12 col-sm-12 col-md-12">
+            <div class="form-group row">
+              <label for="fechavencimiento" class="col-form-label col-sm-6">{{
+                "consultaDocumentosCFDI.lblFechaVencimiento" | translate
+                }}:</label>
+              <div class="col-sm-6">
+                <input disabled class="form-control" type="text" id="fechavencimiento" name="fechavencimiento"
+                  [value]="documentodetalle.fechaVencimientoCfdi" />
+              </div>
+            </div>
+          </div>
+
+          <!-- lblCuentaCargo -->
+          <div class="col-xs-12 col-sm-12 col-md-12">
+            <div class="form-group row">
+              <label for="cuentaCargo" class="col-form-label col-sm-6">{{
+                "consultaDocumentosCFDI.lblCuentaCargo" | translate
+                }}:</label>
+              <div class="col-sm-6">
+                <input disabled class="form-control" type="text" id="cuentaCargo" name="cuentaCargo"
+                  [value]="documentodetalle.cuentaCargoCfdi" />
+              </div>
+            </div>
+          </div>
+
+          <!-- lblFechaPago -->
+          <div class="col-xs-12 col-sm-12 col-md-12">
+            <div class="form-group row">
+              <label for="fechaPago" class="col-form-label col-sm-6">{{ "consultaDocumentosCFDI.lblFechaPago" |
+                translate }}:</label>
+              <div class="col-sm-6">
+                <input disabled class="form-control" type="text" id="fechaPago" name="fechaPago"
+                  [value]="documentodetalle.fechaPagoCfdi" />
+              </div>
+            </div>
+          </div>
+
+          <!-- lblTipoPago -->
+          <div class="col-xs-12 col-sm-12 col-md-12">
+            <div class="form-group row">
+              <label for="tipoPago" class="col-form-label col-sm-6">{{ "consultaDocumentosCFDI.lblTipoPago" | translate
+                }}:</label>
+              <div class="col-sm-6">
+                <input disabled class="form-control" type="text" id="tipoPago" name="tipoPago"
+                  [value]="documentodetalle.tipoPagoCfdi" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+  <td class="text-center">
+    <button type="button" class="btn btn-danger" (click)="regresar()">
+      {{ "btn.regresar" | translate }}
+    </button>
+  </td>
+</div>

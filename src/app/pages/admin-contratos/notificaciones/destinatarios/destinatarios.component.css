@@ -1,0 +1,100 @@
+.col-xs-3{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    justify-items: center;
+    gap: 2em;
+    margin: 2em;
+}
+
+.col-xs-2{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    justify-items: center;
+    gap: 2em;
+    margin: 2em;
+    padding: 0em 25em 0 25em;
+}
+
+.gap-buttons{
+    display: flex;
+    justify-items: center;
+    gap: 2em;
+    margin: 2em;
+}
+
+.txt-end{
+    justify-content: flex-end;
+    display: flex;
+    gap: 2em;
+}
+
+
+.justify-left{
+    justify-content: left;
+    display: flex;
+}
+
+.padding-table{
+    padding: 0 1em 0 1em;
+}
+
+.padding-card-less{
+    padding: 0em 10em 0em 10em;
+}
+
+.padding-form-kindNoti-emailaccount{
+    padding: 2em 2em 2em 2em;
+}
+
+.selection{
+    padding: 1em;
+    cursor: pointer;
+    background-color: transparent; 
+}
+
+.selection:hover{
+    padding: 1em;
+    cursor: pointer;
+    background-color: lightgray;
+}
+
+.cursors{
+    cursor: pointer;
+}
+
+.checkpadding{
+    padding: 1em;
+}
+
+.col-xs-labels{
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    justify-items: center;
+    margin: 0em 21em 0em 21em;
+    align-items: center;
+}
+.buttons-flex{
+    justify-content: flex-end;
+    display: grid;
+    gap: 75%;
+    grid-template-columns: 1fr 1fr;
+    margin: 1em 0em 1em 0em;
+ }
+
+ .buttons-right{
+    display: grid;
+    justify-content: flex-end;
+    gap: 1em;
+    height: min-content;
+ }
+
+ .buttons-left{
+    display: grid;
+    justify-content: flex-start;
+    gap: 1em;
+    height: min-content;
+ }
+
+ input[type="email"] {
+    text-transform: inherit;
+}

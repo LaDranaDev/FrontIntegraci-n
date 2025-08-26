@@ -1,0 +1,206 @@
+<div id="paramDomici" class="panel panel-default col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    <app-operativa-header
+        tituloPantalla="{{'parmetrosDomis.titulo' | translate}} - {{'parmetrosDomis.subtitulo' | translate}}"></app-operativa-header>
+
+    <br>
+    <h5 class="card-header justify-content-center">
+        {{'parmetrosDomis.bloqueDatos' | translate}}
+    </h5>
+
+    <app-busqueda-cliente [data]="datos"></app-busqueda-cliente>
+
+    <br>
+    <br>
+    <h5 class="card-header justify-content-center">
+        {{'parametrosDomis.bloqueParametro' | translate}}
+    </h5>
+    <div class="card">
+        <div class="card-body">
+            <div class="row justify-content-center align-items-center">
+                <div class=" col-xs-5 col-sm-5 col-md-5 col-lg-5">
+                    <div class="form-group">
+                        <input type="checkbox" [(ngModel)]="activarRepDom" id="activarRepDom" name="activarRepDom"
+                            (change)="onChange($event)" class="hidden">
+                        <label for="activarRepDom">{{'parametrosDomis.activaReporteDomis' | translate}}</label>
+                        &nbsp;&nbsp;
+                        <input type="checkbox" [(ngModel)]="activarImpCargoPar" id="activarImpCargoPar"
+                            name="activarImpCargoPar" (change)="onChange($event)" class="hidden">
+                        <label for="activarImpCargoPar">{{'parametrosDomis.enviarImporCargoPar' | translate}}</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <br>
+    <h5 class="card-header justify-content-center">
+        {{'parametrosDomis.bloqueAdminEmisoras' | translate}}
+    </h5>
+    <div class="card">
+        <div class="card-body">
+            <div class="row row10">
+                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                    <div class="form-group row justify-content-center align-items-center">
+
+                        <label for="emisora"
+                            class="col-xs-6 col-sm-10 col-md-6 col-lg-4 col-form-label">{{'parametrosDomis.emisora' |
+                            translate}}</label>
+                        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                            <input class="form-control" type="text" name="emisora" id="emisora"
+                                placeholder="{{'parametrosDomis.emisora' | translate}}" [(ngModel)]="emisora.emisora"
+                                tabindex="1" maxlength="5" (keydown.Tab)="consultaEmisoraDomisTransaccion()"
+                                oncopy="return false" (keypress)="eventOnKeyOnlyNumbers($event)">
+                        </div>
+
+                    </div>
+                </div>
+                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                    <div class="form-group row justify-content-center align-items-center">
+
+                        <label for="estatus"
+                            class="col-xs-6 col-sm-10 col-md-6 col-lg-4 col-form-label">{{'parametrosDomis.estatus' |
+                            translate}}</label>
+                        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                            <input class="form-control" type="text" name="estatus" id="estatus"
+                                placeholder="{{'parametrosDomis.estatus' | translate}}" [(ngModel)]="emisora.status"
+                                disabled tabindex="1" maxlength="255">
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <div class="form-group row justify-content-center align-items-center">
+                        <label for="razonSoc"
+                            class="col-xs-2 col-sm-2 col-md-2 col-lg-2 col-form-label">{{'parametrosDomis.razonSocial' |
+                            translate}}</label>
+                        <div class="col-xs-8 col-sm-8 col-md-8 col-lg-9">
+                            <input class="form-control" type="text" name="razonSoc" id="razonSoc"
+                                placeholder="{{'parametrosDomis.razonSocial' | translate}}"
+                                [(ngModel)]="emisora.razonSocial" [disabled]="true" tabindex="1" maxlength="255">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br>
+
+            <div class="row">
+                <div class="col-xs-12 col-sm-1 col-md-1 col-lg-1 offset-sm-1 offset-md-1 offset-lg-1 mt-1">
+                    <button type="button" class="btn btn-danger" (click)="limpiarEmisora()">{{'btn.limpiar' |
+                        translate}}</button>
+                </div>
+                <div class="col-xs-12 col-sm-1 col-md-1 col-lg-1 offset-sm-6 offset-md-8 offset-lg-8 mt-1">
+                    <button type="button" class="btn btn-danger" [disabled]="enviarImpCaroParcial !==true"
+                        (click)="registrar()">{{'btn.registrar' | translate}}</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <br>
+    <h5 class="card-header justify-content-center">
+        {{'parametrosDomis.bloqueBuscaEmisora' | translate}}
+    </h5>
+    <div class="card">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <div class="form-group row justify-content-center align-items-center">
+                        <label for="emisoraC"
+                            class="col-xs-2 col-sm-2 col-md-2 col-lg-2 col-form-label">{{'parametrosDomis.paramEmisora'
+                            | translate}}</label>
+                        <div class="col-xs-8 col-sm-8 col-md-8 col-lg-9">
+                            <input class="form-control" type="text" name="emisoraC" id="emisoraC"
+                                placeholder="{{'parametrosDomis.paramEmisora' | translate}}"
+                                [(ngModel)]="emisoraRequest.emisora" tabindex="1" maxlength="255">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-sm-1 col-md-1 col-lg-1 offset-sm-1 offset-md-1 offset-lg-1 mt-1">
+                </div>
+                <div class="col-xs-12 col-sm-1 col-md-1 col-lg-1 offset-sm-6 offset-md-8 offset-lg-8 mt-1">
+                    <button type="button" class="btn btn-danger" [disabled]="enviarImpCaroParcial !==true"
+                        (click)="consultarEmisora()">{{'btn.buscar' | translate}}</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <br>
+    <div class="card">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <table class="table table-striped table-hover" aria-describedby="listaConsultaPais">
+                        <thead>
+                            <tr>
+                                <th class="text-center" scope="col">{{'parametrosDomis.colNumEmisora' | translate}}</th>
+                                <th class="text-center" scope="col">{{'parametrosDomis.colRazSocial' | translate}}</th>
+                                <th class="text-center" scope="col">{{'parametrosDomis.colEstatus' | translate}}</th>
+                                <th class="text-center" scope="col">{{'parametrosDomis.colFchUltMod' | translate}}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <ng-container *ngIf="banderaHasRows; then templateFillTable; else templateEmptyTable2">
+                            </ng-container>
+                            <ng-template #templateFillTable>
+                                <tr *ngFor="let dato of tablaDatos">
+                                    <td class="text-center">{{dato.emisora}}</td>
+                                    <td class="text-center">{{dato.razSocial}}</td>
+                                    <td class="text-center">
+                                        <label for="sele" [hidden]="true"></label>
+                                        <select id="sele" name="sele" class="form-control with80"
+                                            [(ngModel)]="dato.estatus">
+                                            <option value="I" [selected]="dato.estatus === 'I'">Inactivo</option>
+                                            <option value="A" [selected]="dato.estatus === 'A'">Activo</option>
+                                        </select>
+                                    </td>
+                                    <td class="text-center">{{dato.fechMod}}</td>
+                                </tr>
+                            </ng-template>
+                            <ng-template #templateEmptyTable2>
+                                <tr>
+                                    <td class="text-center" colspan="6">
+                                        {{'pantalla.moduloAdministracion.gestionBancos.resultadoBusqueda' | translate}}
+                                    </td>
+                                </tr>
+                            </ng-template>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <!-- Paginador -->
+            <div class="row" *ngIf="banderaHasRows">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mt-1">
+                    <div class="d-flex justify-content-center" *ngIf="banderaHasRows">
+                        <pagination [boundaryLinks]="true" [directionLinks]="true"
+                            [totalItems]="totalElements" [itemsPerPage]="rowsPorPagina" [maxSize]="rowsPorPagina"
+                            [(ngModel)]="page" previousText="&lsaquo;" nextText="&rsaquo;"
+                            firstText="{{'paginador.inicio' | translate}}" lastText="{{'paginador.fin' | translate}}"
+                            (pageChanged)="onPageChanged($event)">
+                        </pagination>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xs-12 col-sm-1 col-md-1 col-lg-1 offset-sm-1 offset-md-1 offset-lg-1 mt-1">
+                <button type="button" class="btn btn-danger" [disabled]="enviarImpCaroParcial !==true"
+                    (click)="exportar()">{{'btn.exportar' | translate}}</button>
+            </div>
+            <div class="col-xs-12 col-sm-1 col-md-1 col-lg-1 offset-sm-6 offset-md-8 offset-lg-8 mt-1">
+                <button type="button" class="btn btn-danger" [disabled]="enviarImpCaroParcial !==true"
+                    (click)="guardar()">{{'btn.guardar' | translate}}</button>
+            </div>
+        </div>
+    </div>
+    <br>
+    <br>
+    <br>
+</div>

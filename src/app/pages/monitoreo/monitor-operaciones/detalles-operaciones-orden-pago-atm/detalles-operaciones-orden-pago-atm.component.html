@@ -1,0 +1,89 @@
+<app-operativa-header tituloPantalla="{{'MO' | translate}}"></app-operativa-header>
+<form [formGroup]="datosForm" id="ATM">
+    <div class="card">
+        <h5 class="card-header justify-content-center">
+            {{'MO.DOP' | translate}}:
+        </h5>
+        <div class="inpu">
+            <label for="nombreBenefATM" class="col-form-label col-xs-2 col-sm-2 col-md-1">{{'nomBeneficiario' | translate}}: </label>
+            <input type="text" class="form-control" id="nombreBenefATM" name="nombreBenef" formControlName="nombreBenef">
+        </div>
+        <div class="inpu">
+            <div class="dos">
+                <label for="ctaCargoATM" class="col-form-label col-xs-2 col-sm-2 col-md-2">{{'MO.NC' | translate}}: </label>
+                <input type="text" class="form-control" id="ctaCargoATM" name="ctaCargo" formControlName="ctaCargo">
+            </div>
+            <div class="dos">
+                <label for="fechaAplicATM" class="col-form-label col-xs-2 col-sm-2 col-md-2">{{'MO.FA' | translate}}: </label>
+                <input type="text" class="form-control" id="fechaAplicATM" name="fechaAplic" formControlName="fechaAplic">
+            </div>
+        </div>
+        <div class="inpu">
+            <div class="dos">
+                <label for="fechaLimitPagoATM" class="col-form-label col-xs-2 col-sm-2 col-md-2">{{'MO.FLP' | translate}}: </label>
+                <input type="text" class="form-control" id="fechaLimitPagoATM" name="fechaLimitPago" formControlName="fechaLimitPago" >
+            </div>
+            <div class="dos">
+                <label for="fechaPresIniATM" class="col-form-label col-xs-2 col-sm-2 col-md-2">{{'MO.PR' | translate}}: </label>
+                <input type="text" class="form-control" id="fechaPresIniATM" name="fechaPresIni" formControlName="fechaPresIni">
+            </div>
+        </div>
+
+
+        <div class="inpu">
+            <div class="dos">
+                <label for="referencia" class="col-form-label col-xs-2 col-sm-2 col-md-2">{{'MO.RC' | translate}}: </label>
+                <input type="text" class="form-control" id="referencia" name="referencia" formControlName="referencia">
+            </div>
+            <div class="dos">
+                <label for="estatus" class="col-form-label col-xs-2 col-sm-2 col-md-2">{{'MO.E' | translate}}: </label>
+                <input type="text" class="form-control" id="estatus" name="estatus" formControlName="estatus" >
+            </div>
+        </div>
+        <div class="inpu">
+            <div class="dos">
+                <label for="nombreOrd" class="col-form-label col-xs-2 col-sm-2 col-md-2">{{'numOrdenATM' | translate}}: </label>
+                <input type="text" class="form-control" id="nombreOrd" name="nombreOrd" formControlName="nombreOrd">
+            </div>
+            <div class="dos">
+                <label for="importeATM" class="col-form-label col-xs-2 col-sm-2 col-md-2">{{'MO.I' | translate}}: </label>
+                <input type="text" class="form-control" id="importeATM" name="importe" formControlName="importe">
+            </div>
+        </div>
+    </div>
+    <div class="card">
+        <h5 class="card-header justify-content-center">
+            {{'MO.CO' | translate}}
+        </h5>
+        <div class="inpu">
+                <label for="mensajeATM"></label>
+                <input type="text" class="form-control" id="mensajeATM" name="mensaje" formControlName="mensaje">
+        </div>
+    </div>
+    <div class="row mt-2">
+        <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-1 offset-sm-1 offset-md-1 offset-lg-1">
+            <button type="button" class="btn btn-danger" (click)="regresarATM()">{{'MO.Regr' | translate}}</button>
+        </div>
+        <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-8 offset-sm-8 offset-md-8 offset-lg-8">
+            <button type="button" class="btn btn-danger" (click)="historialATM()"> {{'MO.H' | translate}}</button>
+        </div>
+    </div>
+    <div class="row mt-2" *ngIf="idEstatus === '7'">
+        <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-8 offset-sm-8 offset-md-8 offset-lg-8">
+            <button type="button" class="btn btn-danger" (click)="reintentarATM()">{{'MO.Rei' | translate}}</button>
+        </div>
+        <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-8 offset-sm-8 offset-md-8 offset-lg-8">
+            <button type="button" class="btn btn-danger" (click)="rechazarATM()">{{'MO.Rech' | translate}}</button>
+        </div>
+    </div>
+    <div class="row mt-2">
+        <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-1 offset-sm-1 offset-md-1 offset-lg-1">
+            <button type="button" class="btn btn-danger" (click)="refrescarATM()">{{'MO.Refr' | translate}}</button>
+        </div>
+    </div>
+    <div class="row mt-2" *ngIf="idEstatus === '13'">
+        <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-1 offset-sm-1 offset-md-1 offset-lg-1">
+            <button type="button" class="btn btn-danger" (click)="procesarATM()">{{'MO.Proc' | translate}}</button>
+        </div>
+    </div>
+</form>

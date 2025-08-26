@@ -1,0 +1,115 @@
+<app-operativa-header tituloPantalla="{{'menu.contigencia' | translate}}"></app-operativa-header>
+<div id="envioArchivos" class="panel panel-default col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    <br>
+    <div class="card">
+        <h5 class="card-header justify-content-center">
+            {{'pantalla.datosContrato.title' | translate}}
+        </h5>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-xs-6 col-sm-6 col-md-6">
+                    <div class="form-group row">
+                        <label for="codCliente"
+                            class="col-form-label col-sm-3">{{'pantalla.envio.archivos.datosContrato.codCliente' |
+                            translate}}:</label>
+                        <div class="col-sm-4">
+                            <input type="text" id="codCliente" name="codigoCliente" class="form-control"
+                                placeholder="{{'pantalla.envio.archivos.datosContrato.codCliente' | translate}}"
+                                (keydown.Tab)="findContratoByBuc()" (keypress)="validateOnlyNumeros($event)"
+                                maxlength="8" size="12" (paste)="pasteOnlyNumeros($event)" tabindex="1"
+                                [(ngModel)]="datosContrato.bucCliente">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-6 col-sm-6 col-md-6">
+                    <div class="form-group row">
+                        <label for="estatusContrato"
+                            class="col-form-label col-sm-3">{{'pantalla.envio.archivos.datosContrato.estatusContrato' |
+                            translate}}:</label>
+                        <div class="col-sm-4">
+                            <input type="text" id="estatusContrato" name="estatusContrato" class="form-control"
+                                placeholder="{{'pantalla.envio.archivos.datosContrato.estatusContrato' | translate}}" tabindex="1"
+                                [(ngModel)]="datosContrato.descEstatus" disabled>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group row">
+                        <label for="razonSocial"
+                            class="col-form-label col-sm-3">{{'pantalla.envio.archivos.datosContrato.razonSocial'
+                            |
+                            translate}}:</label>
+                        <div class="col-sm-9">
+                            <input type="text" id="razonSocial" name="razonSocial"
+                                placeholder="{{'pantalla.envio.archivos.datosContrato.razonSocial' | translate}}" class="form-control"
+                                [(ngModel)]="datosContrato.razonSocial" disabled>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-6" hidden>
+                    <div class="form-group row">
+                        <label for="idContrato"
+                            class="col-form-label col-sm-3">{{'pantalla.envio.archivos.datosContrato.idContrato' |
+                            translate}}:</label>
+                        <div class="col-sm-4">
+                            <input type="text" id="idContrato" name="idContrato" class="form-control"
+                                [(ngModel)]="datosContrato.idContrato">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-6 col-sm-6 col-md-6">
+                    <div class="form-group row">
+                        <label for="cuentaEje"
+                            class="col-form-label col-sm-3">{{'pantalla.envio.archivos.datosContrato.cuentaEje' |
+                            translate}}:</label>
+                        <div class="col-sm-4">
+                            <input type="text" id="cuentaEje" name="cuentaEje" class="form-control"
+                                placeholder="{{'pantalla.envio.archivos.datosContrato.cuentaEje' | translate}}"
+                                [(ngModel)]="datosContrato.cuentaEje" disabled>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-6 col-sm-6 col-md-6">
+                    <div class="form-group row">
+                        <label for="numContrato"
+                            class="col-form-label col-sm-3">{{'numContrato' |
+                            translate}}:</label>
+                        <div class="col-sm-4">
+                            <input type="text" class="form-control" name="numContrato"
+                                placeholder="{{'numContrato' | translate}}" id="numContrato"
+                                [(ngModel)]="datosContrato.numContrato" disabled>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card mt-1">
+        <h5 class="card-header justify-content-center">
+            {{'pantalla.envio.archivos.seccion.archivo' | translate}}
+        </h5>
+        <div class="card-body flexbox-align">
+            <div class="col-xs-4 col-sm-4 col-md-4">
+                <input #btnCargarArchivo type="file" class="form-control" name="file" id="file"
+                    [disabled]="banderaBtnCargarArchivo" (change)="readArchivo($event)" aria-label="file">
+            </div>
+        </div>
+        <br />
+        <div class="row mt-3" *ngIf="bandShowBotones">
+            <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-1 offset-sm-1 offset-md-1 offset-lg-1">
+                <button type="button" (click)="resetBtnCargarArchivo()" class="btn btn-danger">{{'btn.limpiar' |
+                    translate}}</button>
+
+            </div>
+            <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-8 offset-sm-8 offset-md-8 offset-lg-8">
+                <button type="button" (click)="uploadArchivo()" class="btn btn-danger">{{'btn.enviar' |
+                    translate}}</button>
+            </div>
+        </div>
+        <br />
+    </div>
+</div>

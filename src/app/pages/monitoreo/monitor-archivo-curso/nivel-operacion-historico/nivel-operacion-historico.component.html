@@ -1,0 +1,94 @@
+<app-operativa-header tituloPantalla="{{'pantalla.monitoreo.monitorArchivoCurso.operacionHist.title' | translate}}"></app-operativa-header>
+
+<div class="panel panel-default col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    <br>
+    <label for="">{{'pantalla.monitoreo.monitorArchivoCurso.cliente' | translate}}: {{register.archivo.cliente}}</label>
+    <!-- --- Seccion de Resultado --- -->
+    <div class="card mt-3">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <table class="table table-striped table-hover">
+                        <caption></caption>
+                        <thead>
+                            <tr>
+                            <th scope="col">{{'pantalla.monitoreo.monitorArchivoCurso.nombreArchivo' | translate}}</th>
+                            <th scope="col">{{'pantalla.monitoreo.monitorArchivoCurso.archivo.estatus' | translate}}</th>
+                            <th scope="col">{{'producto' | translate}}</th>
+                            <th scope="col">{{'idMovimiento' | translate}}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let datos of [register.archivo]">
+                                <td>{{datos.nombreArch}}</td>
+                                <td>{{datos.descEstatus}}</td>
+                                <td>{{register.producto.descProd}}</td>
+                                <td>{{register.producto.idReg}}</td>
+                            </tr>
+                            <ng-template #noHayInformación>
+                                <tr>
+                                    <td class="text-center" colspan="12"> {{'administracion.productos.periodo.Nodata' | translate}}</td>
+                                </tr>
+                            </ng-template>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+           
+        </div>
+    </div>
+
+    <!-- --- Seccion de Busqueda --- -->
+    <div class="card mt-3">
+       
+        <div class="card-body">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                {{'BNO' | translate}}
+                <div class="card mt-3">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                <table class="table table-striped table-hover">
+                                    <caption></caption>
+                                    <thead>
+                                        <tr>
+                                        <th scope="col" class="text-center">{{'EI' | translate}} </th>
+                                        <th scope="col" class="text-center">{{'EF' | translate}} </th>
+                                        <th scope="col" class="text-center">{{'FC' | translate}} </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let dato of datosNivelOper">
+                                            <td class="text-center">{{dato.fechaEnvBe}}</td>
+                                            <td class="text-center">{{dato.descEstatus}}</td>
+                                            <td class="text-center">{{dato.fechaApli}}</td>
+                                        </tr>
+                                        <ng-template #noHayInformación>
+                                            <tr>
+                                                <td class="text-center" colspan="6"> {{'administracion.productos.periodo.Nodata' | translate}} </td>
+                                            </tr>
+                                        </ng-template>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                       
+                    </div>
+                </div>
+                <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12 buttons-flex margins-top" >
+               
+                    <div class="buttons-left">
+                        <button type="button" class="btn btn-danger float-right" (click)="goBack()" >{{'btn.regresar' | translate}}</button>
+                        <button type="button" class="btn btn-danger float-right" (click)="refrescar()" >{{'menu.monitoreo.comprobantesFormatoCDMX.btn.refrescar' | translate}}</button>
+                    </div>
+                     <div class="buttons-right">
+                        <button type="button" class="btn btn-danger float-left" (click)="exportaOperacionHistorica()" >{{'btn.exportar' | translate}}</button>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

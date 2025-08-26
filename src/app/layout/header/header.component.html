@@ -1,0 +1,441 @@
+<mat-toolbar class="colorArriba example-header">
+  <button mat-icon-button class="botonArriba " (click)="isExpanded = !isExpanded"><mat-icon>menu</mat-icon></button>
+  <div id="root-tplVentanaOperativa-genericaMain">
+    <input type="hidden" id="banderaSmall" value="">
+    <div id="banderaEngrane" class="oculto">
+      <input type="hidden" id="banderaSmall" value="">
+    </div>
+
+    <div class="row page-header padding-left-0" id="root-tplVentanaOperativa-genericaContHeader">
+      <div class="col-xs-12 col-sm-12 col-md-5 col-lg-5 padding-left-0"
+        id="root-tplVentanaOperativa-genericaContHeaderPrimary">
+        <div  id="root-tplVentanaOperativa-contImagenHeader">
+          <a id="root-tplVentanaOperativa-linkCabecera">
+            <img draggable="true" class="pull-left page-header-logo" id="root-tplVentanaOperativa-imagenHeader"
+              src="../../assets/img/logotipo-santander.png" alt="logotipo-santander"></a>
+
+        </div>
+        <h1 class="ellipsis hidden-xl" id="root-tplVentanaOperativa-genericaHeaderPrimaryTitleID">
+          <span class="strong " id="root-tplVentanaOperativa-genericaTextHeaderPrimarySubTitle">{{'lblAplicacion' | translate}}</span>
+        </h1>
+      </div>
+      <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6" id="root-tplVentanaOperativa-genericaContHeaderSecondary">
+        <div class="pull-right" id="root-tplVentanaOperativa-seguridadContHeaderSecundaryLogOff">
+          <a title="Cerrar Sesi&oacute;n" class="icon-admin-menu-salir" id="#root-tplVentanaOperativa-aIconHeaderLogoff"
+          (click)="cerrarSesion()"></a>
+        </div>
+        <div class="pull-right" id="root-tplVentanaOperativa-_cont_2">
+          <div id="root-tplVentanaOperativa-slideContent">
+            <div class="language-block" id="root-tplVentanaOperativa-seguridadContHeaderLanguage">
+              <a class="language-selected"
+                id="root-tplVentanaOperativa-aIconHeaderLanguageEsp">{{'lblVersion' | translate}}</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="pull-right" id="root-tplVentanaOperativa-_cont_2">
+          <div id="root-tplVentanaOperativa-slideContent">
+            <div class="language-block pointer" id="root-tplVentanaOperativa-seguridadContHeaderLanguage"
+              (click)="cambiarIdioma('en')">
+              <a class="language-selected" id="root-tplVentanaOperativa-aIconHeaderLanguageEsp">{{'btnIdioma'  | translate}}</a>
+            </div>
+          </div>
+        </div>
+
+        <app-loader show="false"></app-loader>
+
+        <div class="pull-right" id="root-tplVentanaOperativa-_cont_2">
+          <div id="root-tplVentanaOperativa-slideContent">
+            <div class="language-block pointer" id="root-tplVentanaOperativa-seguridadContHeaderLanguage"
+        (click)="cambiarIdioma('es')">
+        <a class="language-selected" id="root-tplVentanaOperativa-aIconHeaderLanguageEsp">{{'btnIdiomaEs'  | translate}}</a>
+      </div>
+          </div>
+        </div>
+
+
+
+
+        <div id="root-tplVentanaOperativa-genericaContHeaderSecundaryUser">
+          <div class="info-user text-right padding-top-3"
+            id="root-tplVentanaOperativa-genericaParHeaderSecondaryUserInfoName">
+            <label class="last-login" id="root-tplVentanaOperativa-_cont_0">{{'lblUltimoLogin'  | translate}}</label>
+            <span id="root-ultimoacceso">{{lastAccess ? lastAccess : 'today' }} </span>
+            <span class="ellipsis user strong"
+              id="root-tplVentanaOperativa-genericaParHeaderSecondaryUserInfoNameText">{{nombreEmpleado}} </span>
+              <label class="last-login" id="root-tplVentanaOperativa-_cont_0" (mouseenter)="onMouseEnter()" (mouseleave)="onMouseLeave()">{{'lblClaveUsuario' | translate}}</label>
+            <span id="root-tplVentanaOperativa-genericaParHeaderSecondaryUserInfoLastAccessText">{{claveUsuario}} </span>
+            <div *ngIf="showTooltip || isLastFiveMinutes" class="tooltipTime" >
+              <p  class="timemessage"  [ngClass]="{'red-text-time': isLastFiveMinutes}" >Tiempo restante: {{ minutes }}:{{ seconds | number: '2.0' }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</mat-toolbar>
+
+<mat-sidenav-container class="example-container">
+   <mat-sidenav #sidenav id="customnav" class="color example-sidenav" [ngClass]="{'nav-hidden' : !isExpanded}"  mode="side" opened="true" (keydown.escape)="sidenav?.open()" (mouseenter)="mouseenter()" (mouseleave)="mouseleave()">
+    <mat-nav-list>
+    <div class="bor1">
+        <mat-list-item class="parent centrar" (click)="inicio()" routerLink="">
+          <span class="inicio" *ngIf="isExpanded || isShowing">{{'menu.inicio' | translate}}</span>
+          <mat-icon  class="full-width" mat-list-icon>home</mat-icon>
+        </mat-list-item>
+      </div>
+
+      <div class="submenu" [ngClass]="{'expanded' : !showSubmenu}" *ngIf="pinta1 && (isShowing || isExpanded)">
+        <div class="bor act" [class.active]="activeState === 1">
+          <mat-list-item (click)="abrir(1,$event)" class="parent">
+            <span  class="full-width text "  [class.active]="activeState === 1"  *ngIf="isExpanded || isShowing"><strong>{{'menu.adminContrato'| translate}}</strong></span>
+            <mat-icon class="menu-button" [ngClass]="{'rotated' : showSubSubMenu}" *ngIf="isExpanded || isShowing">expand_more</mat-icon>
+          </mat-list-item>
+        </div>
+
+        <div *ngIf="showSubSubMenu">
+          <div class="  submenu" [ngClass]="{'expanded' : showSubSubMenu} || {'expanded' : showSubSubMenu}" *ngIf="isShowing || isExpanded">
+            <mat-list-item *ngIf="pinta2"  [class.active]="adminContraAct1 === true" (click)="adminContra(1); emitClickCurrentPage(1) " class="border full-width header" routerLink="/admin-contratos/altaContratos" >{{'menu.adminContrato.altaContratos' | translate}}</mat-list-item>
+           <div *ngIf="datosContrato === true">
+              <mat-list-item *ngIf="pinta5 && otro" [class.active]="adminContraAct2 === true" (click)="adminContra(2); emitClickCurrentPage(2)" class="border full-width header" routerLink="/admin-contratos/productos" >{{'menu.adminContrato.productos' | translate}}</mat-list-item>
+              <mat-list-item *ngIf="pinta6 && otro" [class.active]="adminContraAct3 === true" (click)="adminContra(3); emitClickCurrentPage(3)" class="border full-width header" routerLink="/admin-contratos/cuentasOrdenantes" >{{'menu.adminContrato.cuentasOrdenantes' | translate}}</mat-list-item>
+              <mat-list-item *ngIf="pinta7 && otro" [class.active]="adminContraAct4 === true" (click)="adminContra(4); emitClickCurrentPage(4)" class="border full-width header" routerLink="/admin-contratos/usuarioOperante">{{'menu.adminContrato.usuarioOperante' | translate}}</mat-list-item>
+              <mat-list-item *ngIf="pinta8" [class.active]="adminContraAct5 === true" (click)="adminContra(5); emitClickCurrentPage(5)"class="border full-width header" routerLink="/admin-contratos/notificaciones" >{{'menu.adminContrato.notificaciones' | translate}}</mat-list-item>
+              <mat-list-item *ngIf="pinta9" [class.active]="adminContraAct6 === true" (click)="adminContra(6); emitClickCurrentPage(6)" class="border full-width header" routerLink="/admin-contratos/parametrosDelContrato" >{{'menu.adminContrato.parametros' | translate}}</mat-list-item>
+              <mat-list-item *ngIf="pinta9" [class.active]="adminContraAct7 === true" (click)="adminContra(7); emitClickCurrentPage(7)" class="border full-width header" routerLink="/admin-contratos/consultaParametriaAdicional" >{{'menu.parametriadicional' | translate}}</mat-list-item>
+              <mat-list-item *ngIf="pinta9" [class.active]="adminContraAct23 === true" (click)="adminContra(23); emitClickCurrentPage(23)" class="border full-width header" routerLink="/admin-contratos/consultaParametriaAdicionalDos" >{{'menu.parametros.dos' | translate}}</mat-list-item>
+              <mat-list-item *ngIf="pinta10" [class.active]="adminContraAct22 === true" (click)="adminContra(22); emitClickCurrentPage(22)" class="border full-width header" routerLink="/admin-contratos/regeneraReporteCobranza" >{{'menu.adminContrato.regeneraReporteCobranza' | translate}}</mat-list-item>
+              <mat-list-item *ngIf="pinta10" [class.active]="adminContraAct8 === true" (click)="adminContra(8); emitClickCurrentPage(8)" class="border full-width header" routerLink="/admin-contratos/parametrosDomiciliaciones" >{{'menu.adminContrato.parametrosDomiciliaciones' | translate}}</mat-list-item>
+              <mat-list-item *ngIf="pinta10" [class.active]="adminContraAct9 === true" (click)="adminContra(9); emitClickCurrentPage(9)" class="border full-width header" routerLink="/admin-contratos/reportesCobranzaIntradia" >{{'menu.adminContrato.reporteIntradia' | translate}}</mat-list-item>
+              <mat-list-item *ngIf="pinta10" [class.active]="adminContraAct10 === true" (click)="adminContra(10); emitClickCurrentPage(10)" class="border full-width header" routerLink="/admin-contratos/regeneraRepCobranza" >{{'menu.adminContrato.reporteConsolidado' | translate}}</mat-list-item>
+              <mat-list-item *ngIf="pinta11" [class.active]="adminContraAct11 === true" (click)="adminContra(11); emitClickCurrentPage(11)" class="border full-width header" routerLink="/admin-contratos/edoCuentaIntradia" >{{'menu.adminContrato.edoCuentaIntradia' | translate}}</mat-list-item>
+              <mat-list-item *ngIf="pinta11" [class.active]="adminContraAct12 === true" (click)="adminContra(12); emitClickCurrentPage(12)" class="border full-width header" routerLink="/admin-contratos/edoCuentaconsolidado" >{{'menu.adminContrato.edoCuentaconsolidado' | translate}}</mat-list-item>
+              <mat-list-item *ngIf="pinta12" [class.active]="adminContraAct13 === true" (click)="adminContra(13); emitClickCurrentPage(13)" class="border full-width header" routerLink="/admin-contratos/esquemaComision" >{{'menu.adminContrato.esquemaComision' | translate}}</mat-list-item>
+              <mat-list-item *ngIf="pinta13" [class.active]="adminContraAct14 === true" (click)="adminContra(14); emitClickCurrentPage(14)" class="border full-width header" routerLink="/admin-contratos/cobroComision" >{{'menu.adminContrato.cobroComision' | translate}}</mat-list-item>
+              
+              <mat-list-item *ngIf="pinta14" [class.active]="adminContraAct15 === true" (click)="adminContra(15); emitClickCurrentPage(15)" class="border full-width header" routerLink="/admin-contratos/cuentasbeneficiariasContratos" >{{'menu.adminContrato.consultaCuentaBeneficiaria' | translate}}</mat-list-item>
+              <mat-list-item *ngIf="pinta15" [class.active]="adminContraAct16 === true" (click)="adminContra(16); emitClickCurrentPage(16)" class="border full-width header" routerLink="/admin-contratos/conveniosContratos" >{{'menu.adminContrato.conveniosContrato' | translate}}</mat-list-item>
+              <mat-list-item *ngIf="otro" [class.active]="adminContraAct17 === true" (click)="adminContra(17); emitClickCurrentPage(17)" class="border full-width header" routerLink="/admin-contratos/consultaGestionComprobantes" >{{'menu.adminContrato.gestionComprobantes' | translate}}</mat-list-item>
+              <mat-list-item *ngIf="otro" [class.active]="adminContraAct18 === true" (click)="adminContra(18); emitClickCurrentPage(18)" class="border full-width header" routerLink="/admin-contratos/reportesConfirming" >{{'menu.adminContrato.reportesConfirming' | translate}}</mat-list-item>
+              <mat-list-item *ngIf="otro && otro2 === 'A'" [class.active]="adminContraAct19 === true" (click)="adminContra(19); emitClickCurrentPage(19)" class="border full-width header" routerLink="/admin-contratos/pagoDirecto" >{{'menu.adminContrato.pagoDirecto' | translate}}</mat-list-item>
+
+           </div>
+            <mat-list-item *ngIf="pinta3"  [class.active]="adminContraAct20 === true" (click)="adminContra(20)" (click)="bloquear(); emitClickCurrentPage(20)" class="border full-width header" routerLink="/admin-contratos/consultaContratosUsuario" >{{'menu.adminContrato.consultaContratosUsuario' | translate}}</mat-list-item>
+            <mat-list-item *ngIf="pinta4" [class.active]="adminContraAct21 === true" (click)="adminContra(21)"(click)="bloquear(); emitClickCurrentPage(21)" class="border full-width header" routerLink="/admin-contratos/consultaContratos" >{{'menu.adminContrato.consultaContratos' | translate}}</mat-list-item>
+          </div>
+        </div>
+      </div>
+
+      <div class="submenu" [ngClass]="{'expanded' : !showSubmenu}" *ngIf="pinta16 && (isShowing || isExpanded)">
+        <div class="bor act" [class.active]="activeState === 2">
+          <mat-list-item (click)="abrir(2,$event)" class="parent">
+            <span class="full-width  text "  [class.active]="activeState === 2" *ngIf="isExpanded || isShowing"><strong>{{'menu.contigencia'| translate}}</strong></span>
+            <mat-icon class="menu-button" [ngClass]="{'rotated' : showSubSubMenu2}" *ngIf="isExpanded || isShowing">expand_more</mat-icon>
+          </mat-list-item>
+        </div>
+        <div *ngIf="showSubSubMenu2">
+          <div class="submenu" [ngClass]="{'expanded' : showSubSubMenu2} || {'expanded' : showSubSubMenu} " *ngIf="isShowing || isExpanded ">
+            <mat-list-item [class.active]="contin1 === true"  (click)="contin(1)" (click)="bloquear(); emitClickCurrentPage(1)" class=" border full-width header" routerLink="/contingencia/envioArchivos" >{{'menu.contigencia.envioArchivos' | translate}}</mat-list-item>
+            <mat-list-item [class.active]="contin2 === true"  (click)="contin(2)" (click)="bloquear(); emitClickCurrentPage(2)" class=" border full-width header" routerLink="/contingencia/solicitudEdoCuentaContingencia" >{{'menu.contigencia.solicitudEdoCuentaContingencia' | translate}}</mat-list-item>
+            <mat-list-item [class.active]="contin3 === true"  (click)="contin(3)" (click)="bloquear(); emitClickCurrentPage(3)" class=" border full-width header" routerLink="/contingencia/solicitudCambioEstatus" >{{'menu.contigencia.solicitudCambioEstatus' | translate}}</mat-list-item>
+            <mat-list-item [class.active]="contin4 === true"  (click)="contin(4)" (click)="bloquear(); emitClickCurrentPage(4)" class=" border full-width header" routerLink="/contingencia/cifradoDescifrado" >{{'menu.contigencia.cifradoDescifrado' | translate}}</mat-list-item>
+            <mat-list-item [class.active]="contin20 === true"  (click)="contin(20)" (click)="bloquear(); emitClickCurrentPage(20)" class=" border full-width header" routerLink="/contingencia/consultaDescargaArchivos" >Consulta de Buzón</mat-list-item>
+            <mat-list-item [class.active]="contin5 === true"  (click)="contin(5)" (click)="bloquear(); emitClickCurrentPage(5)" class=" border full-width header" routerLink="/contingencia/cierreProductos" >{{'menu.contigencia.cierreProductos' | translate}}</mat-list-item>
+            <mat-list-item [class.active]="contin6 === true"  (click)="contin(6)" (click)="bloquear(); emitClickCurrentPage(6)" class=" border full-width header" routerLink="/contingencia/parametros" >{{'menu.parametros' | translate}}</mat-list-item>
+            <mat-list-item [class.active]="gesProAct5 === true"  (click)="gesPro(5)" (click)="bloquear(); emitClickCurrentPage(5)" class="border full-width header" routerLink="/contingencia/consultarBuzon" >{{'menu.contigencia.consultarBuzon' | translate}}</mat-list-item>
+            <mat-list-item [class.active]="contin8 === true"  (click)="contin(8)" (click)="bloquear(); emitClickCurrentPage(8)" class=" border full-width header" routerLink="/contingencia/recargarCatalogoSFG" >{{'menu.contigencia.recargarCatalogosSFG' | translate}}</mat-list-item>
+          </div>
+        </div>
+      </div>
+
+      <div class="submenu" [ngClass]="{'expanded' : !showSubmenu}" *ngIf="pinta17 && (isShowing || isExpanded)">
+        <div class="bor act" [class.active]="activeState === 3">
+          <mat-list-item (click)="abrir(3,$event)"  class="parent">
+            <span class="full-width text" [class.active]="activeState === 3"  *ngIf="isExpanded || isShowing"><strong>{{'menu.solicitudEdoCuenta' | translate}}</strong></span>
+            <mat-icon class="menu-button" [ngClass]="{'rotated' : showSubSubMenu3}" *ngIf="isExpanded || isShowing">expand_more</mat-icon>
+          </mat-list-item>
+        </div>
+        <div *ngIf="showSubSubMenu3">
+          <div class="submenu" [ngClass]="{'expanded' : showSubSubMenu3}" *ngIf="isShowing || isExpanded ">
+            <mat-list-item [class.active]="solidEdoCuent1 === true" (click)="solidEdoCuent(1); emitClickCurrentPage(1)" (click)="bloquear()" class="border full-width header"  routerLink="/solicitudEdoCuenta/porDemanda" >{{'menu.solicitudEdoCuenta.porDemanda' | translate}}</mat-list-item>  
+          </div>
+        </div>
+      </div>
+
+      <div class="submenu" [ngClass]="{'expanded' : !showSubmenu}" *ngIf="pinta18 && (isShowing || isExpanded)">
+        <div class="bor act" [class.active]="activeState === 4">
+          <mat-list-item (click)="abrir(4,$event)"  class="parent">
+            <span class="full-width text" [class.active]="activeState === 4"  *ngIf="isExpanded || isShowing"><strong>{{'menu.gestionBuzon' | translate}}</strong></span>
+            <mat-icon class="menu-button" [ngClass]="{'rotated' : showSubSubMenu4}" *ngIf="isExpanded || isShowing">expand_more</mat-icon>
+          </mat-list-item>
+        </div>
+        <div *ngIf="showSubSubMenu4">
+          <div class="submenu" [ngClass]="{'expanded' : showSubSubMenu4}" *ngIf="isShowing || isExpanded ">
+            <mat-list-item *ngIf="pinta19" [class.active]="gesProAct1 === true"  (click)="gesPro(1)" (click)="bloquear(); emitClickCurrentPage(1)" class="border full-width header" routerLink="/gestionBuzon/gestionProtocolos" >{{'menu.gestionBuzon.gestionProtocolos' | translate}}</mat-list-item>
+            <mat-list-item *ngIf="pinta20" [class.active]="gesProAct2 === true"  (click)="gesPro(2)" (click)="bloquear(); emitClickCurrentPage(2)" class="border full-width header" routerLink="/gestionBuzon/gestionParametrosCanal" >{{'menu.gestionBuzon.gestionParametrosCanal' | translate}}</mat-list-item>
+            <mat-list-item *ngIf="pinta21" [class.active]="gesProAct3 === true"  (click)="gesPro(3)" (click)="bloquear(); emitClickCurrentPage(3)" class="border full-width header" routerLink="/gestionBuzon/gestionConexionContrato" >{{'menu.gestionBuzon.gestionConexionContrato' | translate}}</mat-list-item>
+            <mat-list-item *ngIf="pinta18" [class.active]="gesProAct4 === true"  (click)="gesPro(4)" (click)="bloquear(); emitClickCurrentPage(4)" class="border full-width header" routerLink="/gestionBuzon/crearBuzon" >{{'menu.gestionBuzon.creacionBuzon' | translate}}</mat-list-item>
+            <mat-list-item [class.active]="contin9 === true"  (click)="contin(9)" (click)="bloquear(); emitClickCurrentPage(9)" class=" border full-width header" routerLink="/gestionBuzon/consultaVigenciaBuzones" >Actualización Vigencia de Buzones</mat-list-item>
+          </div>
+        </div>
+      </div>
+
+      <div class="submenu" [ngClass]="{'expanded' : !showSubmenu}" *ngIf="pinta22 && (isShowing || isExpanded)">
+        <div class="bor act" [class.active]="activeState === 5">
+          <mat-list-item (click)="abrir(5,$event)"  class="parent">
+            <span class="full-width text" [class.active]="activeState === 5"  *ngIf="isExpanded || isShowing"><strong>{{'menu.moduloAdministracion' | translate}}</strong></span>
+            <mat-icon class="menu-button" [ngClass]="{'rotated' : showSubSubMenu5}" *ngIf="isExpanded || isShowing">expand_more</mat-icon>
+          </mat-list-item>
+        </div>
+        <div *ngIf="showSubSubMenu5">
+          <div class="submenu" [ngClass]="{'expanded' : showSubSubMenu5}" *ngIf="isShowing || isExpanded ">
+            <mat-list-item *ngIf="pinta23" [class.active]="admin1 === true" (click)="admin(1)" (click)="bloquear(); emitClickCurrentPage(1)"class="border full-width header" routerLink="/moduloAdministracion/gestionBackends" >{{'menu.moduloAdministracion.gestionBackend' | translate}}</mat-list-item>
+            <mat-list-item *ngIf="pinta24" [class.active]="admin2 === true" (click)="admin(2)" (click)="bloquear(); emitClickCurrentPage(2)"  class="border full-width header" routerLink="/moduloAdministracion/gestionPaises" >{{'menu.moduloAdministracion.gestionPaises' | translate}}</mat-list-item>
+            <mat-list-item *ngIf="pinta24" [class.active]="admin3 === true" (click)="admin(3)" (click)="bloquear(); emitClickCurrentPage(3)"  class="border full-width header" routerLink="/moduloAdministracion/gestionBancos" >{{'menu.moduloAdministracion.gestionBancos' | translate}}</mat-list-item>
+            <mat-list-item *ngIf="pinta25" [class.active]="admin19 === true" (click)="admin(19)" (click)="bloquear(); emitClickCurrentPage(19)"  class="border full-width header" routerLink="/moduloAdministracion/gestionLayouts" >{{'administracion.gestionLayouts.titlemenu' | translate}}</mat-list-item>  
+            <mat-list-item *ngIf="pinta26" [class.active]="admin4 === true" (click)="admin(4)" (click)="bloquear(); emitClickCurrentPage(4)"  class="border full-width header" routerLink="/moduloAdministracion/gestionNotificaciones" >{{'menu.moduloAdministracion.gestionNotificaciones' | translate}}</mat-list-item>  
+            <mat-list-item *ngIf="pinta27" [class.active]="admin5 === true" (click)="admin(5)" (click)="bloquear(); emitClickCurrentPage(5)"  class="border full-width header" routerLink="/moduloAdministracion/gestionProductos" >{{'menu.moduloAdministracion.gestionProductos' | translate}}</mat-list-item>  
+            <mat-list-item *ngIf="pinta28" [class.active]="admin6 === true" (click)="admin(6)" (click)="bloquear()"  class="border full-width header" routerLink="/moduloAdministracion/gestionMensajesError" >{{'menu.moduloAdministracion.gestionMensajesError' | translate}}</mat-list-item>
+            <mat-list-item *ngIf="pinta29" [class.active]="admin7 === true" (click)="admin(7)" (click)="bloquear(); emitClickCurrentPage(7)"  class="border full-width header" routerLink="/moduloAdministracion/consultaCatalogoDinamico" >{{'menu.moduloAdministracion.catalogoDinamico' | translate}}</mat-list-item>
+            <mat-list-item *ngIf="pinta30"  [class.active]="admin8 === true" (click)="admin(8)" (click)="bloquear();  emitClickCurrentPage(8)" class="border full-width header" routerLink="/moduloAdministracion/cancelacionOperaciones" >{{'menu.moduloAdministracion.cancelacionOperaciones' | translate}}</mat-list-item>  
+            <mat-list-item *ngIf="pinta22" [class.active]="admin9 === true" (click)="admin(9)" (click)="bloquear(); emitClickCurrentPage(9)"  class="border full-width header" routerLink="/moduloAdministracion/gestionSucursales" >{{'menu.moduloAdministracion.gestionSucursales' | translate}}</mat-list-item>  
+            <mat-list-item *ngIf="pinta22" [class.active]="admin10 === true" (click)="admin(10)"(click)="bloquear(); emitClickCurrentPage(10)"  class="border full-width header" routerLink="/moduloAdministracion/codigosPostales" >{{'menu.moduloAdministracion.gestionCP' | translate}}</mat-list-item>  
+            <mat-list-item *ngIf="pinta22" [class.active]="admin11 === true" (click)="admin(11)" (click)="bloquear(); emitClickCurrentPage(11)"  class="border full-width header" routerLink="/moduloAdministracion/consultaBICS" >{{'menu.moduloAdministracion.consultaBICS' | translate}}</mat-list-item>  
+            <mat-list-item *ngIf="pinta22" [class.active]="admin12 === true" (click)="admin(12)" (click)="bloquear(); emitClickCurrentPage(12)"  class="border full-width header" routerLink="/moduloAdministracion/consultaClaveABA" >{{'menu.moduloAdministracion.consultaClaveABA' | translate}}</mat-list-item>
+            <mat-list-item *ngIf="pinta22" [class.active]="admin13 === true" (click)="admin(13)" (click)="bloquear(); emitClickCurrentPage(13)"  class="border full-width header" routerLink="/moduloAdministracion/esquemaComicionDefault" >{{'menu.moduloAdministracion.esquemaComicionDefault' | translate}}</mat-list-item>  
+            <mat-list-item *ngIf="pinta22" [class.active]="admin14 === true" (click)="admin(14)" (click)="bloquear(); emitClickCurrentPage(14)"  class="border full-width header" routerLink="/moduloAdministracion/autorizacionEnrolamiento" >{{'menu.moduloAdministracion.autorizacionEnrolamiento' | translate}}</mat-list-item>
+            <mat-list-item *ngIf="pinta22" [class.active]="admin15 === true" (click)="admin(15)" (click)="bloquear(); emitClickCurrentPage(15)"   class="border full-width header" routerLink="moduloAdministracion/gestionAlarma" >{{'menu.moduloAdministracion.gestionAlarma' | translate}}</mat-list-item>
+            <mat-list-item *ngIf="pinta22" [class.active]="admin16 === true" (click)="admin(16)" (click)="bloquear(); emitClickCurrentPage(16)"  class="border full-width header" routerLink="/moduloAdministracion/vizualizacionLayouts" >{{'menu.moduloAdministracion.vizualizacionLayouts' | translate}}</mat-list-item>
+            <!--<mat-list-item *ngIf="pinta22" [class.active]="admin17 === true" (click)="admin(17)" (click)="bloquear(); emitClickCurrentPage(17)"  class="border full-width header" routerLink="/moduloAdministracion/consultaValidacionesCanal" >{{'menu.moduloAdministracion.consultaValidacionesCanal' | translate}}</mat-list-item>  -->
+            <!--<mat-list-item *ngIf="pinta22" [class.active]="admin18 === true" (click)="admin(18)" (click)="bloquear(); emitClickCurrentPage(18)"  class="border full-width header" routerLink="/moduloAdministracion/gestionValidacionesCanal" >{{'menu.moduloAdministracion.gestionValidacionesCanal' | translate}}</mat-list-item>  -->
+
+          </div>
+        </div>
+      </div>
+
+      <div class="submenu" [ngClass]="{'expanded' : !showSubmenu}" *ngIf=" pinta31 && (isShowing || isExpanded)">
+        <div class="bor act" [class.active]="activeState === 6">
+          <mat-list-item (click)="abrir(6,$event)"  class="parent">
+            <span class="full-width text" [class.active]="activeState === 6"  *ngIf="isExpanded || isShowing"><strong>{{'menu.adminitracionCliente' | translate}}</strong></span>
+            <mat-icon class="menu-button" [ngClass]="{'rotated' : showSubSubMenu6}" *ngIf="isExpanded || isShowing">expand_more</mat-icon>
+          </mat-list-item>
+        </div>
+        <div *ngIf="showSubSubMenu6">
+          <div class="submenu" [ngClass]="{'expanded' : showSubSubMenu6}" *ngIf="isShowing || isExpanded ">
+            <mat-list-item *ngIf="pinta32" [class.active]="adminCliente1 === true" (click)="adminCliente(1)" (click)="bloquear(); emitClickCurrentPage(1)"  class="border full-width header" routerLink="/administracionCliente/descargaApi" >{{'menu.adminitracionCliente.descargaAPi' | translate}}</mat-list-item>
+            <mat-list-item *ngIf="pinta33"[class.active]="adminCliente2 === true" (click)="adminCliente(2)" (click)="bloquear(); emitClickCurrentPage(2)"  class="border full-width header" routerLink="/administracionCliente/adminitracionCertificados" >{{'menu.adminitracionCliente.adminitracionCertificados' | translate}}</mat-list-item>  
+            <mat-list-item *ngIf="pinta34" [class.active]="adminCliente3 === true" (click)="adminCliente(3)" (click)="bloquear(); emitClickCurrentPage(3)"  class="border full-width header" routerLink="/administracionCliente/adminBuzon" >{{'menu.adminitracionCliente.adminitracionBuzon' | translate}}</mat-list-item>  
+            <mat-list-item *ngIf="pinta33" [class.active]="adminCliente4 === true" (click)="adminCliente(4)" (click)="bloquear(); emitClickCurrentPage(4)"  class="border full-width header" routerLink="/administracionCliente/descargaLlavePublicaCanal" >{{'menu.adminitracionCliente.descargaLlavePublicaCanal' | translate}}</mat-list-item>
+          </div>
+        </div>
+      </div> 
+
+      <div class="submenu" [ngClass]="{'expanded' : !showSubmenu}" *ngIf="pinta35 && (isShowing || isExpanded)">
+        <div class="bor act" [class.active]="activeState === 7">
+          <mat-list-item (click)="abrir(7,$event)"  class="parent">
+            <span class="full-width text" [class.active]="activeState === 7"  *ngIf="isExpanded || isShowing"><strong>{{'menu.monitoreo' | translate}}</strong></span>
+            <mat-icon class="menu-button" [ngClass]="{'rotated' : showSubSubMenu7}" *ngIf="isExpanded || isShowing">expand_more</mat-icon>
+          </mat-list-item>
+        </div>
+        <div *ngIf="showSubSubMenu7">
+          <div class="submenu" [ngClass]="{'expanded' : showSubSubMenu7}" *ngIf="isShowing || isExpanded ">
+            <mat-list-item *ngIf="pinta36" [class.active]="moni1 === true" (click)="moni(1)" (click)="bloquear(); emitClickCurrentPage(1)"  class="border full-width header" routerLink="/monitoreo/consultaTracking" >{{'menu.monitoreo.consultaTrackingArchivo' | translate}}</mat-list-item>  
+            <!--se elimina modulo no utilizado-->
+            <!--<mat-list-item *ngIf="pinta37" [class.active]="moni2 === true" (click)="moni(2)" (click)="bloquear(); emitClickCurrentPage(2)"  class="border full-width header" routerLink="/monitoreo/monitorSaldos" >{{'menu.monitoreo.monitorSaldo' | translate}}</mat-list-item> --> 
+            <mat-list-item *ngIf="pinta38" [class.active]="moni3 === true" (click)="moni(3)" (click)="bloquear(); emitClickCurrentPage(3)"  class="border full-width header" routerLink="/monitoreo/monitorOperaciones" >{{'menu.monitoreo.monitorOperaciones' | translate}}</mat-list-item>  
+            <mat-list-item [class.active]="moni4 === true" (click)="moni(4)" (click)="bloquear(); emitClickCurrentPage(4)"  class="border full-width header" routerLink="/monitoreo/comprobantesFormatoCDMX" >{{'menu.monitoreo.comprobantesFormatoCDMX' | translate}}</mat-list-item>  
+            <mat-list-item *ngIf="pinta37" [class.active]="moni5 === true" (click)="moni(5)" (click)="bloquear(); emitClickCurrentPage(5)"  class="border full-width header" routerLink="/monitoreo/monitorArchivosEnCurso" >{{'menu.monitoreo.monitorArchivosEnCurso' | translate}}</mat-list-item>
+            <mat-list-item *ngIf="pinta38"[class.active]="moni6 === true" (click)="moni(6)" (click)="bloquear(); emitClickCurrentPage(6)"  class="border full-width header" routerLink="/monitoreo/monitorOperacionesOnline" >{{'menu.monitoreo.monitorOperacionesOnline' | translate}}</mat-list-item> 
+           </div>
+        </div>
+      </div>
+
+      <div class="submenu" [ngClass]="{'expanded' : !showSubmenu}" *ngIf="pinta39 && (isShowing || isExpanded)">
+        <div class="bor act" [class.active]="activeState === 8">
+          <mat-list-item (click)="abrir(8,$event)"  class="parent">
+            <span class="full-width text" [class.active]="activeState === 8"  *ngIf="isExpanded || isShowing"><strong>{{'menu.controlVolumenOperativo' | translate}}</strong></span>
+            <mat-icon class="menu-button" [ngClass]="{'rotated' : showSubSubMenu8}" *ngIf="isExpanded || isShowing">expand_more</mat-icon>
+          </mat-list-item>
+        </div>
+        <div *ngIf="showSubSubMenu8">
+          <div class="submenu" [ngClass]="{'expanded' : showSubSubMenu8}" *ngIf="isShowing || isExpanded ">
+            <mat-list-item *ngIf="pinta40" [class.active]="contoVolOpe1 === true" (click)="contoVolOpe(1)" (click)="bloquear(); emitClickCurrentPage(1)"  class="border full-width header" routerLink="/controlVolumenOperativo/graficaPorCliente" >{{'menu.controlVolumenOperativo.graficaCliente' | translate}}</mat-list-item>  
+            <mat-list-item *ngIf="pinta41" [class.active]="contoVolOpe2 === true" (click)="contoVolOpe(2)" (click)="bloquear(); emitClickCurrentPage(2)"  class="border full-width header" routerLink="/controlVolumenOperativo/graficaEstatusCliente" >{{'menu.controlVolumenOperativo.graficaEstatusCliente' | translate}}</mat-list-item>  
+            <mat-list-item *ngIf="pinta42" [class.active]="contoVolOpe3 === true" (click)="contoVolOpe(3)" (click)="bloquear(); emitClickCurrentPage(3)"  class="border full-width header" routerLink="/controlVolumenOperativo/graficaEstatusClienteParamtetrizada" >{{'menu.controlVolumenOperativo.graficaEstatusClienteParamtetrizada' | translate}}</mat-list-item>  
+            <mat-list-item *ngIf="pinta43" [class.active]="contoVolOpe4 === true" (click)="contoVolOpe(4)" (click)="bloquear(); emitClickCurrentPage(4)"  class="border full-width header" routerLink="/controlVolumenOperativo/graficaArchivosCliente" >{{'menu.controlVolumenOperativo.graficaArchivosCliente' | translate}}</mat-list-item>  
+            <mat-list-item *ngIf="pinta44" [class.active]="contoVolOpe5 === true" (click)="contoVolOpe(5)" (click)="bloquear(); emitClickCurrentPage(5)"  class="border full-width header" routerLink="/controlVolumenOperativo/totalOperacionesProducto" >{{'menu.controlVolumenOperativo.totalOperacionesProducto' | translate}}</mat-list-item>  
+            <mat-list-item *ngIf="pinta45" [class.active]="contoVolOpe6 === true" (click)="contoVolOpe(6)" (click)="bloquear(); emitClickCurrentPage(6)"  class="border full-width header" routerLink="/controlVolumenOperativo/totalOperacionesCliente" >{{'menu.controlVolumenOperativo.totalOperacionesCliente' | translate}}</mat-list-item>  
+            <mat-list-item *ngIf="pinta46" [class.active]="contoVolOpe7 === true" (click)="contoVolOpe(7)" (click)="bloquear(); emitClickCurrentPage(7)"  class="border full-width header" routerLink="/controlVolumenOperativo/consolidadosHistoricosOperaciones" >{{'menu.controlVolumenOperativo.consolidadosHistoricosOperaciones' | translate}}</mat-list-item>
+            <mat-list-item *ngIf="pinta47" [class.active]="contoVolOpe8 === true" (click)="contoVolOpe(8)" (click)="bloquear(); emitClickCurrentPage(8)"  class="border full-width header" routerLink="/controlVolumenOperativo/consolidadosHistoricosLayout" >{{'menu.controlVolumenOperativo.consolidadosHistoricosLayout' | translate}}</mat-list-item>
+            <mat-list-item *ngIf="pinta48" [class.active]="contoVolOpe9 === true" (click)="contoVolOpe(9)" (click)="bloquear(); emitClickCurrentPage(9)"  class="border full-width header" routerLink="/controlVolumenOperativo/consolidadosHistoricosCliente" >{{'menu.controlVolumenOperativo.consolidadosHistoricosCliente' | translate}}</mat-list-item> 
+          </div>
+          <div class="bor act" [class.active]="activeState === 8">
+            <mat-list-item (click)="abrir(8,$event)"  class="parent">
+              <span class="full-width text" [class.active]="activeState === 8"  *ngIf="isExpanded || isShowing"><strong>{{'menu.sterling' | translate}}</strong></span>
+              <mat-icon class="menu-button" [ngClass]="{'rotated' : showSubSubMenu8}" *ngIf="isExpanded || isShowing">expand_more</mat-icon>
+            </mat-list-item>
+          </div>
+          <div *ngIf="showSubSubMenu8">
+            <div class="submenu" [ngClass]="{'expanded' : showSubSubMenu8}" *ngIf="isShowing || isExpanded ">
+              <mat-list-item [class.active]="contoVolOpe10 === true" (click)="contoVolOpe(10)" (click)="bloquear(); emitClickCurrentPage(10)"  class="border full-width header" routerLink="/sterling/tamanobuzon" >{{'menu.sterling.tamanobuzon' | translate}}</mat-list-item>
+              <mat-list-item [class.active]="contoVolOpe11 === true" (click)="contoVolOpe(11)" (click)="bloquear(); emitClickCurrentPage(11)"  class="border full-width header" routerLink="/sterling/historialBuzon" >{{'menu.sterling.historialBuzon' | translate}}</mat-list-item>
+              <mat-list-item [class.active]="contoVolOpe12 === true" (click)="contoVolOpe(12)" (click)="bloquear(); emitClickCurrentPage(12)"  class="border full-width header" routerLink="/sterling/historialAnualBuzon" >{{'menu.sterling.historialAnualBuzon' | translate}}</mat-list-item>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="submenu" [ngClass]="{'expanded' : !showSubmenu}" *ngIf="pinta35 && (isShowing || isExpanded)">
+        <div class="bor act" [class.active]="activeState === 9">
+          <mat-list-item (click)="abrir(9,$event)"  class="parent">
+            <span class="full-width text" [class.active]="activeState === 9"  *ngIf="isExpanded || isShowing"><strong>{{'menu.duplicados' | translate}}</strong></span>
+            <mat-icon class="menu-button" [ngClass]="{'rotated' : showSubSubMenu9}" *ngIf="isExpanded || isShowing">expand_more</mat-icon>
+          </mat-list-item>
+        </div>
+        <div *ngIf="showSubSubMenu9">
+          <div class="submenu" [ngClass]="{'expanded' : showSubSubMenu9}" *ngIf="isShowing || isExpanded ">
+            <mat-list-item *ngIf="pinta36" [class.active]="dupli1 === true" (click)="dupli(1)" (click)="bloquear(); emitClickCurrentPage(1)"  class="border full-width header"  routerLink="/duplicados/monitorArchivosDuplicados" >{{'menu.duplicados.monitorArchivosDuplicados' | translate}}</mat-list-item>  
+            <mat-list-item *ngIf="pinta36" [class.active]="dupli2 === true" (click)="dupli(2)" (click)="bloquear(); emitClickCurrentPage(2)"  class="border full-width header"  routerLink="/duplicados/monitorOperacionesDuplicadas" >{{'menu.duplicados.monitorOperacionesDuplicadas' | translate}}</mat-list-item>  
+          </div>
+        </div>
+      </div>
+
+      
+      <div class="submenu" [ngClass]="{'expanded' : !showSubmenu}" *ngIf="pinta49 && (isShowing || isExpanded)">
+        <div class="bor act" [class.active]="activeState === 10">
+          <mat-list-item (click)="abrir(10,$event)"  class="parent">
+            <span class="full-width text" [class.active]="activeState === 10"  *ngIf="isExpanded || isShowing"><strong>{{'menu.consultasYreportes' | translate}}</strong></span>
+            <mat-icon class="menu-button" [ngClass]="{'rotated' : showSubSubMenu10}" *ngIf="isExpanded || isShowing">expand_more</mat-icon>
+          </mat-list-item>
+        </div>
+        <div *ngIf="showSubSubMenu10">
+          <div class="submenu" [ngClass]="{'expanded' : showSubSubMenu10}" *ngIf="isShowing || isExpanded ">
+            <mat-list-item *ngIf="pinta50" [class.active]="consuReport1 === true" (click)="consuReport(1)" (click)="bloquear(); emitClickCurrentPage(1)"  class="border full-width header" routerLink="/consultasYreportes/cuentaBeneficiaria" >{{'menu.consultasYreportes.cuentaBeneficiaria' | translate}}</mat-list-item>  
+            <mat-list-item *ngIf="pinta51" [class.active]="consuReport2 === true" (click)="consuReport(2)" (click)="bloquear(); emitClickCurrentPage(2)"  class="border full-width header" routerLink="/consultasYreportes/consultaComisiones" >{{'menu.consultasYreportes.consultaComisiones' | translate}}</mat-list-item>  
+            <mat-list-item *ngIf="pinta52" [class.active]="consuReport3 === true" (click)="consuReport(3)" (click)="bloquear(); emitClickCurrentPage(3)"  class="border full-width header" routerLink="/consultasYreportes/consultaPistasAuditoria" >{{'menu.consultasYreportes.consultaPistasAuditoria' | translate}}</mat-list-item>  
+            <mat-list-item *ngIf="pinta53" [class.active]="consuReport4 === true" (click)="consuReport(4)" (click)="bloquear(); emitClickCurrentPage(4)" class="border full-width header" routerLink="/consultasYreportes/bitacoraEnvioEstadoCuenta" >{{'menu.consultasYreportes.bitacoraEnvioEstadoCuenta' | translate}}</mat-list-item>  
+            <mat-list-item *ngIf="pinta54" [class.active]="consuReport5 === true" (click)="consuReport(5)" (click)="bloquear(); emitClickCurrentPage(5)"  class="border full-width header" routerLink="/consultasYreportes/reportes" >{{'menu.consultasYreportes.reportes' | translate}}</mat-list-item>  
+          </div>
+        </div>
+      </div>
+
+      <div class="submenu" [ngClass]="{'expanded' : !showSubmenu}" *ngIf="pinta56 && (isShowing || isExpanded)">
+        <div class="bor act" [class.active]="activeState === 11">
+          <mat-list-item (click)="abrir(11,$event)"  class="parent">
+            <span class="full-width text" [class.active]="activeState === 11"  *ngIf="isExpanded || isShowing"><strong>{{'menu.administracionStockSuperCuentaGo' | translate}}</strong></span>
+            <mat-icon class="menu-button" [ngClass]="{'rotated' : showSubSubMenu11}" *ngIf="isExpanded || isShowing">expand_more</mat-icon>
+          </mat-list-item>
+        </div>
+        <div *ngIf="showSubSubMenu11">
+          <div class="submenu" [ngClass]="{'expanded' : showSubSubMenu11}" *ngIf="isShowing || isExpanded">
+            <mat-list-item [class.active]="cuentaGo1 === true" (click)="cuentaGo(1000)"  (click)="bloquear(); emitClickCurrentPage(1000)"  class="border full-width header" routerLink="/administracionStockSuperCuentaGo/adminStockSuperCuentaGo" >{{'menu.administracionStockSuperCuentaGo.administracionStockSuperCuentaGo' | translate}}</mat-list-item>  
+          </div>
+        </div>
+      </div>
+
+      <div class="submenu" [ngClass]="{'expanded' : !showSubmenu}" *ngIf="pinta35 && (isShowing || isExpanded)">
+        <div class="bor act" [class.active]="activeState === 12">
+          <mat-list-item (click)="abrir(12,$event)"  class="parent">
+            <span class="full-width text" [class.active]="activeState === 12" (click)="bloquear(); emitClickCurrentPage(12)"  *ngIf="isExpanded || isShowing"><strong>{{'menu.consultaCFDI' | translate}}</strong></span>
+            <mat-icon class="menu-button" [ngClass]="{'rotated' : showSubSubMenu12}" *ngIf="isExpanded || isShowing">expand_more</mat-icon>
+          </mat-list-item>
+        </div>
+        <div *ngIf="showSubSubMenu12">
+          <div class="submenu" [ngClass]="{'expanded' : showSubSubMenu12}" *ngIf="isShowing || isExpanded ">
+            <mat-list-item [class.active]="consulCFDI1 === true" (click)="consulCFDI(1)"  (click)="bloquear() ; emitClickCurrentPage(1)" class="border full-width header" routerLink="/consultaCFDI/consultaCFDI" >{{'menu.consultaCFDI.consultaCFDI' | translate}}</mat-list-item>
+          </div>
+        </div>
+      </div>
+
+      <div class="submenu" [ngClass]="{'expanded' : !showSubmenu}" *ngIf="pinta35 && (isShowing || isExpanded)">
+        <div class="bor act" [class.active]="activeState === 13">
+          <mat-list-item (click)="abrir(13,$event)"  class="parent">
+            <span class="full-width text" [class.active]="activeState === 13"  *ngIf="isExpanded || isShowing"><strong>{{'menu.consultaTipoCambio' | translate}}</strong></span>
+            <mat-icon class="menu-button" [ngClass]="{'rotated' : showSubSubMenu13}" *ngIf="isExpanded || isShowing">expand_more</mat-icon>
+          </mat-list-item>
+        </div>
+        <div *ngIf="showSubSubMenu13">
+          <div class="submenu" [ngClass]="{'expanded' : showSubSubMenu13}" *ngIf="isShowing || isExpanded ">
+            <mat-list-item [class.active]="tipoCambio1 === true" (click)="tipoCambio(1)" (click)="bloquear(); emitClickCurrentPage(1)"  class="border full-width header" routerLink="/consultaTipoCambio/tipoCambio" >{{'menu.consultaTipoCambio.tipoCambio' | translate}}</mat-list-item>
+          </div>
+        </div>
+      </div>
+
+      <div class="submenu" [ngClass]="{'expanded' : !showSubmenu}" *ngIf="isShowing || isExpanded">
+        <div class="bor act" [class.active]="activeState === 14">
+          <mat-list-item (click)="abrir(14,$event)"  class="parent">
+            <span class="full-width text" [class.active]="activeState === 14"  *ngIf="isExpanded || isShowing"><strong>{{'menu.consultaDocumentosCFDI' | translate}}</strong></span>
+            <mat-icon class="menu-button" [ngClass]="{'rotated' : showSubSubMenu14}" *ngIf="isExpanded || isShowing">expand_more</mat-icon>
+          </mat-list-item>
+        </div>
+        <div *ngIf="showSubSubMenu14">
+          <div class="submenu" [ngClass]="{'expanded' : showSubSubMenu14}" *ngIf="isShowing || isExpanded ">
+            <mat-list-item [class.active]="consulDocCFDI1 === true" (click)="consulDocCFDI(1)" (click)="bloquear(); emitClickCurrentPage(1)"  class="border full-width header" routerLink="/consultaDocumentosCFDI/consultaDocumentosCFDI" >{{'menu.consultaDocumentosCFDI' | translate}}</mat-list-item>
+          </div>
+        </div>
+      </div>
+
+      <div class="submenu" [ngClass]="{'expanded' : !showSubmenu}" *ngIf="isShowing || isExpanded">
+        <div class="bor act" [class.active]="activeState === 15">
+          <mat-list-item (click)="abrir(15,$event)"  class="parent">
+            <span class="full-width text" [class.active]="activeState === 15"  *ngIf="isExpanded || isShowing"><strong>Open Roads</strong></span>
+            <mat-icon class="menu-button" [ngClass]="{'rotated' : showSubSubMenu15}" *ngIf="isExpanded || isShowing">expand_more</mat-icon>
+          </mat-list-item>
+        </div>
+        <div *ngIf="showSubSubMenu15">
+          <div class="submenu" [ngClass]="{'expanded' : showSubSubMenu15}" *ngIf="isShowing || isExpanded ">
+            <mat-list-item [class.active]="road1 === true" (click)="road(1)"  (click)="bloquear(); emitClickCurrentPage(1)" class="border full-width header" routerLink="/open-road/clientes" >Clientes</mat-list-item>
+            <mat-list-item [class.active]="road3 === true" (click)="road(3)"  (click)="bloquear(); emitClickCurrentPage(3)" class="border full-width header" routerLink="/open-road/monitorizacion" >Monitorizacion</mat-list-item>
+
+          </div>
+        </div>
+      </div>
+    <!-- =====  NUEVA SECCIÓN: Monitoreo Api  ===== -->
+<div class="submenu" [ngClass]="{'expanded' : !showSubmenu}"
+     *ngIf="pintaMoniApi && (isShowing || isExpanded)">
+  <div class="bor act" [class.active]="activeState === 16">
+    <mat-list-item (click)="abrir(16,$event)" class="parent">
+      <span class="full-width text"
+            [class.active]="activeState === 16"
+            *ngIf="isExpanded || isShowing">
+        <strong>{{ 'menu.monitoreoApi' | translate }}</strong>
+      </span>
+      <mat-icon class="menu-button"
+                [ngClass]="{'rotated' : showSubSubMenuMoniApi}"
+                *ngIf="isExpanded || isShowing">expand_more</mat-icon>
+    </mat-list-item>
+  </div>
+
+  <div *ngIf="showSubSubMenuMoniApi">
+    <div class="submenu"
+         [ngClass]="{'expanded' : showSubSubMenuMoniApi}"
+         *ngIf="isShowing || isExpanded">
+      <mat-list-item
+         [class.active]="moniApi1"
+         (click)="moniApi(1); bloquear(); emitClickCurrentPage(1)"
+         class="border full-width header"
+         routerLink="/monitoreoApi/consultaTrackingApi">
+        {{ 'menu.monitoreoApi.consultaTrackingApi' | translate }}
+      </mat-list-item>
+
+      <mat-list-item
+         [class.active]="moniApi2"
+         (click)="moniApi(2); bloquear(); emitClickCurrentPage(2)"
+         class="border full-width header"
+         routerLink="/monitoreoApi/monitorOperaciones">
+        {{ 'menu.monitoreoApi.monitorOperaciones' | translate }}
+      </mat-list-item>
+    </div>
+  </div>
+</div>
+<!-- fin  nueva seccion-->
+    </mat-nav-list>
+    <mat-nav-list>
+</mat-nav-list>
+  </mat-sidenav>
+
+<mat-sidenav-content  id="customcont" [ngClass]="{'mr-left-content' : !isExpanded}">
+  <router-outlet></router-outlet>
+</mat-sidenav-content>
+</mat-sidenav-container>
+

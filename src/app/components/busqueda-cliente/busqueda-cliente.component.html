@@ -1,0 +1,76 @@
+<div class="card">
+    <div class="card-body">
+        <div class="row">
+            <div class="col-xs-6 col-sm-6 col-md-6">
+                <div class="form-group row">
+                    <label for="nombre" class="col-form-label col-sm-3">{{'pantalla.datosContrato.codCliente' | translate}}:</label>
+
+                    <div class="col-sm-4" *ngIf="bloqueado === false">
+                        <input type="text" id="nombre" name="nombre" class="form-control" placeholder="{{'pantalla.datosContrato.codCliente' | translate}}"
+                            (keydown.Tab)="consultaDatosCliente()" tabindex="1" [(ngModel)]="datospersonales.bucCliente"
+                            (keypress)="eventOnlyNumbers($event)" (paste)="onPaste($event)">
+                    </div>
+
+                    <div class="col-sm-4" *ngIf="bloqueado === true">
+                        <input type="text" id="nombre" name="nombre" class="form-control" placeholder="{{'pantalla.datosContrato.codCliente' | translate}}"
+                            [(ngModel)]="datospersonales.bucCliente" disabled>
+                    </div>
+
+                </div>
+            </div>
+            <div class="col-xs-6 col-sm-6 col-md-6">
+                <div class="form-group row">
+                    <label for="estatus" class="col-form-label col-sm-3">{{'pantalla.datosContrato.estatusContrato' | translate}}:</label>
+                    <div class="col-sm-4">
+                        <input type="text" id="estatus" name="estatus" class="form-control"
+                            placeholder="{{'pantalla.datosContrato.estatusContrato' | translate}}" tabindex="1" [(ngModel)]="datospersonales.descEstatus"
+                            disabled>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6 col-md-6">
+                <div class="form-group row">
+                    <label for="nombre" class="col-form-label col-sm-3">{{'pantalla.datosContrato.razonSocial' | translate}}:</label>
+                    <div class="col-sm-9">
+                        <input type="text" id="nombre" name="nombre" class="form-control" placeholder="{{'pantalla.datosContrato.razonSocial' | translate}}"
+                            tabindex="1" [(ngModel)]="datospersonales.razonSocial" [disabled]="blockedForm">
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-6 col-md-6" hidden>
+                <div class="form-group row">
+                    <label for="idContrato" class="col-form-label col-sm-3">{{'pantalla.datosContrato.idContrato' | translate}}:</label>
+                    <div class="col-sm-4">
+                        <input type="text" id="idContrato" name="idContrato" class="form-control"
+                            [(ngModel)]="datospersonales.idContrato">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-6 col-sm-6 col-md-6">
+                <div class="form-group row">
+                    <label for="nombre" class="col-form-label col-sm-3">{{'pantalla.datosContrato.cuentaEje' | translate}}:</label>
+                    <div class="col-sm-4">
+                        <input type="text" id="nombre" name="nombre" class="form-control" placeholder="{{'pantalla.datosContrato.cuentaEje' | translate}}"
+                            tabindex="1" [(ngModel)]="datospersonales.cuentaEje" [disabled]="blockedForm">
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xs-6 col-sm-6 col-md-6">
+                <div class="form-group row">
+                    <label for="nombre" class="col-form-label col-sm-3">{{'pantalla.datosContrato.numContrato' | translate}}:</label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control" name="nombre" id="nombre"
+                            placeholder="{{'pantalla.datosContrato.numContrato' | translate}}" tabindex="1" [(ngModel)]="datospersonales.numContrato"
+                            [disabled]="blockedForm">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

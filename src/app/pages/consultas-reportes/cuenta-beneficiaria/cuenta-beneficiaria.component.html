@@ -1,0 +1,258 @@
+<app-operativa-header tituloPantalla="{{ 'traking.cuenta.beneficiaria.tituloPag' | translate }}"></app-operativa-header>
+<div id="cuantasBen" class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    <div class="card mt-3 ml-3 mr-3">
+      <h5 class="card-header justify-content-center">
+        {{(showEmailAddMod ? "traking.cuenta.beneficiaria.registro" : "pantalla.monitoreo.monitorArchivoCurso.busqueda") | translate}}
+      </h5>
+      <br />
+      <div class="ml-5">
+        <div class="row">
+          <!-- Cod cliente -->
+          <div class="col-xs-3 col-sm-3 col-md-3">
+            <div class="form-group row">
+              <label for="codCliente" class="col-form-label col-sm-5 col-md-5">{{ "pantalla.datosContrato.codCliente" |
+                translate }}:</label>
+              <div class="col-sm-7 col-md-7">
+                <input type="text" [(ngModel)]="codCliente" id="codCliente" name="codCliente" class="form-control"
+                  maxlength="8" size="16" (blur)="completaBuc($event)" (keypress)="validateOnlyNumeros($event)"  (paste)="pasteOnlyNumeros($event)"
+                  (keydown.Tab)="buscaContrato()"/>
+              </div>
+            </div>
+          </div>
+          <!-- Razón social -->
+          <div class="col-xs-4 col-sm-4 col-md-4" *ngIf="!showEmailAddMod">
+            <div class="form-group row">
+              <label for="razonSocial" class="col-form-label col-sm-3 col-md-3">{{
+                "pantalla.parametriadicional.datosContrato.razonSocial"
+                | translate
+                }}:</label>
+              <div class="col-sm-9 col-md-9">
+                <input type="text" [(ngModel)]="razonSocial" id="razonSocial" name="razonSocial"
+                  class="form-control" [disabled]="true"/>
+              </div>
+            </div>
+          </div>
+
+          <!-- Número de contrato -->
+          <div class="col-xs-4 col-sm-4 col-md-4" *ngIf="!showEmailAddMod">
+            <div class="form-group row">
+              <label for="numContrato" class="col-form-label col-sm-5 col-md-5">{{ "comun.numCntr" | translate
+                }}:</label>
+              <div class="col-sm-6 col-md-6">
+                <input type="text" id="numContrato" name="numContrato" [(ngModel)]="numContrato"
+                  class="form-control" maxlength="12" size="15" (keypress)="validateOnlyNumeros($event)"
+                  (keydown.Tab)="buscaCliente()"
+                  (paste)="pasteOnlyNumeros($event)" [disabled]="true"/>
+              </div>
+            </div>
+          </div>
+
+          <!-- Número de cuenta -->
+          <div class="col-xs-3 col-sm-3 col-md-3">
+            <div class="form-group row">
+              <label for="numCuenta" class="col-form-label col-sm-5 col-md-5">{{ "pantalla.conveniosContratos.cuenta" |
+                translate }}:</label>
+              <div class="col-sm-7 col-md-7">
+                <input type="text" id="numCuenta" name="numCuenta" [(ngModel)]="numCuenta" [disabled]="bloqNumCuenta" class="form-control"
+                  maxlength="11" (keypress)="validateOnlyNumeros($event)" (paste)="pasteOnlyNumeros($event)" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  <!-- Botón consultar -->
+  <div class="row mt-3 mb-2" *ngIf="!showEmailAddMod">
+    <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-1 offset-sm-10 offset-md-10 offset-lg-10">
+      <button type="button" class="btn btn-danger" (click)="getCuentasBeneficiarias()">
+        {{ "btn.consultar" | translate }}
+      </button>
+    </div>
+  </div>
+
+  <!-- Tabla -->
+  <div class="card my-1" *ngIf="!showEmailAddMod && showConsultResult">
+    <h5 class="card-header justify-content-center">
+      {{ "pantalla.gestionAlarma.seccionResultado.title" | translate }}
+    </h5>
+    <div class="card-body">
+      <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+          <table class="table table-striped table-hover" aria-describedby="listaConsultaBita">
+            <thead>
+              <tr>
+                <th class="text-center" scope="col" translate>
+                  traking.cuenta.beneficiaria.tipoCuenta
+                </th>
+                <th class="text-center" scope="col" translate>
+                  traking.cuenta.beneficiaria.nombreCuenta
+                </th>
+                <th class="text-center" scope="col" translate>
+                  traking.cuenta.beneficiaria.noCtaBenef
+                </th>
+                <th class="text-center" scope="col" translate>
+                  traking.cuenta.beneficiaria.estatus
+                </th>
+                <th class="text-center" scope="col" translate>
+                  traking.cuenta.beneficiaria.fechaCreacion
+                </th>
+                <th class="text-center" scope="col" translate>
+                  traking.cuenta.beneficiaria.cuentaCorreo
+                </th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <ng-container *ngIf="true; then templateFillTable; else templateEmptyTable3">
+              </ng-container>
+              <ng-template #templateFillTable>
+                <tr *ngFor="let tab of cuentas">
+                  <td class="text-center">{{tab.cuenta }}</td>
+                  <td class="text-center">{{tab.nombre}}</td>
+                  <td class="text-center">{{tab.numCta }}</td>
+                  <td class="text-center">{{tab.status }}</td>
+                  <td class="text-center">{{tab.fechAlta }}</td>
+                  <td class="ponterItem text-center color" (click)="showDetailEmails(tab)" translate>Cuentas de Correo
+                  </td>
+              </ng-template>
+              <ng-template #templateEmptyTable3>
+                <tr>
+                  <td class="text-center" colspan="12">
+                    {{
+                    "pantalla.moduloAdministracion.gestionBancos.resultadoBusqueda"
+                    | translate
+                    }}
+                  </td>
+                </tr>
+              </ng-template>
+            </tbody>
+          </table>
+        </div>
+        <!-- Botón exportar -->
+          <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-1 offset-sm-10 offset-md-10 offset-lg-10">
+            <button type="button" class="btn btn-danger mr-4" (click)="exportarCuentas()">
+              {{ "btn.exportar" | translate }}
+            </button>
+          </div>
+      </div>
+
+      <!-- Paginador -->
+      <div class="row" *ngIf="banderaHasRows">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mt-1">
+          <div class="d-flex justify-content-center" *ngIf="banderaHasRows">
+            <pagination [boundaryLinks]="showDirectionLinksCU" [directionLinks]="showDirectionLinksCU"
+              [totalItems]="totalElements" [itemsPerPage]="rowsPorPagina" [maxSize]="rowsPorPagina" [(ngModel)]="page"
+              previousText="&lsaquo;" nextText="&rsaquo;" firstText="{{'paginador.inicio' | translate}}"
+              lastText="{{'paginador.fin' | translate}}" (pageChanged)="onPageChanged($event)">
+            </pagination>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Correos -->
+  <div class="card mt-3" *ngIf="showEmailAddMod">
+    <h5 class="card-header justify-content-center">
+      {{ "traking.cuenta.beneficiaria.correos" | translate }}
+    </h5>
+    <br />
+    <!-- Tabla correos -->
+    <div class="row mx-2">
+      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <table class="table table-striped table-hover" *ngIf="emails.length > 0" aria-describedby="correosCuenta">
+          <thead>
+            <tr>
+              <th class="text-center" scope="col" translate>
+                traking.cuenta.beneficiaria.cuentaCorreo
+              </th>
+              <th class="text-center" scope="col" translate>btn.seleccionar</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <ng-container *ngIf="
+                emails.length > 0;
+                then templateFillTable;
+                else templateEmptyTable3
+              ">
+            </ng-container>
+            <ng-template #templateFillTable>
+              <tr *ngFor="let email of emails">
+                <td>{{ email.email }}</td>
+                <td class="text-center">
+                  <label for="activeCheckTable"></label>
+                  <input id="activeCheckTable" type="checkbox" name="activeCheckTable" [checked]="email.selected"
+                    (change)="isSelectedEmail($event, email)" />
+                </td>
+              </tr>
+            </ng-template>
+            <ng-template #templateEmptyTable3>
+              <tr>
+                <td class="text-center" colspan="12">
+                  {{
+                  "pantalla.moduloAdministracion.gestionBancos.resultadoBusqueda"
+                  | translate
+                  }}
+                </td>
+              </tr>
+            </ng-template>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Paginador -->
+    <div class="row" *ngIf="banderaHasRows2">
+      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mt-1">
+        <div class="d-flex justify-content-center" *ngIf="banderaHasRows2">
+          <pagination [boundaryLinks]="showBoundaryLinksCo" [directionLinks]="showDirectionLinksCo"
+            [totalItems]="totalElements2" [itemsPerPage]="rowsPorPagina2" [maxSize]="rowsPorPagina2" [(ngModel)]="page2"
+            previousText="&lsaquo;" nextText="&rsaquo;" firstText="{{'paginador.inicio' | translate}}"
+            lastText="{{'paginador.fin' | translate}}" (pageChanged)="onPageChangedCorreo($event)">
+          </pagination>
+        </div>
+      </div>
+    </div>
+
+    <div class="ml-5">
+      <div class="row mt-3">
+        <!-- Alta/Modfi correo -->
+        <div class="col-xs-6 col-sm-6 col-md-6">
+          <div class="form-group row">
+            <label for="altaModCorreo" class="col-form-label col-sm-4 col-md-4">{{
+              "traking.cuenta.beneficiaria.altaModificacion" | translate
+              }}:</label>
+            <div class="col-sm-7 col-md-7">
+              <input type="text" id="altaModCorreo" name="altaModCorreo" [(ngModel)]="email.email" class="form-control"
+                [disabled]=" emailsSelected.length > 1" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Botones correo -->
+    <div class="row mt-3 mb-3">
+      <div class="col-md-6">
+        <button type="button" class="btn btn-danger mb-2 ml-4" (click)="addModifyEmail()">
+          {{ emailsSelected.length > 0 && emailsSelected.length <= 1? ("btn.guardar" | translate): ("btn.agregar" |
+            translate) }} </button>
+            <br />
+            <button type="button" class="btn btn-danger ml-4" (click)="back()">
+              {{ "btn.regresar" | translate }}
+            </button>
+      </div>
+      <div class="col-md-6 text-right">
+        <button type="button" class="btn btn-danger mb-2 mr-4" (click)="deleteEmails()">
+          {{ "btn.eliminar" | translate }}
+        </button>
+        <br />
+        <button type="button" class="btn btn-danger mr-4" (click)="exportarCorreos()">
+          {{ "btn.exportar" | translate }}
+        </button>
+      </div>
+      <div></div>
+    </div>
+  </div>
+</div>

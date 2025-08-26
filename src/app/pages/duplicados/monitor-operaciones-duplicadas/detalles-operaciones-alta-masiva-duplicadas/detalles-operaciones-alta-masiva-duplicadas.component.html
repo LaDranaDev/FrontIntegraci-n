@@ -1,0 +1,106 @@
+<app-operativa-header tituloPantalla="{{'MO' | translate}} "></app-operativa-header>
+<form [formGroup]="datosForm">
+    <div class="card">
+        <h5 class="card-header justify-content-center">
+            {{'MO.DAM' | translate}}:
+        </h5>
+        <div class="inpu">
+            <label for="nombreEmpleado3" class="col-form-label col-xs-2 col-sm-2 col-md-1">{{'MO.NE' | translate}}: </label>
+            <input type="text" class="form-control" id="nombreEmpleado3" name="nombreEmpleado" formControlName="nombreEmpleado">
+        </div>
+        <div class="inpu">
+            <div class="dos">
+                <label for="rfc3" class="col-form-label col-xs-2 col-sm-2 col-md-2">{{'MO.RFC' | translate}}: </label>
+                <input type="text" class="form-control" id="rfc3" name="rfc" formControlName="rfc">
+            </div>
+            <div class="dos">
+                <label for="numEmpleado3" class="col-form-label col-xs-2 col-sm-2 col-md-2">{{'MO.NUE' | translate}}: </label>
+                <input type="text" class="form-control" id="numEmpleado3" name="numEmpleado" formControlName="numEmpleado">
+            </div>
+        </div>
+        <div class="inpu">
+            <div class="dos">
+                <label for="bucEmpleado3" class="col-form-label col-xs-2 col-sm-2 col-md-2">{{'MO.BE' | translate}}: </label>
+                <input type="text" class="form-control" id="bucEmpleado3" name="bucEmpleado" formControlName="bucEmpleado">
+            </div>
+            <div class="dos">
+                <label for="fechaAplic3" class="col-form-label col-xs-2 col-sm-2 col-md-2">{{'MO.FA' | translate}}: </label>
+                <input type="text" class="form-control" id="fechaAplic3" name="fechaAplic" formControlName="fechaAplic">
+            </div>
+        </div>
+        <div class="inpu">
+            <div class="dos">
+                <label for="numTarjeta3" class="col-form-label col-xs-2 col-sm-2 col-md-2">{{'MO.NT' | translate}}: </label>
+                <input type="text" class="form-control" id="numTarjeta3" name="numTarjeta" formControlName="numTarjeta">
+            </div>
+            <div class="dos">
+                <label for="numeroCuenta" class="col-form-label col-xs-2 col-sm-2 col-md-2">{{'MO.NC' | translate}}: </label>
+                <input type="text" class="form-control" id="numeroCuenta" name="numeroCuenta" formControlName="numeroCuenta">
+            </div>
+        </div>
+        <div class="inpu">
+            <div class="dos">
+                <label for="sucTutora3" class="col-form-label col-xs-2 col-sm-2 col-md-2">{{'MO.ST' | translate}}: </label>
+                <input type="text" class="form-control" id="sucTutora3" name="sucTutora" formControlName="sucTutora" >
+            </div>
+            <div class="dos">
+                <label for="estatus3" class="col-form-label col-xs-2 col-sm-2 col-md-2">{{'MO.E' | translate}}: </label>
+                <input type="text" class="form-control" id="estatus3" name="estatus" formControlName="estatus">
+            </div>
+        </div>
+    </div>
+    <div class="card">
+        <h5 class="card-header justify-content-center">
+             {{'pantallas.usuarioOperantes.Descripcion'| translate}}
+        </h5>
+        <div class="inpu">
+            <label for="descripcion3"></label>
+            <input type="text" class="form-control" id="descripcion3" name="descripcion" formControlName="descripcion" >
+        </div>
+    </div>
+    <div class="card">
+        <h5 class="card-header justify-content-center">
+            {{'MO.CO'| translate}}:
+        </h5>
+        <div class="inpu">
+            <label for="comentario23"></label>
+            <input type="text" class="form-control" id="comentario23" name="comentario" formControlName="comentario">
+        </div>
+    </div>
+
+    <div class="card" *ngIf="rechazo === true">
+        <h5 class="card-header justify-content-center">
+            {{'R' | translate}}:
+        </h5>
+        <div class="inpu">
+            <label for="razonRechazo112" class="col-form-label col-xs-4 col-sm-4 col-md-2">{{'R.R' | translate}}: </label>
+            <input type="text" class="form-control" id="razonRechazo112" name="razonRechazo" formControlName="razonRechazo" maxlength="200">
+        </div>
+
+        <div class="row mt-2">
+            <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-1 offset-sm-1 offset-md-1 offset-lg-1">
+                <button type="button" class="btn btn-danger" (click)="procesar2()">{{'btn.aceptar' | translate}}</button>
+            </div>
+            <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-8 offset-sm-8 offset-md-8 offset-lg-8">
+                <button type="button" class="btn btn-danger" (click)="cancel1()">{{'btn.cancelar' | translate}}</button>
+            </div>
+            <br><br>
+        </div>
+    </div>
+    <div class="row mt-2">
+        <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-1 offset-sm-1 offset-md-1 offset-lg-1">
+            <button type="button" class="btn btn-danger" (click)="regresar2()">{{'MO.Regr' | translate}}</button>
+        </div>
+        <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-8 offset-sm-8 offset-md-8 offset-lg-8">
+            <button type="button" class="btn btn-danger" (click)="procesar2()">{{'MO.Proc' | translate}}</button>
+        </div>
+    </div>
+    <div class="row mt-2">
+        <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-1 offset-sm-1 offset-md-1 offset-lg-1">
+            <button type="button" class="btn btn-danger" (click)="refrescar2()">{{'MO.Refr' | translate}}</button>
+        </div>
+        <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-8 offset-sm-8 offset-md-8 offset-lg-8">
+            <button type="button" class="btn btn-danger" (click)="rechazar2()">{{'MO.Rech' | translate}}</button>
+        </div>
+    </div>
+</form>

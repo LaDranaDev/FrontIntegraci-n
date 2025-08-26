@@ -1,0 +1,133 @@
+<app-operativa-header
+    tituloPantalla="{{'administracion.productos.tituloPagina' | translate}}"></app-operativa-header>
+
+<div id="gestionProductos" class="panel panel-default col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    <br>
+
+    <div class="card mt-3">
+        <h5 class="card-header justify-content-center">{{'pantalla.sucursales.criterios.title'| translate}}</h5>
+        <div class="card-body">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <form [formGroup]="gestionProductosForm" class="row">
+                    <div class="col-6">
+                        <div class="col-label estilo">
+                            <label for="inputIdForm" class="col-form-label">{{'administracion.productos.clave' | translate}}</label>
+                        </div>
+                        <div class="col-input">
+                            <input type="text" class="form-control removeTextTransform" id="inputIdForm" formControlName="claveProd"
+                                maxlength="2" size="5" (keypress)="eventOnlyAlphabeticAndNumbers($event)">
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="col-label estilo">
+                            <label for="descri" class="col-form-label">{{'pantalla.gestionParametrosCanal.descCanal' | translate }}</label>
+                        </div>
+                        <div class="col-input estilo">
+                            <input type="text" class="form-control estilo removeTextTransform" id="descri" formControlName="descripcion"
+                                maxlength="40" size="45" (keypress)="eventOnlyAlphabeticAndNumbers($event)">
+                        </div>
+                    </div>
+                </form>
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-1 estilo">
+                        <button type="button" class="btn btn-danger" (click)="onClickClean()">{{'btn.limpiar' |
+                            translate}}</button>
+                    </div>
+                    <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-8 estilo">
+                        <button type="button" class="btn btn-danger" (click)="searchProductos()">{{'btn.buscar' |
+                            translate}}</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card mt-3">
+        <h5 class="card-header justify-content-center">
+            {{ 'pantalla.gestionAlarma.seccionResultado.title' | translate }}
+        </h5>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <table class="table table-striped table-hover">
+                        <caption></caption>
+                        <thead>
+                            <tr>
+                                <th scope="col" class="text-center">{{'administracion.productos.clave' | translate}}</th>
+                                <th scope="col" class="text-center">{{'pantalla.gestionParametrosCanal.descCanal' | translate}}</th>
+                                <th scope="col" class="text-center">{{'administracion.productos.umbral' | translate}}</th>
+                                <th scope="col" class="text-center">{{'administracion.productos.codigoOperacion' | translate}}</th>
+                                <th scope="col" class="text-center">{{'pantalla.gestionParametrosCanal.activo' | translate}}</th>
+                                <th *ngIf="editarProducto === true" scope="col" class="text-center">{{'btn.modificar' | translate}}</th>
+                                <th scope="col" class="text-center">{{'consultaDocumentosCFDI.lblDetalle' | translate}}</th>
+                                <th *ngIf="verPeriodo === true" scope="col" class="text-center">{{'pantalla.controlVolumenOperativo.graficaArchivoCliente.periodo' | translate}}</th>
+                                <th *ngIf="verCont === true" scope="col" class="text-center">{{'pantalla.envio.archivos' | translate}}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <ng-container *ngIf="banderaHasRows; then templateFillTable; else templateEmptyTableBack">
+                            </ng-container>
+                            <ng-template #templateFillTable>
+                                <tr *ngFor="let dato of tabla">
+                                    <td class="text-center">{{dato.cveProd}}</td>
+                                    <td class="text-center">{{dato.descProd}}</td>
+                                    <td class="text-center">{{dato.umbral}}</td>
+                                    <td class="text-center">{{dato.idBack}}</td>
+                                    <td class="text-center">
+                                        <label for="check1"></label>
+                                        <input type="checkbox" name="" id="check1"
+                                            [checked]="dato.bandActivo === 'A' ? true : false" disabled />
+                                    </td>
+                                    <td *ngIf="editarProducto === true" class="text-center"><button type="button" class="btn btn-outline-danger"
+                                            [disabled]="(dato.cveProd.toUpperCase() === 'CO' && (dato.descProd.toUpperCase() === 'COMISIÓN H2H' || dato.descProd.toUpperCase() === 'COMISION H2H')) ||
+                                        (dato.cveProd.toUpperCase() === 'RA' && dato.descProd.toUpperCase() === 'REPORTES CONFIRMING') ||
+                                        (dato.cveProd.toUpperCase() === 'RC' && (dato.descProd.toUpperCase() === 'REPORTES CAPTACION' || dato.descProd.toUpperCase() === 'REPORTES CAPTACIÓN'))"
+                                            (click)="goEnviarProducto('modif', dato.idProduct)">{{'btn.modificar' | translate}}</button></td>
+                                    <td class="text-center"><button type="button" class="btn btn-outline-danger"
+                                            (click)="goEnviarProducto('detalle', dato.idProduct)">{{'consultaDocumentosCFDI.lblDetalle' | translate}}</button></td>
+                                    <td *ngIf="verPeriodo === true" class="text-center"><button type="button" class="btn btn-outline-danger"
+                                            [disabled]="(dato.cveProd.toUpperCase() === 'CO' && (dato.descProd.toUpperCase() === 'COMISIÓN H2H' || dato.descProd.toUpperCase() === 'COMISION H2H')) ||
+                                    (dato.cveProd.toUpperCase() === 'RA' && dato.descProd.toUpperCase() === 'REPORTES CONFIRMING') ||
+                                    (dato.cveProd.toUpperCase() === 'RC' && (dato.descProd.toUpperCase() === 'REPORTES CAPTACION' || dato.descProd.toUpperCase() === 'REPORTES CAPTACIÓN'))"
+                                            (click)="goContingencia('periodo', dato.idProduct, dato.descProd)">{{'pantalla.controlVolumenOperativo.graficaArchivoCliente.periodo' | translate}}</button>
+                                    </td>
+                                    <td *ngIf="verCont === true" class="text-center"><button type="button" class="btn btn-outline-danger"
+                                            [disabled]="dato.cveProdOper === '95' || dato.cveProdOper === '93' || dato.cveProdOper === '96' || dato.cveProdOper === '00'"
+                                            (click)="goContingencia('contingencia', dato.idProduct, dato.descProd)">{{'pantalla.envio.archivos' | translate }}</button>
+                                    </td>
+                                </tr>
+                            </ng-template>
+                            <ng-template #templateEmptyTableBack>
+                                <tr>
+                                    <td class="text-center" colspan="12"> {{'noResult' | translate}}</td>
+                                </tr>
+                            </ng-template>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mt-1">
+                    <div class="d-flex justify-content-center" *ngIf="banderaHasRows">
+                        <pagination [boundaryLinks]="showBoundaryLinks" [directionLinks]="showDirectionLinks"
+                            [totalItems]="totalElements" [itemsPerPage]="rowsPorPagina" [maxSize]="rowsPorPagina"
+                            [(ngModel)]="page" previousText="&lsaquo;" nextText="&rsaquo;"
+                            firstText="{{'paginador.inicio' | translate}}" lastText="{{'paginador.fin' | translate}}"
+                            (pageChanged)="onPageChanged($event)">
+                        </pagination>
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 offset-10 mb-3" *ngIf="agregarProducto === true">
+                    <button type="button" class="btn btn-danger" (click)="goProducto('alta')">{{'administracion.productos.agregarProducto' | translate}}</button>
+                </div>
+                <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-10">
+                    <button type="button" class="btn btn-danger" (click)="onClickExportar()"
+                        [disabled]="banderaBtnExportar">{{'btn.exportar' | translate}}</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

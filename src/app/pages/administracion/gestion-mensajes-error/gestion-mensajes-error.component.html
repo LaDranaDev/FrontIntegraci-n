@@ -1,0 +1,131 @@
+<app-operativa-header tituloPantalla="{{'pantalla.mensajesError' | translate}}"></app-operativa-header>
+<div id="consultaPais" class="panel panel-default col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    <br>
+    <div class="card">
+        <h5 class="card-header justify-content-center">
+            {{'pantalla.mensajesError.title' | translate}}
+        </h5>
+        <div class="card-body">
+            <form [formGroup]="gestionMensajesErrorForm">
+                <div class="row justify-content-center">
+                    <div class="col-xs-6 col-sm-6 col-md-6">
+                        <div class="form-group row">
+                            <label class="col-xs-2 col-sm-2 col-md-2 col-lg-2 offset-xs-1 offset-sm-1 offset-md-1 offset-lg-1 col-form-label text-right mt-1" for="codigoErrorBack">{{'pantalla.mensajesError.codigo' | translate}}:</label>
+                            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                <input class="form-control"  type="text" id="codigoErrorBack" name="codigoErrorBack" formControlName="codigoErrorBack" placeholder="{{'pantalla.mensajesError.codigo' | translate}}" appInputMask="alfanumerico_observ_bajo" maxlength="10">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-6 col-sm-6 col-md-6">
+                        <div class="form-group row">
+                            <label class="col-xs-2 col-sm-2 col-md-2 col-lg-2 offset-xs-1 offset-sm-1 offset-md-1 offset-lg-1 col-form-label text-right mt-1" for="dscClte">{{'pantalla.mensajesError.mensaje'| translate}}:</label>
+                            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                <textarea id="dscClte" name="dscClte" class="form-control" placeholder="{{'pantalla.mensajesError.mensaje'| translate}}" formControlName="mensaje" appInputMask="specialComment" maxlength="100"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <div class="row mt-2">
+                <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-1 offset-sm-1 offset-md-1 offset-lg-1">
+                    <button type="button" class="btn btn-danger" (click)="eventClean()">{{'btn.limpiar' |
+                        translate}}</button>
+                </div>
+                <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-8 offset-sm-8 offset-md-8 offset-lg-8">
+                    <button type="button" class="btn btn-danger" (click)="consultarError()">{{'btn.buscarError' |
+                        translate}}</button>
+                </div>
+            </div>
+            <div class="row mt-2">
+                <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-1 offset-sm-1 offset-md-1 offset-lg-1">
+                </div>
+                <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-8 offset-sm-8 offset-md-8 offset-lg-8">
+                    <button type="button" class="btn btn-danger" (click)="agregarMensajeError()" >{{'administracion.mensajeerror.detalle.agregarMensaje' |
+                        translate}}</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card my-1">
+        <h5 class="card-header justify-content-center">
+            {{'pantalla.moduloAdministracion.resultadoBusqueda.title' | translate}}
+        </h5>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                   <table class="table table-striped table-hover" aria-describedby="listaConsultaPais">
+                        <thead>
+                            <tr>
+                                <th class="text-center" scope="col">{{'administracion.mensajeerror.detalle.codigoErrorBackend' |translate}}</th>
+                                <th class="text-center" scope="col">{{'administracion.mensajeerror.detalle.codigoErrorH2H' |translate}}</th>
+                                <th class="text-center" scope="col">{{'administracion.mensajeerror.detalle.mensajeBack' |translate}}</th>
+                                <th class="text-center" scope="col">{{'administracion.mensajeerror.detalle.mensajeH2H' |translate}}</th>
+                                <th class="text-center" scope="col">{{'pantalla.gestionParametrosCanal.activo' |translate}}</th>
+                                <th class="text-center" scope="col">{{'administracion.mensajeerror.detalle.tipoMensaje' |translate}}</th>
+                                <th class="text-center" scope="col">{{'btn.modificar' | translate }}</th>
+                                <th class="text-center" scope="col">{{'consultaDocumentosCFDI.lblDetalle' | translate }}</th>
+                                
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <ng-container *ngIf="banderaHasRows; then templateFillTable; else templateEmptyTable">
+                            </ng-container>
+                            <ng-template #templateFillTable>
+                                <tr *ngFor="let mensaje of tablaMensajeError">
+                                    <td class="text-center">{{mensaje.codErrBack}}</td>
+                                    <td class="text-center">{{mensaje.codErrorH2h}}</td>
+                                    <td class="text-center">{{mensaje.mensajeBack}}</td>
+                                    <td class="text-center">{{mensaje.mensajeH2h}}</td>
+                                    <td class="text-center">
+                                        <input type="checkbox"  [checked]="mensaje.bandActivo === true ? true : false" disabled aria-label="entregaBuzonCliente" disabled>
+                                    </td>
+                                    <td class="text-center">
+                                        <div *ngIf="mensaje.tipoMensaje === 'E'"> {{'menu.sterling.historialBuzon.error' | translate}} </div>
+                                        <div *ngIf="mensaje.tipoMensaje === 'D'"> {{'consultaDocumentosCFDI.lblDetalle' | translate }} </div>
+                                        <div *ngIf="mensaje.tipoMensaje === 'F'"> {{'menu.gestionBuzon.parametroProtocolo.formato' | translate }} </div>
+                                    </td>
+                                    <td  class="text-center">
+                                        <button type="button" class="btn btn-outline-danger" (click)="editarMensajeError(mensaje.idMensaje)" >{{'btn.modificar' | translate}}</button>
+                                    </td>
+                                    <td  class="text-center">
+                                        <button type="button" class="btn btn-outline-danger" (click)="detalleMensaje(mensaje.idMensaje)"  >{{'consultaDocumentosCFDI.lblDetalle' | translate}}</button>
+                                    </td>
+                                </tr>
+                            </ng-template>
+                            <ng-template #templateEmptyTable>
+                                <tr>
+                                    <td class="text-center" colspan="12"> {{'administracion.productos.periodo.Nodata' | translate }} </td>
+                                </tr>
+                            </ng-template>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mt-1">
+                    <div class="d-flex justify-content-center" *ngIf="banderaHasRows">
+                        <pagination
+                            [boundaryLinks]="showBoundaryLinks"
+                            [directionLinks]="showDirectionLinks"
+                            [totalItems]="totalElements"
+                            [itemsPerPage]="rowsPorPagina"
+                            [maxSize]="rowsPorPagina"
+                            [(ngModel)]="page"
+                            previousText="&lsaquo;" nextText="&rsaquo;"
+                            firstText="{{'paginador.inicio' | translate}}" lastText="{{'paginador.fin' | translate}}"
+                            (pageChanged)="onPageChanged($event)">
+                        </pagination>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-2">
+        <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-10 offset-sm-10 offset-md-10 offset-lg-10">
+            <button type="button" class="btn btn-danger" [disabled]="!banderaBtnExportar" (click)="exportar()">{{'btn.exportar' | translate}}</button>
+        </div>
+    </div>
+
+</div>

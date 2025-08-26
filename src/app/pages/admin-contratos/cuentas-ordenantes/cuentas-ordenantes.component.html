@@ -1,0 +1,235 @@
+<app-operativa-header tituloPantalla="{{'pantalla.cuentasOrdenantes' | translate}}"></app-operativa-header>
+<div id="EdoCuentaConsolidado" class="panel panel-default col-xs-12 col-sm-12 col-md-12 col-lg-12">
+      <br>
+      <div class="card">
+            <h5 class="card-header justify-content-center">
+                  {{'pantalla.datosContrato.title' | translate}}
+            </h5>
+            <app-busqueda-cliente [data]="dataContract"></app-busqueda-cliente> <!-- #limpiar-->
+      </div>
+
+      <div class="card mt-3">
+            <h5 class="card-header justify-content-center unir">
+                  {{'pantalla.cuentasOrdenantes.AdminCtaOrdenantes' | translate}}
+            </h5>
+            <div class="card-body">
+                  <form [formGroup]="formSaveCta">
+                        <div class="row justify-content-center">
+                              <div class="col-xs-1 col-sm-1 col-md-1">
+                                    <input type="checkbox" class="checkBox-control" name="tercerosCheck"
+                                          aria-label="activo" formControlName="terceros" />
+                                    <label for="tercerosCheck" class="col-form-label">{{
+                                          "pantalla.cuentasOrdenantes.label.terceros"
+                                          | translate
+                                          }}</label>
+                              </div>
+                              <label for="ctaInput" class="col-form-label col-auto">{{
+                                    "pantalla.cuentasOrdenantes.label.cuenta"
+                                    | translate
+                                    }}</label>
+                              <div class="col-xs-2 col-sm-2 col-md-2">
+                                    <input type="text" class="form-control" id="ctaInput" name="ctaInput" maxlength="11"
+                                          size="20" appInputMask="numerico" formControlName="cuenta"
+                                          (keydown.tab)="ValidarDatosCuenta()" />
+                              </div>
+                              <label for="bicInput" class="col-form-label col-auto">{{
+                                    "pantalla.cuentasOrdenantes.label.bic"
+                                    | translate
+                                    }}</label>
+                              <div class="col-xs-2 col-sm-2 col-md-2">
+                                    <input type="text" class="form-control" id="bicInput" name="bicInput" maxlength="11"
+                                          size="20" appInputMask="alfanumerico" formControlName="bic" />
+                              </div>
+                              <label for="estatusInput" class="col-form-label col-auto display">{{
+                                    "pantalla.cuentasOrdenantes.label.estatus"
+                                    | translate
+                                    }}</label>
+                              <div class="col-xs-2 col-sm-2 col-md-2">
+                                    <input type="text" class="form-control" id="estatusInput" name="estatusInput"
+                                          [disabled]="true" maxlength="8" size="20" formControlName="estatus" />
+                              </div>
+
+                        </div>
+                        <br>
+                        <div class="row justify-content-center">
+                              <label for="estatusInput" class="col-form-label col-auto display">{{
+                                    "pantalla.cuentasOrdenantes.label.titularCta"
+                                    | translate
+                                    }}</label>
+                              <div class="col-xs-6 col-sm-6 col-md-6">
+                                    <input type="text" class="form-control" id="estatusInput" name="estatusInput"
+                                          maxlength="8" size="85" readonly formControlName="titular" />
+                              </div>
+                        </div>
+                  </form>
+
+            </div>
+            <div class="row mt-2 mb-4">
+                  <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-1 offset-sm-1 offset-md-1 offset-lg-1">
+                        <button type="button" class="btn btn-danger"
+                              (click)="limpiarAdminCtaOperantes()">{{'btn.limpiar' | translate}}</button>
+                  </div>
+                  <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-8 offset-sm-8 offset-md-8 offset-lg-8">
+                        <button type="button" class="btn btn-danger" (click)="saveCtaData()">{{'btn.guardar' |
+                              translate}}</button>
+                  </div>
+            </div>
+      </div>
+
+      <div class="card mt-3">
+            <h5 class="card-header justify-content-center unir">
+                  {{'pantalla.cuentasOrdenantes.CtaAConsultar' | translate}}
+            </h5>
+            <div class="card-body">
+                  <form [formGroup]="formSearchCta">
+                        <div class="row justify-content-center">
+                              <label for="ctaInputBusqueda" class="col-form-label col-auto">{{
+                                    "pantalla.cuentasOrdenantes.label.cuenta" | translate}}</label>
+                              <div class="col-xs-2 col-sm-2 col-md-2">
+                                    <input type="text" class="form-control" id="ctaInputBusqueda"
+                                          name="ctaInputBusqueda" maxlength="11" size="20" appInputMask="numerico"
+                                          formControlName="cuenta" />
+                              </div>
+
+                        </div>
+                        <div class="row mt-2">
+                              <div
+                                    class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-1 offset-sm-1 offset-md-1 offset-lg-1">
+                                    <!-- <button type="button" class="btn btn-danger" (click)="limpiarCtaConsulta()">{{'btn.limpiar' | translate}}</button> -->
+                              </div>
+                              <div
+                                    class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-8 offset-sm-8 offset-md-8 offset-lg-8">
+                                    <button type="button" class="btn btn-danger"
+                                          (click)="buscarContrato()">{{'btn.buscar' |
+                                          translate}}</button>
+                              </div>
+                        </div>
+                  </form>
+            </div>
+      </div>
+
+      <div class="card mt-3">
+            <!-- <h5 class="card-header justify-content-center unir">
+                  {{'pantalla.cuentasOrdenantes.CtaAConsultar' | translate}}
+            </h5> -->
+            <div class="card-body">
+                  <div class="row justify-content-center">
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                              <table class="table table-striped table-hover" aria-describedby="listaConsultaPais">
+                                    <thead>
+                                          <tr>
+                                                <th class="text-center" scope="col">
+                                                      {{'pantalla.cuentasOrdenantes.table.sel' | translate}}</th>
+                                                <th class="text-center" scope="col">
+                                                      {{'pantalla.cuentasOrdenantes.table.cta' | translate}}</th>
+                                                <th class="text-center" scope="col">
+                                                      {{'pantalla.cuentasOrdenantes.table.titularCta' | translate}}</th>
+                                                <th class="text-center" scope="col">
+                                                      {{'pantalla.cuentasOrdenantes.table.bic' | translate}}</th>
+                                                <th class="text-center" scope="col">
+                                                      {{'pantalla.cuentasOrdenantes.table.terceros' | translate}}</th>
+
+                                          </tr>
+                                    </thead>
+                                    <tbody>
+
+                                          <tr *ngFor="let data of ctasShowList">
+                                                <td class="text-center">
+                                                      <input type="checkbox" class="checkBox-control" name="selCheck"
+                                                            aria-label="activo" [value]="data.idContratoCuenta"
+                                                            (change)="selCta($event)" [checked]="data.selection"
+                                                            [disabled]="data.tipoCuenta === 'E'" />
+                                                </td>
+                                                <td class="text-center">{{data.numCuenta}}</td>
+                                                <td class="text-center">{{data.titular}}</td>
+                                                <td class="text-center">{{data.bic}}</td>
+                                                <td class="text-center">
+                                                      <input type="checkbox" [checked]="data.terceros"
+                                                            aria-label="entregaBuzonCliente" disabled>
+                                                </td>
+                                          </tr>
+
+                                    </tbody>
+                              </table>
+                        </div>
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mt-1">
+                              <div class="d-flex justify-content-center">
+                                    <pagination [boundaryLinks]="true" 
+                                          [directionLinks]="true" 
+                                          [totalItems]="totalRegistros" 
+                                          [itemsPerPage]="rowsPorPagina" 
+                                          [maxSize]="rowsPorPagina"
+                                          [(ngModel)]="page" 
+                                          previousText="&lsaquo;" 
+                                          nextText="&rsaquo;" 
+                                          firstText="Inicio" 
+                                          lastText="Fin" (pageChanged)="onPageChanged($event)"
+                                          [hidden]="ctasList.length === 0">
+                                    </pagination>
+                              </div>
+                        </div>
+
+                  </div>
+                  <div class="row mt-2">
+                        <div
+                              class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-1 offset-sm-1 offset-md-1 offset-lg-1">
+                              <button type="button" class="btn btn-danger" (click)="deleteData()">{{'btn.eliminar' |
+                                    translate}}</button>
+                        </div>
+                        <div
+                              class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-8 offset-sm-8 offset-md-8 offset-lg-8">
+                              <button type="button" class="btn btn-danger" (click)="exportData()">{{'btn.exportar' |
+                                    translate}}</button>
+                        </div>
+                  </div>
+                  <div class="row mt-2">
+                        <div
+                              class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-1 offset-sm-1 offset-md-1 offset-lg-1">
+                              <div class="form-group row justify-content-center align-items-center">
+                                    <button type="button" class="btn btn-danger"
+                                          (click)="limpiarSeleccion()">{{'btn.limpiarSeleccion' |
+                                          translate}}</button>
+                              </div>
+                        </div>
+                  </div>
+            </div>
+      </div>
+
+      <div class="card mt-3">
+            <h5 class="card-header justify-content-center unir">
+                  {{'pantalla.cuentasOrdenantes.AltaBajaCtaMasiva' | translate}}
+            </h5>
+            <div class="card-body">
+                  <div class="row justify-content-center ml-2">
+                        <div class="col-auto">
+                              <button type="button" class="btn btn-danger mr-3 col-form-label"
+                                    (click)="btnCargarArchivo.click()">{{'btn.archivo' | translate}}</button>
+                              <label for="file" class="col-form-label" [hidden]="true"></label>
+                        </div>
+                        <div class="col-xs-3 col-sm-3 col-md-3">
+                              <div class="form-group">
+                                    <input #btnCargarArchivo type="file" name="file" id="file"
+                                          (change)="readArchivo($event)" [hidden]="true" accept=".xls, .xlsx">
+                                    <label for="inputNombreArchivo" class="col-form-label" [hidden]="true"></label>
+                                    <input type="text" id="inputNombreArchivo"
+                                          class="form-control form-control-plaintext" [readonly]="true"
+                                          [(ngModel)]="nombreArchivo">
+                              </div>
+                        </div>
+                  </div>
+                  <div class="row mt-2">
+                        <div
+                              class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-1 offset-sm-1 offset-md-1 offset-lg-1">
+                              <button type="button" class="btn btn-danger" (click)="limpiarFile()">{{'btn.limpiar' |
+                                    translate}}</button>
+                        </div>
+                        <div
+                              class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-8 offset-sm-8 offset-md-8 offset-lg-8">
+                              <button type="button" class="btn btn-danger" (click)="guardarMasivo()">{{'btn.enviar' |
+                                    translate}}</button>
+                        </div>
+                  </div>
+            </div>
+
+      </div>
+</div>

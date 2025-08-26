@@ -1,0 +1,366 @@
+<app-operativa-header
+  tituloPantalla="{{
+    'menu.moduloAdministracion.gestionValidacionesCanal' | translate
+  }}"
+></app-operativa-header>
+<div
+  id="gestionValidacionesCanal"
+  class="panel panel-default col-xs-12 col-sm-12 col-md-12 col-lg-12"
+>
+  <br />
+  <div class="card">
+    <h5 class="card-header justify-content-center">
+      {{ "pantalla.gestionValidacion.seccionBusqueda.title" | translate }}
+    </h5>
+    <div class="card-body">
+      <form [formGroup]="formControlValidaciones">
+        <div class="row">
+          <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+            <div
+              class="form-group row justify-content-center align-items-center"
+            >
+              <label for="selectProducto" class="col-md-3 col-form-label">{{
+                "pantallas.monitorOperacionesOnline.producto" | translate
+              }}</label>
+              <div class="col-md-9">
+                <select
+                  class="form-select form-select-sm form-control"
+                  (change)="selectProduct($event)"
+                  id="selectProducto"
+                  formControlName="producto"
+                  aria-label="estatus"
+                >
+                  <option value="">{{'pantalla.moduloAdministracion.gestionBancos.seleccione' | translate }}</option>
+                  <option
+                    [value]="item.idCatalogo"
+                    *ngFor="let item of productos"
+                  >
+                    {{ item.descripcion }}
+                  </option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+            <div
+              class="form-group row justify-content-center align-items-center"
+            >
+              <label for="selectLayout" class="col-md-3 col-form-label"
+                >{{
+                  "menu.moduloAdministracion.creacionLayouts.layout"
+                    | translate
+                }}:</label
+              >
+              <div class="col-md-9">
+                <select
+                  class="form-select form-select-sm form-control"
+                  id="selectLayout"
+                  formControlName="layout"
+                >
+                  <option value="">{{'pantalla.moduloAdministracion.gestionBancos.seleccione' | translate }}</option>
+                  <option
+                    [value]="item.idCatalogo"
+                    *ngFor="let item of catLayout"
+                  >
+                    {{ item.descripcion }}
+                  </option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+            <div
+              class="form-group row justify-content-center align-items-center"
+            >
+              <label for="selectAsignados" class="col-md-4 col-form-label"
+                >{{
+                  "menu.moduloAdministracion.gestionValidacionesCanal.asignados"
+                    | translate
+                }}:</label
+              >
+              <div class="col-md-8">
+                <select
+                  class="form-control"
+                  id="selectAsignados"
+                  (change)="selectAsignados($event)"
+                  name="v_Asignados"
+                  formControlName="asignados"
+                >
+                  <option value="">{{'seleccione' | translate}}</option>
+                  <option [value]="item.id" *ngFor="let item of catAsignados">
+                    {{ item.descripcion }}
+                  </option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row" *ngIf="assign === true">
+          <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+            <div class="form-group row align-items-center">
+              <label
+                for="claveRelacion"
+                class="col-xs-3 col-sm-3 col-md-3 col-lg-3 col-form-label"
+              >
+                {{ "gestionValidaciones.general.gestionValidaciones.claveArchivo" | translate }}:
+              </label>
+              <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                <input
+                  onDrag="return false"
+                  onDrop="return false"
+                  type="text"
+                  class="form-control"
+                  name="claveRelacion"
+                  formControlName="claveRelacion"
+                  appInputMask="alfanumerico_space"
+                  aria-label="activo"
+                  maxlength="20"
+                  (paste)="eventoPaste($event)"
+                />
+              </div>
+            </div>
+          </div>
+          <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+            <div class="form-group row align-items-center">
+              <label
+                for="descripcionRelacion"
+                class="col-xs-3 col-sm-3 col-md-3 col-lg-3 col-form-label"
+              >
+                {{ "gestionValidaciones.general.gestionValidaciones.descArchivo" | translate }} :</label
+              >
+              <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                <input
+                  onDrag="return false"
+                  onDrop="return false"
+                  type="text"
+                  class="form-control"
+                  name="descripcionRelacion"
+                  formControlName="descripcionRelacion"
+                  aria-label="activo"
+                  maxlength="40"
+                  appInputMask="alfanumerico_space"
+                  (paste)="eventoPaste($event)"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+      <div class="row">
+        <div
+          class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-1 offset-sm-1 offset-md-1 offset-lg-1"
+        >
+          <button
+            type="button"
+            class="btn btn-danger"
+            (click)="onClickLimpiar()"
+          >
+            {{ "btn.limpiar" | translate }}
+          </button>
+        </div>
+        <div
+          class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-8 offset-sm-8 offset-md-8 offset-lg-8"
+        >
+          <button type="button" class="btn btn-danger" (click)="buscar()">
+            {{ "btn.buscar" | translate }}
+          </button>
+        </div>
+      </div>
+      <br />
+      <div class="row">
+        <div
+          class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-1 offset-sm-1 offset-md-1 offset-lg-1"
+        >
+          <button type="button" class="btn btn-danger" (click)="asignar()">
+            {{ "btn.asignar" | translate }}
+          </button>
+        </div>
+        <div
+          class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-8 offset-sm-8 offset-md-8 offset-lg-8"
+        >
+          <button
+            type="button"
+            class="btn btn-danger"
+            (click)="agregar()"
+            *ngIf="catAsignados.length > 0 && tabla.length <= 0"
+          >
+            {{ "btn.agregar" | translate }}
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="card my-1" *ngIf="tabla.length > 0">
+      <h5 class="card-header justify-content-center">
+        {{ "gestionValidaciones.general.gestionValidaciones.validacionesCanal" | translate }}
+      </h5>
+      <div class="card-body">
+        <div class="row">
+          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <table
+              class="table table-striped table-hover"
+              aria-describedby="listaConsultaBanco"
+            >
+              <thead>
+                <tr>
+                  <th class="text-center" scope="col" translate>
+                    {{
+                      "pantalla.moduloAdministracion.gestionValidacionesCanal.numero"
+                    }}
+                  </th>
+                  <th class="text-center" scope="col" translate>
+                    {{
+                      "pantalla.moduloAdministracion.gestionValidacionesCanal.campo"
+                    }}
+                  </th>
+                  <th class="text-center" scope="col" translate>
+                    {{
+                      "pantalla.moduloAdministracion.gestionValidacionesCanal.descripcion"
+                    }}
+                  </th>
+                  <th class="text-center" scope="col" translate>
+                    {{
+                      "pantalla.moduloAdministracion.gestionValidacionesCanal.tipo"
+                    }}
+                  </th>
+                  <th class="text-center" scope="col" translate>
+                    {{
+                      "pantalla.moduloAdministracion.gestionValidacionesCanal.inicio"
+                    }}
+                  </th>
+                  <th class="text-center" scope="col" translate>
+                    {{
+                      "pantalla.moduloAdministracion.gestionValidacionesCanal.final"
+                    }}
+                  </th>
+                  <th class="text-center" scope="col" translate>
+                    {{
+                      "pantalla.moduloAdministracion.gestionValidacionesCanal.validacion"
+                    }}
+                  </th>
+                  <th class="text-center" scope="col" translate>
+                    {{
+                      "pantalla.moduloAdministracion.gestionValidacionesCanal.descripcionValidacion"
+                    }}
+                  </th>
+                  <th class="text-center" scope="col" translate>
+                    {{
+                      "pantalla.moduloAdministracion.gestionValidacionesCanal.codigoBack"
+                    }}
+                  </th>
+                  <th class="text-center" scope="col" translate>
+                    {{
+                      "pantalla.moduloAdministracion.gestionValidacionesCanal.codigoCCBN"
+                    }}
+                  </th>
+                  <th class="text-center" scope="col" translate>
+                    {{
+                      "pantalla.moduloAdministracion.gestionValidacionesCanal.mensaje"
+                    }}
+                  </th>
+                  <th class="text_centro" scope="col">{{'btn.seleccionar' | translate}}</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                <ng-container
+                  *ngIf="
+                    banderaHasRows;
+                    then templateFillTable;
+                    else templateEmptyTable3
+                  "
+                >
+                </ng-container>
+                <ng-template #templateFillTable>
+                  <tr *ngFor="let gvc of tabla; let i = index">
+                    <td>{{ gvc.numero }}</td>
+                    <td>{{ gvc.campo }}</td>
+                    <td>{{ gvc.descripcion }}</td>
+                    <td>{{ gvc.tipoCampo }}</td>
+                    <td>{{ gvc.posInicial }}</td>
+                    <td>{{ gvc.posFinal }}</td>
+                    <td>{{ gvc.validacion }}</td>
+                    <td>{{ gvc.descripcionValidacion }}</td>
+                    <td>{{ gvc.codigoBack }}</td>
+                    <td>{{ gvc.codigoCcnbn }}</td>
+                    <td>{{ gvc.mensaje }}</td>
+                    <td class="text-center">
+                        <label for="rad"></label>
+                        <input
+                          type="radio"
+                          id="rad"
+                          name="rad"
+                          [checked]="gvc.selected"
+                          [value]="gvc"
+                          (click)="radio(gvc, i)"
+                        />
+                      </td>
+                  </tr>
+                </ng-template>
+                <ng-template #templateEmptyTable3>
+                  <tr>
+                    <td class="text-center" colspan="12">
+                      {{
+                        "pantalla.moduloAdministracion.gestionBancos.resultadoBusqueda"
+                          | translate
+                      }}
+                    </td>
+                  </tr>
+                </ng-template>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="row" *ngIf="banderaHasRows">
+          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mt-1">
+            <div class="d-flex justify-content-center" *ngIf="banderaHasRows">
+              <pagination
+                [boundaryLinks]="showBoundaryLinksGvc"
+                [directionLinks]="showDirectionLinksGvc"
+                [totalItems]="totalElements"
+                [itemsPerPage]="rowsPorPagina"
+                [maxSize]="rowsPorPagina"
+                [(ngModel)]="page"
+                previousText="&lsaquo;"
+                nextText="&rsaquo;"
+                firstText="{{'paginador.inicio' | translate}}"
+                lastText="{{'paginador.fin' | translate}}"
+                (pageChanged)="onPageChanged($event)"
+              >
+              </pagination>
+            </div>
+          </div>
+
+          <ng-container>
+            <div class="col-md-5 offset-1">
+              <button type="button" class="btn btn-danger" (click)="edit()">
+                {{ "btn.editar" | translate }}
+              </button>
+            </div>
+            <div class="col-md-4 offset-1 text-right">
+              <button type="button" class="btn btn-danger" (click)="agregar()">
+                {{ "btn.agregar" | translate }}
+              </button>
+            </div>
+            <div class="col-md-5 offset-1 mt-3">
+              <button type="button" class="btn btn-danger" (click)="deleteV()">
+                {{ "btn.eliminar" | translate }}
+              </button>
+            </div>
+            <div class="col-md-4 offset-1 mt-3 text-right">
+              <button
+                type="button"
+                class="btn btn-danger"
+                [disabled]="!banderaHasRows"
+                (click)="openModal()"
+              >
+                {{ "btn.exportar" | translate }}
+              </button>
+            </div>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

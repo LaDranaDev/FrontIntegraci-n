@@ -1,0 +1,176 @@
+<app-operativa-header [tituloPantalla]="title"></app-operativa-header>
+<div id="altaBanco" class="panel panel-default col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    <br>
+    <div class="card">
+        <h5 class="card-header justify-content-center">
+            {{'pantalla.moduloAdministracion.mensajeError.titleD' | translate}}
+        </h5>
+        <div class="card-body">
+            <form [formGroup]="mensajeErrorForm">
+                <div class="row">
+                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                        <div class="form-group row align-items-center">
+                            <label for="codigoErrorBack" class="col-xs-3 col-sm-3 col-md-3 col-lg-3 col-form-label text-right">{{'pantalla.moduloAdministracion.mensajeError.codigoErrorBack' | translate}}:</label>
+                            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                <input type="text" class="form-control removeTextTransform" id="codigoErrorBack" name="codigoErrorBack" formControlName="codigoErrorBack"
+                               placeholder="Error Back" appInputMask="alfanumerico_observ_bajo2"  maxlength="10">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                        <div class="form-group row align-items-center">
+                            <label for="codigoPayext1" class="col-xs-3 col-sm-3 col-md-3 col-lg-3 col-form-label text-right">{{'pantalla.moduloAdministracion.mensajeError.codigoErrorPayext' | translate}}:</label>
+                            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                <input type="text" class="form-control removeTextTransform" id="codigoPayext1" name="codigoPayext" formControlName="codigoPayext"
+                                 placeholder="Error Payext"  appInputMask="alfanumerico_observ_bajo2" maxlength="10">
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                        <div class="form-group row align-items-center">
+                            <label for="origenCodigo1" class="col-xs-3 col-sm-3 col-md-3 col-lg-3 col-form-label text-right">{{'pantalla.moduloAdministracion.mensajeError.origenCodigo' | translate}}:</label>
+                            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                <select class="form-control" id="origenCodigo1" name="origenCodigo" formControlName="origenCodigo" (change)="esComponenteVacio()">
+                                    <option value=""> Seleccione ... </option>
+                                    <option *ngFor="let item of back" [value]="item.idBack">{{item.nombre}}</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                        <div class="form-group row align-items-center">
+                            <label for="mensajeBack" class="col-xs-3 col-sm-3 col-md-3 col-lg-3 col-form-label text-right">{{'pantalla.moduloAdministracion.mensajeError.mensajeBack' | translate}}:</label>
+                            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                <textarea id="mensajeBack" name="mensajeBack" class="form-control" placeholder="Mensaje Back" formControlName="mensajeBack"  appInputMask="specialComment" maxlength="100"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                        <div class="form-group row align-items-center">
+                            <label for="mensajeH2H" class="col-xs-3 col-sm-3 col-md-3 col-lg-3 col-form-label text-right">{{'pantalla.moduloAdministracion.mensajeError.mensajeH2H' | translate}}:</label>
+                            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                <textarea id="mensajeH2H" name="mensajeH2H" class="form-control" placeholder="Mensaje H2H" formControlName="mensajeH2H"  appInputMask="specialComment"  maxlength="100"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="row">
+                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                        <div class="form-group row align-items-center">
+                            <label for="codigoCCBN" class="col-xs-3 col-sm-3 col-md-3 col-lg-3 col-form-label text-right">{{'pantalla.moduloAdministracion.mensajeError.codigoCCBN' | translate}}:</label>
+                            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                <input type="text" class="form-control removeTextTransform" id="codigoCCBN" name="codigoCCBN" formControlName="codigoCCBN" appInputMask="alfanumerico" maxlength="2">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                        <div class="form-group row align-items-center">
+                            <label for="componente1" class="col-xs-3 col-sm-3 col-md-3 col-lg-3 col-form-label text-right">{{'pantalla.moduloAdministracion.mensajeError.componente' | translate}}:</label>
+                            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                <select class="form-control" id="componente1" name="componente" formControlName="componente">
+                                    <option value=""> {{'seleccione' | translate}} </option>
+									<option value="MA" label="Mapa"></option>
+									<option value="MQ" label="MQ"></option>
+									<option value="FG" label="File Gateway"></option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                        <div class="form-group row align-items-center">
+                            <label for="banderaReintentos1" class="col-xs-3 col-sm-3 col-md-3 col-lg-3 col-form-label text-right">{{'pantalla.moduloAdministracion.mensajeError.banderaReintentos' | translate}}:</label>
+                            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                <input type="checkbox" class="form-control removeTextTransform text-center" id="banderaReintentos1" name="banderaReints" (click)="seleccionarBandera('banderaReintentos')" formControlName="banderaReintentos">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                        <div class="form-group row align-items-center">
+                            <label for="banderaPendientes1" class="col-xs-3 col-sm-3 col-md-3 col-lg-3 col-form-label text-right">{{'pantalla.moduloAdministracion.mensajeError.banderaPendientes' | translate}}:</label>
+                            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                <input type="checkbox" class="form-control removeTextTransform" id="banderaPendientes1" name="banderaPendientes" (click)="seleccionarBandera('banderaPendientes')" formControlName="banderaPendientes">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                        <div class="form-group row align-items-center">
+                            <label for="banderaFinal1" class="col-xs-3 col-sm-3 col-md-3 col-lg-3 col-form-label text-right">{{'pantalla.moduloAdministracion.mensajeError.banderaFinal' | translate}}:</label>
+                            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                <input type="checkbox" class="form-control removeTextTransform" id="banderaFinal1" name="banderaFinal" (click)="seleccionarBandera('banderaFinal')" formControlName="banderaFinal">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                        <div class="form-group row align-items-center">
+                            <label for="activo1" class="col-xs-3 col-sm-3 col-md-3 col-lg-3 col-form-label text-right">{{'pantalla.moduloAdministracion.mensajeError.activo' | translate}}:</label>
+                            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                <input type="checkbox" class="form-control removeTextTransform" id="activo1" name="activo"  formControlName="activo">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                        <div class="form-group row align-items-center">
+                            <label for="tipoMensaje1" class="col-xs-3 col-sm-3 col-md-3 col-lg-3 col-form-label text-right">{{'pantalla.moduloAdministracion.mensajeError.tipoMensaje' | translate}}:</label>
+                            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                <select class="form-control" id="tipoMensaje1" name="tipoMensaje" formControlName="tipoMensaje">
+                                    <option value=""> {{'seleccione' | translate}} </option>
+                                    <option value="D">{{'consultaDocumentosCFDI.lblDetalle' | translate }}</option>
+                                    <option value="E">{{'menu.sterling.historialBuzon.error' | translate}}</option>
+                                    <option value="F">{{'menu.gestionBuzon.parametroProtocolo.formato' | translate }}</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+    </div>
+    <br>
+    <div class="row mb-2">
+
+        <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-1 offset-sm-1 offset-md-1 offset-lg-1">
+            <button type="button" class="btn btn-danger" (click)="regresar()">{{'btn.cancelar' | translate}}</button>
+        </div>
+        <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-8 offset-sm-8 offset-md-8 offset-lg-8" *ngIf="mensajeError === null" >
+            <button type="button" class="btn btn-danger" (click)="validaCadaCampoObligatorioGuardar()">{{'btn.guardar' | translate}}</button>
+        </div>
+        <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-8 offset-sm-8 offset-md-8 offset-lg-8" *ngIf="mensajeError !== null">
+            <button type="button" class="btn btn-danger" (click)="validaCadaCampoObligatorioActualizar()">{{'btn.guardar' | translate}}</button>
+        </div>
+    </div>
+    <br>
+</div>

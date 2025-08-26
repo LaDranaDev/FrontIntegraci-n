@@ -1,0 +1,76 @@
+.col-xs-2{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    justify-items: center;
+    margin: 1em 10em 0em 10em;
+    column-gap: 2em;
+}
+
+.padding-margin{
+    padding-top: 0px;
+    margin-top: 0px;
+}
+
+.justify-center{-ms-flex-pack:center!important;justify-content:center!important; display: grid;}
+
+.txt-end{
+    justify-content: flex-end;
+    display: flex;
+    gap: 2em;
+}
+
+.justify-right{
+    justify-content: right;
+    display: flex;
+}
+
+.estilo{
+    cursor: pointer; color: blue;
+}
+
+.row-gap{
+    gap: 1em;
+}
+
+.margin-buttons-right{
+    margin: 1em 2em 1em 1em;
+}
+.margin-buttons-left{
+    margin: 1em 1em 1em 2em;
+}
+
+.col-xs-2-label{
+    display: grid;
+    grid-template-columns: 30% 70%;
+    margin: 2em 0em 1em 0em;
+    text-align: end;
+    align-items: center;
+    gap: 1em;
+    width: 100%;
+}
+
+.col-xs-2-label-date{
+    display: grid;
+    grid-template-columns: 30% 62% 8%;
+    margin: 2em 0em 1em 0em;
+    align-items: center;
+    width: 100%;
+
+}
+
+.label-txt-align{
+    text-align: end;
+}
+
+.removeTextUpper{
+    text-transform: none;
+}
+
+.margin-title{
+    margin: 1em;
+}
+
+.float-custom{
+    float: right;
+    margin-right: 2em;
+}

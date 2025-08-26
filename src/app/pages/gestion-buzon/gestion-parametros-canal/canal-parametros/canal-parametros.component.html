@@ -1,0 +1,95 @@
+<app-operativa-header tituloPantalla="{{'GPC' | translate}} {{channelName}}"></app-operativa-header>
+
+<div *ngIf="idChannel" class="panel panel-default col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    <br>
+    <form>
+
+        <div class="card">
+            <h5 class="card-header justify-content-center">
+                {{'GPC.protocolo' | translate}}
+            </h5>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-xs-6 col-sm-6 col-md-6">
+                        <div class="form-group row">
+                            <label for="protocolo" class="col-form-label col-sm-3"> {{'GPC.protocolo' | translate}}</label>
+                            <div class="col-sm-3">
+                                <select class="form-control" name="protocolo" id="protocolo" required
+                                    (change)="selectProtocol($event)">
+                                    <option value=""> {{'seleccione' | translate}} </option>
+                                    <option *ngFor="let protocol of protocols" [value]="protocol.idProtocol"
+                                        [selected]="protocol.idProtocol === idProtocol">
+                                        {{ protocol.name }}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row" *ngIf="paramNames && paramNames.length">
+
+            <div class="card col-sm-12 col-md-6">
+                <h5 class="card-header justify-content-center">
+                   {{'GPC.put' | translate}}
+                </h5>
+                <div class="card-body">
+                    <div class="row m-1">
+                        <label class="tex col-sm-6"> {{'GPC.nombre' | translate}}</label>
+                        <label class="tex col-sm-6"> {{'GPC.valor' | translate}}</label>
+                    </div>
+
+                    <div class="row m-1" *ngFor="let param of paramNames; index as i">
+                        <label class="tex col-sm-6">{{ param }}:</label>
+                        <input class="form-control col-sm-6 border" [name]="param + 'PUT'"
+                            [maxLength]="paramsPut[i].paramLength" [required]="paramsPut[i].paramIsMandatory === 1"
+                            [class.border-primary]="paramsPut[i].paramIsMandatory === 1"
+                            [(ngModel)]="paramsPut[i].patternValue" (keypress)="validarParametro($event)">
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="card col-sm-12 col-md-6">
+                <h5 class="card-header justify-content-center">
+                    {{'GPC.get' | translate}}
+                </h5>
+                <div class="card-body">
+                    <div class="row m-1">
+                        <label class="tex col-sm-6"> {{'GPC.nombre' | translate}}</label>
+                        <label class="tex col-sm-6"> {{'GPC.valor' | translate}}</label>
+                    </div>
+
+                    <div class="row m-1" *ngFor="let param of paramNames; index as i">
+                        <label class="tex col-sm-6">{{ param }}:</label>
+                        <input class="form-control col-sm-6" [name]="param + 'GET'" [maxLength]="paramsGet[i].paramLength"
+                            [required]="paramsGet[i].paramIsMandatory === 1"
+                            [class.border-primary]="paramsGet[i].paramIsMandatory === 1"
+                            [(ngModel)]="paramsGet[i].patternValue" (keypress)="validarParametro($event)">
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+        <div class="row mt-2">
+            <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-1 offset-sm-1 offset-md-1 offset-lg-1">
+                <button type="button" class="btn btn-danger" (click)="cancelar()">{{'btn.cancelar' |
+                    translate}}</button>
+            </div>
+            <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-8 offset-sm-8 offset-md-8 offset-lg-8">
+                <button type="button" class="btn btn-danger" (click)="guardar()" [hidden]="(paramsGet.length === 0 || paramsPut.length === 0) || idProtocol === null ">{{'btn.guardar' | translate}}</button>
+            </div>
+        </div>
+
+        <div class="row mt-2">
+            <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-1 offset-sm-1 offset-md-1 offset-lg-1">
+                <button type="button" class="btn btn-danger" (click)="limpiar()">{{'btn.limpiar' | translate}}</button>
+            </div>
+        </div>
+
+    </form>
+</div>

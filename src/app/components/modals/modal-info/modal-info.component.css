@@ -1,0 +1,77 @@
+.center {
+    display: flex;
+    justify-content: center;
+}
+
+input[type="text"] {
+    text-transform: none;
+}
+
+.modal-button {
+    background-color: #dddddd;
+    /* background-color: #F4f6f7; */
+    width: 100%;
+    height: 2em;
+}
+
+::ng-deep .mat-dialog-container {
+    padding: 4px;
+    max-width: 47em;
+    min-width: 40em;
+}
+
+.content-padding {
+    padding: 0 24px 24px 0;
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+}
+
+.title-bold {
+    font-weight: bold;
+}
+
+.padding-button {
+    padding: 0 0px 4px 0px;
+}
+
+.titles {
+    display: grid;
+    grid-template-columns: 1fr 2.3fr;
+    padding: 1em;
+}
+
+.titles-sub {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+}
+
+.display-buttons {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1em;
+}
+
+.txt-center {
+    text-align: center;
+}
+
+.txt-end {
+    text-align: end;
+}
+
+.txt-wordbreak {
+    align-items: center;
+    word-break: break-word;
+}
+
+.txt-start {
+    text-align: start;
+}
+
+font-email {
+    font-size: 10px !important;
+}
+
+.customRadio {
+    height: 7em;
+}

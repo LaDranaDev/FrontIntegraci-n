@@ -1,0 +1,90 @@
+<div class="modal-content">
+
+  <div class="modal-header">
+    <h5 class="title" id="gridModalLabel">{{'NCC'| translate}}</h5>
+    <button type="button" class="btn-close" (click)="onClose()">X</button>
+  </div>
+
+  <div class="modal-body">
+
+    <div class="container-fluid">
+
+      <div class="justify-row">
+        <label for="nuevoContrato"></label>
+        <input class="filtro" id="nuevoContrato" type="text" name="nuevoContrato" appInputMask="numerico" maxlength="11" lang="12" [value]="nuevoContrato" (input)="nuevoContrato=getValue($event)" />
+      </div>
+
+      <div class="row">
+        <div class="col-md-6 col-sm-6 col-xs-6 ajustar-texto ">
+          <button class="link" id="agregar" name="agregar" (click)="agregarNuevoContrato()">
+            {{'btn.agregar'| translate}}
+          </button>
+        </div>
+      </div>
+
+
+      <div class="justify-row ">
+        <div class="col-md-12 col-sm-12 col-xs-12 ajustar-texto justify-row" id="divSelAll" name="divSelAll">
+          <button class="link ajust-button" id="selAll" name="selAll" (click)="selectAll('true')">
+            {{'ST'| translate}}
+          </button>
+          <p class="separador">/</p>
+          <button class="link ajust-button" id="unSelAll" name="unSelAll" (click)="selectAll('false')">
+            {{'DT'| translate}}
+          </button>
+        </div>
+        <div class="col-md-12 col-sm-12 col-xs-12 ajustar-texto justify-row hidden" id="divUnselAll" name="divUnselAll">
+
+        </div>
+
+      </div>
+
+      <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+
+          <table aria-describedby="selectItems">
+            <thead>
+              <tr> </tr>
+            </thead>
+            <tbody #tabCatLayouts>
+              <ng-container *ngIf="contratosConfirmingList.length>0 then templateFillTable; else templateEmptyTable4">
+              </ng-container>
+              <ng-template #templateFillTable>
+                <tr *ngFor="let contrato of contratosConfirmingList">
+                  <td>
+                    <input class="align-check" type="checkbox" 
+                      id="contrato{{contrato.numeroContratoConf}}" 
+                      name="contrato{{contrato.numeroContratoConf}}"
+                      [checked]="contrato.status === 'A' ? true : false"
+                      (change)="selContratoConf($event, contrato.numeroContratoConf)" />
+                    <label for="contrato{{contrato.numeroContratoConf}}" 
+                      class="col-form-label col-sm-8 text-style">{{contrato.numeroContratoConf}}
+                    </label>
+
+                    <label for="chkDivisa{{contrato.numeroContratoConf}}"></label>
+                    <input type="checkbox" value="{{contrato.divisa}}" name="chkConfDivisa{{contrato.numeroContratoConf}}" 
+                      id="chkDivisa{{contrato.numeroContratoConf}}"
+                      [checked]="contrato.status === 'A' ? true : false" class="hidden"
+                      (change)="selDivisa($event, contrato)">
+                    
+                    <label for="chkEje{{contrato.numeroContratoConf}}"></label>
+                    <input type="checkbox" value="{{contrato.numCta}}" name="chkConfEje{{contrato.numeroContratoConf}}" 
+                      id="chkEje{{contrato.numeroContratoConf}}"
+                      [checked]="contrato.asignado === 'true' ? true : false" class="hidden"
+                      (change)="selCtaEje($event, contrato)">
+
+                  </td>
+                </tr>
+              </ng-template>
+              <ng-template #templateEmptyTable4>
+                <tr>
+                  <td class="text-center" colspan="12"> </td>
+                </tr>
+              </ng-template>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

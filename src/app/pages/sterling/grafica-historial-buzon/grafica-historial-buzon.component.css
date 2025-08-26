@@ -1,0 +1,40 @@
+.centrar {
+    display: flex !important;
+    align-items: center !important;
+    align-self: center !important;
+}
+
+.separar-check {
+    padding-left: 2px;
+}
+
+.inputDate {
+    width: 60% !important;
+    display: inline-block !important;
+    align-self: center;
+}
+
+.ajust-div {
+    position: absolute;
+}
+
+.eliminar-upperCase {
+    text-transform: none;
+}
+
+.margin-right {
+    margin-right: 5px;
+    margin-bottom: 0px;
+}
+
+.delete-padding {
+    padding: 0;
+}
+
+.label-date {
+    display: flex;
+    margin-left: 1em;
+}
+.removeTextTransform {
+    text-transform: none;
+}

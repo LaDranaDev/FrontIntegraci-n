@@ -1,0 +1,129 @@
+<div id="adminBuzon" class="panel panel-default col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    <app-operativa-header tituloPantalla="{{'solicitudEstadosCuenta.solEstadosDeCuenta' | translate}}"></app-operativa-header>
+    
+    <br>
+    <h5 class="card-header justify-content-center">
+        {{'solicitudEstadosCuenta.general.tituloDatosContrato' | translate}}
+    </h5>
+    <div class="card">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                    <div class="form-group row justify-content-center align-items-center">
+                        <label for="codCliente" class="col-xs-6 col-sm-10 col-md-6 col-lg-4 col-form-label">{{'comun.codCliente' | translate}}:</label>
+                        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                            <input class="form-control" type="text" name="codCliente" id="codCliente"  placeholder="{{'comun.codCliente' | translate}}" 
+                                    (keydown.Tab)="buscarBuc()" [(ngModel)]="datosDemandaRequest.codigoCliente"  (keypress)="eventOnKeyOnlyNumbers($event)" tabindex="1" maxlength="8"  > 
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                    <div class="form-group row justify-content-center align-items-center">
+                        <label for="estatus" class="col-xs-6 col-sm-10 col-md-6 col-lg-4 col-form-label">{{'comun.estatusContrato' | translate}}:</label>
+                        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                            <select class="form-control" id="estatus" name="estatus" disabled [(ngModel)]="datosDemandaRequest.statusContrato"> 
+                                <option  ></option>
+                                <option *ngFor="let estatus of lstEstatusContrato"
+                                    [value]="estatus.idCat" >
+                                    {{ estatus.descripcionCatalogo }}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <div class="form-group row justify-content-center align-items-center">
+                        <label for="razonSocialEnc" class="col-xs-2 col-sm-2 col-md-2 col-lg-2 col-form-label">{{'comun.razonSocial' | translate}}:</label>
+                        <div class="col-xs-8 col-sm-8 col-md-8 col-lg-9">
+                            <input class="form-control" type="text" name="razonSocialEnc" id="razonSocialEnc"  placeholder="{{'comun.razonSocial' | translate}}" 
+                                [(ngModel)]="datosDemandaRequest.razonSocial"  maxlength="50" size="75" disabled> 
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                    <div class="form-group row justify-content-center align-items-center">
+                        <label for="cuentaEjeEnc" class="col-xs-6 col-sm-10 col-md-6 col-lg-4 col-form-label">{{'comun.cuentaEje' | translate}}:</label>
+                        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                            <input class="form-control" type="text" name="cuentaEjeEnc" id="cuentaEjeEnc"  placeholder="{{'comun.cuentaEje' | translate}}" 
+                                [(ngModel)]="datosDemandaRequest.cuentaEje" maxlength="20" size="20" disabled> 
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                    <div class="form-group row justify-content-center align-items-center">
+                        <label for="folioEnc" class="col-xs-6 col-sm-10 col-md-6 col-lg-4 col-form-label">{{'comun.numCntr' | translate}}:</label>
+                        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                            <input class="form-control" type="text" name="folioEnc" id="folioEnc"  placeholder="{{'comun.numCntr' | translate}}" 
+                                    [(ngModel)]="datosDemandaRequest.numContrato" maxlength="12" size="20" disabled> 
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <br>
+    <h5 class="card-header justify-content-center">{{'configuracionEstadosCuenta.contenidoEstadoCuenta' | translate}}</h5>
+    <div class="card">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 stil">
+                    <label for="cuenta"></label>
+                    
+                    <select class="form-control display col-xs-3 col-sm-3 col-md-3 col-lg-3 fRight" size="10" id="cuenta" name="cuenta"  multiple disabled>
+                        <option *ngFor="let dato of listaItems">
+                            {{ dato.numCuenta }}
+                        </option>
+                    </select>
+                </div>
+                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                    <div class="col-xs-12  col-sm-12 col-md-12 col-lg-12" *ngIf="archivoOp !== '' && archivoOp === 'D' ">
+                        <input type="checkbox" name="dividirXDivisa" id="dividirXDivisa" class="m-2" [(ngModel)]="dividirXDivisa" >
+                        <label for="dividirXDivisa" >{{'configuracionEstadosCuenta.separacion.divisa' | translate}}</label>
+                    </div>
+                    <mat-radio-group class="radio" [(ngModel)]="archivoOp">
+                        <ng-container >
+                            <mat-radio-button class="col-xs-12  col-sm-12 col-md-12 col-lg-12" disabled  value="C">{{'configuracionEstadosCuenta.recibirArchConsCuenta' | translate}}</mat-radio-button>
+                            <mat-radio-button class="col-xs-12  col-sm-12 col-md-12 col-lg-12" disabled  value="P">{{'configuracionEstadosCuenta.recibirArchivoCuenta' | translate}}</mat-radio-button>
+                        </ng-container>
+                    </mat-radio-group>
+
+                    <div class="col-xs-12  col-sm-12 col-md-12 col-lg-12">
+                        <label class="col-xs-6 col-sm-10 col-md-6 col-lg-4 col-form-label">{{'configuracionEstadosCuenta.formatoArchivo' | translate}}</label>
+                    </div>
+                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                        <label for="tipoFormato"></label>
+                        <select class="form-control" id="tipoFormato" [(ngModel)]="tipoFormato" title="{{'seleccione' | translate}}" disabled  name="tipoFormato" >
+                            <option *ngFor="let dato of listFormatArchivo" [value]="dato.id">{{dato.description}}</option>
+                        </select>
+                    </div>
+                    <div class="col-xs-12  col-sm-12 col-md-12 col-lg-12">
+                        <input type="checkbox" name="incAnulaciones" id="incAnulaciones" class="m-2" disabled [(ngModel)]="incAnulaciones" >
+                        <label for="incAnulaciones" >{{'solicitudEstadosCuenta.anulaciones' | translate}}</label>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <br>
+    <br>
+
+    <div class="card-body" *ngIf="banderaBtn===true">
+        <div class="row">
+            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                <div class="form-group row fLeft justify-content-center align-items-center">
+                        <button type="button" class="btn btn-danger" (click)="generarEstado()">{{'solicitudEstadosCuenta.solEstadosDeCuentalink' | translate}}</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

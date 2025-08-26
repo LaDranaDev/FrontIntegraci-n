@@ -1,0 +1,336 @@
+<ng-container *ngIf="data.opcion == 1">
+    <mat-dialog-content>
+        <div class="card">
+            <div class="card-body">
+                <form (ngSubmit)="guardaUnaCuenta()" [formGroup]="formUnaCuenta" autocomplete="off">
+                    <table class="table" aria-describedby="unaCuenta">
+                        <tr scope="col">
+                            <td class="col-6">
+                                <label for="cuentaComision" class="col-form-label">Cuenta de Cargo</label>
+                            </td>
+                            <td class="col-4">
+                                <input type="text" aria-label="unaCuenta" class="form-control" formControlName="unaCuenta" [maxlength]="lengthCuenta" size='25' (keypress)="maxLengthNumber($event);numerico($event)" (paste)="onPaste($event)" (drop)="dropHandler($event);" (dragover)="dragOver($event)">
+                                <span class="form-text" *ngIf="formUnaCuenta.get('unaCuenta')?.invalid && (formUnaCuenta.get('unaCuenta')?.dirty || formUnaCuenta.get('unaCuenta')?.touched)" error-msg mensaje="El campo es obligatorio"></span>
+                                <span class="form-text" *ngIf="formUnaCuenta.get('unaCuenta')?.errors?.['minlength']" error-msg mensaje="La longitud del campo debe de ser 11 caracteres."></span>
+                            </td>
+                        </tr>
+                    </table>
+                    <button type='button' class="btn btn-outline-danger float-start" (click)="cancelar()">{{'btn.cancelar' | translate}}</button>
+                    <button type="submit" class="btn btn-outline-danger  float-end">{{'btn.guardar' | translate}}</button>
+                </form>
+            </div>
+        </div>
+    </mat-dialog-content>
+</ng-container>
+
+<ng-container *ngIf="data.opcion == 2">
+    <mat-dialog-content>
+        <div class="card">
+            <div class="card-body">
+                <form (ngSubmit)="guardaConfirming()" [formGroup]="formConfirming" autocomplete="off">
+                    <table class="table" aria-describedby="pagadora">
+                        <div formArrayName="cuentaComision">
+                            <div *ngFor="let single of confirming.controls | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize;  let i=index">
+                                <div [formGroupName]="itemGlobalIndex(i)">
+                                    <tr scope="col">
+                                        <td class="col-6">
+                                            <label for="cuentaComision" class="col-form-label">{{ single.get('idCntrConfirming')?.value == 0 ? 'Cuenta de Cargo ':'Confirming '+single.get('contratoConfirming')?.value}} </label>
+                                        </td>
+                                        <td class="col-6">
+                                            <input type="text" class="form-control" id="cuentaComision" formControlName="cuentaComision" size='25' [maxlength]="lengthCuenta" (keypress)="maxLengthNumber($event);numerico($event)" (paste)="onPaste($event)" (drop)="dropHandler($event);" (dragover)="dragOver($event)">
+                                            <span class="form-text" *ngIf="single.get('cuentaComision')?.invalid && (single.get('cuentaComision')?.dirty || single.get('cuentaComision')?.touched)" error-msg mensaje="El campo es obligatorio"></span>
+                                            <span class="form-text" *ngIf="single.get('cuentaComision')?.errors?.['minlength']" error-msg mensaje="La longitud del campo debe de ser 11 caracteres."></span>
+                                        </td>
+                                    </tr>
+                                </div>
+                            </div>
+                        </div>
+                    </table>
+                    <section class="text-right" *ngIf="confirming.controls.length > pageSize">
+                        <ngb-pagination [(page)]="page" [pageSize]="pageSize" (pageChange)="onPageChange(page)" [collectionSize]="confirming.controls.length" size="sm"></ngb-pagination>
+                    </section>
+                    <button type='button' class="btn btn-outline-danger float-start" (click)="cancelar()">{{'btn.cancelar' | translate}}</button>
+                    <button type="submit" class="btn btn-outline-danger  float-end">{{'btn.guardar' | translate}}</button>
+                </form>
+            </div>
+        </div>
+    </mat-dialog-content>
+</ng-container>
+
+<ng-container *ngIf="data.opcion == 3">
+    <mat-dialog-content>
+        <div class="card">
+            <div class="card-body">
+                <form (ngSubmit)="guardaProducto()" [formGroup]="formProducto" autocomplete="off">
+                    <table class="table" aria-describedby="porProducto">
+                        <div formArrayName="producto">
+                            <div *ngFor="let single of producto.controls| slice: (page-1) * pageSize : (page-1) * pageSize + pageSize; let i = index">
+                                <div [formGroupName]="itemGlobalIndex(i)">
+                                    <tr scope="col">
+                                        <td class="col-7">
+                                            <label for="cuentaCargo" class="col-form-label">{{ single.get('descripcion')?.value}}</label>
+                                        </td>
+                                        <td class="col-5">
+                                            <input type="text" class="form-control" id='cuentaComision' formControlName="cuentaComision" size='25' [maxlength]="lengthCuenta" (keypress)="maxLengthNumber($event);numerico($event)" (paste)="onPaste($event)" (drop)="dropHandler($event);" (dragover)="dragOver($event)">
+                                            <span class="form-text" *ngIf="single.get('cuentaComision')?.invalid && (single.get('cuentaComision')?.dirty || single.get('cuentaComision')?.touched)" error-msg mensaje="El campo es obligatorio"></span>
+                                            <span class="form-text" *ngIf="single.get('cuentaComision')?.errors?.['minlength']" error-msg mensaje="La longitud del campo debe de ser 11 caracteres."></span>
+                                        </td>
+                                    </tr>
+                                </div>
+                            </div>
+                        </div>
+                    </table>
+                    <section class="text-right" *ngIf="producto.controls.length > pageSize">
+                        <ngb-pagination [(page)]="page" [pageSize]="pageSize" (pageChange)="onPageChange(page)" [collectionSize]="producto.controls.length" size="sm"></ngb-pagination>
+                    </section>
+                    <button type='button' class="btn btn-outline-danger float-start" (click)="cancelar()">{{'btn.cancelar' | translate}}</button>
+                    <button type="submit" class="btn btn-outline-danger  float-end">{{'btn.guardar' | translate}}</button>
+                </form>
+            </div>
+        </div>
+    </mat-dialog-content>
+</ng-container>
+
+<ng-container *ngIf="data.opcion == 4">
+
+    <mat-dialog-content *ngIf="!ordenante && !modalH2H">
+        <div class="card">
+            <div class="card-body pb-0">
+                <form (ngSubmit)="agregarSubsidiaria()" [formGroup]="formSubsidiaria" autocomplete="off">
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="form-group row">
+                                <label for="buc" class="col-form-label col-5">{{'pantallas.tipoDeCobro.subsidiaria' | translate}}</label>
+                                <div class="col">
+                                    <input type="text" id="buc" formControlName="buc" class="form-control" placeholder="{{'pantallas.tipoDeCobro.cuentaSubsidiaria' | translate}}" tabindex="1" (keydown.Tab)="informacionBUC()" [maxlength]="lengthBUC" (keypress)="maxLengthNumber($event);numerico($event)" (paste)="onPaste($event)" (drop)="dropHandler($event);" (dragover)="dragOver($event)">
+                                    <span class="form-text" *ngIf="formSubsidiaria.get('buc')?.invalid && (formSubsidiaria.get('buc')?.dirty || formSubsidiaria.get('buc')?.touched)" error-msg mensaje="El campo es obligatorio"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group row">
+                                <label for="idCuentaComision" class="col-form-label col-5">{{'pantallas.tipoDeCobro.ctaComision' | translate}}</label>
+                                <div class="col">
+                                    <select id="idCuentaComision" formControlName="idCuentaComision" class="form-select form-select-sm form-control">
+                                            <option value="">Seleccione una cuenta</option>
+                                            <option *ngFor="let item of this.catalogoCuentasComision" [value]="item.idCuenta">{{item.numCuenta}}</option>
+                                        </select>
+                                    <span class="form-text" *ngIf="formSubsidiaria.get('idCuentaComision')?.invalid && (formSubsidiaria.get('idCuentaComision')?.dirty || formSubsidiaria.get('idCuentaComision')?.touched)" error-msg mensaje="El campo es obligatorio"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="form-group row">
+                                <label for="razonSocial" class="col-form-label col-5">{{'pantallas.tipoDeCobro.razon' | translate}}</label>
+                                <div class="col">
+                                    <input type="text" id="razonSocial" formControlName="razonSocial" class="form-control" placeholder="Razón Social" tabindex="1">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="form-group row">
+                                <label for="alias" class="col-form-label col-5">{{'pantallas.tipoDeCobro.alias' | translate}}</label>
+                                <div class="col">
+                                    <input type="text" formControlName="alias" id="alias" class="form-control" placeholder="{{'pantallas.tipoDeCobro.alias' | translate}}" tabindex="1" [maxlength]="lengthAlias" (keypress)="maxLengthNumber($event);alphaNumberSpace($event)">
+                                    <span class="form-text" *ngIf="formSubsidiaria.get('alias')?.invalid && (formSubsidiaria.get('alias')?.dirty || formSubsidiaria.get('alias')?.touched)" error-msg mensaje="El campo es obligatorio"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <button type="submit" class="btn btn-outline-danger float-end">{{'btn.agregar' | translate}}</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-body pl-3  pb-0">
+                <table class="table" aria-describedby="subsidiaria" *ngIf="subsidiarias.length > 0">
+                    <thead>
+                        <tr>
+                            <th scope="col">{{'pantallas.tipoDeCobro.alias1' | translate }}</th>
+                            <th scope="col">{{'pantallas.tipoDeCobro.subsidiaria' | translate}}</th>
+                            <th scope="col">{{'pantallas.tipoDeCobro.razon' | translate}}</th>
+                            <th scope="col">{{'pantallas.tipoDeCobro.ctaComision1' | translate}}</th>
+                            <th scope="col">{{'pantallas.tipoDeCobro.titularCta' | translate}}</th>
+                            <th scope="col"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of subsidiarias | slice: (page-1) * pageSize : page * pageSize">
+                            <td>{{item.alias}}</td>
+                            <td><span class="link" (click)="openModal(item)">{{item.buc}}</span></td>
+                            <td>{{item.razonSocial}}</td>
+                            <td>{{item.cuentaComision}}</td>
+                            <td>{{item.titularCuenta}}</td>
+                            <td>
+                                <div class="btn-group float-end">
+                                    <button type="button" class="btn btn-outline-danger" (click)="eliminarBuc(item.idSubsidiaria)">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+                                            <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
+                                            <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
+                                        </svg>
+                                        </button>
+                                    <p>&nbsp;&nbsp;</p>
+                                    <button type="button" class="btn  btn-outline-danger" (click)="editarBuc(item)">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                                                <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+                                                <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+                                              </svg>
+                                        </button>
+                                </div>
+                            </td>
+
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="text-right" *ngIf="subsidiarias.length > 0">
+                    <ngb-pagination i18n-title="paginacion" [collectionSize]="subsidiarias.length" [(page)]="page" [pageSize]="pageSize" size="sm"></ngb-pagination>
+                </div>
+            </div>
+        </div>
+        <div class="card text-center">
+            <mat-card-subtitle class="pt-4">Configuración para la Comisión H2H</mat-card-subtitle>
+            <mat-card-actions>
+                <button class="btn btn-outline-danger" mat-button (click)="comisionH2H()">Comisión H2H</button>
+                <br><br>
+                <div class="btn-group float-end me-4">
+                    <button type="button" class="btn btn-outline-danger mr-2 float-end" (click)="cancelar()">{{'btn.cancelar' | translate}}</button>
+                    <button type="button" class="btn btn-outline-danger float-end" (click)="limpiar()">{{'btn.limpiar' | translate}}</button>
+                </div>
+            </mat-card-actions>
+        </div>
+    </mat-dialog-content>
+    <mat-dialog-content *ngIf="ordenante && !modalH2H">
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-6">
+                        <div class="form-group row">
+                            <label class="col-form-label col-5">{{'pantallas.tipoDeCobro.subsidiaria' | translate}}</label>
+                            <div class="col">
+                                <input type="text" class="form-control" id='buc' placeholder="{{'pantallas.tipoDeCobro.cuentaSubsidiaria' | translate}}" tabindex="1" disabled [value]="dataOrdenante.buc">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group row">
+                            <label for="ordenante" class="col-form-label col-5">{{'pantallas.tipoDeCobro.ctaOrdenante' | translate}}</label>
+                            <div class="col">
+                                <select id="ordenante" [formControl]="nuevaOrdenante" name="inputUser" class="form-select form-select-sm form-control">
+                                    <option value="">Seleccione una cuenta</option>
+                                    <option *ngFor="let item of this.catalogoCuentasOrdenantes" [ngValue]="item">{{item.numCuenta}}</option>
+                                </select>
+                                <span class="form-text" *ngIf="nuevaOrdenante?.invalid && (nuevaOrdenante?.dirty || nuevaOrdenante?.touched)" error-msg mensaje="El campo es obligatorio"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6">
+                        <div class="form-group row">
+                            <label for='razonSocialO' class="col-form-label col-5">{{'pantallas.tipoDeCobro.razon' | translate}}</label>
+                            <div class="col">
+                                <input type="text" class="form-control" id="razonSocialO" tabindex="1" disabled [value]="dataOrdenante.razonSocial">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6">
+                        <div class="form-group row">
+                            <label for='aliasO' class="col-form-label col-5">{{'pantallas.tipoDeCobro.alias' | translate }}</label>
+                            <div class="col">
+                                <input type="text" id='aliasO' class="form-control" tabindex="1" disabled [value]="dataOrdenante.alias">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <button type="button" class="btn btn-outline-danger float-end" (click)="agregarOrdenante(nuevaOrdenante)">{{'btn.agregar' | translate}}</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-body pl-3">
+                <table class="table" aria-describedby="ordenante" *ngIf="listaOrdenantes.length > 0">
+                    <thead>
+                        <tr>
+                            <th scope="col">Titular</th>
+                            <th scope="col">Cuentas Ordenantes</th>
+                            <th scope="col"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of listaOrdenantes | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize;">
+                            <td>{{item.titular}}</td>
+                            <td>{{item.numCuenta}}</td>
+                            <td>
+                                <button type="button" class="btn btn-outline-danger" (click)="onPageChange(page);borrarOrdenante(item)">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+                                    <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
+                                    <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
+                                </svg>
+                            </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <section class="text-right" *ngIf="listaOrdenantes.length > 0">
+                    <ngb-pagination (pageChange)="onPageChange(page)" [collectionSize]="listaOrdenantes.length" [(page)]="page" [pageSize]="pageSize" size="sm"></ngb-pagination>
+                </section>
+                <button type="button" class="btn btn-outline-danger float-end" (click)="regresar()">{{'btn.cancelar' | translate}}</button>
+                <button type="button" class="btn btn-outline-danger float-end" (click)="guardarOrdenante()">{{'btn.guardar' | translate}}</button>
+            </div>
+        </div>
+    </mat-dialog-content>
+
+    <mat-dialog-content *ngIf="modalH2H">
+        <mat-card-subtitle class="text-center pt-4">Configuración para la Comisión H2H</mat-card-subtitle>
+        <form [formGroup]="formComisionH2H" autocomplete="off">
+            <p class="text-sm-right operaciones"><strong>Total de Operaciones Libres: {{operacionesTotalesF}}</strong></p>
+            <table class="table" aria-describedby="operaciones">
+                <ng-container formArrayName="operaciones">
+                    <thead>
+                        <tr>
+                            <th scope="col">Alias</th>
+                            <th scope="col">Subsidiaria</th>
+                            <th scope="col">Razón Social</th>
+                            <th scope="col">Cuenta Comisión</th>
+                            <th scope="col">Operaciones Libres</th>
+                            <th scope="col">% Comisión H2H</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <ng-container *ngFor="let item of operaciones.controls;  let i=index">
+                            <ng-container [formGroupName]="itemGlobalIndex(i)">
+                                <tr>
+                                    <td>{{ item.get('alias')?.value}}</td>
+                                    <td>{{ item.get('buc')?.value}}</td>
+                                    <td>{{ item.get('razonSocial')?.value}}</td>
+                                    <td>{{ item.get('cuentaComision')?.value}}</td>
+                                    <td>
+                                        <input type="text" class="form-control text-center" formControlName="operacionesLibres" id="operacionesLibres" (keypress)="numerico($event)" [disabled]="(operacionesTotales == 0 || operacionesTotales == -1 )" aria-label="operacionesLibres">
+                                    </td>
+                                    <td>
+                                        <div class="input-group">
+                                            <input type="text" class="form-control text-center" formControlName="porcentajeComiH2H" aria-labelledby="porcentajeComiH2H" id="porcentajeComiH2H" maxlength="3" (keypress)="numerico($event);maxLengthNumber($event);">
+                                            <span class="input-group-text " id="porcentaje">%</span>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </ng-container>
+                        </ng-container>
+                    </tbody>
+                </ng-container>
+            </table>
+            <button type='button' class="btn btn-outline-danger float-start" (click)="regresarSubsidiaria()">{{'btn.cancelar' | translate}}</button>
+            <button type="submit" class="btn btn-outline-danger  float-end" (click)="guardarOperacionLibre()">{{'btn.guardar' | translate}}</button>
+        </form>
+    </mat-dialog-content>
+
+</ng-container>

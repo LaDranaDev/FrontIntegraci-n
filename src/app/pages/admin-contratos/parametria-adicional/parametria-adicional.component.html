@@ -1,0 +1,288 @@
+<app-operativa-header tituloPantalla="{{'menu.parametriadicional' | translate}}"></app-operativa-header>
+<div id="parametriaAdicional" class="panel panel-default col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    <br>
+    <div class="card">
+        <h5 class="card-header justify-content-center">
+            {{'pantalla.datosContrato.title' | translate}}
+        </h5>
+        <app-busqueda-cliente [data]="datos"></app-busqueda-cliente>
+    </div>
+    <div class="card mt-3">
+        <h5 class="card-header justify-content-center">
+            {{'pantalla.parametriadicional.consulta.datosparametria.title' | translate}}
+        </h5>
+        <div class="card-body">
+            <div class="row justify-content-center">
+                <div class="col-xs-5 col-sm-5 col-md-5">
+                    <div class="form-group row">
+                        <div class="col-sm-1">
+                            <input type="checkbox" name="activaReporteConsolidadPagoAtm"
+                                id="activaReporteConsolidadPagoAtm" value="A"
+                                [checked]="beanParametriaAdicionalATM.chkRptActConsAtm === 'A' ? true : false"
+                                (change)="getTheCheckboxWhenIsChecked($event,'CONSOPAGOATM')"
+                                [disabled]="banderaDisabledChkAtivaReporteConsolidadPagoAtm" />
+                        </div>
+                        <label for="activaReporteConsolidadPagoAtm"
+                            class="col-form-label col-sm-8 text-style">{{'pantalla.parametriadicional.consulta.datosparametria.activaReporteConsolidadoPagoATM'
+                            | translate}}</label>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-sm-1">
+                            <input type="checkbox" name="activaReporteIntradiaPagoAtm" id="activaReporteIntradiaPagoAtm"
+                                value="A" [checked]="beanParametriaAdicionalATM.chkRptIntrAtm === 'A' ? true : false"
+                                (change)="getTheCheckboxWhenIsChecked($event,'INTRAPAGOATM')"
+                                [disabled]="banderaDisabledChkActivaReporteIntradiaPagoAtm" />
+                        </div>
+                        <label for="activaReporteIntradiaPagoAtm"
+                            class="col-form-label col-sm-8 text-style">{{'pantalla.parametriadicional.consulta.datosparametria.activaReporteIntradiaOrdenPagoATM'
+                            | translate}}</label>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-sm-1">
+                            <input type="checkbox" name="mostrarReferenciaCobroResponseOdp"
+                                id="mostrarReferenciaCobroResponseOdp" value="A"
+                                [checked]="beanParametriaAdicionalATM.chkOdpAtm === 'A' ? true : false"
+                                (change)="getTheCheckboxWhenIsChecked($event,'COBRORESPODP')"
+                                [disabled]="banderaDisabledChkMostrarReferenciaCobroResponseOdp" />
+                        </div>
+                        <label for="mostrarReferenciaCobroResponseOdp"
+                            class="col-form-label col-sm-8 text-style">{{'pantalla.parametriadicional.consulta.datosparametria.mostrarReferenciaCobroArchivoResponseOdpATM'
+                            | translate}}</label>
+                    </div>
+                    <div class="form-group row">
+                        <label for="selectHorasToAddAndRemove"
+                            class="col-form-label col-sm-8 text-style">{{'pantalla.parametriadicional.consulta.datosparametria.seleccionarHora'
+                            | translate}}</label>
+                    </div>
+                    <div class="form-group row align-items-center">
+                        <div class="col-sm-4">
+                            <select class="form-control" size="10" name="selectHorasToAddAndRemove"
+                                id="selectHorasToAddAndRemove" multiple [(ngModel)]="listHorasSelectedIzquierda"
+                                [disabled]="banderaDisableSelectHorasIzq">
+                                <option *ngIf="listHorasFirstSelect.length > 1" value="-1"> {{'todos' | translate}}
+                                </option>
+                                <option *ngFor="let hora of listHorasFirstSelect" [value]="hora['idCat']">
+                                    {{hora['descripcionCatalogo']}}</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-1">
+                            <span class="badge badge-secondary text-desing-badge mb-1" (click)="addNewHour()"
+                                [class.disabled]="banderaDisableAddHour">{{'pantalla.parametriadicional.consulta.datosparametria.sendToAnother'
+                                | translate}}</span>
+                            <span class="badge badge-secondary text-desing-badge" (click)="removeHour()"
+                                [class.disabled]="banderaDisableRemoveHour">{{'pantalla.parametriadicional.consulta.datosparametria.returnToAnother'
+                                | translate}}</span>
+                        </div>
+                        <div class="col-sm-4">
+                            <select class="form-control" size="10" name="selectHorasDestinyToAdd" multiple
+                                id="selectHorasDestinyToAdd" [(ngModel)]="listHorasSelectedDerecha"
+                                aria-label="selectHorasDestinyToAdd" [disabled]="banderaDisableSelectHorasDer">
+                                <option *ngIf="listHorasSecondSelect.length > 1" value="-1"> {{'todos' | translate}}
+                                </option>
+                                <option *ngFor="let hora of listHorasSecondSelect" [value]="hora['idCat']">
+                                    {{hora['descripcionCatalogo']}}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="listaCriticidadCliente"
+                            class="col-form-label col-sm-8 text-style">{{'pantalla.parametriadicional.consulta.datosparametria.criticidadCliente'
+                            | translate}}:</label>
+                        <div class="col-sm-7">
+                            <select class="form-control" id="listaCriticidadCliente" name="listaCriticidadCliente"
+                                (change)="getTheSelectedValueFromSelect($event,'CRITICIDADCLIENTE')"
+                                [disabled]="banderaDisabledListaCriticidadCliente">
+                                <option value="-1">{{'seleccione' | translate}}...</option>
+                                <option *ngFor="let criticidad of listaCriticidad" [value]="criticidad['key']"
+                                    [selected]="beanParametriaAdicionalATM.bandVip === criticidad['key']">
+                                    {{criticidad['value']}}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-sm-1">
+                            <input type="checkbox" name="activarEntregaEstadoCuenta" id="activarEntregaEstadoCuenta"
+                                [checked]="beanParametriaAdicionalATM.chkEntregaEstadoCuenta === 'A' ? true : false"
+                                (change)="getTheCheckboxWhenIsChecked($event,'ENTREGAESTADOCUENTA')"
+                                [disabled]="banderaDisabledEntregaEstadoCuenta" />
+                        </div>
+                        <label for="activarEntregaEstadoCuenta"
+                            class="col-form-label col-sm-8 text-style">{{'pantalla.parametriadicional.consulta.datosparametria.activaEntregaEstadoCuenta'
+                            | translate}}</label>
+                    </div>
+                </div>
+                <div class="col-xs-5 col-sm-5 col-md-5">
+                    <div class="form-group row">
+                        <div class="col-sm-1">
+                            <input type="checkbox" name="activaReporteHistoricoPagoAtm"
+                                id="activaReporteHistoricoPagoAtm"
+                                [checked]="beanParametriaAdicionalATM.chkRptHistAtm === 'A' ? true : false"
+                                (change)="getTheCheckboxWhenIsChecked($event,'HISTOPAGOATM')"
+                                [disabled]="banderaDisabledChkActivaReporteHistoricoPagoAtm" />
+                        </div>
+                        <label for="activaReporteHistoricoPagoAtm"
+                            class="col-form-label col-sm-8 text-style">{{'pantalla.parametriadicional.consulta.datosparametria.activaReporteHistoricoPagoATM'
+                            | translate}}</label>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-sm-1">
+                            <input type="checkbox" name="activarEnvioClaveRastreo" id="activarEnvioClaveRastreo"
+                                [checked]="beanParametriaAdicionalATM.chkCveRsto === 'A' ? true : false"
+                                (change)="getTheCheckboxWhenIsChecked($event,'ENVIOCLAVERASTREO')"
+                                [disabled]="banderaDisabledEnvioClaveRastreo" />
+                        </div>
+                        <label for="activarEnvioClaveRastreo"
+                            class="col-form-label col-sm-8 text-style">{{'pantalla.parametriadicional.consulta.datosparametria.activaEnvioClaveRastreo'
+                            | translate}}</label>
+                    </div>
+                    <div class="form-group row">
+                        <label for="canalEntrega"
+                            class="col-form-label col-sm-8 text-style">{{'pantalla.parametriadicional.consulta.datosparametria.canalEntrega'
+                            | translate}}</label>
+                        <div class="col-sm-7">
+                            <select class="form-control" id="canalEntrega" name="canalEntrega"
+                                (change)="getTheSelectedValueFromSelect($event,'CANALENTREGA')"
+                                [disabled]="banderaDisabledIdCanalPaAd">
+                                <option value="-1">Seleccione...</option>
+                                <option *ngFor="let canal of listCanalEntrega" [value]="canal['idChannel']"
+                                    [selected]="beanParametriaAdicionalATM.idCanalPaAd === canal['idChannel']">
+                                    {{canal['description']}}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="canalEntregaReporteOptimus"
+                            class="col-form-label col-sm-8 text-style">{{'pantalla.parametriadicional.consulta.datosparametria.canalEntregaReporteOptimus'
+                            | translate}}</label>
+                        <div class="col-sm-7">
+                            <select class="form-control" id="canalEntregaReporteOptimus"
+                                name="canalEntregaReporteOptimus"
+                                (change)="getTheSelectedValueFromSelect($event,'CANALENTREGAOPTIMUS')"
+                                [disabled]="banderaDisabledIdCanal">
+                                <option value="-1">Seleccione...</option>
+                                <option *ngFor="let optimus of listReportesOptimus" [value]="optimus['idChannel']"
+                                    [selected]="beanParametriaAdicionalATM.idCanal === optimus['idChannel']">
+                                    {{optimus['description']}}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row mb-4">
+                        <label for="canalEntregaReportesDevOnline"
+                            class="col-form-label col-sm-8 text-style">{{'pantalla.parametriadicional.consulta.datosparametria.canalEntregaReporteDevolucionesOnline'
+                            | translate}}</label>
+                        <div class="col-sm-7">
+                            <select class="form-control" id="canalEntregaReportesDevOnline"
+                                name="canalEntregaReportesDevOnline"
+                                (change)="getTheSelectedValueFromSelect($event,'CANALENTREGADEVONLINE')"
+                                [disabled]="banderaDisableItem">
+                                <option value="-1">{{'seleccione' | translate}}</option>
+                                <option *ngFor="let online of listDevolucionesOnline" [value]="online['idChannel']"
+                                    [selected]="beanParametriaAdicionalATM.idCanalOnline === online['idChannel']">
+                                    {{online['description']}}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row mb-4">
+                        <label for="ipCliente"
+                            class="col-form-label col-sm-3 text-style">{{'pantalla.parametriadicional.consulta.datosparametria.ipCliente'
+                            | translate}}</label>
+                        <div class="col-xs-4 col-sm-4 col-md-4">
+                            <input type="text" class="form-control" name="ipCliente" id="ipCliente"
+                                (keypress)="eventOnlyNumberAndPoint($event)"
+                                (paste)="eventOnPageOnlyNumberAndPoint($event)" [(ngModel)]="request.ipCliente"
+                                [disabled]="banderaDisableItem" size="17" maxlength="15" />
+                        </div>
+                    </div>
+                    <div class="form-group row mb-4">
+                        <label for="bicEmisiones"
+                            class="col-form-label col-sm-3 text-style">{{'pantalla.parametriadicional.consulta.datosparametria.BICEmisiones'
+                            | translate}}</label>
+                        <div class="col-xs-4 col-sm-4 col-md-4">
+                            <input type="text" class="form-control" name="bicEmisiones" id="bicEmisiones"
+                                (keypress)="eventOnlyAlphabeticAndNumbers($event)"
+                                (paste)="eventOnPageOnlyAlphabeticAndNumbers($event)" [(ngModel)]="request.codBICE"
+                                [disabled]="banderaDisableItem" size="17" maxlength="13" />
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-sm-1">
+                            <input type="checkbox" name="activaValidacionDuplicados" id="activaValidacionDuplicados"
+                                [checked]="beanParametriaAdicionalATM.chkValDuplicados === 'A' ? true : false"
+                                (change)="getTheCheckboxWhenIsChecked($event,'VALIDADUPLI')"
+                                [disabled]="banderaDisableItem" />
+                        </div>
+                        <label for="activaValidacionDuplicados"
+                            class="col-form-label col-sm-8 text-style">{{'pantalla.parametriadicional.consulta.datosparametria.activarValidacionDuplicados'
+                            | translate}}</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card mt-3">
+        <h5 class="card-header justify-content-center">
+            {{'pantalla.parametriadicional.consulta.programacionhorariosespecifios.title' | translate}}
+        </h5>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <table class="table table-striped table-hover" id="lstProductos" aria-describedby="listaProductos">
+                        <thead>
+                            <tr>
+                                <th class="text-center" scope="col">
+                                    {{'pantalla.parametriadicional.consulta.programacionhorariosespecifios.producto' |
+                                    translate}}</th>
+                                <th class="text-center" scope="col">
+                                    {{'pantalla.parametriadicional.consulta.programacionhorariosespecifios.programacionPorHorarios'
+                                    | translate}}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <ng-container *ngIf="banderaHasRows; then templateFillTable; else templateEmptyTable">
+                            </ng-container>
+                            <ng-template #templateFillTable>
+                                <tr *ngFor="let producto of listProductos">
+                                    <td class="text-center">
+                                        <p>{{producto.productDescription}}</p>
+                                    </td>
+                                    <td class="text-center">
+                                        <input type="checkbox" name="checkProdId" id="checkProd{{producto.productId}}"
+                                            aria-label="checkProdId" value={{producto.productId}}
+                                            [checked]="producto.flagProgramation === 'A' ? true : false">
+                                    </td>
+                                    <td class="hideTd">
+                                        <input type="text" name="{{producto.contractProductId}}"
+                                            aria-label="contractProductoId" id="{{producto.contractProductId}}"
+                                            value="{{producto.contractProductId}}" />
+                                    </td>
+                                </tr>
+                            </ng-template>
+                            <ng-template #templateEmptyTable>
+                            </ng-template>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-3">
+        <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">
+            <button type="button" class="btn btn-danger" (click)="limpiarValues()" [disabled]="banderaDisableItem"
+                [appInputDisabled]="datos?.descEstatus">{{'btn.limpiar' |
+                translate}}</button>
+        </div>
+        <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 offset-md-9">
+            <button type="button" class="btn btn-danger mr-2" (click)="openModalGuardarParametriaAdicional()"
+                [disabled]="banderaDisableSave" [appInputDisabled]="datos?.descEstatus">{{'btn.guardar' |
+                translate}}</button>
+            <button type="button" class="btn btn-danger" (click)="openModalExportacion()"
+                [disabled]="banderaDisableExport">{{'btn.exportar' |
+                translate}}</button>
+        </div>
+    </div>
+    <br />
+</div>
