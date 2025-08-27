@@ -35,13 +35,7 @@ export class ConsultaTrackingApiService {
     //return 'http://localhost:8087'//return localStorage.getItem('url');
   }
 
-  async pagos3(request: PagoRequest,paginacion:IPaginationRequest){
-    let response:any;
-    response = await this._conectionWS.peticionServicioWs(`${this.url}/api/pagos/resumen?page=${paginacion.page}&size=${paginacion.size}`,TypeRequest.POST_VALUES,request);
-    return response;
-  }
-
-  async tablaPagos2(request: PagoRequest,paginacion:IPaginationRequest){
+  async pagos(request: PagoRequest,paginacion:IPaginationRequest){
     let response:any;
     response = await this._conectionWS.peticionServicioWs(`${this.url}/api/pagos/resumen?page=${paginacion.page}&size=${paginacion.size}`,TypeRequest.POST_VALUES,request);
     return response;

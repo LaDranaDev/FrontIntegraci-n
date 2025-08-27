@@ -66,8 +66,8 @@ import { ModalCuentaCobroComponent } from './components/modals/modal-cuenta-cobr
 import { ConfirmacionAnularComisionComponent } from './components/modals/confirmacion-anular-comision/confirmacion-anular-comision.component';
 import { defineLocale, esLocale } from 'ngx-bootstrap/chronos';
 import { BsLocaleService } from 'ngx-bootstrap/datepicker';
-import { MonitoreoOperacionesComponent } from './pages/monitoreo-api/monitoreo-operaciones/monitoreo-operaciones/monitoreo-operaciones.component';
-import { ConsultaTrackingApiComponent } from './pages/monitoreo-api/consulta-tracking-api/consulta-tracking-api/consulta-tracking-api.component';
+import { MonitoreoOperacionesComponent } from './pages/monitoreo-api/monitoreo-operaciones/monitoreo-operaciones.component';
+import { ConsultaTrackingApiComponent } from './pages/monitoreo-api/consulta-tracking-api/consulta-tracking-api.component';
 defineLocale('es', esLocale);
 
 
@@ -179,7 +179,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     //IMPORTANT: this prefij doesn´t afect navigation and routing inside app, It only affects when entering the app
     { provide: APP_BASE_HREF, useValue: '/H2HUsuariosPaaS' },
   ],
-    
+
   bootstrap: [AppComponent]
 })
 export class AppModule {

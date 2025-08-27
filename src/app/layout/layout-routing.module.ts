@@ -5,8 +5,8 @@ import { RouterModule, Routes } from '@angular/router';
 import { MonitorOperacionesOnlineComponent } from '../pages/monitoreo/monitor-operaciones-online/monitor-operaciones-online.component';
 import { SolicitudEdoCuentaModule } from '../pages/solicitud-edo-cuenta/solicitud-edo-cuenta.module';
 import { ControlVolumenOperativoModule } from '../pages/control-volumen-operativo/control-volumen-operativo.module';
-import { ConsultaTrackingApiComponent } from '../pages/monitoreo-api/consulta-tracking-api/consulta-tracking-api/consulta-tracking-api.component';
-import { MonitoreoOperacionesComponent } from '../pages/monitoreo-api/monitoreo-operaciones/monitoreo-operaciones/monitoreo-operaciones.component';
+import { ConsultaTrackingApiComponent } from '../pages/monitoreo-api/consulta-tracking-api/consulta-tracking-api.component';
+import { MonitoreoOperacionesComponent } from '../pages/monitoreo-api/monitoreo-operaciones/monitoreo-operaciones.component';
 const routes: Routes = [
   { path: '',component: LayoutComponent,
   children: [

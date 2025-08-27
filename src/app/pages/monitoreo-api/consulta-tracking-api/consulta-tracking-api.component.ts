@@ -3,14 +3,16 @@ import { TranslateService } from '@ngx-translate/core';
 import { ConsultaTrackingApiService } from 'src/app/services/monitoreo-api/consulta-tracking-api.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Subscription } from 'rxjs';
-import { IPaginationRequest } from '../../../contingencia/request/pagination-request.component';
+import { IPaginationRequest } from '../../contingencia/request/pagination-request.component';
 import { Chart } from 'chart.js';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { DatePipe, formatDate } from '@angular/common';
 import { ComunesService } from 'src/app/services/comunes.service';
-import { PagoRequest } from '../../../../models/pago-request.module';
-
+import { PagoRequest } from '../../../models/pago-request.module';
+import { Globals } from 'src/app/bean/globals-bean.component';
+import { ModalInfoComponent } from 'src/app/components/modals/modal-info/modal-info.component';
+import { ModalInfoBeanComponents } from 'src/app/bean/modal-info-bean.component';
 
 @Component({
   selector: 'app-consulta-tracking-api',
@@ -64,7 +66,8 @@ export class ConsultaTrackingApiComponent implements OnInit {
   clickSuscliptionGraph: Subscription | undefined;
   date: any;
   // Datos de usuario
-  cliente: any = 'Jeremy';
+  cliente: any = '';
+  traking: any;
   estatus: number = 0;
   codCliente: any = '';
 
@@ -88,6 +91,7 @@ export class ConsultaTrackingApiComponent implements OnInit {
     public dialog: MatDialog,
     private formBuilder: FormBuilder,
     private router: Router,
+    private globals: Globals,
     private translate: TranslateService,
     private comunService: ComunesService,
     public datePipe: DatePipe,
@@ -143,22 +147,19 @@ export class ConsultaTrackingApiComponent implements OnInit {
       fechaInicio: null,
       fechaFin: null
     };
-    //this.traking = this.consultaTrackingArchivoService.getSaveLocalStorage('traking');
-    //this.cliente = this.traking.cliente;
-    //this.codCliente = this.traking.codigoCliente,
-    //this.estatus = this.traking.estatus;
     try {
       this.consultaTrackingApiService
-        .pagos3(this.pagosRequest,this.fillObjectPag(0, 20)).then(
+        .pagos(this.pagosRequest,this.fillObjectPag(0, 20)).then(
         resp => {
           this.resultRequest(resp);
           this.det(resp);
           this.getCatalogs();
+          this.globals.loaderSubscripcion.emit(false);
       }
       );
     } catch (e) {
       this.datos = {};
-      //this.globals.loaderSubscripcion.emit(false);
+      this.globals.loaderSubscripcion.emit(false);
       this.open(
         'Error',
         this.translate.instant('consultaTracking.noResultTraking'),
@@ -169,7 +170,7 @@ export class ConsultaTrackingApiComponent implements OnInit {
 
   async det(resp:any) {
     this.respuestaTabla(resp.resumenPorProductoDivisaEstatus,resp.totales);
-    //this.globals.loaderSubscripcion.emit(false);
+    this.globals.loaderSubscripcion.emit(false);
   }
 
   respuestaTabla(data: any,totales:any) {
@@ -192,21 +193,21 @@ export class ConsultaTrackingApiComponent implements OnInit {
         this.translate.instant('consultaTracking.msjTRACKING007')
       );
     }
-    //this.globals.loaderSubscripcion.emit(false);
+    this.globals.loaderSubscripcion.emit(false);
   }
 
   getCatalogs(){
     try {
       this.consultaTrackingApiService
         .obtenerCatalogos()
-        .then( (resp) => {
+        .then( (resp:any) => {
           this.catalogoDivisa=resp.divisas;
           this.catalogoProductos=resp.tiposOperacion;
           this.catalogoTipoPago=resp.tiposPago;
         });
     } catch (e) {
       this.datos = {};
-      //this.globals.loaderSubscripcion.emit(false);
+      this.globals.loaderSubscripcion.emit(false);
       this.open(
         'Error',
         this.translate.instant('consultaTracking.noResultTraking'),
@@ -273,13 +274,13 @@ export class ConsultaTrackingApiComponent implements OnInit {
         },
       },
     });
-    //this.globals.loaderSubscripcion.emit(false);
+    this.globals.loaderSubscripcion.emit(false);
   }
 
   archivo(data: string) {
-    this.consultaTrackingApiService.setSaveLocalStorage('monitor', data.split(' ')[0]);
+    this.consultaTrackingApiService.setSaveLocalStorage('monitoreoConsulta', data.split(' ')[0]);
      console.log('Navigation triggered'); // Check browser console
-  this.router.navigate(['/app/tracking']).then(success => {
+  this.router.navigate(['/src/app/pages/monitoreo-api/monitoreo-operaciones']).then(success => {
     console.log('Navigation success:', success);
   }).catch(err => {
     console.error('Navigation error:', err);
@@ -299,8 +300,8 @@ export class ConsultaTrackingApiComponent implements OnInit {
     this.datos = [];
     try {
       this.consultaTrackingApiService
-        .pagos3(this.pagosRequest,this.fillObjectPag(this.page, this.rowsPorPagina))
-        .then((tabla) => {
+        .pagos(this.pagosRequest,this.fillObjectPag(this.page, this.rowsPorPagina))
+        .then((tabla:any) => {
           this.respuestaTabla(tabla.resumenPorProductoDivisaEstatus,tabla.totales);
         });
     } catch (e) {
@@ -314,7 +315,7 @@ export class ConsultaTrackingApiComponent implements OnInit {
         this.translate.instant('modal.msjERRGEN0001Observacion')
       );
     }
-    //this.globals.loaderSubscripcion.emit(false);
+    this.globals.loaderSubscripcion.emit(false);
   }
 
 
@@ -325,11 +326,15 @@ export class ConsultaTrackingApiComponent implements OnInit {
     errorCode?: string,
     sugerencia?: string
   ) {
-    alert(titulo + '| ' + obser +'| '+ type + '| ' +errorCode+'| '+sugerencia);
-  }
-
-  regresar() {
-    this.router.navigate(['/monitoreo/consultaTracking']);
+    this.dialog.open(ModalInfoComponent, {
+          data: new ModalInfoBeanComponents(
+            titulo,
+            obser,
+            type,
+            errorCode,
+            sugerencia
+          ), hasBackdrop: true
+        });
   }
 
   refrescar() {
@@ -368,7 +373,7 @@ export class ConsultaTrackingApiComponent implements OnInit {
         this.translate.instant('modal.msjERRGEN0001Observacion')
       );
     }
-    //this.globals.loaderSubscripcion.emit(false);
+    this.globals.loaderSubscripcion.emit(false);
   }
 
   Limpiar(){

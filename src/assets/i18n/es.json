@@ -3290,14 +3290,26 @@
     "usuarioOperantes.guardarPerfilObservación": "La modificación de perfil ha sido efectuada correctamente",
 
     "administracion.contratos.fechaDiaAnterior": "La fecha no puede ser mayor a la fecha actual",
-    
+
     "parametrosContrato.msjERR0009Sugerencia":"Favor de intentarlo mas tarde",
     "parametrosContrato.msjERR0009Observacion":"Ocurrió un error al generar el reporte",
     "parametrosContrato.msjERR0009Titulo":"Generación de Reporte de Parámetros",
     "parametrosContrato.msjERR0009Codigo":"ERR0009",
 
     "admonContratos.msjERRWS001Sugerencia": "Revise las cuentas confirming",
-    "admonContratos.msjERRWS001Titulo":"Cuentas Confirming inválidas", 
+    "admonContratos.msjERRWS001Titulo":"Cuentas Confirming inválidas",
     "admonContratos.msjERRWS001Codigo": "ERRWS001",
-    "admonContratos.msjERRWS001Observacion": "Las Cuentas Confirming no son validas" 
+    "admonContratos.msjERRWS001Observacion": "Las Cuentas Confirming no son validas",
+    "T.Api": "Consulta Tracking de Pagos - Nivel general",
+    "OP":"Operación",
+    "PO":"Producto",
+    "BNG":"Búsqueda Nivel General",
+    "EAPI":"Estatus de Operaciones",
+    "aH2HOR":"Total de Operaciones Recibidos",
+    "T.PR":"Total de Pagos",
+    "T.MR":"Total de Montos",
+    "RFCA":"Referencia Canal",
+    "T.ID":"Transaction ID",
+    "MOA.RB": "Resultados de Búsqueda",
+    "MOA.IG":"Importe Global"
 }

@@ -1,9 +1,6 @@
 <app-operativa-header tituloPantalla="{{'T' | translate}}"></app-operativa-header>
 <div id="trakingPagos" class="panel panel-default col-xs-12 col-sm-12 col-md-12 col-lg-12">
-    <br />
-    <h5>Cliente: {{cliente}} </h5>
-    <h5>Fecha: {{date}}</h5>
-    <br />
+  <br>
     <!-- --- Tabla de Pagos y Montos recibidos --- -->
     <div class="card mt-3">
         <div class="card-body">
@@ -30,7 +27,7 @@
     </div>
 
     <!-- --- Tabla de estatus Izquierda --- -->
-    <div class="divide">
+    <div class="divide2">
         <div class="row">
             <table class="table table-striped table-hover">
                 <caption></caption>
@@ -66,21 +63,21 @@
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                 <form [formGroup]="formSearch" class="dis">
                     <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-1">
-                        <label for="operacion" class="col-form-label">{{'Operación'| translate}}</label>
+                        <label for="operacion" class="col-form-label">{{'PO'| translate}}</label>
                     </div>
                     <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 estilo">
                         <select formControlName="operacion" aria-label="operacion" id="operacion" class="form-control form-control-sm" appInputMask="operacionTrakin">
-                          <option value="">{{'Todos' | translate}}</option>
+                          <option value="">{{'todos' | translate}}</option>
                           <option  *ngFor="let operacion of catalogoProductos" [value]="operacion.id"> {{operacion.descripcion}} </option>
                         </select>
                     </div>
 
                     <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-1">
-                        <label for="tipoPago" class="col-form-label">{{'Tipo de Pago'| translate}}</label>
+                        <label for="tipoPago" class="col-form-label">{{'MO.TP'| translate}}</label>
                     </div>
                     <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 estilo">
                         <select formControlName="tipoPago" aria-label="tipoPago" id="tipoPago" class="form-control form-control-sm" appInputMask="tipoPagoTrakin">
-                          <option value="">{{'Todos' | translate}}</option>
+                          <option value="">{{'todos' | translate}}</option>
                           <option  *ngFor="let tiposPago of catalogoTipoPago" [value]="tiposPago.id"> {{tiposPago.descripcion}} </option>
                         </select>
                     </div>
@@ -89,8 +86,8 @@
                         <label for="divisa" class="col-form-label">{{'divisa'| translate}}</label>
                     </div>
                     <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 estilo">
-                        <select formControlName="divisa" aria-label="Divisa" id="divisa" class="form-control form-control-sm" appInputMask="divisaTrakin">
-                          <option value="">{{'Todos' | translate}}</option>
+                        <select formControlName="divisa" aria-label="divisa" id="divisa" class="form-control form-control-sm" appInputMask="divisaTrakin">
+                          <option value="">{{'todos' | translate}}</option>
                           <option  *ngFor="let divisa of catalogoDivisa" [value]="divisa.id"> {{divisa.descripcion}} </option>
                         </select>
                     </div>
@@ -115,10 +112,10 @@
                             <caption></caption>
                             <thead>
                                 <tr>
-                                    <th scope="col"  rowspan="4" class="text-center">{{'Operación' | translate}}</th> <!-- Constante debe cambiar en la referencia al es.json -->
-                                    <th scope="col" class="text-center">{{'Divisa' | translate}}</th> <!-- Constante debe cambiar en la referencia al es.json -->
-                                    <th scope="col" class="text-center">{{'Estatus' | translate}}</th> <!-- Constante debe cambiar en la referencia al es.json -->
-                                    <th scope="col" class="text-center">{{'Total' | translate}}</th> <!-- Constante debe cambiar en la referencia al es.json -->
+                                    <th scope="col"  rowspan="4" class="text-center">{{'PO' | translate}}</th> <!-- Constante debe cambiar en la referencia al es.json -->
+                                    <th scope="col" class="text-center">{{'divisa' | translate}}</th> <!-- Constante debe cambiar en la referencia al es.json -->
+                                    <th scope="col" class="text-center">{{'estatus' | translate}}</th> <!-- Constante debe cambiar en la referencia al es.json -->
+                                    <th scope="col" class="text-center">{{'TT' | translate}}</th> <!-- Constante debe cambiar en la referencia al es.json -->
                                 </tr>
                             </thead>
 
@@ -128,7 +125,7 @@
                                 <ng-template #templateFillTable>
                                     <ng-container class="table" *ngFor="let dato of datos"> <!-- Tratamiento de los datos puede variar -->
                                         <tr >
-                                            <td class="tipo produc">
+                                            <td class="text-center">
                                                 <a class="color" (click)="archivo(dato.operacion)">{{dato.operacion}}</a>
                                             </td>
                                             <td class="text-center">{{dato.divisa}}</td>
@@ -155,8 +152,8 @@
                             [itemsPerPage]="rowsPorPagina"
                             [maxSize]="rowsPorPagina"
                             [(ngModel)]="page" previousText="&lsaquo;" nextText="&rsaquo;"
-                            firstText="{{'inicio' | translate}}"
-                            lastText="{{'fin' | translate}}"
+                            firstText="{{'paginador.inicio' | translate}}"
+                            lastText="{{'paginador.fin' | translate}}"
                             (pageChanged)="onPageChanged($event)">
                         </pagination>
 

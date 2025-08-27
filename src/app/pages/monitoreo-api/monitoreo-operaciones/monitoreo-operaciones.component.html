@@ -1,0 +1,219 @@
+<app-operativa-header tituloPantalla="{{'pantallas.monitorOperaciones' | translate}}"></app-operativa-header>
+<div id="monitorOperaciones" class="panel panel-default col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    <br>
+    <div class="card my-1" *ngIf="filtros === true">
+        <h5 class="card-header justify-content-center">{{'pantallas.monitorOperaciones.title' | translate}}</h5>
+        <form [formGroup]="monitorOperacionesForm">
+            <div class="dos" *ngIf="todos === true">
+                <div class="dividir">
+                        <div class="card-body">
+                            <div class="form-group row2">
+                                <label for="codCli" class="col-md-3  col-xs-3 col-xs-3 col-sm-3">{{'OP' | translate}}:</label>
+                                <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+                                    <select class="form-select form-select-sm form-control" formControlName="producto" id="producto"  aria-label=".form-select-sm example">
+                                        <option value="">{{'todos' | translate}}</option>
+                                        <option [value]="item.id" *ngFor="let item of catalogo" >{{item.descripcion}}</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group row2">
+                                <label for="cuentaAbono" class="col-md-3  col-xs-3 col-xs-3 col-sm-3">{{'cuentaAbono' | translate}}:</label>
+                                <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+                                    <input class="form-control"  type="text" name="cuentaAbono" id="cuentaAbono" formControlName="cuentaAbono" placeholder="{{'cuentaAbono' | translate}}"
+                                    (keypress)="numerico($event)" (ondragenter)="disableEvent($event)" (dragover)="disableEvent($event)" (ondrop)="disableEvent($event)" maxlength="18"> </div>
+                            </div>
+                            <div class="form-group row2">
+                                <label for="importe" class="col-md-3  col-xs-3 col-xs-3 col-sm-3">{{'importe' | translate}}:</label>
+                                <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+                                        <input class="form-control"  type="text" id="importe" name="importe" appCurrencyInput formControlName="importe" placeholder="{{'importe' | translate}}"
+                                        (keypress)="numerico($event)" (ondragenter)="disableEvent($event)" (dragover)="disableEvent($event)" (ondrop)="disableEvent($event)" maxlength="15">
+                                </div>
+                            </div>
+                            <div class="form-group row2">
+                                <label for="referencia1" class="col-md-3  col-xs-3 col-xs-3 col-sm-3">{{'RFCA' | translate}}:</label>
+                                <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+                                    <input class="form-control"  type="text" id="referencia1" name="referencia" formControlName="referenciaCanal" placeholder="{{'RFCA' | translate}}"
+                                    (ondragenter)="disableEvent($event)" (dragover)="disableEvent($event)" (ondrop)="disableEvent($event)">
+                                </div>
+                            </div>
+                            <div class="form-group row2">
+                                <label for="divisa1" class="col-md-3  col-xs-3 col-xs-3 col-sm-3">{{'divisa' | translate}}:</label>
+                                <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+                                    <select class="form-select form-select-sm form-control" formControlName="divisa" id="divisa1"  aria-label=".form-select-sm example">
+                                        <option value="">{{'todos' | translate}}</option>
+                                        <option [value]="item.id" *ngFor="let item of divi" >{{item.descripcion}}</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group row2">
+                                <label for="inputFechaInicial" class="col-md-3  col-xs-3 col-xs-3 col-sm-3">{{'fechaInicial' | translate}}:</label>
+                                <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" id="inputFechaInicial" name="v_fechaInicial" readonly required
+                                        bsDatepicker #dpFechaIni="bsDatepicker" [bsConfig]="datePickerConfig" formControlName="fechaInicio"
+                                        [maxDate]="getMaxDate()" placement="top">
+                                        <div class="input-group-append">
+                                            <button class="btn btn-outline-danger" type="button" id="btnFechaInicio" name="btnFechaInicio" (click)="dpFechaIni.toggle()" [attr.aria-expanded]="dpFechaIni.isOpen"><em class="fa fa-calendar"></em>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                </div>
+                <div class="dividir">
+                    <div class="card-body">
+                        <div class="form-group row2" >
+                            <label for="cuentaCargo" class="col-md-3  col-xs-3 col-xs-3 col-sm-3">{{'cuentaCargo' | translate}}:</label>
+                            <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+                                    <input class="form-control"  type="text" name="cuentaCargo" id="cuentaCargo" formControlName="cuentaCargo" placeholder="{{'cuentaCargo' | translate}}"
+                                    (keypress)="numerico($event)" maxlength="20" (ondragenter)="disableEvent($event)" (dragover)="disableEvent($event)" (ondrop)="disableEvent($event)">
+                            </div>
+                        </div>
+                        <div class="form-group row2">
+                            <label for="tipoPago" class="col-md-3  col-xs-3 col-xs-3 col-sm-3">{{'MO.TP' | translate}}:</label>
+                            <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+                                <select class="form-select form-select-sm form-control" formControlName="tipoPago" id="tipoPago"  aria-label=".form-select-sm example" (change)="valueChange($event)">
+                                <option value="">{{'todos' | translate}}</option>
+                                <option [value]="item.id" *ngFor="let item of tiposPago" >{{item.descripcion}}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row2">
+                            <label for="estatus1" class="col-md-3  col-xs-3 col-xs-3 col-sm-3">{{'estatus' | translate}}:</label>
+                            <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+                                <select class="form-select form-select-sm form-control" formControlName="estatus" id="estatus1"  aria-label=".form-select-sm example" (change)="valueChangeText($event)">
+                                <option value="">{{'todos' | translate}}</option>
+                                <option [value]="item.id" *ngFor="let item of estat" >{{item.descripcion}}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row2">
+                            <p class="espacio2"></p>
+                        </div>
+                        <div class="form-group row2">
+                            <label for="transactionId" class="col-md-3  col-xs-3 col-xs-3 col-sm-3">{{'T.ID' | translate}}:</label>
+                            <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+                                    <input class="form-control"  type="text" id="transactionId" name="transactionId" formControlName="transactionId" placeholder="{{'T.ID' | translate}}"
+                                    (keypress)="numerico($event)" (ondragenter)="disableEvent($event)" (dragover)="disableEvent($event)" (ondrop)="disableEvent($event)" maxlength="12">
+                            </div>
+                        </div>
+                        <div class="form-group row2">
+                            <label for="fechaFin" class="col-md-3  col-xs-3 col-xs-3 col-sm-3">{{'fechaFinal' | translate}}:</label>
+                            <div class="ccol-xs-8 col-sm-8 col-md-8 col-lg-8">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" id="fechaFin" name="fechaFin" readonly required
+                                    bsDatepicker #dpFechaFin="bsDatepicker" [bsConfig]="datePickerConfig" formControlName="fechaFin"
+                                    [maxDate]="getMaxDate()" placement="top">
+                                    <div class="input-group-append">
+                                        <button class="btn btn-outline-danger" type="button" id="btnFechaFin" name="btnFechaFin" (click)="dpFechaFin.toggle()"
+                                        [attr.aria-expanded]="dpFechaFin.isOpen">
+                                            <em class="fa fa-calendar"></em>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-2">
+                <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-1 offset-sm-1 offset-md-1 offset-lg-1">
+                    <button type="button" class="btn btn-danger" (click)="limpiarMonitor()">{{'btn.limpiar' | translate}}</button>
+                </div>
+                <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-8 offset-sm-8 offset-md-8 offset-lg-8">
+                    <button type="button" class="btn btn-danger" (click)="guardarMonitor()">{{'btn.buscar' | translate}}</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+
+    <div *ngIf="abreTabla === true">
+        <div class="card my-1">
+            <h5 class="card-header justify-content-center">{{'MOA.RB' | translate}}</h5>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 table-responsive">
+                       <table class="table table-striped table-hover" aria-describedby="listaConsultaMonitor">
+                        <caption></caption>
+                            <thead>
+                                <tr>
+                                    <th class="text-center" scope="col">{{'OP' | translate}}</th>
+                                    <th class="text-center" scope="col">{{'RFCA' | translate}}</th>
+                                    <th class="text-center" scope="col">{{'T.ID' | translate}}</th>
+                                    <th class="text-center" scope="col">{{'cuentaCargo' | translate}}</th>
+                                    <th class="text-center" scope="col">{{'cuentaAbono' | translate}}</th>
+                                    <th class="text-center" scope="col">{{'MO.TP' | translate}}</th>
+                                    <th class="text-center" scope="col">{{'estatus' | translate}}</th>
+                                    <th class="text-center" scope="col">{{'importe' | translate}}</th>
+                                    <th class="text-center" scope="col">{{'divisa' | translate}}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <ng-container *ngIf="banderaHasRows; then templateFillTable; else templateEmptyTableMONI">
+                                </ng-container>
+                                <ng-template #templateFillTable>
+                                    <tr *ngFor="let tab of tablaMonitor">
+                                        <td class="text-center">{{tab.operacion }}</td>
+                                        <td class="text-center">{{tab.referenciaCanal}}</td>
+                                        <td class="text-center">{{tab.transactionId}}</td>
+                                        <td class="text-center">{{tab.cuentaCargo}}</td>
+                                        <td class="text-center">{{tab.cuentaAbono }}</td>
+                                        <td class="text-center">{{tab.tipoPago }}</td>
+                                        <td class="text-center">{{tab.estatus}}</td>
+                                        <td class="text-center">{{tab.importe }}</td>
+                                        <td class="text-center">{{tab.divisa}}</td>
+                                    </tr>
+                                </ng-template>
+                                <ng-template #templateEmptyTableMONI>
+                                    <tr>
+                                        <td class="text-center" colspan="12"> {{'noResult' | translate}} </td>
+                                    </tr>
+                                </ng-template>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mt-1">
+                       <div class="d-flex justify-content-center" *ngIf="banderaHasRows">
+                        <pagination
+                        [boundaryLinks]="showBoundaryLinksMO"
+                        [directionLinks]="showDirectionLinksMO"
+                        [totalItems]="totalElements"
+                        [itemsPerPage]="rowsPorPagina"
+                        [maxSize]="10"
+                        [(ngModel)]="page"
+                        previousText="&lsaquo;" nextText="&rsaquo;"
+                        firstText="{{'paginador.inicio' | translate}}"
+                        lastText="{{'paginador.fin' | translate}}"
+                        (pageChanged)="onPageChanged($event)">
+                </pagination>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="clas">
+            <div><div>{{'MO.TOS' | translate}}: {{archi}}</div></div>
+            <div><div>{{'MOA.IG' | translate}}: {{importGlobal | currency}}</div></div>
+        </div>
+        <div class="row mt-2">
+            <!--<div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-8 offset-sm-8 offset-md-8 offset-lg-8">
+                <button type="button" class="btn btn-danger" (click)="exportar()"> {{'btn.exportar' | translate}}</button>
+            </div>-->
+            <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-1 offset-sm-1 offset-md-1 offset-lg-1">
+                <button type="button" class="btn btn-danger" (click)="regresar()">{{'MO.Regr' | translate}}</button>
+            </div>
+
+        </div>
+        <div class="row mt-2">
+           <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-1 offset-sm-1 offset-md-1 offset-lg-1">
+                <button type="button" class="btn btn-danger" (click)="refrescar()">{{'MO.Refr' | translate}}</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
