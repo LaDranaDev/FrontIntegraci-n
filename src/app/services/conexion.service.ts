@@ -52,10 +52,10 @@ export class ConexionService {
     const headers = new HttpHeaders()
       .set('Content-Type', metodoEnvio === 8 ? 'multipart/form-data': 'application/json')
     //AGREGAR HTTPS
-    if (url.includes('https://')) {
+    if (url.includes('http://')) {
       urlFinal = url;
     } else {
-      urlFinal = 'https://' + url;
+      urlFinal = 'http://' + url;
     }
 
     let valid = this.whiteList(urlFinal);
@@ -100,7 +100,7 @@ export class ConexionService {
     let flag = true;
 
     let verifyUrl = [
-      "<a>", "</a>", "<A>", "</A>", "<script>", "</script>", "<SCRIPT>", "</SCRIPT>", "<", ">", "http:", "tcp:",
+      "<a>", "</a>", "<A>", "</A>", "<script>", "</script>", "<SCRIPT>", "</SCRIPT>", "<", ">", "tcp:",
       "go=", "return=", "r_url=", "returnUrl=", "returnUri=", "locationUrl=", "goTo=", "return_url=", "return_uri=", "ref=",
       "referrer=", "backUrl=", "returnTo=", "successUrl=", "href=", "HREF=", "site:", "inurl:"
     ];
