@@ -7,7 +7,7 @@ import { IPaginationRequest } from '../../contingencia/request/pagination-reques
 import { Chart } from 'chart.js';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
-import { DatePipe, formatDate } from '@angular/common';
+import { DatePipe } from '@angular/common';
 import { ComunesService } from 'src/app/services/comunes.service';
 import { PagoRequest } from '../../../models/pago-request.module';
 import { Globals } from 'src/app/bean/globals-bean.component';

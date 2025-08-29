@@ -3372,5 +3372,21 @@
     "admonContratos.msjERRWS001Sugerencia": "Review Confirming Account",
     "admonContratos.msjERRWS001Titulo":"Confirming Account invalid", 
     "admonContratos.msjERRWS001Codigo": "ERRWS001",
-    "admonContratos.msjERRWS001Observacion": "This Accounts Confirming is invalid" 
+    "admonContratos.msjERRWS001Observacion": "This Accounts Confirming is invalid",
+    "T.Api": "Payment Tracking Query - General Level",
+    "menu.monitoreoApi": "API Monitoring",
+    "menu.monitoreoApi.consultaTrackingApi": "API Tracking Query",
+    "menu.monitoreoApi.monitorOperaciones": "Operations Monitor",
+    "OP": "Operation",
+    "PO": "Product",
+    "BNG": "General Level Search",
+    "EAPI": "Operations Status",
+    "aH2HOR": "Total Operations Received",
+    "T.PR": "Total Payments",
+    "T.MR": "Total Amounts",
+    "RFCA": "Channel Reference",
+    "T.ID": "Transaction ID",
+    "MOA.RB": "Search Results",
+    "MOA.IG": "Global Amount",
+    "30": "The start date can only be a maximum of thirty days old"
 }

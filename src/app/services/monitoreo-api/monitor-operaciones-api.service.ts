@@ -52,7 +52,7 @@ async catalogos(){
 
 
   getUrl() {
-    return 'localhost:8080'
-    //return localStorage.getItem('url');
+    //return 'localhost:8080'
+    return localStorage.getItem('url');
   }
 }

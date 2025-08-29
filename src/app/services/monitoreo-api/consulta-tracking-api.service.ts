@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
 import { IPaginationRequest } from 'src/app/pages/contingencia/request/pagination-request.component';
 import { ConexionService, TypeRequest } from '../conexion.service';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { PagoRequest } from '../../models/pago-request.module';
-import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -31,8 +30,9 @@ export class ConsultaTrackingApiService {
    * @description recupera la funcion el valor de la url
   */
   getUrl() {
-    return 'localhost:8080';
-    //return 'http://localhost:8087'//return localStorage.getItem('url');
+    //return 'localhost:8080';
+    //return 'http://localhost:8087'
+    return localStorage.getItem('url');
   }
 
   async pagos(request: PagoRequest,paginacion:IPaginationRequest){

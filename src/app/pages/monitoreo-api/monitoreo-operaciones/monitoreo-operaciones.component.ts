@@ -1,14 +1,13 @@
 import { IPaginationRequest } from '../../contingencia/request/pagination-request.component';
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { FormBuilder, FormGroup, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
-import { DatePipe, formatDate } from '@angular/common';
+import { DatePipe } from '@angular/common';
 import { ComunesService } from 'src/app/services/comunes.service';
 import { PagoRequest } from '../../../models/pago-request.module';
-import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { BsDatepickerConfig, BsLocaleService } from "ngx-bootstrap/datepicker";
 import { MonitorOperacionesApiService } from 'src/app/services/monitoreo-api/monitor-operaciones-api.service';
 import { FuncionesComunesComponent } from 'src/app/components/funciones-comunes.component';
