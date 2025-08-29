@@ -280,7 +280,7 @@ export class ConsultaTrackingApiComponent implements OnInit {
   archivo(data: string) {
     this.consultaTrackingApiService.setSaveLocalStorage('monitoreoConsulta', data.split(' ')[0]);
      console.log('Navigation triggered'); // Check browser console
-  this.router.navigate(['/src/app/pages/monitoreo-api/monitoreo-operaciones']).then(success => {
+  this.router.navigate(['/monitoreo-api/monitorOperaciones']).then(success => {
     console.log('Navigation success:', success);
   }).catch(err => {
     console.error('Navigation error:', err);

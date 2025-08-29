@@ -3301,6 +3301,9 @@
     "admonContratos.msjERRWS001Codigo": "ERRWS001",
     "admonContratos.msjERRWS001Observacion": "Las Cuentas Confirming no son validas",
     "T.Api": "Consulta Tracking de Pagos - Nivel general",
+    "menu.monitoreoApi":"Monitoreo API",
+    "menu.monitoreoApi.consultaTrackingApi":"Consulta Tracking API",
+    "menu.monitoreoApi.monitorOperaciones":"Monitor de Operaciones",
     "OP":"Operación",
     "PO":"Producto",
     "BNG":"Búsqueda Nivel General",
@@ -3311,5 +3314,6 @@
     "RFCA":"Referencia Canal",
     "T.ID":"Transaction ID",
     "MOA.RB": "Resultados de Búsqueda",
-    "MOA.IG":"Importe Global"
+    "MOA.IG":"Importe Global",
+    "30": "La fecha de inicio solo puede tener una antigüedad máxima de treinta días"
 }

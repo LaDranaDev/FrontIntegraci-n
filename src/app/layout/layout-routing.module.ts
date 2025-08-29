@@ -5,8 +5,8 @@ import { RouterModule, Routes } from '@angular/router';
 import { MonitorOperacionesOnlineComponent } from '../pages/monitoreo/monitor-operaciones-online/monitor-operaciones-online.component';
 import { SolicitudEdoCuentaModule } from '../pages/solicitud-edo-cuenta/solicitud-edo-cuenta.module';
 import { ControlVolumenOperativoModule } from '../pages/control-volumen-operativo/control-volumen-operativo.module';
-import { ConsultaTrackingApiComponent } from '../pages/monitoreo-api/consulta-tracking-api/consulta-tracking-api.component';
-import { MonitoreoOperacionesComponent } from '../pages/monitoreo-api/monitoreo-operaciones/monitoreo-operaciones.component';
+import { MonitoreoApiModule } from '../pages/monitoreo-api/monitoreo-api.module';
+
 const routes: Routes = [
   { path: '',component: LayoutComponent,
   children: [
@@ -27,8 +27,7 @@ const routes: Routes = [
     { path: 'consultaDocumentosCFDI', loadChildren: () => import('../pages/consulta-documentos-cfdi/consulta-documentos-cfdi.module').then(m => m.ConsultaDocumentosCfdiModule)},
     { path: 'open-road', loadChildren: () => import('../pages/open-road/open-road.module').then(m => m.OpenRoadModule)},
     { path: 'sterling', loadChildren: () => import('../pages/sterling/sterling.module').then(m => m.SterlingModule)},
-    { path: 'monitoreoApi/consultaTrackingApi',component: ConsultaTrackingApiComponent },
-     { path: 'monitoreoApi/monitorOperaciones', component: MonitoreoOperacionesComponent }
+    { path: 'monitoreo-api',loadChildren: () => import('../pages/monitoreo-api/monitoreo-api.module').then(m => m.MonitoreoApiModule)},
   ]}
 ];
 

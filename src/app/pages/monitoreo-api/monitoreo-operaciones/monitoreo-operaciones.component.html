@@ -155,14 +155,14 @@
                                 </ng-container>
                                 <ng-template #templateFillTable>
                                     <tr *ngFor="let tab of tablaMonitor">
-                                        <td class="text-center">{{tab.operacion }}</td>
+                                        <td class="text-center">{{getOperacionDesc(tab.operacion) }}</td>
                                         <td class="text-center">{{tab.referenciaCanal}}</td>
                                         <td class="text-center">{{tab.transactionId}}</td>
                                         <td class="text-center">{{tab.cuentaCargo}}</td>
                                         <td class="text-center">{{tab.cuentaAbono }}</td>
                                         <td class="text-center">{{tab.tipoPago }}</td>
                                         <td class="text-center">{{tab.estatus}}</td>
-                                        <td class="text-center">{{tab.importe }}</td>
+                                        <td class="text-center">{{tab.importe | currency}}</td>
                                         <td class="text-center">{{tab.divisa}}</td>
                                     </tr>
                                 </ng-template>
@@ -200,20 +200,13 @@
             <div><div>{{'MOA.IG' | translate}}: {{importGlobal | currency}}</div></div>
         </div>
         <div class="row mt-2">
-            <!--<div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-8 offset-sm-8 offset-md-8 offset-lg-8">
-                <button type="button" class="btn btn-danger" (click)="exportar()"> {{'btn.exportar' | translate}}</button>
-            </div>-->
-            <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-1 offset-sm-1 offset-md-1 offset-lg-1">
-                <button type="button" class="btn btn-danger" (click)="regresar()">{{'MO.Regr' | translate}}</button>
-            </div>
-
-        </div>
-        <div class="row mt-2">
-           <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-1 offset-sm-1 offset-md-1 offset-lg-1">
+             <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-1 offset-sm-1 offset-md-1 offset-lg-1">
                 <button type="button" class="btn btn-danger" (click)="refrescar()">{{'MO.Refr' | translate}}</button>
             </div>
+            <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-8 offset-sm-8 offset-md-8 offset-lg-8">
+                <button type="button" class="btn btn-danger" (click)="regresar()">{{'MO.Regr' | translate}}</button>
+            </div>
         </div>
-
     </div>
 </div>
 

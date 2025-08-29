@@ -1,6 +1,7 @@
-<app-operativa-header tituloPantalla="{{'T' | translate}}"></app-operativa-header>
+<app-operativa-header tituloPantalla="{{'T.Api' | translate}}"></app-operativa-header>
 <div id="trakingPagos" class="panel panel-default col-xs-12 col-sm-12 col-md-12 col-lg-12">
   <br>
+
     <!-- --- Tabla de Pagos y Montos recibidos --- -->
     <div class="card mt-3">
         <div class="card-body">
@@ -92,11 +93,10 @@
                         </select>
                     </div>
 
-                    <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 estilo">
+                    <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-1">
                         <button type="button" class="btn btn-outline-primary" (click)="buscar()">{{'btn.buscar' | translate}}</button>
                         <button type="button" class="btn btn-outline-primary" (click)="Limpiar()">{{'btn.limpiar' | translate}}</button>
                     </div>
-
                 </form>
             </div>
         </div>
@@ -112,10 +112,11 @@
                             <caption></caption>
                             <thead>
                                 <tr>
-                                    <th scope="col"  rowspan="4" class="text-center">{{'PO' | translate}}</th> <!-- Constante debe cambiar en la referencia al es.json -->
-                                    <th scope="col" class="text-center">{{'divisa' | translate}}</th> <!-- Constante debe cambiar en la referencia al es.json -->
-                                    <th scope="col" class="text-center">{{'estatus' | translate}}</th> <!-- Constante debe cambiar en la referencia al es.json -->
-                                    <th scope="col" class="text-center">{{'TT' | translate}}</th> <!-- Constante debe cambiar en la referencia al es.json -->
+                                    <th scope="col"  rowspan="4" class="text-center">{{'PO' | translate}}</th> 
+                                    <th scope="col" class="text-center">{{'divisa' | translate}}</th> 
+                                    <th scope="col" class="text-center">{{'MO.TOS' | translate}}</th> 
+                                    <th scope="col" class="text-center">{{'estatus' | translate}}</th> 
+                                    
                                 </tr>
                             </thead>
 
@@ -123,14 +124,15 @@
                                 <ng-container *ngIf="banderaHasRows; then templateFillTable; else templateEmptyTable5">
                                 </ng-container>
                                 <ng-template #templateFillTable>
-                                    <ng-container class="table" *ngFor="let dato of datos"> <!-- Tratamiento de los datos puede variar -->
+                                    <ng-container class="table" *ngFor="let dato of datos"> 
                                         <tr >
                                             <td class="text-center">
                                                 <a class="color" (click)="archivo(dato.operacion)">{{dato.operacion}}</a>
                                             </td>
                                             <td class="text-center">{{dato.divisa}}</td>
-                                            <td class="text-center">{{dato.estatus}}</td>
                                             <td class="text-center">{{dato.total}}</td>
+                                            <td class="text-center">{{dato.estatus}}</td>
+                                            
                                         </tr>
                                     </ng-container>
                                 </ng-template>

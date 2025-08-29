@@ -50,8 +50,8 @@ export class AppComponent {
           }
         } else {
           console.log('no hay user en parametros...');
-          let userlocal = localStorage.getItem('UserID');
-          //let userlocal = 'Z483900';
+          //let userlocal = localStorage.getItem('UserID');
+          let userlocal = 'D681657';
           if (userlocal !== undefined) {
             console.log('userlocal: ' + userlocal);
             localStorage.setItem('UserID', userlocal ?? '');

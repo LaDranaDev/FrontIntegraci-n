@@ -52,7 +52,7 @@ export class ConexionService {
     const headers = new HttpHeaders()
       .set('Content-Type', metodoEnvio === 8 ? 'multipart/form-data': 'application/json')
     //AGREGAR HTTPS
-    if (url.includes('http://')) {
+    if (url.includes('http://')||url.includes('https://')) {
       urlFinal = url;
     } else {
       urlFinal = 'http://' + url;

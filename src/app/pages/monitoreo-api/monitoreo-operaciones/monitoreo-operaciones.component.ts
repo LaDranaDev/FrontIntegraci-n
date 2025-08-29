@@ -312,7 +312,7 @@ export class MonitoreoOperacionesComponent implements OnInit {
         async (tab: any) => {
           this.tablaMonitor = []
           this.resultRequest(tab.content);
-          this.archi = tab.content.totalElements;
+          this.archi = tab.content.page.totalElements;
         });
     } catch (e) {
       this.open(
@@ -501,7 +501,7 @@ export class MonitoreoOperacionesComponent implements OnInit {
                 try {
                   await this.monitor.operacionesTotales(this.valoresPrueba).then((tab: any) => {
                     console.log("Respuesta de total: " + JSON.stringify(tab));
-                    this.archi = tab1.content.totalElements;
+                    this.archi = tab1.content.page.totalElements;
                     if(this.monitorOperacionesForm.value.divisa!=null && this.monitorOperacionesForm.value.divisa!= ""){
                       this.importGlobal = tab[0].importeTotal;
                     }else{
@@ -545,7 +545,7 @@ export class MonitoreoOperacionesComponent implements OnInit {
   resultRequest(result: any) {
     console.log("RESULT: " + JSON.stringify(result.totalElements));
     this.tablaMonitor = this.generateTablaMonitor(result.content);
-    this.totalElements = result.totalElements;
+    this.totalElements = result.page.totalElements;
     //this.limiteOperaciones = result.limiteOperaciones
     this.totalOperaciones = Math.ceil(parseFloat(this.totalElements) / 20);
     if (this.totalElements > 0) {
@@ -590,6 +590,11 @@ export class MonitoreoOperacionesComponent implements OnInit {
     return result;
   }
 
+  getOperacionDesc(operacion:string):string | null{
+    const desc = this.catalogo.find((desc: { id: String; }) => desc.id ===operacion);
+    return desc ? desc.descripcion : null; 
+  }
+
   async onPageChanged(event: any) {
     this.page = event.page;
     this.tablaMonitor = [];
@@ -612,25 +617,6 @@ export class MonitoreoOperacionesComponent implements OnInit {
     return this.objPageable;
   }
 
-
-
-  /**
-   * Metodo para poder cambiar los valores del check EnviaBuzon en el lista de productos
-   */
-  onChangeEnviaBuzon(tab: any, e: any) {
-    if (tab.idProducto === '32') {
-      tab.vistProd = tab.vistProd + '_32'
-    }
-    if (e.target.checked === true) {
-      this.checkComprobante = true;
-      this.comprobanteObj.push(tab)
-    } else {
-      this.checkComprobante = false
-      this.comprobanteObj = this.comprobanteObj.filter((item) => item.idOperacion !== tab.idOperacion)
-    }
-
-  }
-
   /**
    * Metodo para obtener la cantidad de registros habilitados.
    * @returns cantidad de registros habilitados
@@ -639,85 +625,7 @@ export class MonitoreoOperacionesComponent implements OnInit {
     return this.tablaMonitor.filter((d: any) => d.disabled == '0').length;
   }
 
-  /**
-   * Metodo para seleccionar todos los registros
-   */
-  onChangeComboTodos(e: any) {
-    this.selAllCheck = false;
-
-    const combobox = document.getElementsByName("comprobante");
-    const activos = this.tablaMonitor.filter((d: any) => d.isSelected == 'true').length;
-    const inactivos = this.tablaMonitor.filter((d: any) => d.isSelected == '').length;
-
-    if ((activos > 0 && inactivos == 0) || (activos == 0 && inactivos > 0)) {
-      /** Selecciona todos los combobox habilitados. **/
-      for (let j = 0; j < combobox.length; j++) {
-        if (this.tablaMonitor[j].disabled != '1') {
-          if (this.tablaMonitor[j] === '32') {
-            this.tablaMonitor[j].vistProd = this.tablaMonitor[j].vistProd + '_32'
-          }
-          if (this.tablaMonitor[j].isSelected == 'true') {
-            this.tablaMonitor[j].isSelected = '';
-            this.comprobanteObj = this.comprobanteObj.filter((item) => item.idOperacion !== this.tablaMonitor[j].idOperacion);
-          } else {
-            this.tablaMonitor[j].isSelected = 'true';
-            this.comprobanteObj.push(this.tablaMonitor[j]);
-          }
-        }
-      }
-      // Activamos la bandera de seleccion de All Checks
-      if (this.comprobanteObj.length > 0) {
-        this.selAllCheck = true;
-      }
-
-    } else {
-      /** habilitados **/
-      let habilitados = this.tablaMonitor.filter((d: any) => d.disabled == '0').length;
-
-      /** seleccionados **/
-      let seleccionados = this.tablaMonitor.filter((d: any) => d.isSelected == 'true').length;
-
-      if (habilitados == seleccionados) {
-        /** Se deseleccionan **/
-        for (let j = 0; j < combobox.length; j++) {
-          if (this.tablaMonitor[j].disabled != '1') {
-            if (this.tablaMonitor[j] === '32') {
-              this.tablaMonitor[j].vistProd = this.tablaMonitor[j].vistProd + '_32'
-            }
-            this.tablaMonitor[j].isSelected = '';
-            this.comprobanteObj = this.comprobanteObj.filter((item) => item.idOperacion !== this.tablaMonitor[j].idOperacion);
-          }
-        }
-      } else {
-        /** Se deseleccionan **/
-        for (let j = 0; j < combobox.length; j++) {
-          if (this.tablaMonitor[j].disabled != '1') {
-            if (this.tablaMonitor[j] === '32') {
-              this.tablaMonitor[j].vistProd = this.tablaMonitor[j].vistProd + '_32'
-            }
-            this.tablaMonitor[j].isSelected = '';
-            this.comprobanteObj = this.comprobanteObj.filter((item) => item.idOperacion !== this.tablaMonitor[j].idOperacion);
-          }
-        }
-        /** Se seleccionan todos los campos **/
-        for (let j = 0; j < combobox.length; j++) {
-          if (this.tablaMonitor[j].disabled != '1') {
-            if (this.tablaMonitor[j] === '32') {
-              this.tablaMonitor[j].vistProd = this.tablaMonitor[j].vistProd + '_32'
-            }
-            if (this.tablaMonitor[j].isSelected == 'true') {
-              this.tablaMonitor[j].isSelected = '';
-              this.comprobanteObj = this.comprobanteObj.filter((item) => item.idOperacion !== this.tablaMonitor[j].idOperacion);
-            } else {
-              this.tablaMonitor[j].isSelected = 'true';
-              this.comprobanteObj.push(this.tablaMonitor[j]);
-            }
-          }
-        }
-      }
-
-    }
-  }
+  
 
   /**
    *
@@ -803,7 +711,7 @@ export class MonitoreoOperacionesComponent implements OnInit {
     const diffInDays = Math.round((diffInTime / oneHour) / 24);
     if (diffInDays < 0) {
       if (diffInDays * -1 > 30) {
-        this.open('Error', this.translate.instant('93'), 'error');
+        this.open('Error', this.translate.instant('30'), 'error');
       }
       return diffInDays * -1
     }

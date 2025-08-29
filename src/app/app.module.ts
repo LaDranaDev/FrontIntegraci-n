@@ -66,8 +66,7 @@ import { ModalCuentaCobroComponent } from './components/modals/modal-cuenta-cobr
 import { ConfirmacionAnularComisionComponent } from './components/modals/confirmacion-anular-comision/confirmacion-anular-comision.component';
 import { defineLocale, esLocale } from 'ngx-bootstrap/chronos';
 import { BsLocaleService } from 'ngx-bootstrap/datepicker';
-import { MonitoreoOperacionesComponent } from './pages/monitoreo-api/monitoreo-operaciones/monitoreo-operaciones.component';
-import { ConsultaTrackingApiComponent } from './pages/monitoreo-api/consulta-tracking-api/consulta-tracking-api.component';
+
 defineLocale('es', esLocale);
 
 
@@ -104,8 +103,6 @@ export function HttpLoaderFactory(http: HttpClient) {
     ModalMtvoRechazoComponent,
     ModalCuentaCobroComponent,
     ConfirmacionAnularComisionComponent,
-    MonitoreoOperacionesComponent,
-    ConsultaTrackingApiComponent,
     ],
   imports: [
     BrowserModule,

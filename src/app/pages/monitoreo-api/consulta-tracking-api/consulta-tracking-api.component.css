@@ -3,20 +3,21 @@
 }
 
 .divide2{
-    display: flex
+    /*display: flex;*/
+    display:flex;
 
 }
 
-.row{
+.row{    
     width: 30%;
     margin: 5px;
 }
-.rot{
+.rot{    
     width: 30%;
     margin: 5px;
     display: contents;
 }
-.rof{
+.rof{    
     width: 100%;
     margin: 5px;
     display: flex;
