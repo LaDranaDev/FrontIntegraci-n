@@ -52,6 +52,7 @@ export class ConsultaTrackingApiComponent implements OnInit {
   idArchivo: any = 0;
   l: any;
   t: any;
+  isData=false;
 
   lab: string[] = [];
   tab: number[] = [];
@@ -177,14 +178,14 @@ export class ConsultaTrackingApiComponent implements OnInit {
     this.datos = data;
     this.title=totales;
     this.totalElements = data.length;
+    console.log('datos:', this.datos);
+
     if (this.totalElements > 0) {
       this.banderaHasRows = true;
-      //this.banderaBtnExportar = true;
       // Si existen datos provocamos el SLICE
       this.datos = this.datos ? this.datos.slice(0, this.rowsPorPagina) : [];
     } else {
       this.banderaHasRows = false;
-      //this.banderaBtnExportar = false;
       this.datos = this.datos;
       this.open(
         'Aviso',
@@ -193,6 +194,7 @@ export class ConsultaTrackingApiComponent implements OnInit {
         this.translate.instant('consultaTracking.msjTRACKING007')
       );
     }
+    console.log('banderaHasRows:', this.banderaHasRows);
     this.globals.loaderSubscripcion.emit(false);
   }
 
@@ -218,13 +220,40 @@ export class ConsultaTrackingApiComponent implements OnInit {
 
   title: any;
   resultRequest(result: any) {
+    this.validarChart();
     this.content = [];
     this.est = [];
     this.tot = [];
     this.datos = '';
     this.title = result.totales;
     this.datos = result;
-    for(let data in result.resumenPorEstatus){
+    if(result.resumenPorEstatus.length===0){
+      this.isData=false;
+      this.content = [
+      {
+        estatus: this.translate.instant('ENVIADO'),
+        total: 0,
+        id: 1
+      }, {
+        estatus: this.translate.instant('PROCESADO'),
+        total: 0,
+        id: 2
+      }, {
+        estatus: this.translate.instant('PENDIENTE'),
+        total: 0,
+        id: 3
+      }, {
+        estatus: this.translate.instant('RECHAZADO'),
+        total: 0,
+        id: 4
+      }, {
+        estatus: this.translate.instant('RECHAZADO APLICATIVO'),
+        total: 0,
+        id: 5
+      }];
+    }else{
+      this.isData=true;
+      for(let data in result.resumenPorEstatus){
       this.content[data] =
       {
         estatus: this.translate.instant(result.resumenPorEstatus[data].estatus),
@@ -232,6 +261,8 @@ export class ConsultaTrackingApiComponent implements OnInit {
         id: data
       }
     }
+    }
+
 
     for (let dato in this.content) {
       this.est.push(this.content[dato].estatus);
@@ -249,8 +280,9 @@ export class ConsultaTrackingApiComponent implements OnInit {
         labels: label,
         datasets: [
           {
-            data: data,
-            backgroundColor: [
+            data: data, // Use [1] if all zeros to show a single slice
+            backgroundColor
+            : [
               '#55ff55',
               '#ff5555',
               '#55ffff',
@@ -275,6 +307,12 @@ export class ConsultaTrackingApiComponent implements OnInit {
       },
     });
     this.globals.loaderSubscripcion.emit(false);
+  }
+
+  validarChart() {
+    if (this.chart2) {
+      this.chart2.destroy();
+    }
   }
 
   archivo(data: string) {

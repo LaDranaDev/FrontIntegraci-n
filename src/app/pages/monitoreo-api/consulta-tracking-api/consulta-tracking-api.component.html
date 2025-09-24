@@ -20,6 +20,11 @@
                             <td class="text-center3">{{title?.totalPagos}}</td>
                             <td class="text-center3">{{title?.totalMontos | currency}}</td>
                         </tr>
+                        <ng-template #noHayInformación>
+                            <tr>
+                                <td class="text-center" colspan="6"> {{'administracion.productos.periodo.Nodata' | translate}} </td>
+                            </tr>
+                        </ng-template>
                     </tbody>
                     </table>
                 </div>
@@ -45,13 +50,13 @@
                     </tr>
                     <ng-template #noHayInformación>
                         <tr>
-                            <td class="text-center" colspan="12"> {{'noResult'| translate}} </td>
+                            <td class="text-center" colspan="6"> {{'administracion.productos.periodo.Nodata' | translate}} </td>
                         </tr>
                     </ng-template>
                 </tbody>
             </table>
         </div>
-        <div  class="row2">
+        <div *ngIf="isData" class="row2">
             <div  width="200px" height="200px">
                 <canvas  id="MyChart2">{{ chart2 }}</canvas>
             </div>
@@ -105,38 +110,35 @@
     <!-- Tabla de estatus Izquierda  -->
 
 
-        <div class="card mt-3"  *ngIf="banderaHasRows">
+        <div class="card mt-3">
             <div class="card-body">
                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                         <table class="table table-striped table-hover">
                             <caption></caption>
                             <thead>
                                 <tr>
-                                    <th scope="col"  rowspan="4" class="text-center">{{'PO' | translate}}</th> 
-                                    <th scope="col" class="text-center">{{'divisa' | translate}}</th> 
-                                    <th scope="col" class="text-center">{{'MO.TOS' | translate}}</th> 
-                                    <th scope="col" class="text-center">{{'estatus' | translate}}</th> 
-                                    
+                                    <th scope="col"  rowspan="4" class="text-center">{{'PO' | translate}}</th>
+                                    <th scope="col" class="text-center">{{'divisa' | translate}}</th>
+                                    <th scope="col" class="text-center">{{'MO.TOS' | translate}}</th>
+                                    <th scope="col" class="text-center">{{'estatus' | translate}}</th>
+
                                 </tr>
                             </thead>
 
                             <tbody>
-                                <ng-container *ngIf="banderaHasRows; then templateFillTable; else templateEmptyTable5">
+                                <ng-container *ngIf="banderaHasRows; then templateFillTable; else templateEmptyTableApi">
                                 </ng-container>
                                 <ng-template #templateFillTable>
-                                    <ng-container class="table" *ngFor="let dato of datos"> 
-                                        <tr >
-                                            <td class="text-center">
-                                                <a class="color" (click)="archivo(dato.operacion)">{{dato.operacion}}</a>
-                                            </td>
-                                            <td class="text-center">{{dato.divisa}}</td>
-                                            <td class="text-center">{{dato.total}}</td>
-                                            <td class="text-center">{{dato.estatus}}</td>
-                                            
-                                        </tr>
-                                    </ng-container>
+                                    <tr *ngFor="let dato of datos">
+                                      <td class="text-center">
+                                          <a class="color" (click)="archivo(dato.operacion)">{{dato.operacion}}</a>
+                                      </td>
+                                      <td class="text-center">{{dato.divisa}}</td>
+                                      <td class="text-center">{{dato.total}}</td>
+                                      <td class="text-center">{{dato.estatus}}</td>
+                                    </tr>
                                 </ng-template>
-                                <ng-template #templateEmptyTable5>
+                                <ng-template #templateEmptyTableApi>
                                     <tr>
                                         <td class="text-center" colspan="12">{{'administracion.productos.periodo.Nodata' | translate}}</td> <!-- En caso de no retornar info en la request -->
                                     </tr>
