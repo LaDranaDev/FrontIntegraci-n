@@ -31,8 +31,8 @@ export class ConsultaTrackingApiComponent implements OnInit {
   rowsPorPagina: number = 20;
   banderaBtnExportar: boolean = true;
   /** Variables para mostrar las vinetas de ultimo y primero */
-  showBoundaryLinksArchivo: boolean = true;
-  showDirectionLinksArchivo: boolean = true;
+  showBoundaryLinksArchivoA: boolean = true;
+  showDirectionLinksArchivoA: boolean = true;
 
   /**
    * @description Formulario para la busqueda de paises
@@ -52,7 +52,6 @@ export class ConsultaTrackingApiComponent implements OnInit {
   idArchivo: any = 0;
   l: any;
   t: any;
-  isData=false;
 
   lab: string[] = [];
   tab: number[] = [];
@@ -71,6 +70,7 @@ export class ConsultaTrackingApiComponent implements OnInit {
   traking: any;
   estatus: number = 0;
   codCliente: any = '';
+  isData=true;
 
   pagosRequest :PagoRequest={
     operacion :'',
@@ -178,14 +178,14 @@ export class ConsultaTrackingApiComponent implements OnInit {
     this.datos = data;
     this.title=totales;
     this.totalElements = data.length;
-    console.log('datos:', this.datos);
-
     if (this.totalElements > 0) {
       this.banderaHasRows = true;
+      //this.banderaBtnExportar = true;
       // Si existen datos provocamos el SLICE
       this.datos = this.datos ? this.datos.slice(0, this.rowsPorPagina) : [];
     } else {
       this.banderaHasRows = false;
+      //this.banderaBtnExportar = false;
       this.datos = this.datos;
       this.open(
         'Aviso',
@@ -194,8 +194,13 @@ export class ConsultaTrackingApiComponent implements OnInit {
         this.translate.instant('consultaTracking.msjTRACKING007')
       );
     }
-    console.log('banderaHasRows:', this.banderaHasRows);
     this.globals.loaderSubscripcion.emit(false);
+  }
+
+  validarChart() {
+    if (this.chart2) {
+      this.chart2.destroy();
+    }
   }
 
   getCatalogs(){
@@ -263,7 +268,6 @@ export class ConsultaTrackingApiComponent implements OnInit {
     }
     }
 
-
     for (let dato in this.content) {
       this.est.push(this.content[dato].estatus);
       this.tot.push(this.content[dato].total);
@@ -280,9 +284,8 @@ export class ConsultaTrackingApiComponent implements OnInit {
         labels: label,
         datasets: [
           {
-            data: data, // Use [1] if all zeros to show a single slice
-            backgroundColor
-            : [
+            data: data,
+            backgroundColor: [
               '#55ff55',
               '#ff5555',
               '#55ffff',
@@ -307,12 +310,6 @@ export class ConsultaTrackingApiComponent implements OnInit {
       },
     });
     this.globals.loaderSubscripcion.emit(false);
-  }
-
-  validarChart() {
-    if (this.chart2) {
-      this.chart2.destroy();
-    }
   }
 
   archivo(data: string) {
@@ -381,9 +378,9 @@ export class ConsultaTrackingApiComponent implements OnInit {
 
   async buscar() {
     this.pagosRequest = {
-      operacion: this.formSearch.value.operacion,
-      divisa:this.formSearch.value.divisa,
-      tipoPago:this.formSearch.value.tipoPago,
+      operacion: this.formSearch.value.operacion || null,
+      divisa:this.formSearch.value.divisa || null,
+      tipoPago:this.formSearch.value.tipoPago || null,
       estatus:null,
       cuentaCargo:null,
       cuentaAbono:null,

@@ -97,8 +97,8 @@ export class MonitoreoOperacionesComponent implements OnInit {
   banderaHasRows: boolean = false;
 
   /** Variables para mostrar las vinetas de ultimo y primero */
-  showBoundaryLinksMO: boolean = true;
-  showDirectionLinksMO: boolean = true;
+  showBoundaryLinksMOA: boolean = true;
+  showDirectionLinksMOA: boolean = true;
   hora: any
   /**
 * @description Objeto para el evento de paginacion
@@ -311,8 +311,9 @@ export class MonitoreoOperacionesComponent implements OnInit {
         async (tab: any) => {
           this.tablaMonitor = []
           this.resultRequest(tab.content);
-          this.archi = tab.content.page.totalElements;
+          this.archi = tab.content.totalElements;
         });
+        this.monitor.setSaveLocalStorage('monitoreoConsulta',null);
     } catch (e) {
       this.open(
         this.translate.instant('modal.msjERRGEN0001Titulo'),
@@ -500,7 +501,7 @@ export class MonitoreoOperacionesComponent implements OnInit {
                 try {
                   await this.monitor.operacionesTotales(this.valoresPrueba).then((tab: any) => {
                     console.log("Respuesta de total: " + JSON.stringify(tab));
-                    this.archi = tab1.content.page.totalElements;
+                    this.archi = tab1.content.totalElements;
                     if(this.monitorOperacionesForm.value.divisa!=null && this.monitorOperacionesForm.value.divisa!= ""){
                       this.importGlobal = tab[0].importeTotal;
                     }else{
@@ -544,7 +545,7 @@ export class MonitoreoOperacionesComponent implements OnInit {
   resultRequest(result: any) {
     console.log("RESULT: " + JSON.stringify(result.totalElements));
     this.tablaMonitor = this.generateTablaMonitor(result.content);
-    this.totalElements = result.page.totalElements;
+    this.totalElements = result.totalElements;
     //this.limiteOperaciones = result.limiteOperaciones
     this.totalOperaciones = Math.ceil(parseFloat(this.totalElements) / 20);
     if (this.totalElements > 0) {

@@ -61,15 +61,23 @@ obtenUrl() {
     response = this._conectionWS.peticionServicioWs(`${this.obtenUrl()}/admoncontratos/generaXML`, TypeRequest.PUT, datos);
     return response;
   }
-////////////////////////////////////////////////////////////
-  /**
+ /**
    * @description Obtiene la configuracion del yml cargada en el servicio de Configuracion
-   */
+   
    obtenerDatosYml(): Observable<any> {
     const headers: HttpHeaders = new HttpHeaders({'Content-Type' : 'application/json'});
     return this.http.get(environment.url, { 'headers': headers }).pipe(
 
     );
+  }*/
+
+  obtenerDatosYml(): Observable<any> {
+    const headers: HttpHeaders = new HttpHeaders({'Content-Type' : 'application/json'});
+    var json = '{"propertySources":[{"name":"","source":{"url":"https://lightweight-gateway-mx-h2h-bo-monitoreo-dev.apps.str01.mex.dev.mx1.paas.cloudcenter.corp","urlRdFront":"https://myapps.microsoft.com/","linkSalirSAM":"https://myapps.microsoft.com/","grupoSAM":"grp_h2h_usr","urlLogAzure":"https://myapps.microsoft.com/"}}]}';
+    return new Observable((observer) => {
+      observer.next(JSON.parse(json));
+      observer.complete();
+    });
   }
 
    /**Consulta catalogos de tipo de cobro. */
