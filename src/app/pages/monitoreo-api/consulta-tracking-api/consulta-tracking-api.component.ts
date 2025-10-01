@@ -338,7 +338,7 @@ export class ConsultaTrackingApiComponent implements OnInit {
   archivo(data: any) {
     this.consultaMonitor = {
       operacion: data.operacion.split(' ')[1],
-      divisa:null,
+      divisa:data.divisa,
       tipoPago:data.operacion.split(' ')[0],
       estatus:this.getOperacionId(data.estatus),
       cuentaCargo:null,

@@ -229,7 +229,7 @@ export class MonitoreoOperacionesComponent implements OnInit {
       this.hoy = this.datePipe.transform(Date.now(), 'dd/MM/yyyy')
       this.valoresPrueba = {
       operacion: this.monitor2.operacion,
-      divisa:null,
+      divisa:this.monitor2.divisa,
       tipoPago:this.monitor2.tipoPago,
       estatus:this.monitor2.estatus,
       cuentaCargo:null,
@@ -312,6 +312,11 @@ export class MonitoreoOperacionesComponent implements OnInit {
           this.tablaMonitor = []
           this.resultRequest(tab.content);
           this.archi = tab.content.totalElements;
+          if(this.valoresPrueba.divisa!=null && this.valoresPrueba.divisa!= ""){
+            this.importGlobal = tab.totalesPorDivisa[0].importeTotal;
+          }else{
+            this.importGlobal = "";
+          }
         });
         this.monitor.setSaveLocalStorage('monitoreoConsulta',null);
     } catch (e) {
