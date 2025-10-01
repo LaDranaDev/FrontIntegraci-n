@@ -140,11 +140,11 @@
                             <thead>
                                 <tr>
                                     <th class="text-center" scope="col">{{'OP' | translate}}</th>
+                                    <th class="text-center" scope="col">{{'MO.TP' | translate}}</th>
                                     <th class="text-center" scope="col">{{'canal' | translate}}</th>
                                     <th class="text-center" scope="col">{{'T.ID' | translate}}</th>
                                     <th class="text-center" scope="col">{{'cuentaCargo' | translate}}</th>
                                     <th class="text-center" scope="col">{{'cuentaAbono' | translate}}</th>
-                                    <th class="text-center" scope="col">{{'MO.TP' | translate}}</th>
                                     <th class="text-center" scope="col">{{'estatus' | translate}}</th>
                                     <th class="text-center" scope="col">{{'importe' | translate}}</th>
                                     <th class="text-center" scope="col">{{'divisa' | translate}}</th>
@@ -156,11 +156,11 @@
                                 <ng-template #templateFillTable>
                                     <tr *ngFor="let tab of tablaMonitor">
                                         <td class="text-center">{{getOperacionDesc(tab.operacion) }}</td>
+                                        <td class="text-center">{{tab.tipoPago }}</td>
                                         <td class="text-center">{{tab.referenciaCanal}}</td>
                                         <td class="text-center">{{tab.transactionId}}</td>
                                         <td class="text-center">{{tab.cuentaCargo}}</td>
                                         <td class="text-center">{{tab.cuentaAbono }}</td>
-                                        <td class="text-center">{{tab.tipoPago }}</td>
                                         <td class="text-center">{{tab.estatus}}</td>
                                         <td class="text-center">{{tab.importe | currency}}</td>
                                         <td class="text-center">{{tab.divisa}}</td>

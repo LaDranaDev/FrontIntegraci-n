@@ -41,7 +41,13 @@ export class ConsultaTrackingApiComponent implements OnInit {
    */
   formSearch!: FormGroup;
   objPageable: IPaginationRequest;
-
+  catalogoStatus = [
+  { id: "PR", descripcion: "PROCESADO" },
+  { id: "PE", descripcion: "PENDIENTE" },
+  { id: "EN", descripcion: "ENVIADO" },
+  { id: "RE", descripcion: "RECHAZADO" },
+  { id: "RA", descripcion: "RECHAZADO APLICATIVO" }
+  ];
   grafi: any;
   da: any = [];
   dat = [];
@@ -52,6 +58,7 @@ export class ConsultaTrackingApiComponent implements OnInit {
   idArchivo: any = 0;
   l: any;
   t: any;
+  consultaMonitor:any;
 
   lab: string[] = [];
   tab: number[] = [];
@@ -70,7 +77,6 @@ export class ConsultaTrackingApiComponent implements OnInit {
   traking: any;
   estatus: number = 0;
   codCliente: any = '';
-  isData=true;
 
   pagosRequest :PagoRequest={
     operacion :'',
@@ -152,9 +158,9 @@ export class ConsultaTrackingApiComponent implements OnInit {
       this.consultaTrackingApiService
         .pagos(this.pagosRequest,this.fillObjectPag(0, 20)).then(
         resp => {
+          this.getCatalogs();
           this.resultRequest(resp);
           this.det(resp);
-          this.getCatalogs();
           this.globals.loaderSubscripcion.emit(false);
       }
       );
@@ -173,6 +179,16 @@ export class ConsultaTrackingApiComponent implements OnInit {
     this.respuestaTabla(resp.resumenPorProductoDivisaEstatus,resp.totales);
     this.globals.loaderSubscripcion.emit(false);
   }
+
+  getOperacionDesc(operacion: string): string {
+  const catalogId = operacion.split(' ')[1];
+  const desc = this.catalogoProductos.find((item: { id: string }) => item.id === catalogId);
+  if (desc) {
+    const prefix = operacion.split(' ')[0];
+    return `${prefix} ${desc.descripcion}`;
+  }
+  return operacion;
+}
 
   respuestaTabla(data: any,totales:any) {
     this.datos = data;
@@ -233,7 +249,6 @@ export class ConsultaTrackingApiComponent implements OnInit {
     this.title = result.totales;
     this.datos = result;
     if(result.resumenPorEstatus.length===0){
-      this.isData=false;
       this.content = [
       {
         estatus: this.translate.instant('ENVIADO'),
@@ -257,15 +272,14 @@ export class ConsultaTrackingApiComponent implements OnInit {
         id: 5
       }];
     }else{
-      this.isData=true;
       for(let data in result.resumenPorEstatus){
       this.content[data] =
-      {
-        estatus: this.translate.instant(result.resumenPorEstatus[data].estatus),
-        total: this.datos.resumenPorEstatus[data].total,
-        id: data
+        {
+          estatus: this.translate.instant(result.resumenPorEstatus[data].estatus),
+          total: this.datos.resumenPorEstatus[data].total,
+          id: data
+        };
       }
-    }
     }
 
     for (let dato in this.content) {
@@ -312,8 +326,31 @@ export class ConsultaTrackingApiComponent implements OnInit {
     this.globals.loaderSubscripcion.emit(false);
   }
 
-  archivo(data: string) {
-    this.consultaTrackingApiService.setSaveLocalStorage('monitoreoConsulta', data.split(' ')[0]);
+  getOperacionId(descripcion: string): string | null {
+  const catalogItem = this.catalogoStatus.find((item: { descripcion: string }) =>
+    item.descripcion.toUpperCase() === descripcion.toUpperCase()
+  );
+
+  return catalogItem ? catalogItem.id : null;
+}
+
+
+  archivo(data: any) {
+    this.consultaMonitor = {
+      operacion: data.operacion.split(' ')[1],
+      divisa:null,
+      tipoPago:data.operacion.split(' ')[0],
+      estatus:this.getOperacionId(data.estatus),
+      cuentaCargo:null,
+      cuentaAbono:null,
+      canal:null,
+      transactionId:null,
+      referenciaCanal:null,
+      importe:null,
+      fechaInicio: new Date(),
+      fechaFin: new Date()
+    };
+    this.consultaTrackingApiService.setSaveLocalStorage('monitoreoConsulta', this.consultaMonitor);
      console.log('Navigation triggered'); // Check browser console
   this.router.navigate(['/monitoreo-api/monitorOperaciones']).then(success => {
     console.log('Navigation success:', success);
@@ -395,6 +432,7 @@ export class ConsultaTrackingApiComponent implements OnInit {
       await this.consultaTrackingApiService
         .buscarProductoDivisa(this.pagosRequest, this.fillObjectPag(0, 20))
         .then(async (result: any) => {
+          this.resultRequest(result);
           this.respuestaTabla(result.resumenPorProductoDivisaEstatus,result.totales);
         });
     } catch (e) {

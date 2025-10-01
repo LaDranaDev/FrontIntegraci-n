@@ -51,11 +51,12 @@
                 </tbody>
             </table>
         </div>
-        <div *ngIf="isData" class="row2">
-            <div  width="200px" height="200px">
-                <canvas  id="MyChart2">{{ chart2 }}</canvas>
-            </div>
+        <div [hidden]="datos.length <= 0" class="row2">
+          <div  width="200px" height="200px">
+            <canvas id="MyChart2">{{ chart2 }}</canvas>
+          </div>
         </div>
+
     </div>
     <!-- --- Seccion de Busqueda --- -->
     <div class="card">
@@ -112,11 +113,11 @@
                             <caption></caption>
                             <thead>
                                 <tr>
-                                    <th scope="col"  rowspan="4" class="text-center">{{'PO' | translate}}</th> 
-                                    <th scope="col" class="text-center">{{'divisa' | translate}}</th> 
-                                    <th scope="col" class="text-center">{{'MO.TOS' | translate}}</th> 
-                                    <th scope="col" class="text-center">{{'estatus' | translate}}</th> 
-                                    
+                                    <th scope="col"  rowspan="4" class="text-center">{{'PO' | translate}}</th>
+                                    <th scope="col" class="text-center">{{'divisa' | translate}}</th>
+                                    <th scope="col" class="text-center">{{'MO.TOS' | translate}}</th>
+                                    <th scope="col" class="text-center">{{'estatus' | translate}}</th>
+
                                 </tr>
                             </thead>
 
@@ -124,15 +125,15 @@
                                 <ng-container *ngIf="banderaHasRows; then templateFillTable; else templateEmptyTableCTA">
                                 </ng-container>
                                 <ng-template #templateFillTable>
-                                    <ng-container class="table" *ngFor="let dato of datos"> 
+                                    <ng-container class="table" *ngFor="let dato of datos">
                                         <tr >
                                             <td class="text-center">
-                                                <a class="color" (click)="archivo(dato.operacion)">{{dato.operacion}}</a>
+                                                <a class="color" (click)="archivo(dato)">{{getOperacionDesc(dato.operacion)}}</a>
                                             </td>
                                             <td class="text-center">{{dato.divisa}}</td>
                                             <td class="text-center">{{dato.total}}</td>
                                             <td class="text-center">{{dato.estatus}}</td>
-                                            
+
                                         </tr>
                                     </ng-container>
                                 </ng-template>

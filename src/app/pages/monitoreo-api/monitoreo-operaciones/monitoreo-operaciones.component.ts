@@ -117,7 +117,7 @@ export class MonitoreoOperacionesComponent implements OnInit {
   todos = true
   catHoras: any
   regreso = null
-  monitor2=null
+  monitor2:any;
   valoresRetorno: any
   limiteOperaciones: any
   totalOperaciones: any
@@ -207,7 +207,7 @@ export class MonitoreoOperacionesComponent implements OnInit {
       this.comprobanteObj = []
       this.hoy = this.datePipe.transform(Date.now(), 'dd/MM/yyyy')
       this.valoresPrueba = {
-      producto: null,
+      operacion: null,
       divisa:null,
       tipoPago:null,
       estatus:null,
@@ -228,18 +228,18 @@ export class MonitoreoOperacionesComponent implements OnInit {
       this.comprobanteObj = []
       this.hoy = this.datePipe.transform(Date.now(), 'dd/MM/yyyy')
       this.valoresPrueba = {
-      producto: null,
+      operacion: this.monitor2.operacion,
       divisa:null,
-      tipoPago:this.monitor2,
-      estatus:null,
+      tipoPago:this.monitor2.tipoPago,
+      estatus:this.monitor2.estatus,
       cuentaCargo:null,
       cuentaAbono:null,
       canal:null,
       transactionId:null,
       referenciaCanal:null,
       importe:null,
-      fechaInicio: null,
-      fechaFin: null
+      fechaInicio: this.monitor2.fechaInicio,
+      fechaFin: this.monitor2.fechaFin
       };
       this.regresoPantalla();
     }
@@ -459,7 +459,7 @@ export class MonitoreoOperacionesComponent implements OnInit {
           "importe": this.monitorOperacionesForm.value.importe || null, //560.00
           "referenciaCanal": this.monitorOperacionesForm.value.referenciaCanal || null,
           "cuentaCargo": this.monitorOperacionesForm.value.cuentaCargo || null, //65506119203
-          "operacion": this.monitorOperacionesForm.value.operacion || null,
+          "operacion": this.monitorOperacionesForm.value.producto || null,
           "transactionId": this.monitorOperacionesForm.value.transactionId || null,
           "estatus": this.monitorOperacionesForm.value.estatus || null, // Error falta Algo  (SI)
         }
@@ -477,7 +477,7 @@ export class MonitoreoOperacionesComponent implements OnInit {
               "importe": this.monitorOperacionesForm.value.importe || null, //560.00
               "referenciaCanal": this.monitorOperacionesForm.value.referenciaCanal || null,
               "cuentaCargo": this.monitorOperacionesForm.value.cuentaCargo || null, //65506119203
-              "operacion": this.monitorOperacionesForm.value.operacion || null,
+              "operacion": this.monitorOperacionesForm.value.producto || null,
               "transactionId": this.monitorOperacionesForm.value.transactionId || null, //TRAN08032023_TEF_CLABINT111.IN
               "estatus": this.monitorOperacionesForm.value.estatus || null, // Error falta Algo  (SI)
             }
@@ -592,7 +592,7 @@ export class MonitoreoOperacionesComponent implements OnInit {
 
   getOperacionDesc(operacion:string):string | null{
     const desc = this.catalogo.find((desc: { id: String; }) => desc.id ===operacion);
-    return desc ? desc.descripcion : null; 
+    return desc ? desc.descripcion : null;
   }
 
   async onPageChanged(event: any) {
@@ -624,8 +624,6 @@ export class MonitoreoOperacionesComponent implements OnInit {
   listDisabledCount() {
     return this.tablaMonitor.filter((d: any) => d.disabled == '0').length;
   }
-
-  
 
   /**
    *
